@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DurationUnit
 import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -45,14 +44,14 @@ sealed class SynthesisCardInfo(open val trips: List<Trip>) : DKSynthesisCardInfo
         when (this) {
             is ACTIVEDAYS -> {
                 val activeDays = trips.computeActiveDays()
-                val daysUnitIdentifier = context.resources.getQuantityString(
+                val daysString = context.resources.getQuantityString(
                     com.drivequant.drivekit.common.ui.R.plurals.day_plural,
                     activeDays
                 )
                 formattingTypes = listOf(
                     FormatType.VALUE(activeDays.toString()),
                     FormatType.SEPARATOR(),
-                    FormatType.UNIT(DKResource.convertToString(context, daysUnitIdentifier))
+                    FormatType.UNIT(daysString)
                 )
             }
             is DISTANCE -> {
@@ -65,12 +64,12 @@ sealed class SynthesisCardInfo(open val trips: List<Trip>) : DKSynthesisCardInfo
             }
             is TRIPS -> {
                 val value = trips.size
-                val textIdentifier = context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, value)
+                val text = context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, value)
 
                 formattingTypes = listOf(
                     FormatType.VALUE(value.toString()),
                     FormatType.SEPARATOR(),
-                    FormatType.UNIT(DKResource.convertToString(context, textIdentifier))
+                    FormatType.UNIT(text)
                 )
             }
         }

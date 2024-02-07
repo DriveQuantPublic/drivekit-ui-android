@@ -7,15 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeResultsBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 
 
 class ChallengeResultsFragment : Fragment() {
@@ -34,7 +37,7 @@ class ChallengeResultsFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putString("challengeIdTag", viewModel.getChallengeId())
+            outState.putString("challengeIdTag", viewModel.challengeId)
         }
         super.onSaveInstanceState(outState)
     }
@@ -49,12 +52,7 @@ class ChallengeResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_challenge_detail_results"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_challenge_detail_results), javaClass.simpleName)
 
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProvider(
@@ -63,7 +61,7 @@ class ChallengeResultsFragment : Fragment() {
             )[ChallengeDetailViewModel::class.java]
         }
 
-        viewModel.syncChallengeDetailError.observe(viewLifecycleOwner, Observer {
+        viewModel.syncChallengeDetailError.observe(viewLifecycleOwner) {
             val colorStateList =
                 ColorStateList.valueOf(
                     ContextCompat.getColor(
@@ -75,15 +73,12 @@ class ChallengeResultsFragment : Fragment() {
             binding.dkChallengeProgressBar.progress = viewModel.getDriverProgress()
             binding.dkChallengeRatingBar.rating = viewModel.computeRatingStartCount()
             binding.textViewResultGlobalRank.text = viewModel.challengeGlobalRank(requireContext())
-            binding.textViewWorst.text = viewModel.getWorstPerformance(requireContext())
-            binding.textViewBest.text = viewModel.getBestPerformance(requireContext())
+            binding.textViewWorst.text = viewModel.getWorstPerformance()
+            binding.textViewBest.text = viewModel.getBestPerformance()
             binding.textViewCardScore.text = viewModel.getMainScore(requireContext())
-            binding.textViewCardTitle.text = DKResource.convertToString(
-                requireContext(),
-                viewModel.getChallengeResultScoreTitle()
-            )
+            binding.textViewCardTitle.setText(viewModel.getChallengeResultScoreTitleResId())
 
-            DKResource.convertToDrawable(requireContext(), "dk_challenge_first_driver")?.let {
+            ContextCompat.getDrawable(requireContext(), R.drawable.dk_challenge_first_driver)?.let {
                 if (viewModel.isUserTheFirst()) {
                     it.tintDrawable(
                         ContextCompat.getColor(
@@ -101,7 +96,7 @@ class ChallengeResultsFragment : Fragment() {
 
             displayCards()
             setStyle()
-        })
+        }
     }
 
     override fun onDestroyView() {
@@ -110,70 +105,34 @@ class ChallengeResultsFragment : Fragment() {
     }
 
     private fun displayCards() {
-        DKResource.convertToDrawable(requireContext(), "dk_common_road")?.let { drawable ->
-            binding.cardViewDistance.iconDistance.setImageDrawable(drawable)
-        }
-        viewModel.shouldDisplayDistanceCard().let {
-            binding.cardViewDistance.cardViewDistance.visibility = it
-            binding.cardViewDistance.textViewDriverValue.text = DKResource.buildString(
-                requireContext(),
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.primaryColor(),
-                "dk_challenge_driver_distance",
-                viewModel.getDriverDistance(requireContext()))
+        val context = requireContext()
+        binding.cardViewUserStats.textViewTitle.text = "${viewModel.getDriverDistance(context)} - ${viewModel.getDriverTripsNumber(context)}"
+        binding.cardViewUserStats.textViewDescription.setText(R.string.dk_challenge_synthesis_my_stats)
 
-            binding.cardViewDistance.textViewCompetitorValue.text = DKResource.buildString(
-                requireContext(),
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.primaryColor(),
-                "dk_challenge_competitors_distance",
-                viewModel.getCompetitorDistance(requireContext())
-            )
-        }
+        binding.cardViewDistance.textViewTitle.text = viewModel.getCompetitorDistance(context)
+        binding.cardViewDistance.textViewDescription.setText(R.string.dk_challenge_synthesis_total_distance)
 
-        viewModel.shouldDisplayDurationCard().let {
-            DKResource.convertToDrawable(requireContext(), "dk_common_clock")?.let { drawable ->
-                binding.cardViewDuration.iconDistance.setImageDrawable(drawable)
-            }
-            binding.cardViewDuration.cardViewDistance.visibility = it
-            binding.cardViewDuration.textViewDriverValue.text = DKResource.buildString(
-                requireContext(),
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.primaryColor(),
-                "dk_challenge_driver_duration",
-                viewModel.getDriverDuration(requireContext()))
-
-            binding.cardViewDuration.textViewCompetitorValue.text = DKResource.buildString(
-                requireContext(),
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.primaryColor(),
-                "dk_challenge_competitors_duration",
-                viewModel.getCompetitorDuration(requireContext())
-            )
-        }
-
-        viewModel.shouldDisplayTripsCard().let {
-             DKResource.convertToDrawable(requireContext(), "dk_common_trip")?.let { drawable ->
-                 binding.cardViewTripsNumber.iconDistance.setImageDrawable(drawable)
-            }
-            binding.cardViewTripsNumber.cardViewDistance.visibility = it
-            binding.cardViewTripsNumber.textViewDriverValue.text = DKResource.buildString(
-                requireContext(),
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.primaryColor(),
-                "dk_challenge_driver_trips",
-                viewModel.getDriverTripsNumber(requireContext()))
-
-            binding.cardViewTripsNumber.textViewCompetitorValue.text = DKResource.buildString(
-                requireContext(),
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.primaryColor(),
-                "dk_challenge_competitors_trips",
-                viewModel.getCompetitorTripsNumber(requireContext()))
-        }
+        binding.cardViewRanking.textViewTitle.text = DKSpannable()
+            .append(context, "${viewModel.getNbDriverRanked()} ", DriveKitUI.colors.primaryColor(), DKStyle.HIGHLIGHT_SMALL)
+            .append(context, resources.getQuantityString(R.plurals.dk_challenge_synthesis_ranked, viewModel.getNbDriverRanked()), DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)
+            .append(context, " / ${viewModel.getNbDriverRegistered()} ", DriveKitUI.colors.primaryColor(), DKStyle.HIGHLIGHT_SMALL)
+            .append(context, resources.getQuantityString(R.plurals.dk_challenge_synthesis_registered, viewModel.getNbDriverRegistered()), DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)
+            .toSpannable()
+        binding.cardViewRanking.textViewDescription.text = DKResource.buildString(
+            context,
+            DriveKitUI.colors.complementaryFontColor(),
+            DriveKitUI.colors.primaryColor(),
+            R.string.dk_challenge_synthesis_ranked_percentage,
+            viewModel.getNbDriverRankedPercentage(),
+            textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_small,
+            highlightSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_small
+        )
     }
 
     private fun setStyle() {
         binding.textViewCardTitle.setTextColor(DriveKitUI.colors.mainFontColor())
+        binding.cardViewUserStats.textViewTitle.highlightSmall(DriveKitUI.colors.primaryColor())
+        binding.cardViewDistance.textViewDescription.smallText(DriveKitUI.colors.complementaryFontColor())
+        binding.cardViewDistance.textViewTitle.highlightSmall(DriveKitUI.colors.primaryColor())
     }
 }

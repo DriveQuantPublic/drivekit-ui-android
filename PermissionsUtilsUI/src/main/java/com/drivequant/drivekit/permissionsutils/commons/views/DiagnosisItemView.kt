@@ -13,7 +13,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.R
 
@@ -110,11 +109,11 @@ class DiagnosisItemView : LinearLayout {
             PermissionStatus.WARNING -> DriveKitUI.colors.warningColor()
         }
         val drawableItem = when (permissionStatus) {
-            PermissionStatus.VALID -> "dk_perm_utils_checked_generic"
-            PermissionStatus.NOT_VALID -> "dk_perm_utils_high_priority_generic"
-            PermissionStatus.WARNING -> "dk_perm_utils_warning"
+            PermissionStatus.VALID -> R.drawable.dk_perm_utils_checked_generic
+            PermissionStatus.NOT_VALID -> R.drawable.dk_perm_utils_high_priority_generic
+            PermissionStatus.WARNING -> R.drawable.dk_perm_utils_warning
         }.let {
-            DKResource.convertToDrawable(context, it)
+            ContextCompat.getDrawable(context, it)
         }
         if (drawableItem != null) {
             val wrapped = DrawableCompat.wrap(drawableItem)

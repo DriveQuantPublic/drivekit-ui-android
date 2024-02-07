@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeJoinBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeRulesActivity
@@ -23,7 +24,6 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
 import kotlin.math.roundToInt
@@ -63,14 +63,9 @@ class ChallengeParticipationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setStyle()
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_challenge_join"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_challenge_join), javaClass.simpleName)
 
-        (savedInstanceState?.getString("challengeIdTag"))?.let {
+        savedInstanceState?.getString("challengeIdTag")?.let {
             challengeId = it
         }
 
@@ -92,10 +87,7 @@ class ChallengeParticipationFragment : Fragment() {
                 } else {
                     Toast.makeText(
                         context,
-                        DKResource.convertToString(
-                            context,
-                            "dk_challenge_failed_to_join"
-                        ),
+                        R.string.dk_challenge_failed_to_join,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -139,16 +131,16 @@ class ChallengeParticipationFragment : Fragment() {
             viewModel.manageChallengeDisplayState()?.let {
                 when (it) {
                     ChallengeParticipationDisplayState.PROGRESS -> progress(context)
-                    ChallengeParticipationDisplayState.JOIN -> join(context)
+                    ChallengeParticipationDisplayState.JOIN -> join()
                     ChallengeParticipationDisplayState.COUNT_DOWN -> countDown(context)
                 }
             }
         }
     }
 
-    private fun join(context: Context) {
+    private fun join() {
         binding.textViewJoinChallenge.apply {
-            text = DKResource.convertToString(context, "dk_challenge_participate_button")
+            setText(R.string.dk_challenge_participate_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
             visibility = View.VISIBLE
@@ -158,8 +150,7 @@ class ChallengeParticipationFragment : Fragment() {
     private fun progress(context: Context) {
         binding.containerConditionsInfo.visibility = View.VISIBLE
         binding.textViewJoinChallenge.apply {
-            text =
-                DKResource.convertToString(context, "dk_challenge_registered_confirmation")
+            setText(R.string.dk_challenge_registered_confirmation)
             setBackgroundColor(DriveKitUI.colors.primaryColor())
             headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
             visibility = View.VISIBLE
@@ -189,8 +180,7 @@ class ChallengeParticipationFragment : Fragment() {
 
     private fun countDown(context: Context) {
         binding.textViewJoinChallenge.apply {
-            text =
-                DKResource.convertToString(context, "dk_challenge_registered_confirmation")
+            setText(R.string.dk_challenge_registered_confirmation)
             setBackgroundColor(DriveKitUI.colors.primaryColor())
             headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
             isEnabled = false
@@ -202,7 +192,7 @@ class ChallengeParticipationFragment : Fragment() {
                 visibility = View.VISIBLE
             }
             binding.challengeStart.apply {
-                text = DKResource.convertToString(context, "dk_challenge_start")
+                setText(R.string.dk_challenge_start)
                 setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
                 typeface = DriveKitUI.primaryFont(context)
             }

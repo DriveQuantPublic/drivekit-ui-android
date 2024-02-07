@@ -18,7 +18,6 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
@@ -220,12 +219,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
     }
 
     private fun tagScreen() {
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_timeline"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_timeline), javaClass.simpleName)
     }
 
     override fun onPeriodSelected(period: DKPeriod) {

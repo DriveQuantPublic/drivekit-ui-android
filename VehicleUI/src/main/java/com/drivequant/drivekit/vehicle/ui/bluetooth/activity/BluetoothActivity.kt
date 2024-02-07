@@ -17,7 +17,6 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.ActivityBluetoothBinding
@@ -44,7 +43,7 @@ class BluetoothActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_bluetooth_add"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_bluetooth_add), javaClass.simpleName)
 
         binding = ActivityBluetoothBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -152,6 +151,6 @@ class BluetoothActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_vehicle_bluetooth_combination_view_title"))
+        setActivityTitle(getString(R.string.dk_vehicle_bluetooth_combination_view_title))
     }
 }

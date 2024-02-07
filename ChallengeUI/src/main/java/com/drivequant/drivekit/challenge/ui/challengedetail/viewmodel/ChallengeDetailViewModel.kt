@@ -3,37 +3,35 @@ package com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel
 import android.content.Context
 import android.graphics.Typeface.BOLD
 import android.text.Spannable
-import android.text.SpannableString
-import android.view.View
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ChallengeDetailQueryListener
 import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
+import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.format
-import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.common.ui.utils.DurationUnit
 import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeDetail
+import com.drivequant.drivekit.databaseutils.entity.ChallengeType
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
 import kotlin.math.roundToInt
 
-class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
+class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
 
     var syncChallengeDetailError: MutableLiveData<Boolean> = MutableLiveData()
     var challengeDetailData: ChallengeDetail? = null
@@ -46,13 +44,18 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }
     }
 
-    fun getChallengeId() = challengeId
+    private fun isChallengeManaged(): Boolean = (challenge.challengeType != ChallengeType.DEPRECATED && challenge.challengeType != ChallengeType.UNKNOWN)
 
-    fun getLocalChallengeDetail() : ChallengeDetail? =
-        DbChallengeAccess.findChallengeDetailById(challengeId)
+    fun getLocalChallengeDetail(): ChallengeDetail? {
+        return if (isChallengeManaged()) {
+            DbChallengeAccess.findChallengeDetailById(challengeId)
+        } else {
+            null
+        }
+    }
 
     fun fetchChallengeDetail(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
-        if (DriveKit.isConfigured()) {
+        if (DriveKit.isConfigured() && isChallengeManaged()) {
             DriveKitChallenge.getChallengeDetail(
                 challengeId,
                 object : ChallengeDetailQueryListener {
@@ -80,39 +83,25 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }
     }
 
-    fun getTripData() = when (challenge.themeCode) {
-        in 101..104 -> TripData.ECO_DRIVING
-        in 201..216 -> TripData.SAFETY
-        in 301..305 -> TripData.DISTANCE
-        in 306..309 -> TripData.DURATION
-        221 -> TripData.DISTRACTION
-        401 -> TripData.SPEEDING
-        else -> TripData.SAFETY
+    fun getTripData() = when (challenge.challengeType) {
+        ChallengeType.SAFETY,
+        ChallengeType.HARD_BRAKING,
+        ChallengeType.HARD_ACCELERATION -> TripData.SAFETY
+        ChallengeType.ECODRIVING -> TripData.ECO_DRIVING
+        ChallengeType.DISTRACTION -> TripData.DISTRACTION
+        ChallengeType.SPEEDING -> TripData.SPEEDING
+        ChallengeType.DEPRECATED,
+        ChallengeType.UNKNOWN -> TripData.SAFETY // Should not happen.
     }
 
-    fun getDriverProgress() : Int {
-        var progress = 0
-        challengeDetailData?.let {
+    fun getDriverProgress(): Int {
+        val progress = challengeDetailData?.let {
             if (it.challengeStats.maxScore == it.challengeStats.minScore || it.challengeStats.maxScore == it.driverStats.score) {
-                progress = 100
+                100
             } else {
-                progress = when (challenge.themeCode) {
-                    in 101..301,
-                    in 306..309,
-                    401 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
-                        it.challengeStats.maxScore - it.challengeStats.minScore
-                    ).roundToInt()
-                    in 302..305 -> {
-                        val duration = (it.driverStats.score * 3600 / 60).roundToInt()
-                        val minDuration = (it.challengeStats.minScore * 3600 / 60).roundToInt()
-                        val numeratorDuration = (duration - minDuration) * 100
-                        val maxDuration = (it.challengeStats.maxScore * 3600 / 60).roundToInt()
-                        numeratorDuration / (maxDuration - minDuration)
-                    }
-                    else -> 0
-                }
+                ((it.driverStats.score - it.challengeStats.minScore) * 100).div(it.challengeStats.maxScore - it.challengeStats.minScore).roundToInt()
             }
-        }
+        } ?: 0
         return progress.let {
             if (it <= 0) {
                  1
@@ -122,131 +111,31 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }
     }
 
-    fun getBestPerformance(context: Context): String {
+    fun getBestPerformance(): String? {
         return challengeDetailData?.let {
-            return when (challenge.themeCode) {
-                in 101..221,
-                401 -> {
-                    val score = if (it.challengeStats.maxScore == 10.0) {
-                        it.challengeStats.maxScore.removeZeroDecimal()
-                    } else {
-                        it.challengeStats.maxScore.format(2)
-                    }
-                    "$score/10"
-                }
-                in 306..309 ->formatChallengeDuration(it.challengeStats.maxScore, context).convertToString()
-                in 302..305 -> formatChallengeDistance(it.challengeStats.maxScore, context).convertToString()
-                301 -> "${it.challengeStats.maxScore.removeZeroDecimal()} ${context.resources.getQuantityString(
-                    com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
-                    it.challengeStats.numberTrip
-                )}"
-                else -> "-"
-            }
-        } ?: ""
+            "${it.challengeStats.maxScore.format(2)}/10"
+        }
     }
 
-    fun getWorstPerformance(context: Context): String {
+    fun getWorstPerformance(): String? {
         return challengeDetailData?.let {
-            return when (challenge.themeCode) {
-                in 101..221,
-                401 -> "${it.challengeStats.minScore.format(2)}/10"
-                in 306..309,
-                in 302..305,
-                301 -> "${it.challengeStats.minScore.removeZeroDecimal()} ${context.resources.getQuantityString(
-                    com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
-                    it.challengeStats.numberTrip
-                )}"
-                else -> "-"
-            }
-        } ?: ""
+            "${it.challengeStats.minScore.format(2)}/10"
+        }
     }
 
-    fun getMainScore(context: Context): Spannable {
+    fun getMainScore(context: Context): Spannable? {
         return challengeDetailData?.let {
-            return when (challenge.themeCode) {
-                in 101..221,
-                401 -> {
-                    val score = if (it.driverStats.score == 10.0) {
-                        it.driverStats.score.removeZeroDecimal()
-                    } else {
-                        it.driverStats.score.format(2)
-                    }
-                    DKSpannable().append(score, context.resSpans {
-                        color(DriveKitUI.colors.primaryColor())
-                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
-                        typeface(BOLD)
+            DKSpannable().append(it.driverStats.score.format(2), context.resSpans {
+                color(DriveKitUI.colors.primaryColor())
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
+                typeface(BOLD)
 
-                    }).append(" /10", context.resSpans {
-                        color(DriveKitUI.colors.mainFontColor())
-                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
-                        typeface(BOLD)
-                    }).toSpannable()
-                }
-
-                in 306..309 -> {
-                    val spannable = DKSpannable()
-                    formatChallengeDuration(it.driverStats.score, context).forEach { formatType ->
-                        when (formatType) {
-                            is FormatType.VALUE -> spannable.append(
-                                formatType.value,
-                                context.resSpans {
-                                    color(DriveKitUI.colors.primaryColor())
-                                    typeface(BOLD)
-                                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
-                                })
-                            is FormatType.UNIT -> spannable.append(
-                                formatType.value,
-                                context.resSpans {
-                                    color(DriveKitUI.colors.primaryColor())
-                                    typeface(BOLD)
-                                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
-                                })
-                            is FormatType.SEPARATOR -> spannable.append(formatType.value)
-                        }
-                    }
-                    spannable.toSpannable()
-                }
-                in 302..305 -> {
-                    val spannable = DKSpannable()
-                    formatChallengeDistance(it.driverStats.score, context).forEach { formatType ->
-                        when (formatType) {
-                            is FormatType.VALUE -> spannable.append(
-                                formatType.value,
-                                context.resSpans {
-                                    color(DriveKitUI.colors.primaryColor())
-                                    typeface(BOLD)
-                                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
-                                })
-                            is FormatType.UNIT -> spannable.append(
-                                formatType.value,
-                                context.resSpans {
-                                    color(DriveKitUI.colors.mainFontColor())
-                                    typeface(BOLD)
-                                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
-                                })
-                            is FormatType.SEPARATOR -> spannable.append(formatType.value)
-                        }
-                    }
-                    spannable.toSpannable()
-                }
-                301 -> DKSpannable().append("${it.driverStats.numberTrip} ", context.resSpans {
-                        color(DriveKitUI.colors.primaryColor())
-                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
-                        typeface(BOLD)
-
-                    }).append(
-                        context.resources.getQuantityString(
-                            com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
-                            it.driverStats.numberTrip
-                        ), context.resSpans {
-                            color(DriveKitUI.colors.mainFontColor())
-                            size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
-                            typeface(BOLD)
-                        }).toSpannable()
-
-                else -> SpannableString("")
-            }
-        } ?: SpannableString("")
+            }).append(" /10", context.resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
+                typeface(BOLD)
+            }).toSpannable()
+        }
     }
 
     fun challengeGlobalRank(context: Context) =
@@ -279,25 +168,23 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                     typeface(BOLD)
                 }).append(
-                    "${challengeDetailData?.nbDriverRanked}", context.resSpans {
+                    "${challengeDetailData?.nbDriverRegistered}", context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
                         size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                         typeface(BOLD)
                     }).toSpannable()
         }
 
-    fun getChallengeResultScoreTitle() = when (challenge.themeCode) {
-        in 101..104 -> "dk_challenge_eco_driving_score"
-        in 201..204 -> "dk_challenge_safety_score"
-        in 205..208 -> "dk_challenge_braking_score"
-        in 209..212 -> "dk_challenge_acceleration_score"
-        in 213..216 -> "dk_challenge_adherence_score"
-        221 -> "dk_challenge_distraction_score"
-        301 -> "dk_challenge_nb_trip"
-        in 306..309 -> "dk_challenge_driving_time"
-        in 302..305 -> "dk_challenge_traveled_distance"
-        401 -> "dk_challenge_speeding_score"
-        else -> "-"
+    @StringRes
+    fun getChallengeResultScoreTitleResId(): Int = when (challenge.challengeType) {
+        ChallengeType.SAFETY -> R.string.dk_challenge_safety_score
+        ChallengeType.ECODRIVING -> R.string.dk_challenge_eco_driving_score
+        ChallengeType.DISTRACTION -> R.string.dk_challenge_distraction_score
+        ChallengeType.SPEEDING -> R.string.dk_challenge_speeding_score
+        ChallengeType.HARD_BRAKING -> R.string.dk_challenge_braking_score
+        ChallengeType.HARD_ACCELERATION -> R.string.dk_challenge_acceleration_score
+        ChallengeType.DEPRECATED,
+        ChallengeType.UNKNOWN -> com.drivequant.drivekit.common.ui.R.string.dk_common_no_value
     }
 
     private fun computeRankPercentage(): Int = challengeDetailData?.let {
@@ -319,19 +206,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         false
     }
 
-    fun shouldDisplayDistanceCard() = when(challenge.themeCode) {
-        in 302..305 -> View.GONE
-        else -> View.VISIBLE
-    }
-    fun shouldDisplayTripsCard() = when(challenge.themeCode) {
-        301 -> View.GONE
-        else -> View.VISIBLE
-    }
-    fun shouldDisplayDurationCard() = when(challenge.themeCode) {
-        in 306..309 -> View.GONE
-        else -> View.VISIBLE
-    }
-
     fun computeRatingStartCount(): Float {
         val value = computeRankPercentage()
         return if (isUserTheFirst() || value >= 100) {
@@ -347,16 +221,8 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }.toFloat()
     }
 
-    fun getScoreTitle(context: Context) = when(challenge.themeCode) {
-        in 101..221 -> "dk_common_ranking_score"
-        in 306..309 -> "dk_common_duration"
-        in 302..305 -> "dk_common_distance"
-        301 -> "dk_common_trip_plural"
-
-        else -> "dk_common_ranking_score"
-    }.let {
-        DKResource.convertToString(context, it).capitalizeFirstLetter()
-    }
+    fun getScoreTitle(context: Context) =
+        context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ranking_score).capitalizeFirstLetter()
 
     fun getDriverDistance(context: Context) =
         challengeDetailData?.let {
@@ -368,16 +234,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
             formatChallengeDistance(it.challengeStats.distance, context).convertToString()
         } ?: "-"
 
-    fun getDriverDuration(context: Context) =
-        challengeDetailData?.let {
-            formatChallengeDuration(it.driverStats.duration, context).convertToString()
-        } ?: "-"
-
-    fun getCompetitorDuration(context: Context) =
-        challengeDetailData?.let {
-            formatChallengeDuration(it.challengeStats.duration, context).convertToString()
-        } ?: "-"
-
     fun getDriverTripsNumber(context: Context): String {
         return challengeDetailData?.let {
             "${it.driverStats.numberTrip} ${context.resources.getQuantityString(
@@ -387,26 +243,32 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         } ?: "-"
     }
 
-    fun getCompetitorTripsNumber(context: Context): String {
-        return challengeDetailData?.let {
-            "${it.challengeStats.numberTrip} ${context.resources.getQuantityString(
-                com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
-                it.challengeStats.numberTrip
-            )}"
-        } ?: "-"
+    fun getNbDriverRanked(): Int = challengeDetailData?.nbDriverRanked ?: 0
+
+    fun getNbDriverRegistered(): Int = challengeDetailData?.nbDriverRegistered ?: 0
+
+    fun getNbDriverRankedPercentage(): String {
+        val nbDriverRanked = challengeDetailData?.nbDriverRanked ?: 0
+        val nbDriverRegistered = challengeDetailData?.nbDriverRegistered
+        return if (nbDriverRegistered != null && nbDriverRegistered > 0) {
+            val percentage = (nbDriverRanked.toDouble() / nbDriverRegistered.toDouble() * 100.0).roundToInt()
+            "$percentage %"
+        } else {
+            "-"
+        }
     }
 
-    fun getRankingHeaderIcon(context: Context) = when (challenge.themeCode) {
-        in 101..104 -> "dk_challenge_leaderboard_ecodriving"
-        in 201..204, in 205..208,  in 209..212, in 213..216  -> "dk_challenge_leaderboard_safety"
-        221 -> "dk_challenge_leaderboard_distraction"
-        301 -> "dk_challenge_leaderboard_trips_number"
-        in 306..309 -> "dk_challenge_leaderboard_duration"
-        in 302..305 -> "dk_challenge_leaderboard_distance"
-        401 -> "dk_challenge_leaderboard_speeding"
-        else -> "-"
-    }.let {
-        DKResource.convertToDrawable(context, it)
+    fun getRankingHeaderIcon(context: Context) = when (challenge.challengeType) {
+        ChallengeType.SAFETY,
+        ChallengeType.HARD_BRAKING,
+        ChallengeType.HARD_ACCELERATION -> R.drawable.dk_challenge_leaderboard_safety
+        ChallengeType.ECODRIVING -> R.drawable.dk_challenge_leaderboard_ecodriving
+        ChallengeType.DISTRACTION -> R.drawable.dk_challenge_leaderboard_distraction
+        ChallengeType.SPEEDING -> R.drawable.dk_challenge_leaderboard_speeding
+        ChallengeType.DEPRECATED,
+        ChallengeType.UNKNOWN -> null
+    }?.let {
+        ContextCompat.getDrawable(context, it)
     }
 
     fun getRankingList(): List<ChallengeRankingItem> {
@@ -447,7 +309,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
             }
         }
 
-    fun geRankingGlobalRank(context: Context) =
+    fun getRankingGlobalRank(context: Context) =
         if (challengeDetailData?.driverStats?.rank == 0) {
             "-"
         } else {
@@ -462,7 +324,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                 typeface(BOLD)
             }).append(
-                "${challengeDetailData?.nbDriverRanked}", context.resSpans {
+                "${challengeDetailData?.nbDriverRegistered}", context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                     typeface(BOLD)
@@ -474,12 +336,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
             context,
             distance * 1000,
             minDistanceToRemoveFractions = 10.0
-        )
-
-    fun formatChallengeDuration(duration: Double, context: Context): List<FormatType> =
-        DKDataFormatter.formatDuration(
-            context,
-            DKDataFormatter.ceilDuration(duration * 3600, 600), DurationUnit.HOUR
         )
 
     @Suppress("UNCHECKED_CAST")

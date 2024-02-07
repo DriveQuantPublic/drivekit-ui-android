@@ -20,7 +20,6 @@ import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import com.drivequant.drivekit.common.ui.utils.DKResource
 
 
 class ChallengeTripListFragment : Fragment() {
@@ -42,19 +41,14 @@ class ChallengeTripListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putString("challengeIdTag", viewModel.getChallengeId())
+            outState.putString("challengeIdTag", viewModel.challengeId)
         }
         super.onSaveInstanceState(outState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_challenge_detail_trips"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_challenge_detail_trips), javaClass.simpleName)
 
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProvider(
@@ -86,7 +80,7 @@ class ChallengeTripListFragment : Fragment() {
 
         val viewModelParticipation = ViewModelProvider(
             this,
-            ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(viewModel.getChallengeId())
+            ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(viewModel.challengeId)
         )[ChallengeParticipationViewModel::class.java]
 
         val challengeHeaderView =

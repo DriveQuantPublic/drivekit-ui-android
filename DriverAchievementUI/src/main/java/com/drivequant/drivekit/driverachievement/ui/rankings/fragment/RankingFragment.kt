@@ -17,7 +17,6 @@ import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
 import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
 import com.drivequant.drivekit.common.ui.component.PseudoUtils
 import com.drivequant.drivekit.common.ui.component.ranking.views.DKRankingView
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -48,12 +47,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_rankings"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_rankings), javaClass.simpleName)
 
         this.selectorsContainer = view.findViewById(R.id.selectors_container)
         this.tabLayoutLeaderBoard = view.findViewById(R.id.tab_layout_leader_board)
@@ -106,7 +100,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
     private fun setTabLayout() {
         for (rankingTypeData in rankingViewModel.rankingTypesData) {
             val tab = this.tabLayoutLeaderBoard.newTab()
-            val icon = DKResource.convertToDrawable(requireContext(), rankingTypeData.iconId)
+            val icon = ContextCompat.getDrawable(requireContext(), rankingTypeData.iconId)
             icon?.let {
                 tab.setIcon(it)
             }
@@ -173,7 +167,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                         PseudoUtils.show(it, object : PseudoChangeListener {
                             override fun onPseudoChanged(success: Boolean) {
                                 if (!success) {
-                                    Toast.makeText(it, DKResource.convertToString(it, "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(it, com.drivequant.drivekit.common.ui.R.string.dk_common_error_message, Toast.LENGTH_LONG).show()
                                 }
                                 updateRanking(it)
                             }

@@ -39,7 +39,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -136,7 +135,7 @@ class TripDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_trips_detail"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trips_detail), javaClass.simpleName)
         savedInstanceState?.getString("itinId")?.let{
             itinId = it
         }
@@ -379,8 +378,7 @@ class TripDetailFragment : Fragment() {
             .setPositiveButton(context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) { _, _ ->
                 if (radioGroup.checkedRadioButtonId == R.id.radio_button_choice_05 && feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isEmpty()) {
                     context?.let {
-                        val emptyFieldText = DKResource.convertToString(it, "dk_common_error_empty_field")
-                        Toast.makeText(it, emptyFieldText, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, com.drivequant.drivekit.common.ui.R.string.dk_common_error_empty_field, Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     buildFeedbackData(mapItem, feedbackView, radioGroup)

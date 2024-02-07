@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="dk_challenge_synthesis_ranked" translatable="false">
+        <item quantity="one">@string/dk_challenge_synthesis_ranked_singular</item>
+        <item quantity="other">@string/dk_challenge_synthesis_ranked_plural</item>
+    </plurals>
+    <plurals name="dk_challenge_synthesis_registered" translatable="false">
+        <item quantity="one">@string/dk_challenge_synthesis_registered_singular</item>
+        <item quantity="other">@string/dk_challenge_synthesis_registered_plural</item>
+    </plurals>
+</resources>

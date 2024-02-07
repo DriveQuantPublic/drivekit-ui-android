@@ -4,17 +4,19 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.Spannable
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.component.ranking.RankingHeaderDisplayType
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.driverachievement.ui.R
 
 class RankingData(
     private val viewModel: RankingViewModel
@@ -24,22 +26,23 @@ class RankingData(
         if (DriverAchievementUI.rankingTypes.size > 1 && viewModel.rankingSelectorsData.size > 1)
             RankingHeaderDisplayType.COMPACT else RankingHeaderDisplayType.FULL
 
-    override fun getTitle(): String =
+    @StringRes
+    override fun getTitleResId(): Int =
         when (viewModel.fetchedRanking.rankingType) {
-            RankingType.SAFETY -> "dk_common_safety"
-            RankingType.DISTRACTION -> "dk_common_distraction"
-            RankingType.ECO_DRIVING -> "dk_common_ecodriving"
-            RankingType.SPEEDING -> "dk_common_speed_limit"
+            RankingType.SAFETY -> com.drivequant.drivekit.common.ui.R.string.dk_common_safety
+            RankingType.DISTRACTION -> com.drivequant.drivekit.common.ui.R.string.dk_common_distraction
+            RankingType.ECO_DRIVING -> com.drivequant.drivekit.common.ui.R.string.dk_common_ecodriving
+            RankingType.SPEEDING -> com.drivequant.drivekit.common.ui.R.string.dk_common_speed_limit
         }
 
     override fun getIcon(context: Context): Drawable? =
         when (viewModel.fetchedRanking.rankingType) {
-            RankingType.SAFETY -> "dk_common_safety_flat"
-            RankingType.DISTRACTION -> "dk_common_distraction_flat"
-            RankingType.ECO_DRIVING -> "dk_common_ecodriving_flat"
-            RankingType.SPEEDING -> "dk_common_speeding_flat"
+            RankingType.SAFETY -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_flat
+            RankingType.DISTRACTION -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_distraction_flat
+            RankingType.ECO_DRIVING -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_ecodriving_flat
+            RankingType.SPEEDING -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_speeding_flat
         }.let {
-            DKResource.convertToDrawable(context, it)
+            ContextCompat.getDrawable(context, it)
         }
 
     override fun getProgression(): DriverProgression? {
@@ -78,21 +81,20 @@ class RankingData(
                 .toSpannable()
         }
 
-    override fun getScoreTitle(context: Context): String =
-        DKResource.convertToString(context, "dk_common_ranking_score")
+    override fun getScoreTitle(context: Context): String = context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ranking_score)
 
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.rankingDriversData
     override fun getBackgroundColor(): Int = Color.parseColor("#FAFAFA")
     override fun hasInfoButton() = true
     override fun getInfoPopupMessage(context: Context) =
         when (viewModel.selectedRankingSelectorData.rankingPeriod) {
-            RankingPeriod.LEGACY -> "dk_achievements_ranking_legacy_info"
-            RankingPeriod.WEEKLY -> "dk_achievements_ranking_week_info"
-            RankingPeriod.MONTHLY -> "dk_achievements_ranking_month_info"
-            RankingPeriod.ALL_TIME -> "dk_achievements_ranking_permanent_info"
+            RankingPeriod.LEGACY -> R.string.dk_achievements_ranking_legacy_info
+            RankingPeriod.WEEKLY -> R.string.dk_achievements_ranking_week_info
+            RankingPeriod.MONTHLY -> R.string.dk_achievements_ranking_month_info
+            RankingPeriod.ALL_TIME -> R.string.dk_achievements_ranking_permanent_info
         }.let {
-            DKResource.convertToString(context, it)
+            context.getString(it)
         }
 
-    override fun getInfoPopupTitle(context: Context) = DKResource.convertToString(context, "app_name")
+    override fun getInfoPopupTitle(context: Context) = context.getString(R.string.app_name)
 }

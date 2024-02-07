@@ -51,6 +51,7 @@
    <string name="dk_common_no_pseudo_set">For at dele din ranglisteplacering med de andre deltagere kan du vælge et brugernavn. Uden et brugernavn vises du som anonym.</string>
    <string name="dk_common_no_trip">Ingen rejse</string>
    <string name="dk_common_no_trips_yet">App\'en har endnu ikke analyseret din kørsel.</string>
+   <string name="dk_common_no_value">-</string>
    <string name="dk_common_ok">Ok</string>
    <string name="dk_common_period_selector_month">Måned</string>
    <string name="dk_common_period_selector_week">Uge</string>

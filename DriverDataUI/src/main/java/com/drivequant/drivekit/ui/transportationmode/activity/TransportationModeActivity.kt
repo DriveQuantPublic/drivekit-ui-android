@@ -8,15 +8,13 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.transportationmode.fragment.TransportationModeFragment
 
 internal class TransportationModeActivity : AppCompatActivity() {
 
-    private val FRAGMENT_TAG = "transportation-mode-fragment-tag"
-
     companion object {
+        private const val FRAGMENT_TAG = "transportation-mode-fragment-tag"
         private const val ITINID_EXTRA = "itinId-extra"
         const val UPDATE_TRIP_TRANSPORTATION_MODE = 104
 
@@ -78,6 +76,6 @@ internal class TransportationModeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_driverdata_transportation_mode_title"))
+        setActivityTitle(getString(R.string.dk_driverdata_transportation_mode_title))
     }
 }

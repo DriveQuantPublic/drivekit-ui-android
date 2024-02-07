@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentVehicleNameChooserBinding
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -48,15 +47,15 @@ class VehicleNameChooserFragment : Fragment() {
             viewModel =
                 ViewModelProvider(this, VehiclePickerViewModel.VehiclePickerViewModelFactory())[VehiclePickerViewModel::class.java]
         }
-        binding.dkImageViewVehicleName.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_vehicle_name_chooser"))
+        binding.dkImageViewVehicleName.setImageResource(R.drawable.dk_vehicle_name_chooser)
         binding.textViewDescription.normalText()
-        binding.textViewDescription.text = DKResource.convertToString(requireContext(), "dk_vehicle_name_chooser_description")
+        binding.textViewDescription.setText(R.string.dk_vehicle_name_chooser_description)
 
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
         binding.buttonValidate.apply {
             button()
-            text = DKResource.convertToString(requireContext(), "dk_common_validate")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             isEnabled = true
             setOnClickListener {
                 viewModel.progressBarObserver.observe(viewLifecycleOwner) { displayProgressCircular ->

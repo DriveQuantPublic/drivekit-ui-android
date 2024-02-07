@@ -1,24 +1,25 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.graphics.drawable.Drawable
-import androidx.core.text.HtmlCompat
 import android.text.Spannable
 import android.text.SpannableString
+import androidx.core.text.HtmlCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.extension.text
 
 internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
 
-    fun updateTrip(){
+    fun updateTrip() {
         DbTripAccess.findTrip(trip.itinId).executeOneTrip()?.toTrip()?.let {
             trip = it
         }
@@ -32,15 +33,15 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
                 context,
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.primaryColor(),
-                DKResource.convertToString(context, "dk_driverdata_detected_transportation_mode"),
+                R.string.dk_driverdata_detected_transportation_mode,
                 " ${trip.transportationMode.text(context)}"
             )
         } else {
             SpannableString(
-                DKResource.convertToString(
-                    context,
-                    "dk_driverdata_detected_transportation_mode"
-                ) + " " + HtmlCompat.fromHtml(trip.transportationMode.text(context), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                context.getString(R.string.dk_driverdata_detected_transportation_mode) + " " + HtmlCompat.fromHtml(
+                    trip.transportationMode.text(context),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
             )
         }
     }
@@ -51,7 +52,7 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
                 context,
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.primaryColor(),
-                DKResource.convertToString(context, "dk_driverdata_declared_transportation_mode"),
+                R.string.dk_driverdata_declared_transportation_mode,
                 " ${trip.declaredTransportationMode?.transportationMode.text(context)}"
             )
         } else {
@@ -61,51 +62,51 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
 
     fun getDescription(context: Context): String {
         val identifier = trip.declaredTransportationMode?.transportationMode?.let {
-            "dk_driverdata_alternative_transportation_thanks"
+            R.string.dk_driverdata_alternative_transportation_thanks
         } ?: run {
-            "dk_driverdata_alternative_transportation_remark"
+            R.string.dk_driverdata_alternative_transportation_remark
         }
-        return DKResource.convertToString(context, identifier)
+        return context.getString(identifier)
     }
 
     fun getConditionValue(context: Context): String {
         val identifier = trip.tripStatistics?.let {
             if (it.day) {
-                "dk_driverdata_day"
+                R.string.dk_driverdata_day
             } else {
-                "dk_driverdata_night"
+                R.string.dk_driverdata_night
             }
         } ?: run {
-            "dk_driverdata_unknown"
+            R.string.dk_driverdata_unknown
         }
-        return DKResource.convertToString(context, identifier)
+        return context.getString(identifier)
     }
 
     fun getWeatherValue(context: Context): String {
         trip.tripStatistics?.let {
             val identifier = when (it.meteo) {
-                1 -> "dk_driverdata_weather_sun"
-                2 -> "dk_driverdata_weather_cloud"
-                3 -> "dk_driverdata_weather_fog"
-                4 -> "dk_driverdata_weather_rain"
-                5 -> "dk_driverdata_weather_snow"
-                6 -> "dk_driverdata_weather_hail"
-                else -> "dk_driverdata_unknown"
+                1 -> R.string.dk_driverdata_weather_sun
+                2 -> R.string.dk_driverdata_weather_cloud
+                3 -> R.string.dk_driverdata_weather_fog
+                4 -> R.string.dk_driverdata_weather_rain
+                5 -> R.string.dk_driverdata_weather_snow
+                6 -> R.string.dk_driverdata_weather_hail
+                else -> R.string.dk_driverdata_unknown
             }
-            return DKResource.convertToString(context, identifier)
+            return context.getString(identifier)
         } ?: run {
-            return DKResource.convertToString(context, "dk_driverdata_unknown")
+            return context.getString(R.string.dk_driverdata_unknown)
         }
     }
 
     fun getMeanSpeed(context: Context): String {
         return if (isIdleTrip()) {
-            "-"
+            context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no_value)
         } else {
             trip.tripStatistics?.let {
                 DKDataFormatter.formatSpeedMean(context, it.speedMean)
             } ?: run {
-                DKResource.convertToString(context, "dk_driverdata_unknown")
+                context.getString(R.string.dk_driverdata_unknown)
             }
         }
     }

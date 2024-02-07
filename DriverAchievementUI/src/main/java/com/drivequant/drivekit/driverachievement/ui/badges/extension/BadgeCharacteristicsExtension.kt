@@ -7,7 +7,6 @@ import com.drivequant.drivekit.databaseutils.entity.BadgeCharacteristics
 import com.drivequant.drivekit.databaseutils.entity.Level
 import com.drivequant.drivekit.driverachievement.ui.R
 
-
 fun BadgeCharacteristics.isBadgeAcquired() = progressValue >= threshold
 
 fun BadgeCharacteristics.computePercent() = progressValue.div(threshold) * 10

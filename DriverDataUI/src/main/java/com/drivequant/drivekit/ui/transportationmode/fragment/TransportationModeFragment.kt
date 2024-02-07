@@ -19,7 +19,6 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
 import com.drivequant.drivekit.ui.R
@@ -57,7 +56,7 @@ internal class TransportationModeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_trips_detail_transportation_mode"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trips_detail_transportation_mode), javaClass.simpleName)
         savedInstanceState?.getString("itinId")?.let{
             itinId = it
         }
@@ -69,13 +68,13 @@ internal class TransportationModeFragment : Fragment() {
 
         (binding.descriptionTitle.background as GradientDrawable).setColor(DriveKitUI.colors.warningColor())
         binding.descriptionTitle.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-        binding.descriptionTitle.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_text")
+        binding.descriptionTitle.setText(R.string.dk_driverdata_transportation_mode_declaration_text)
 
         binding.transportationProfileTitle.normalText()
-        binding.transportationProfileTitle.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_passenger_driver")
+        binding.transportationProfileTitle.setText(R.string.dk_driverdata_transportation_mode_passenger_driver)
 
         binding.commentTitle.normalText()
-        binding.commentTitle.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment")
+        binding.commentTitle.setText(R.string.dk_driverdata_transportation_mode_declaration_comment)
 
         val editTextBackground = binding.editTextComment.background as GradientDrawable
         editTextBackground.setStroke(4, DriveKitUI.colors.neutralColor())
@@ -93,10 +92,10 @@ internal class TransportationModeFragment : Fragment() {
             }
         })
         binding.textCommentError.smallText(DriveKitUI.colors.criticalColor())
-        binding.textCommentError.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error")
+        binding.textCommentError.setText(R.string.dk_driverdata_transportation_mode_declaration_comment_error)
 
         binding.buttonValidate.button()
-        binding.buttonValidate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
+        binding.buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
 
         updateTransportationProfileVisibility()
         bindTransportationModeItems()
@@ -114,14 +113,14 @@ internal class TransportationModeFragment : Fragment() {
                     TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
                         Toast.makeText(
                             requireContext(),
-                            DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
+                            R.string.dk_driverdata_failed_to_declare_transportation,
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                     TransportationModeUpdateStatus.COMMENT_TOO_LONG -> {
                         Toast.makeText(
                             requireContext(),
-                            DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error"),
+                            R.string.dk_driverdata_transportation_mode_declaration_comment_error,
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -220,7 +219,7 @@ internal class TransportationModeFragment : Fragment() {
         } else {
             Toast.makeText(
                 requireContext(),
-                DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
+                R.string.dk_driverdata_failed_to_declare_transportation,
                 Toast.LENGTH_SHORT
             ).show()
         }

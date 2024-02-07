@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.ui.transportationmode.viewmodel
 
+import android.content.Context
+import android.text.Spanned
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import android.content.Context
-import android.text.Spanned
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -13,6 +13,7 @@ import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TransportationModeQueryListener
 import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.text
 
 internal class TransportationModeViewModel(private val itinId: String) : ViewModel() {
@@ -76,7 +77,7 @@ internal class TransportationModeViewModel(private val itinId: String) : ViewMod
     fun buildSelectedTransportationModeTitle(context: Context): Spanned {
         return DKResource.buildString(
             context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.primaryColor(),
-            "dk_driverdata_transportation_mode",
+            R.string.dk_driverdata_transportation_mode,
             " ${selectedTransportationMode.text(context)}"
         )
     }

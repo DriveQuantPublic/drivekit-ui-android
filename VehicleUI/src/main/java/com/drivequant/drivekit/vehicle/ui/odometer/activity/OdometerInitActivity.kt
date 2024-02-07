@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerInitFragment
 
@@ -46,6 +45,6 @@ class OdometerInitActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_vehicle_odometer_car"))
+        setActivityTitle(getString(R.string.dk_vehicle_odometer_car))
     }
 }

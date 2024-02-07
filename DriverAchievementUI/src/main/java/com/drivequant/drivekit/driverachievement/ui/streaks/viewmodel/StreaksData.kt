@@ -8,7 +8,6 @@ import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DurationUnit
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -27,15 +26,15 @@ internal class StreaksData(
     val bestTripsCount = best.tripNumber
 
     fun getTitle(context: Context) = when (streakTheme) {
-        StreakTheme.PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_title"
-        StreakTheme.SAFETY -> "dk_achievements_streaks_safety_title"
-        StreakTheme.SPEEDING -> "dk_achievements_streaks_speeding_title"
-        StreakTheme.ACCELERATION -> "dk_achievements_streaks_acceleration_title"
-        StreakTheme.BRAKE -> "dk_achievements_streaks_brake_title"
-        StreakTheme.ADHERENCE -> "dk_achievements_streaks_adherence_title"
-        StreakTheme.CALL -> "dk_achievements_streaks_phone_call_title"
+        StreakTheme.PHONE_DISTRACTION -> R.string.dk_achievements_streaks_phone_distraction_title
+        StreakTheme.SAFETY -> R.string.dk_achievements_streaks_safety_title
+        StreakTheme.SPEEDING -> R.string.dk_achievements_streaks_speeding_title
+        StreakTheme.ACCELERATION -> R.string.dk_achievements_streaks_acceleration_title
+        StreakTheme.BRAKE -> R.string.dk_achievements_streaks_brake_title
+        StreakTheme.ADHERENCE -> R.string.dk_achievements_streaks_adherence_title
+        StreakTheme.CALL -> R.string.dk_achievements_streaks_phone_call_title
     }.let {
-        DKResource.convertToString(context, it)
+        context.getString(it)
     }
 
     fun getIcon() = when (streakTheme) {
@@ -49,27 +48,27 @@ internal class StreaksData(
     }
 
     private fun getResetText(context: Context) = when (streakTheme) {
-        StreakTheme.PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_reset"
-        StreakTheme.SAFETY -> "dk_achievements_streaks_safety_reset"
-        StreakTheme.SPEEDING -> "dk_achievements_streaks_speeding_reset"
-        StreakTheme.ACCELERATION -> "dk_achievements_streaks_acceleration_reset"
-        StreakTheme.BRAKE -> "dk_achievements_streaks_brake_reset"
-        StreakTheme.ADHERENCE -> "dk_achievements_streaks_adherence_reset"
-        StreakTheme.CALL -> "dk_achievements_streaks_call_reset"
+        StreakTheme.PHONE_DISTRACTION -> R.string.dk_achievements_streaks_phone_distraction_reset
+        StreakTheme.SAFETY -> R.string.dk_achievements_streaks_safety_reset
+        StreakTheme.SPEEDING -> R.string.dk_achievements_streaks_speeding_reset
+        StreakTheme.ACCELERATION -> R.string.dk_achievements_streaks_acceleration_reset
+        StreakTheme.BRAKE -> R.string.dk_achievements_streaks_brake_reset
+        StreakTheme.ADHERENCE -> R.string.dk_achievements_streaks_adherence_reset
+        StreakTheme.CALL -> R.string.dk_achievements_streaks_call_reset
     }.let {
-        DKResource.convertToString(context, it)
+        context.getString(it)
     }
 
     fun getDescriptionText(context: Context) = when (streakTheme) {
-        StreakTheme.PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_text"
-        StreakTheme.SAFETY -> "dk_achievements_streaks_safety_text"
-        StreakTheme.SPEEDING -> "dk_achievements_streaks_speeding_text"
-        StreakTheme.ACCELERATION -> "dk_achievements_streaks_acceleration_text"
-        StreakTheme.BRAKE -> "dk_achievements_streaks_brake_text"
-        StreakTheme.ADHERENCE -> "dk_achievements_streaks_adherence_text"
-        StreakTheme.CALL -> "dk_achievements_streaks_phone_call_text"
+        StreakTheme.PHONE_DISTRACTION -> R.string.dk_achievements_streaks_phone_distraction_text
+        StreakTheme.SAFETY -> R.string.dk_achievements_streaks_safety_text
+        StreakTheme.SPEEDING -> R.string.dk_achievements_streaks_speeding_text
+        StreakTheme.ACCELERATION -> R.string.dk_achievements_streaks_acceleration_text
+        StreakTheme.BRAKE -> R.string.dk_achievements_streaks_brake_text
+        StreakTheme.ADHERENCE -> R.string.dk_achievements_streaks_adherence_text
+        StreakTheme.CALL -> R.string.dk_achievements_streaks_phone_call_text
     }.let {
-        DKResource.convertToString(context, it)
+        context.getString(it)
     }
 
     fun getStreakStatus(): StreakStatus {

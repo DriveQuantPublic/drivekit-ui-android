@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
-import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.util.TypedValue
 import android.view.View
@@ -11,7 +10,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -101,21 +99,15 @@ internal class TripGoogleMapViewHolder(
                     .init(itemView.context)
                     .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .cancelable(true)
-                    .positiveButton(DKResource.convertToString(itemView.context, "dk_common_ok"),
-                        DialogInterface.OnClickListener
-                        { dialog, _ -> dialog.dismiss() })
+                    .positiveButton(itemView.context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) { dialog, _ -> dialog.dismiss() }
                     .show()
 
                 val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 val icon = alert.findViewById<ImageView>(com.drivequant.drivekit.common.ui.R.id.image_view_alert_icon)
 
-                title?.text =
-                    DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event")
-                description?.text = DKResource.convertToString(
-                    itemView.context,
-                    "dk_driverdata_speeding_event_info_content"
-                )
+                title?.setText(R.string.dk_driverdata_speeding_event)
+                description?.setText(R.string.dk_driverdata_speeding_event_info_content)
                 icon?.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_speeding)
                 title?.headLine1()
                 description?.normalText()
@@ -142,9 +134,9 @@ internal class TripGoogleMapViewHolder(
                 adviceFabButton.setOnClickListener {
                     fragment.displayAdvice(mapItem)
                     if (mapItem == MapItem.SAFETY){
-                        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(itemView.context, "dk_tag_trips_detail_advice_safety"), javaClass.simpleName)
+                        DriveKitUI.analyticsListener?.trackScreen(itemView.context.getString(R.string.dk_tag_trips_detail_advice_safety), javaClass.simpleName)
                     } else if (mapItem == MapItem.ECO_DRIVING){
-                        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(itemView.context, "dk_tag_trips_detail_advice_efficiency"), javaClass.simpleName)
+                        DriveKitUI.analyticsListener?.trackScreen(itemView.context.getString(R.string.dk_tag_trips_detail_advice_efficiency), javaClass.simpleName)
                     }
                 }
             }

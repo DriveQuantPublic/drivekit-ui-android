@@ -12,7 +12,6 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengePar
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.utils.DKResource
 
 class ChallengeHeaderView(context: Context) : LinearLayout(context) {
 
@@ -44,10 +43,7 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
         viewModel.challenge?.let { challenge ->
             if (!challenge.rules.isNullOrBlank()) {
                 challengeRuleConsultTextView.apply {
-                    text = DKResource.convertToString(
-                        context,
-                        "dk_challenge_consult_rule_button"
-                    )
+                    setText(R.string.dk_challenge_consult_rule_button)
                     setTextColor(DriveKitUI.colors.secondaryColor())
                     visibility = View.VISIBLE
                     setOnClickListener {

@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -23,7 +24,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -73,7 +73,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         textViewDetectionModeTitle.headLine2()
         textViewDetectionModeDescription.normalText()
 
-        popup.setImageDrawable(DKResource.convertToDrawable(itemView.context, "dk_common_dots"))
+        popup.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_dots)
         popup.setColorFilter(DriveKitUI.colors.secondaryColor())
         buttonSetup.button(
             textColor = DriveKitUI.colors.secondaryColor(),
@@ -108,14 +108,14 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             linearLayoutDetectionMode.visibility = View.GONE
         } else {
             linearLayoutDetectionMode.visibility = View.VISIBLE
-            textViewDetectionModeTitle.text = DKResource.convertToString(context,"dk_vehicle_detection_mode_title")
+            textViewDetectionModeTitle.setText(R.string.dk_vehicle_detection_mode_title)
         }
 
         textViewDetectionModeDescription.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getDescription(context, vehicle)
         if (vehicle.isConfigured()){
             textViewDetectionModeDescription.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
         } else {
-            DKResource.convertToDrawable(context, "dk_common_warning")?.let { infoDrawable ->
+            ContextCompat.getDrawable(context, com.drivequant.drivekit.common.ui.R.drawable.dk_common_warning)?.let { infoDrawable ->
                 val bitmap = (infoDrawable as BitmapDrawable).bitmap
                 val size = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_ic_medium).toInt()
                 val resizedDrawable: Drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, size, size, true))

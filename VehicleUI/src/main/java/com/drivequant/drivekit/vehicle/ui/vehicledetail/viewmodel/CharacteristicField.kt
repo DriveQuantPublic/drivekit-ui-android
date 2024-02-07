@@ -3,9 +3,9 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 import android.content.Context
 import androidx.annotation.Keep
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleType
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getGearBoxName
 
 enum class CharacteristicField : Field {
@@ -31,14 +31,13 @@ enum class CharacteristicField : Field {
     }
 
     override fun getTitle(context: Context, vehicle: Vehicle): String? {
-        val identifier = when (this) {
-            POWER -> "dk_power"
-            GEARBOX -> "dk_gearbox"
-            CAR_MASS -> "dk_mass"
-            TRUCK_MASS -> "dk_vehicle_curbweight"
-            PTAC -> "dk_vehicle_ptac"
-        }
-        return DKResource.convertToString(context, identifier)
+        return when (this) {
+            POWER -> R.string.dk_power
+            GEARBOX -> R.string.dk_gearbox
+            CAR_MASS -> R.string.dk_mass
+            TRUCK_MASS -> R.string.dk_vehicle_curbweight
+            PTAC -> R.string.dk_vehicle_ptac
+        }.let { context.getString(it) }
     }
 
     override fun getValue(context: Context, vehicle: Vehicle): String? {
@@ -48,7 +47,8 @@ enum class CharacteristicField : Field {
             CAR_MASS -> DKDataFormatter.formatMass(context, vehicle.mass)
             TRUCK_MASS -> DKDataFormatter.formatMassInTon(context, vehicle.mass)
             PTAC -> {
-                vehicle.ptac?.let { DKDataFormatter.formatMassInTon(context, it)
+                vehicle.ptac?.let {
+                    DKDataFormatter.formatMassInTon(context, it)
                 }
             }
         }

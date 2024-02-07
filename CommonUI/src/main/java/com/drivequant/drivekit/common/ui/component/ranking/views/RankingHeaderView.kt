@@ -12,8 +12,6 @@ import com.drivequant.drivekit.common.ui.component.ranking.RankingHeaderDisplayT
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
 import com.drivequant.drivekit.common.ui.extension.bigText
 
-import com.drivequant.drivekit.common.ui.utils.DKResource
-
 /**
  * Created by Mohamed on 2020-07-03.
  */
@@ -62,7 +60,7 @@ class RankingHeaderView : LinearLayout {
     fun setHeaderData(rankingViewModel: DKRankingViewModel) {
         this.container.setBackgroundColor(rankingViewModel.getBackgroundColor())
         this.driverProgressionView.setDriverProgression(rankingViewModel)
-        this.headerTitleView.text = DKResource.convertToString(context, rankingViewModel.getTitle())
+        this.headerTitleView.setText(rankingViewModel.getTitleResId())
         rankingViewModel.getIcon(context)?.let {
             this.rankingTypeImageView.setImageDrawable(it)
         }

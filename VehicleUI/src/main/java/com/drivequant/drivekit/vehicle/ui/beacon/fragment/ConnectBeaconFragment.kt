@@ -15,7 +15,6 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
@@ -67,47 +66,43 @@ class ConnectBeaconFragment : Fragment() {
 
         binding.textViewConnectTitle.apply {
             headLine1()
-            text =
-                DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_guide_title")
+            setText(R.string.dk_vehicle_beacon_setup_guide_title)
         }
         binding.textViewConnectDesc1.apply {
-            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_guide_desc1")
+            setText(R.string.dk_vehicle_beacon_setup_guide_desc1)
             normalText()
         }
         binding.textViewConnectDesc2.apply {
-            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_guide_desc2")
+            setText(R.string.dk_vehicle_beacon_setup_guide_desc2)
             normalText()
         }
         binding.textViewConnectDesc3.apply {
             normalText()
-            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_guide_desc3")
+            setText(R.string.dk_vehicle_beacon_setup_guide_desc3)
         }
 
         binding.buttonBegin.button()
-        binding.buttonBegin.text =  DKResource.convertToString(requireContext(), "dk_vehicle_begin")
+        binding.buttonBegin.setText(R.string.dk_vehicle_begin)
         binding.buttonBegin.setOnClickListener {
             if (!viewModel.isBluetoothSensorEnabled()) {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
                     .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(
-                        DKResource.convertToString(
-                            requireContext(), "dk_common_activate")
-                    ) { _, _ ->
+                    .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_activate)) { _, _ ->
                         val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                         startActivityForResult(enableIntent, REQUEST_ENABLE_BT)
                     }
-                    .negativeButton(DKResource.convertToString(requireContext(), "dk_common_back"))
+                    .negativeButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_back))
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
                 val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
                 titleTextView?.apply {
-                    text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_enable_bluetooth_alert_title")
+                    setText(R.string.dk_vehicle_beacon_enable_bluetooth_alert_title)
                     headLine1()
                 }
                 descriptionTextView?.apply {
-                    text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_enable_bluetooth_alert_message")
+                    setText(R.string.dk_vehicle_beacon_enable_bluetooth_alert_message)
                     normalText()
                 }
             } else {

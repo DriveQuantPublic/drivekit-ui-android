@@ -19,7 +19,6 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerVehicleDetailBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoriesListActivity
@@ -71,13 +70,8 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_vehicles_odometer_vehicles_detail"
-            ), javaClass.simpleName
-        )
-        (savedInstanceState?.getString("vehicleIdTag"))?.let {
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_odometer_vehicles_detail), javaClass.simpleName)
+        savedInstanceState?.getString("vehicleIdTag")?.let {
             vehicleId = it
         }
 
@@ -96,16 +90,16 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
                     OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId))[OdometerDetailViewModel::class.java]
                 initOdometerItems(vehicleId)
                 initVehicle(context)
-                displayOdometerReadings(context, vehicleId)
-                updateOdometerClicked(context, vehicleId)
+                displayOdometerReadings(vehicleId)
+                updateOdometerClicked(vehicleId)
             }
         }
     }
 
-    private fun displayOdometerReadings(context: Context, vehicleId: String) {
+    private fun displayOdometerReadings(vehicleId: String) {
         binding.buttonDisplayOdometerReadings.apply {
             visibility = if(viewModel.shouldShowDisplayReadingButton()) View.VISIBLE else View.GONE
-            text = DKResource.convertToString(context, "dk_vehicle_odometer_histories_link")
+            setText(R.string.dk_vehicle_odometer_histories_link)
             headLine2(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 activity?.let { activity ->
@@ -115,9 +109,9 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
         }
     }
 
-    private fun updateOdometerClicked(context: Context, vehicleId: String) {
+    private fun updateOdometerClicked(vehicleId: String) {
         binding.buttonUpdateOdometerReading.apply {
-            text = DKResource.convertToString(context, "dk_vehicle_odometer_history_update")
+            setText(R.string.dk_vehicle_odometer_history_update)
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
@@ -158,21 +152,21 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     override fun onDrawableClicked(view: View, odometerItemType: OdometerItemType) {
         val alertDialogData = when (odometerItemType) {
             OdometerItemType.ODOMETER -> Pair(
-                "dk_vehicle_odometer_vehicle_title",
-                "dk_vehicle_odometer_info_vehicle_distance_text"
+                R.string.dk_vehicle_odometer_vehicle_title,
+                R.string.dk_vehicle_odometer_info_vehicle_distance_text
             )
             OdometerItemType.ANALYZED -> Pair(
-                "dk_vehicle_odometer_info_analysed_distance_title",
-                "dk_vehicle_odometer_info_analysed_distance_text"
+                R.string.dk_vehicle_odometer_info_analysed_distance_title,
+                R.string.dk_vehicle_odometer_info_analysed_distance_text
             )
             OdometerItemType.ESTIMATED -> Pair(
-                "dk_vehicle_odometer_info_estimated_distance_title",
-                "dk_vehicle_odometer_info_estimated_distance_text"
+                R.string.dk_vehicle_odometer_info_estimated_distance_title,
+                R.string.dk_vehicle_odometer_info_estimated_distance_text
             )
         }.let {
             Pair(
-                DKResource.convertToString(view.context, it.first),
-                DKResource.convertToString(view.context, it.second)
+                getString(it.first),
+                getString(it.second)
             )
         }
         val alertDialog = DKAlertDialog.LayoutBuilder()

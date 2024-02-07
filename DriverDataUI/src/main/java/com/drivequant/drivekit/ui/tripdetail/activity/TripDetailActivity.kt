@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
@@ -88,6 +87,6 @@ class TripDetailActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_driverdata_trip_detail_title"))
+        setActivityTitle(getString(R.string.dk_driverdata_trip_detail_title))
     }
 }

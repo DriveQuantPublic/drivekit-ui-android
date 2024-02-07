@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
@@ -17,7 +18,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 
 
 class DriverProgressionView : LinearLayout {
@@ -52,18 +52,14 @@ class DriverProgressionView : LinearLayout {
     fun setDriverProgression(rankingViewModel: DKRankingViewModel) {
         val progressionIconId =
             when (rankingViewModel.getProgression()) {
-                DriverProgression.GOING_DOWN -> "dk_common_arrow_down"
-                DriverProgression.GOING_UP -> "dk_common_arrow_up"
+                DriverProgression.GOING_DOWN -> R.drawable.dk_common_arrow_down
+                DriverProgression.GOING_UP -> R.drawable.dk_common_arrow_up
                 else -> null
             }
         this.globalRankTextView.text = rankingViewModel.getDriverGlobalRank(context)
         progressionIconId?.let {
-            this.driverProgressionImageView.setImageDrawable(
-                DKResource.convertToDrawable(
-                    context,
-                    it
-                )
-            )
+            this.driverProgressionImageView.setImageResource(it)
+            this.driverProgressionImageView.visibility = View.VISIBLE
         }?:run {
             this.driverProgressionImageView.visibility = View.GONE
         }
@@ -72,7 +68,7 @@ class DriverProgressionView : LinearLayout {
     }
 
     private fun setConditionInfoButton(rankingViewModel: DKRankingViewModel) {
-        DKResource.convertToDrawable(context, "dk_common_info")?.let {
+        ContextCompat.getDrawable(context, R.drawable.dk_common_info)?.let {
             it.tintDrawable(DriveKitUI.colors.secondaryColor())
             this.infoPopupConditionImageView.apply {
                 visibility = if (rankingViewModel.getConditionVisibility()) {
@@ -85,7 +81,7 @@ class DriverProgressionView : LinearLayout {
                     val alertDialog = DKAlertDialog.LayoutBuilder()
                         .init(context)
                         .layout(R.layout.template_alert_dialog_layout)
-                        .positiveButton(DKResource.convertToString(context, "dk_common_ok")) { dialog, _ ->
+                        .positiveButton(context.getString(R.string.dk_common_ok)) { dialog, _ ->
                             dialog.dismiss()
                         }
                         .show()

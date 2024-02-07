@@ -4,131 +4,72 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.activity.ChallengeDetailActivity
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
+import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeListCategory
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeData
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListener
-import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.containsActiveChallenge
-import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.toStatusList
-import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.toStringArray
-import com.drivequant.drivekit.challenge.ui.databinding.DkChallengeEmptyViewBinding
-import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeListBinding
+import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.updateTabsFont
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
-
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 class ChallengeListFragment : Fragment(), ChallengeListener {
 
     private lateinit var viewModel: ChallengeListViewModel
-    private lateinit var status: List<ChallengeStatus>
-    private var adapter: ChallengeListAdapter? = null
-    private var _binding: DkFragmentChallengeListBinding? = null
+    private var _binding: DkFragmentChallengeBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
-    companion object {
-        fun newInstance(status: List<ChallengeStatus>, viewModel: ChallengeListViewModel): ChallengeListFragment {
-            val fragment = ChallengeListFragment()
-            fragment.status = status
-            fragment.viewModel = viewModel
-            return fragment
-        }
-    }
+    private lateinit var dateSelectorView: DKDateSelectorView
+    private var adapter: ChallengeListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        _binding = DkFragmentChallengeListBinding.inflate(inflater, container, false)
-        binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkRankingListBackgroundColor))
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = DkFragmentChallengeBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putStringArray("status",status.toStringArray())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        savedInstanceState?.getStringArray("status")?.let {
-            status = it.toStatusList()
+
+        checkViewModelInitialization()
+
+        setupSwipeToRefresh()
+        configureTabSelectorView()
+        configureDateSelector()
+
+        this.viewModel.updateData.observe(viewLifecycleOwner) {
+            updateDateSelector()
+            updateChallengeList()
         }
 
-        val tag = if (status.containsActiveChallenge()) {
-            "dk_tag_challenge_list_active"
-        } else {
-            "dk_tag_challenge_list_finished"
-        }
-
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                tag
-            ), javaClass.simpleName
-        )
-
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProvider(this)[ChallengeListViewModel::class.java]
-        }
-
-        binding.dkSwipeRefreshChallenge.setOnRefreshListener {
-            updateSwipeRefreshChallengesVisibility(true)
-            viewModel.fetchChallengeList()
-        }
-
-        viewModel.syncChallengesError.observe(viewLifecycleOwner) {
-            if (!it) {
-                Toast.makeText(
-                    context,
-                    DKResource.convertToString(
-                        requireContext(),
-                        "dk_challenge_failed_to_sync_challenges"
-                    ),
-                    Toast.LENGTH_SHORT
-                ).show()
+        this.viewModel.syncStatus.observe(viewLifecycleOwner) { success ->
+            updateSwipeRefreshTripsVisibility(false)
+            if (!success) {
+                Toast.makeText(context, R.string.dk_challenge_failed_to_sync_challenges, Toast.LENGTH_SHORT).show()
             }
-            when {
-                viewModel.activeChallenges.isEmpty() && status.containsAll(
-                    listOf(
-                        ChallengeStatus.PENDING,
-                        ChallengeStatus.SCHEDULED
-                    )
-                ) -> displayNoChallenges(status)
-                viewModel.finishedChallenges.isEmpty() && status.containsAll(
-                    listOf(
-                        ChallengeStatus.ARCHIVED,
-                        ChallengeStatus.FINISHED
-                    )
-                ) -> displayNoChallenges(status)
-                else -> {
-                    binding.dkRecyclerViewChallenge.layoutManager = LinearLayoutManager(requireContext())
-                    adapter?.notifyDataSetChanged() ?: run {
-                        adapter = ChallengeListAdapter(
-                            requireContext(),
-                            viewModel,
-                            status,
-                            this
-                        )
-                        binding.dkRecyclerViewChallenge.adapter = adapter
-                    }
-                    displayChallenges()
-                }
-            }
-            updateSwipeRefreshChallengesVisibility(false)
         }
+
+        binding.dkRecyclerViewChallenge.layoutManager = LinearLayoutManager(requireContext())
+        updateSwipeRefreshTripsVisibility(true)
     }
 
     override fun onDestroyView() {
@@ -136,41 +77,134 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         _binding = null
     }
 
-    private fun updateSwipeRefreshChallengesVisibility(display: Boolean) {
-        if (display) {
-            binding.dkSwipeRefreshChallenge.isRefreshing = display
+    fun updateChallenge() {
+        if (this::viewModel.isInitialized) {
+            viewModel.updateLocalData()
+        }
+    }
+
+    private fun updateChallengeList() {
+        this.adapter?.update(this.viewModel.currentChallenges) ?: run {
+            context?.let {
+                this.adapter = ChallengeListAdapter(
+                    it,
+                    this@ChallengeListFragment.viewModel.currentChallenges,
+                    this
+                )
+            }
+        }
+        if (binding.dkRecyclerViewChallenge.adapter == null) {
+            binding.dkRecyclerViewChallenge.adapter = adapter
+        }
+
+        if (this.viewModel.hasChallengesToDisplay) {
+            displayChallenges()
         } else {
-            binding.dkSwipeRefreshChallenge.visibility = View.VISIBLE
-            binding.dkSwipeRefreshChallenge.isRefreshing = display
+            displayNoChallenges()
         }
     }
 
     private fun displayChallenges() {
-        getEmptyViewBinding().viewGroupEmptyScreen.visibility = View.GONE
-        binding.dkRecyclerViewChallenge.visibility = View.VISIBLE
+        binding.noChallenges.viewGroupEmptyScreen.visibility = View.GONE
+        binding.dkRecyclerViewChallenge.apply {
+            visibility = View.VISIBLE
+            scrollToPosition(0)
+        }
     }
 
-    private fun displayNoChallenges(challengeStatusList: List<ChallengeStatus>) {
-        var pair = Pair("dk_challenge_no_active_challenge", "dk_challenge_waiting")
-        challengeStatusList.map {
-            pair = when (it) {
-                ChallengeStatus.FINISHED, ChallengeStatus.ARCHIVED -> Pair(
-                    "dk_challenge_no_finished_challenge",
-                    "dk_challenge_finished"
+    private fun displayNoChallenges() {
+        binding.noChallenges.apply {
+            dkTextViewNoChallenge.apply {
+                setText(this@ChallengeListFragment.viewModel.computeNoChallengeTextResId())
+                headLine2(DriveKitUI.colors.mainFontColor())
+            }
+            view?.resources?.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)?.let { cornerRadius ->
+                this.noChallenges.roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
+            }
+            DrawableCompat.setTint(this.noChallenges.background, DriveKitUI.colors.neutralColor())
+            viewGroupEmptyScreen.visibility = View.VISIBLE
+        }
+        binding.dkRecyclerViewChallenge.visibility = View.GONE
+    }
+
+    private fun checkViewModelInitialization() {
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProvider(this)[ChallengeListViewModel::class.java]
+        }
+    }
+
+    private fun setupSwipeToRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            updateData()
+        }
+    }
+
+    private fun updateDateSelector() {
+        this.dateSelectorView.configure(viewModel.dateSelectorViewModel)
+    }
+
+    private fun updateSwipeRefreshTripsVisibility(display: Boolean) {
+        binding.swipeRefreshLayout.isRefreshing = display
+    }
+
+    private fun configureTabSelectorView() {
+        binding.tabLayoutChallenge.apply {
+            removeAllTabs()
+
+            ChallengeListCategory.values().forEach {
+                val tab = newTab()
+                tab.setText(it.getText())
+                tab.tag = it
+                addTab(tab)
+            }
+
+            setTabTextColors(
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.secondaryColor()
+            )
+            setSelectedTabIndicatorColor(DriveKitUI.colors.secondaryColor())
+            setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+            updateTabsFont()
+
+            addOnTabSelectedListener(object : OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    DriveKitUI.analyticsListener?.trackScreen(
+                        getString(this@ChallengeListFragment.viewModel.getScreenTagResId()),
+                        javaClass.simpleName
+                    )
+
+                    (tab?.tag as ChallengeListCategory?)?.let {
+                        this@ChallengeListFragment.viewModel.updateSelectedCategory(it)
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            })
+        }
+    }
+
+    private fun configureDateSelector() {
+        this.context?.let {
+            this.dateSelectorView = DKDateSelectorView(it)
+            this.dateSelectorView.apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
                 )
-                ChallengeStatus.PENDING, ChallengeStatus.SCHEDULED -> Pair(
-                    "dk_challenge_no_active_challenge",
-                    "dk_challenge_waiting"
-                )
+                configure(this@ChallengeListFragment.viewModel.dateSelectorViewModel)
+            }
+            binding.dateSelectorContainer.apply {
+                removeAllViews()
+                addView(dateSelectorView)
             }
         }
-        getEmptyViewBinding().dkTextViewNoChallenge.text = DKResource.convertToString(requireContext(), pair.first)
-        DKResource.convertToDrawable(requireContext(), pair.second)?.let {
-            getEmptyViewBinding().dkImageViewNoChallenge.setImageDrawable(it)
-        }
-        getEmptyViewBinding().dkTextViewNoChallenge.headLine2(DriveKitUI.colors.mainFontColor())
-        getEmptyViewBinding().viewGroupEmptyScreen.visibility = View.VISIBLE
-        binding.dkRecyclerViewChallenge.visibility = View.GONE
+    }
+
+    private fun updateData() {
+        updateSwipeRefreshTripsVisibility(true)
+        this.viewModel.synchronizeChallenges()
     }
 
     override fun onClickChallenge(challengeData: ChallengeData) {
@@ -185,9 +219,8 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
                     alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
-                titleTextView?.text = getString(R.string.app_name)
-                descriptionTextView?.text =
-                    DKResource.convertToString(requireContext(), "dk_challenge_not_a_participant")
+                titleTextView?.setText(R.string.app_name)
+                descriptionTextView?.setText(R.string.dk_challenge_not_a_participant)
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
             }
@@ -201,11 +234,5 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 challengeData.challengeId
             )
         }
-    }
-
-    @SuppressWarnings("kotlin:S6531")
-    private fun getEmptyViewBinding(): DkChallengeEmptyViewBinding {
-        @Suppress("USELESS_CAST")
-        return binding.noChallenges as DkChallengeEmptyViewBinding // DO NOT REMOVE THIS "USELESS CAST". It's actually necessary for compilation.
     }
 }

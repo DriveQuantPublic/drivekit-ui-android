@@ -8,8 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
 import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityCrashFeedbackStep1Binding
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.common.ui.utils.*
+import com.drivequant.drivekit.common.ui.extension.pixelToSp
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DurationUnit
+import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.crashfeedback.view.RoundedSlicesPieChartRenderer
 import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep1ViewModel
@@ -22,8 +26,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
-import java.util.*
-
 
 class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
@@ -35,12 +37,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
         binding = DkLayoutActivityCrashFeedbackStep1Binding.inflate(layoutInflater)
 
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                this,
-                "dk_tag_trip_analysis_crash_feedback_step1"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trip_analysis_crash_feedback_step1), javaClass.simpleName)
 
         DriveKitTripAnalysis.setCrashFeedbackTimer(60) // 1 minute
 

@@ -2,17 +2,17 @@ package com.drivequant.drivekit.vehicle.ui.odometer.viewmodel
 
 import android.app.Activity
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleDetailActivity
 
-internal enum class OdometerAction(
-    private val descriptionResId: String) : OdometerActionItem {
-    SHOW("dk_vehicle_show"),
-    ADD("dk_vehicle_odometer_add_history");
+internal enum class OdometerAction(@StringRes private val descriptionResId: Int) : OdometerActionItem {
+    SHOW(R.string.dk_vehicle_show),
+    ADD(R.string.dk_vehicle_odometer_add_history);
 
-    override fun getTitle(context: Context) = DKResource.convertToString(context, descriptionResId)
+    override fun getTitle(context: Context) = context.getString(descriptionResId)
 
     override fun onItemClicked(
         activity: Activity,

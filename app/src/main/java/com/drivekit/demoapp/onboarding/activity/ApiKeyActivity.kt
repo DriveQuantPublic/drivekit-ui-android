@@ -32,11 +32,11 @@ internal class ApiKeyActivity : AppCompatActivity() {
         val viewModel = ApiKeyViewModel()
         binding.textViewDescription.text = viewModel.getDescription(this@ApiKeyActivity)
         binding.textViewTitle.apply {
-            text = getString(viewModel.getTitle())
+            setText(viewModel.getTitleResId())
             headLine1()
         }
         binding.root.findViewById<Button>(R.id.button_action).apply {
-            text = getString(viewModel.getButtonText())
+            setText(viewModel.getButtonTextResId())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 if (viewModel.isApiKeyValid()) {

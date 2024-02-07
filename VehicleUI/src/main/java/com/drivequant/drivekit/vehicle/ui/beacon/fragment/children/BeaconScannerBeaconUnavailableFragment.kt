@@ -10,8 +10,8 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconChildScannerBeaconUnavailableBinding
@@ -58,17 +58,17 @@ class BeaconScannerBeaconUnavailableFragment : Fragment() {
         }
 
         binding.textViewDescription.normalText()
-        binding.textViewDescription.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_retry_title")
+        binding.textViewDescription.setText(R.string.dk_vehicle_beacon_setup_code_retry_title)
 
         binding.buttonRetry.button()
-        binding.buttonRetry.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+        binding.buttonRetry.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
         binding.buttonRetry.setOnClickListener {
             activity?.onBackPressed()
         }
 
         binding.buttonAbort.apply {
             normalText(DriveKitUI.colors.secondaryColor())
-            text = DKResource.convertToString(requireContext(), "dk_common_finish")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
             setOnClickListener {
                 viewModel.scanValidationFinished()
             }

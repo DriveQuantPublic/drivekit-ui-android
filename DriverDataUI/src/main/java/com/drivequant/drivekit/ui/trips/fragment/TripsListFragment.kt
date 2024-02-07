@@ -27,7 +27,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.extension.updateSubMenuItemFont
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -60,7 +59,7 @@ class TripsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_trips_list"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trips_list), javaClass.simpleName)
         activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
 
         if (!this::viewModel.isInitialized) {

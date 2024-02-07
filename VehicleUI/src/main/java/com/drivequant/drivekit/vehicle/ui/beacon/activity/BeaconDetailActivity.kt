@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
@@ -55,7 +54,7 @@ class BeaconDetailActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_beacon_info"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_beacon_info), javaClass.simpleName)
 
         setContentView(R.layout.activity_beacon)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -135,6 +134,6 @@ class BeaconDetailActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_beacon_diagnostic_title"))
+        setActivityTitle(getString(R.string.dk_beacon_diagnostic_title))
     }
 }
