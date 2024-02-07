@@ -182,13 +182,13 @@
    <string name="dk_driverdata_profile_activity_very_low_text">Seit Sie die App verwenden, fahren Sie weniger als eine Woche alle zwei Monate.</string>
    <string name="dk_driverdata_profile_distance_long_text">Sie fahren zwischen 20 000 und 40 000 km pro Jahr. Das hebt Sie in die Kategorie der Vielfahrer.</string>
    <string name="dk_driverdata_profile_distance_long_title">Sie sind ein Langstreckenfahrer</string>
-   <string name="dk_driverdata_profile_distance_medium_text">Sie fahren zwischen 6.000 und 20.000 km. Das ist der Bereich der jährlichen Fahrleistung, der die Mehrheit der Fahrer umfasst.</string>
+   <string name="dk_driverdata_profile_distance_medium_text">Sie fahren zwischen 10.000 und 20.000 km. Das ist der Bereich der jährlichen Fahrleistung, der die Mehrheit der Fahrer umfasst.</string>
    <string name="dk_driverdata_profile_distance_medium_title">Sie sind ein Mittelstreckenfahrer</string>
-   <string name="dk_driverdata_profile_distance_short_text">Sie gehören zur Kategorie der Vielfahrer, die zwischen 2 500 und 6 000 km pro Jahr zurücklegen.</string>
+   <string name="dk_driverdata_profile_distance_short_text">Sie gehören zur Kategorie der Vielfahrer, die zwischen 5.000 und 10.000 km pro Jahr zurücklegen.</string>
    <string name="dk_driverdata_profile_distance_short_title">Sie sind ein Kurzstreckenfahrer</string>
    <string name="dk_driverdata_profile_distance_very_long_text">Sie haben keine Angst vor Kilometern! Sie gehören zu den Nutzern, die mehr als 40.000 km pro Jahr fahren.</string>
    <string name="dk_driverdata_profile_distance_very_long_title">Sie sind ein professioneller Fahrer</string>
-   <string name="dk_driverdata_profile_distance_very_short_text">Sie benutzen Ihr Auto sehr selten. Sie gehören zur Kategorie der Fahrer, die weniger als 2 500 km pro Jahr fahren.</string>
+   <string name="dk_driverdata_profile_distance_very_short_text">Sie benutzen Ihr Auto sehr selten. Sie gehören zur Kategorie der Fahrer, die weniger als 5.000 km pro Jahr fahren.</string>
    <string name="dk_driverdata_profile_distance_very_short_title">Sie sind ein Kurzstreckler</string>
    <string name="dk_driverdata_profile_empty_card_text">Um Ihr Fahrerprofil zu bestimmen, müssen Sie zwei Wochen lang fahren und mindestens 500 km zurücklegen.</string>
    <string name="dk_driverdata_profile_empty_card_title">Sie sind nicht genug gefahren</string>
