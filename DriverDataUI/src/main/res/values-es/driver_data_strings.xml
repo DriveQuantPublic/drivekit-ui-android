@@ -182,13 +182,13 @@
    <string name="dk_driverdata_profile_activity_very_low_text">Desde que utilizas la aplicación, has conducido menos de una semana cada dos meses.</string>
    <string name="dk_driverdata_profile_distance_long_text">Conduces entre 20.000 y 40.000 km al año. Eso te sitúa en la categoría de conductor frecuente.</string>
    <string name="dk_driverdata_profile_distance_long_title">Eres un conductor de larga distancia</string>
-   <string name="dk_driverdata_profile_distance_medium_text">Conduces entre 6.000 y 20.000 km. Esta es la distancia anual que recorren la mayoría de los conductores.</string>
+   <string name="dk_driverdata_profile_distance_medium_text">Conduces entre 10.000 y 20.000 km. Esta es la distancia anual que recorren la mayoría de los conductores.</string>
    <string name="dk_driverdata_profile_distance_medium_title">Eres conductor de media distancia</string>
-   <string name="dk_driverdata_profile_distance_short_text">Perteneces a la categoría de conductores que recorren entre 2.500 y 6.000 km al año.</string>
+   <string name="dk_driverdata_profile_distance_short_text">Perteneces a la categoría de conductores que recorren entre 5.000 y 10.000 km al año.</string>
    <string name="dk_driverdata_profile_distance_short_title">Eres un conductor de corta distancia</string>
    <string name="dk_driverdata_profile_distance_very_long_text">No te asustan los kilómetros. Eres de los que conducen más de 40.000 km al año.</string>
    <string name="dk_driverdata_profile_distance_very_long_title">Eres un conductor profesional</string>
-   <string name="dk_driverdata_profile_distance_very_short_text">Utilizas poco el coche. Perteneces a la categoría de conductores que recorren menos de 2.500 km al año.</string>
+   <string name="dk_driverdata_profile_distance_very_short_text">Utilizas poco el coche. Perteneces a la categoría de conductores que recorren menos de 5.000 km al año.</string>
    <string name="dk_driverdata_profile_distance_very_short_title">Eres un conductor de corta distancia</string>
    <string name="dk_driverdata_profile_empty_card_text">Para determinar su perfil de conductor, debe conducir durante 2 semanas y recorrer al menos 500 km.</string>
    <string name="dk_driverdata_profile_empty_card_title">No has conducido lo suficiente</string>

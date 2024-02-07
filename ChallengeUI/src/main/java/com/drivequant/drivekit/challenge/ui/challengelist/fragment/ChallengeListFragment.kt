@@ -91,8 +91,10 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                     this@ChallengeListFragment.viewModel.currentChallenges,
                     this
                 )
-                binding.dkRecyclerViewChallenge.adapter = adapter
             }
+        }
+        if (binding.dkRecyclerViewChallenge.adapter == null) {
+            binding.dkRecyclerViewChallenge.adapter = adapter
         }
 
         if (this.viewModel.hasChallengesToDisplay) {
