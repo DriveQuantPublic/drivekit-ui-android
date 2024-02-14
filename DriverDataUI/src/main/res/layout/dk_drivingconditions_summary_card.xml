@@ -11,9 +11,7 @@
         style="@style/DKCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/dk_margin"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp">
+        android:paddingVertical="@dimen/dk_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/empty_view"
