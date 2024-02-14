@@ -17,7 +17,6 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
@@ -571,7 +570,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         this.batteryTitle.headLine1()
         this.batteryDescription.normalText(DriveKitUI.colors.complementaryFontColor())
 
-        this.helpReport.button()
         this.helpTitle.headLine1()
         this.helpDescription.normalText(DriveKitUI.colors.complementaryFontColor())
         this.diagViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
