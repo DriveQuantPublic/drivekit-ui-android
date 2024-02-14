@@ -60,7 +60,6 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     private fun setStyle() {
         binding.textViewActivityPermissionTitle.highlightMedium()
         binding.textViewActivityPermissionText.normalText()
-        binding.buttonRequestActivityPermission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }

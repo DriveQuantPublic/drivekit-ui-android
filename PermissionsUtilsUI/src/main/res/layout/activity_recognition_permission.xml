@@ -1,58 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".permissions.activity.ActivityRecognitionPermissionActivity">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar" />
 
-    <ImageView
-        android:id="@+id/image_view_activity_permission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin"
-        android:padding="@dimen/dk_margin"
-        android:src="@drawable/dk_perm_utils_activity_permission"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <TextView
-        android:id="@+id/text_view_activity_permission_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:gravity="center"
-        android:padding="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_phone_settings_activity_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view_activity_permission" />
-
-    <TextView
-        android:id="@+id/text_view_activity_permission_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_phone_settings_activity_text_android"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_activity_permission_title" />
-
-    <Button
-        android:id="@+id/button_request_activity_permission"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:onClick="onRequestPermissionClicked"
-        android:padding="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_phone_settings_activity_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_activity_permission_text" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/dk_screen_border_permissionutils_onboarding">
+
+            <ImageView
+                android:id="@+id/image_view_activity_permission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin"
+                android:paddingVertical="@dimen/dk_margin"
+                android:src="@drawable/dk_perm_utils_activity_permission"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_activity_permission_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dk_margin"
+                android:text="@string/dk_perm_utils_permissions_phone_settings_activity_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_activity_permission" />
+
+            <TextView
+                android:id="@+id/text_view_activity_permission_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dk_margin"
+                android:text="@string/dk_perm_utils_permissions_phone_settings_activity_text_android"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_activity_permission_title" />
+
+            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+                style="@style/DKButton"
+                android:id="@+id/button_request_activity_permission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:onClick="onRequestPermissionClicked"
+                android:paddingVertical="@dimen/dk_margin"
+                android:text="@string/dk_perm_utils_permissions_phone_settings_activity_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_activity_permission_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

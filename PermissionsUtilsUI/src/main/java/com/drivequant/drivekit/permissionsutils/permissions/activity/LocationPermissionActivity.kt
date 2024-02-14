@@ -147,7 +147,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
         binding.textViewPermissionLocationTitle.highlightMedium()
         binding.textViewLocationPermissionText1.normalText()
         binding.textViewLocationPermissionText2.normalText()
-        binding.buttonRequestLocationPermission.button()
+        //binding.buttonRequestLocationPermission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }
