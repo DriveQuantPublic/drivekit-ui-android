@@ -37,21 +37,12 @@
     </style>
 
     <style name="DKCard">
-        <item name="android:layout_margin">8dp</item>
-        <item name="android:padding">32dp</item>
+        <item name="android:padding">16dp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@android:color/white</item>
         <item name="elevation">4dp</item>
         <item name="cardCornerRadius">8dp</item>
-    </style>
-
-    <style name="DKCardDev">
-        <item name="android:layout_margin">@dimen/dk_margin_half</item>
-        <item name="cardCornerRadius">2dp</item>
-        <item name="cardElevation">2dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:backgroundTint">@android:color/white</item>
-        <item name="android:padding">16dp</item>
+        <item name="cardUseCompatPadding">true</item>
     </style>
 
     <style name="DKCard.NoElevation" parent="DKCard">
