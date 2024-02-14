@@ -8,12 +8,13 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
+        style="@style/DKCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/dk_margin_half"
+        android:layout_marginVertical="2dp"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        android:padding="@dimen/dk_margin">
+        android:paddingVertical="@dimen/dk_margin">
 
         <LinearLayout
             android:layout_width="match_parent"

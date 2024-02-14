@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
-    android:padding="@dimen/dk_margin"
+    android:paddingVertical="@dimen/dk_margin"
     tools:viewBindingIgnore="true">
 
     <LinearLayout
@@ -47,7 +47,8 @@
         android:id="@+id/spinner_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end">
+        android:gravity="end"
+        android:background="@drawable/dk_spinner_background">
 
         <Spinner
             android:id="@+id/spinner"

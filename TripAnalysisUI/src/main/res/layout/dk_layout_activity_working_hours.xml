@@ -39,29 +39,28 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/dk_screen_border">
 
                     <com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
                         android:id="@+id/inside_hours_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="2dp"/>
 
                     <View
                         android:id="@+id/separator_inside"
-                        style="@style/Separator.Horizontal"
-                        android:layout_marginStart="@dimen/dk_margin"
-                        android:layout_marginEnd="@dimen/dk_margin" />
+                        style="@style/Separator.Horizontal"/>
 
                     <com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
                         android:id="@+id/outside_hours_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="2dp" />
 
                     <View
                         android:id="@+id/separator_outside"
-                        style="@style/Separator.Horizontal"
-                        android:layout_marginStart="@dimen/dk_margin"
-                        android:layout_marginEnd="@dimen/dk_margin" />
+                        style="@style/Separator.Horizontal" />
 
                     <LinearLayout
                         android:id="@+id/days_container"
