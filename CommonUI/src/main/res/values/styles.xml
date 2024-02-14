@@ -20,19 +20,42 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="ButtonText">
+    <style name="DKButton">
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">@dimen/dk_text_medium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/dk_text_normal</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
     </style>
 
+
+    <style name="DKButton.Secondary" parent="DKButton">
+        <item name="android:textColor">@color/secondaryColor</item>
+        <item name="android:background">@drawable/dk_test</item>
+    </style>
+
     <style name="DKCard">
-        <item name="android:layout_margin">@dimen/dk_margin_half</item>
-        <item name="android:padding">@dimen/dk_margin</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:padding">32dp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@android:color/white</item>
-        <item name="elevation">@dimen/dk_margin_quarter</item>
+        <item name="elevation">4dp</item>
+        <item name="cardCornerRadius">8dp</item>
+    </style>
+
+    <style name="DKCardDev">
+        <item name="android:layout_margin">@dimen/dk_margin_half</item>
+        <item name="cardCornerRadius">2dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundTint">@android:color/white</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="DKCard.NoElevation" parent="DKCard">
+        <item name="cardElevation">0dp</item>
     </style>
 
     <style name="MW">

@@ -5,16 +5,13 @@
     style="@style/DKCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="2dp"
-    app:cardUseCompatPadding="true"
     tools:viewBindingIgnore="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/dk_margin"
-        android:paddingTop="@dimen/dk_margin">
+        android:padding="@dimen/dk_margin">
 
         <ImageView
             android:id="@+id/info_button"
@@ -66,7 +63,6 @@
             android:id="@+id/text_view_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dk_margin_half"
             android:padding="@dimen/dk_margin_half"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

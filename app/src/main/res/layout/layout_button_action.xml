@@ -3,18 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
+    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_action"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        style="@style/DKButton"
         android:layout_marginHorizontal="@dimen/dk_margin"
-        android:layout_marginVertical="@dimen/dk_margin_half"
-        android:background="@color/colorAccent"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:layout_marginVertical="@dimen/dk_margin_half">
+    </com.drivequant.drivekit.common.ui.component.DKButtonPrimary>
 </FrameLayout>

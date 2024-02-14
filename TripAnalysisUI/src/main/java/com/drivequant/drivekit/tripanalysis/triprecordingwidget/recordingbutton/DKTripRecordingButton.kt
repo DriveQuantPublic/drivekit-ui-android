@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +33,7 @@ class DKTripRecordingButton : Fragment() {
     private lateinit var stateImageBorder: View
     private lateinit var stateImageGroup: Group
     private lateinit var viewModel: DKTripRecordingButtonViewModel
+    private lateinit var container: ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +49,7 @@ class DKTripRecordingButton : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cornerRadius = view.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)
+        val cornerRadius = view.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_rounded_corner)
         this.view.roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
 
         this.titleTextView = this.view.findViewById(R.id.title)
@@ -57,13 +59,15 @@ class DKTripRecordingButton : Fragment() {
         this.stateImageBackground = this.view.findViewById(R.id.iconBackground)
         this.stateImageBorder = this.view.findViewById(R.id.iconBorder)
         this.stateImageGroup = this.view.findViewById(R.id.iconGroup)
+        this.container = this.view.findViewById(R.id.container)
 
-        (this.view.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
+        //(this.view.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
         (this.stateImageBackground.background as GradientDrawable).setColor(DriveKitUI.colors.fontColorOnSecondaryColor())
         this.stateImageView.setColorFilter(DriveKitUI.colors.secondaryColor())
         (this.stateImageBorder.background as GradientDrawable).setStroke(1.5F.convertDpToPx(), view.context.getColor(R.color.dkTripRecordingButtonBorder).tintFromHueOfColor(DriveKitUI.colors.secondaryColor()))
         this.distanceTextView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         this.durationTextView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+        this.container.setBackgroundColor(DriveKitUI.colors.secondaryColor())
 
         configure()
     }
