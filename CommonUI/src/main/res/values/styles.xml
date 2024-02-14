@@ -24,7 +24,7 @@
         <item name="android:layout_height">56dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/fontColorOnSecondaryColor</item>
         <item name="android:textSize">@dimen/dk_text_normal</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>

@@ -29,5 +29,4 @@
     <dimen name="dk_rounded_corner">48dp</dimen>
 
     <dimen name="dk_screen_border">12dp</dimen>
-    <dimen name="dk_screen_border_permissionutils_onboarding">16dp</dimen>
 </resources>
