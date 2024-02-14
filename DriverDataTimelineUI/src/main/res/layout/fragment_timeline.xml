@@ -36,9 +36,9 @@
                 android:id="@+id/date_selector_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dk_margin_medium"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/dk_margin_medium"
                 android:paddingVertical="@dimen/dk_margin_quarter" />
 
             <LinearLayout
