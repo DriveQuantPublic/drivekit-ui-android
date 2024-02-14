@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/dk_margin_quarter" />
+            android:paddingHorizontal="@dimen/dk_margin_medium"
+            android:paddingVertical="@dimen/dk_margin_quarter" />
 
         <LinearLayout
             android:id="@+id/date_selector_container"
@@ -33,7 +34,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/dk_margin_quarter" />
+            android:layout_marginHorizontal="@dimen/dk_margin_medium"
+            android:paddingVertical="@dimen/dk_margin_quarter" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
@@ -45,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingHorizontal="@dimen/dk_margin_quarter">
+                android:paddingVertical="@dimen/dk_margin_quarter"
+                android:paddingHorizontal="@dimen/dk_margin_medium" >
 
                 <FrameLayout
                     android:id="@+id/scoreCard_container"
