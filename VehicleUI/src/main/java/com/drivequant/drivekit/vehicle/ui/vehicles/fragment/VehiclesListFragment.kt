@@ -129,7 +129,6 @@ class VehiclesListFragment : Fragment() {
         if (viewModel.shouldDisplayAddReplaceButton()) {
             binding.buttonVehicle.apply {
                 visibility = View.VISIBLE
-                button()
                 setText(viewModel.getAddReplaceButtonTextResId())
                 setOnClickListener {
                     if (viewModel.shouldReplaceVehicle()) {

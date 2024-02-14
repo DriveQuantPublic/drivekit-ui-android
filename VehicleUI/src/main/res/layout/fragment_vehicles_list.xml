@@ -27,9 +27,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dk_screen_border" >
 
-                <include
+            <include
                     android:id="@+id/vehicleListHeader"
                     layout="@layout/header_vehicle_list" />
 
@@ -43,13 +44,13 @@
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <Button
+        <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
             android:id="@+id/button_vehicle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/DKButton"
             android:layout_gravity="bottom"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
+            android:layout_margin="@dimen/dk_screen_border"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
