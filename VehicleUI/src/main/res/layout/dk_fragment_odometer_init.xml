@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/dk_margin"
-    android:paddingEnd="@dimen/dk_margin">
+    android:paddingHorizontal="@dimen/dk_screen_border_vehicle">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -55,15 +54,12 @@
                     tools:textSize="@dimen/dk_text_normal" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
                 android:id="@+id/button_validate_reference"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:textAllCaps="true"
-                tools:text="@string/dk_common_validate" />
-
+                style="@style/DKButton"
+                android:text="@string/dk_common_validate"
+                android:layout_marginVertical="10dp"
+                android:gravity="center" />
         </LinearLayout>
 
         <ProgressBar
