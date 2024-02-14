@@ -14,7 +14,8 @@
             android:id="@+id/recycler_view_streaks"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:paddingVertical="@dimen/dk_screen_border"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
