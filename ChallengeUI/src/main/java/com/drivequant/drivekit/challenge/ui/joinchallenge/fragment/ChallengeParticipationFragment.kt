@@ -19,7 +19,6 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.common.TitleProgressBa
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationDisplayState
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -33,7 +32,7 @@ class ChallengeParticipationFragment : Fragment() {
     private lateinit var challengeId: String
     private lateinit var viewModel: ChallengeParticipationViewModel
     private lateinit var countDownTimer: CountDownTimer
-    private lateinit var challengeHeaderView:ChallengeHeaderView
+    private lateinit var challengeHeaderView: ChallengeHeaderView
     private var _binding: DkFragmentChallengeJoinBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
@@ -141,8 +140,6 @@ class ChallengeParticipationFragment : Fragment() {
     private fun join() {
         binding.textViewJoinChallenge.apply {
             setText(R.string.dk_challenge_participate_button)
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
             visibility = View.VISIBLE
         }
     }
@@ -151,8 +148,6 @@ class ChallengeParticipationFragment : Fragment() {
         binding.containerConditionsInfo.visibility = View.VISIBLE
         binding.textViewJoinChallenge.apply {
             setText(R.string.dk_challenge_registered_confirmation)
-            setBackgroundColor(DriveKitUI.colors.primaryColor())
-            headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
             visibility = View.VISIBLE
             isEnabled = false
         }
@@ -181,8 +176,8 @@ class ChallengeParticipationFragment : Fragment() {
     private fun countDown(context: Context) {
         binding.textViewJoinChallenge.apply {
             setText(R.string.dk_challenge_registered_confirmation)
-            setBackgroundColor(DriveKitUI.colors.primaryColor())
-            headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
+            //setBackgroundColor(DriveKitUI.colors.primaryColor())
+            //headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
             isEnabled = false
         }
         if (viewModel.getTimeLeft() > 0) {
@@ -248,10 +243,6 @@ class ChallengeParticipationFragment : Fragment() {
     private fun setStyle() {
         binding.textViewConditionsInfo.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
         binding.containerConditionsInfo.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        binding.textViewJoinChallenge.apply {
-            setBackgroundColor(DriveKitUI.colors.primaryColor())
-            headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
-        }
         binding.textViewCountdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
