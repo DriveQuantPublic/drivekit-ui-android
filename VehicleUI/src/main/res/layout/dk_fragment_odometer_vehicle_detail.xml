@@ -9,23 +9,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/dk_screen_border">
 
         <androidx.cardview.widget.CardView
             style="@style/DKCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dk_margin_half"
             android:layout_marginTop="@dimen/dk_margin"
             android:layout_marginBottom="@dimen/dk_margin_half"
-            android:orientation="vertical"
-            android:padding="@dimen/dk_margin">
+            android:orientation="vertical">
 
             <include
                 android:id="@+id/spinnerItem"
                 layout="@layout/dk_custom_filter_spinner_item" />
         </androidx.cardview.widget.CardView>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_marginVertical="@dimen/dk_margin_quarter"
                 app:odometerCornerIcon="@drawable/dk_common_info"
                 app:odometerTitle="dk_vehicle_odometer_distance_analyzed" />
 
@@ -57,15 +56,11 @@
                 app:odometerTitle="dk_vehicle_odometer_info_estimated_distance_title" />
         </LinearLayout>
 
-        <TextView
+        <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
             android:id="@+id/button_update_odometer_reading"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="@dimen/dk_margin"
-            android:background="#000"
-            android:gravity="center"
-            android:text="update odometer reading"
-            android:textAllCaps="true" />
+            style="@style/DKButton"
+            android:layout_marginVertical="@dimen/dk_margin"
+            android:text="@string/dk_vehicle_odometer_history_update" />
 
         <TextView
             android:id="@+id/button_display_odometer_readings"
@@ -73,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dk_margin"
             android:gravity="center"
-            android:text="see odometer readings"
+            android:text="@string/dk_vehicle_odometer_histories_link"
             android:textAllCaps="true"
             android:textColor="#000" />
     </LinearLayout>

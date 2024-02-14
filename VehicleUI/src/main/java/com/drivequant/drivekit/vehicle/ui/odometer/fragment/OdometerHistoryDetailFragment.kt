@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
@@ -99,11 +98,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                 binding.vehicleItem.setBackgroundColor(DriveKitUI.colors.neutralColor())
                 viewModel.odometerActionObserver.observe(viewLifecycleOwner) {
                     updateProgressVisibility(false)
-                    Toast.makeText(
-                        context,
-                        it.first,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(context, it.first, Toast.LENGTH_LONG).show()
                     if (it.second) {
                         val intentData = Intent()
                         activity?.let { activity ->
@@ -154,11 +149,7 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     private fun onValidateButtonClicked(context: Context) {
         binding.buttonValidateReference.apply {
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
-            visibility =
-                if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
+            visibility = if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
             setOnClickListener {
                 if (viewModel.showMileageDistanceErrorMessage()) {
                     Toast.makeText(

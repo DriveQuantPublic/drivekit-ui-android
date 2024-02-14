@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoriesListActivity">
+    tools:context="com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoriesListActivity"
+    android:layout_marginTop="@dimen/dk_screen_border"
+    android:paddingHorizontal="@dimen/dk_screen_border">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dk_recycler_view_histories"
@@ -11,13 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_ic_xxbig" />
 
-    <TextView
+    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/dk_button_add_reference"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        style="@style/DKButton"
         android:layout_gravity="bottom"
-        android:gravity="center"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        tools:text="@string/dk_vehicle_odometer_add_history" />
+        android:text="@string/dk_vehicle_odometer_add_history"
+        android:layout_marginBottom="@dimen/dk_screen_border"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

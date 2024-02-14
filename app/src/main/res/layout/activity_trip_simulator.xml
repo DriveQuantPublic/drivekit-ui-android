@@ -59,7 +59,7 @@
                 android:layout_marginStart="@dimen/dk_margin"
                 android:layout_marginTop="@dimen/dk_margin_double"
                 android:layout_marginEnd="@dimen/dk_margin"
-                android:background="@drawable/spinner_background">
+                android:background="@drawable/dk_spinner_background">
 
                 <Spinner
                     android:id="@+id/trips_dropdown_spinner"

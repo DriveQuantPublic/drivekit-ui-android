@@ -12,7 +12,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:paddingHorizontal="@dimen/dk_screen_border">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -23,7 +24,7 @@
                     style="@style/DKCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dk_margin">
+                    android:layout_marginVertical="@dimen/dk_margin">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -78,16 +79,12 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <TextView
+                <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
                     android:id="@+id/button_validate_reference"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="@dimen/dk_margin"
+                    style="@style/DKButton"
                     android:layout_marginTop="@dimen/dk_margin_half"
-                    android:layout_marginEnd="@dimen/dk_margin"
-                    android:gravity="center"
-                    android:text="@string/dk_common_validate"
-                    android:textAllCaps="true" />
+                    android:layout_marginHorizontal="2dp"
+                    android:text="@string/dk_common_validate"/>
 
                 <TextView
                     android:id="@+id/button_cancel_action"
