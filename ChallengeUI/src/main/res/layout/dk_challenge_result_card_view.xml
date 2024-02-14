@@ -4,7 +4,8 @@
     android:id="@+id/card_view_distance"
     style="@style/DKCard"
     android:layout_width="match_parent"
-    android:layout_height="82dp">
+    android:layout_marginVertical="2dp"
+    android:layout_height="92dp">
 
     <LinearLayout
         android:layout_width="match_parent"

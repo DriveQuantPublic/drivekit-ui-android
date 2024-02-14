@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dk_margin_half">
+    android:paddingVertical="@dimen/dk_margin_half">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/dk_screen_border">
 
         <TextView
             android:id="@+id/text_view_result_global_rank"
@@ -30,7 +31,7 @@
         <androidx.cardview.widget.CardView
             style="@style/DKCard"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="196dp"
             android:layout_gravity="center">
 
             <LinearLayout
