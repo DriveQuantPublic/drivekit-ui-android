@@ -169,7 +169,6 @@ class ChallengeParticipationFragment : Fragment() {
 
     private fun countDown(context: Context) {
         binding.textViewJoinChallenge.visibility = View.GONE
-        binding.challengeJoined.headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         if (viewModel.getTimeLeft() > 0) {
             startCountDown(context)
@@ -232,6 +231,7 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun setStyle() {
+        binding.challengeJoined.headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
         binding.textViewConditionsInfo.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
         binding.containerConditionsInfo.setBackgroundColor(DriveKitUI.colors.primaryColor())
         binding.textViewCountdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
