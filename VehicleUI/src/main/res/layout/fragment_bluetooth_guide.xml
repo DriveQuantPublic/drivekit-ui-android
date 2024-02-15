@@ -10,12 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.65"
         android:fillViewport="true"
-        android:padding="@dimen/dk_margin">
+        android:paddingVertical="@dimen/dk_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/dk_screen_border">
 
             <TextView
                 android:id="@+id/text_view_guide_title"
@@ -23,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/dk_margin"
+                android:text="@string/dk_vehicle_bluetooth_guide_header"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
@@ -33,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="@string/dk_vehicle_bluetooth_guide_desc1_android" />
 
             <TextView
                 android:id="@+id/text_view_guide_desc2"
@@ -41,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="@string/dk_vehicle_bluetooth_guide_desc2_android" />
 
             <TextView
                 android:id="@+id/text_view_guide_desc3"
@@ -49,16 +53,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="@string/dk_vehicle_bluetooth_guide_desc3_android" />
         </LinearLayout>
     </ScrollView>
 
-    <Button
+    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginEnd="@dimen/dk_margin"
+        style="@style/DKButton"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"
+        android:layout_marginHorizontal="@dimen/dk_screen_border"
+        android:text="@string/dk_vehicle_begin" />
 </LinearLayout>
