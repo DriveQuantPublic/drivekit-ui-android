@@ -50,7 +50,6 @@ internal class PermissionsActivity : AppCompatActivity() {
         }
         binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.permissions_intro_button)
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 PermissionsUtilsUI.showPermissionViews(
                     this@PermissionsActivity, object : PermissionViewListener {

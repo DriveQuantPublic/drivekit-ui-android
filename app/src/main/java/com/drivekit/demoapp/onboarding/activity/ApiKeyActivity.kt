@@ -37,7 +37,6 @@ internal class ApiKeyActivity : AppCompatActivity() {
         }
         binding.root.findViewById<Button>(R.id.button_action).apply {
             setText(viewModel.getButtonTextResId())
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 if (viewModel.isApiKeyValid()) {
                     UserIdActivity.launchActivity(this@ApiKeyActivity)

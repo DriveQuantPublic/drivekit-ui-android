@@ -38,19 +38,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
 
-    <TextView
+    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_add_vehicle"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        style="@style/DKButton"
         android:layout_marginStart="@dimen/dk_margin"
         android:layout_marginEnd="@dimen/dk_margin"
         android:layout_marginBottom="@dimen/dk_margin"
-        android:background="@color/colorAccent"
-        android:gravity="center"
         android:text="@string/vehicle_intro_button"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
