@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -91,13 +90,11 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
         }
         binding.textViewDescription.normalText()
 
-        binding.buttonValidate.button()
         binding.buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)
         binding.buttonValidate.setOnClickListener {
             viewModel.changeBeaconToVehicle()
         }
 
-        binding.buttonAbort.button()
         binding.buttonAbort.typeface = Typeface.DEFAULT_BOLD
         binding.buttonAbort.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
         binding.buttonAbort.setOnClickListener {
