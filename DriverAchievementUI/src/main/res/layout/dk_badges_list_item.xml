@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/dk_screen_border">
 
     <TextView
         android:id="@+id/text_view_badge_title"
@@ -14,11 +15,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:maxLines="1"
-        android:paddingLeft="@dimen/dk_margin_half"
-        android:paddingTop="@dimen/dk_margin_quarter"
-        android:paddingRight="@dimen/dk_margin_half"
-        android:paddingBottom="@dimen/dk_margin_quarter"
-        android:background="@drawable/dk_spinner_background"
+        android:paddingVertical="@dimen/dk_margin_quarter"
+        android:background="@drawable/dk_badge_header_background"
         tools:text="@string/badge_trip_number_theme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

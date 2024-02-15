@@ -45,6 +45,5 @@ internal class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
 
     private fun setStyle() {
         title.headLine2()
-        title.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 }
