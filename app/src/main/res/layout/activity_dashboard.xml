@@ -56,7 +56,7 @@
 
     <include
         android:id="@+id/button_trip_simulator"
-        layout="@layout/layout_button_action"
+        layout="@layout/layout_button_secondary_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin" />

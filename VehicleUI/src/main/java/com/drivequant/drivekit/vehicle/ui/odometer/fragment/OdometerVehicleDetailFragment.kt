@@ -99,7 +99,6 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     private fun displayOdometerReadings(vehicleId: String) {
         binding.buttonDisplayOdometerReadings.apply {
             visibility = if(viewModel.shouldShowDisplayReadingButton()) View.VISIBLE else View.GONE
-            headLine2(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 activity?.let { activity ->
                     OdometerHistoriesListActivity.launchActivity(activity, vehicleId, this@OdometerVehicleDetailFragment)

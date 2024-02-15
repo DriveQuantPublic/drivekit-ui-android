@@ -16,7 +16,6 @@
             style="@style/DKCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dk_margin"
             android:layout_marginBottom="@dimen/dk_margin_half"
             android:orientation="vertical">
 
@@ -62,14 +61,10 @@
             android:layout_marginVertical="@dimen/dk_margin"
             android:text="@string/dk_vehicle_odometer_history_update" />
 
-        <TextView
+        <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
             android:id="@+id/button_display_odometer_readings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/DKButton.Secondary"
             android:layout_marginBottom="@dimen/dk_margin"
-            android:gravity="center"
-            android:text="@string/dk_vehicle_odometer_histories_link"
-            android:textAllCaps="true"
-            android:textColor="#000" />
+            android:text="@string/dk_vehicle_odometer_histories_link" />
     </LinearLayout>
 </ScrollView>

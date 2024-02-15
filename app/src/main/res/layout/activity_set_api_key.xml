@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
 
     <include
-        layout="@layout/layout_button_action"
+        layout="@layout/layout_button_primary_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin"

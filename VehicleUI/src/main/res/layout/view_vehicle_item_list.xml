@@ -4,6 +4,7 @@
     style="@style/DKCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginVertical="2dp"
     tools:viewBindingIgnore="true">
 
     <LinearLayout
@@ -94,7 +95,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="5"
-                android:text="This text describes state of the selected detection mode" />
+                tools:text="This text describes state of the selected detection mode" />
 
             <Button
                 android:id="@+id/text_view_setup_button"

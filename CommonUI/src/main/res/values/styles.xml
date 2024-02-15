@@ -25,7 +25,8 @@
     </style>
 
     <style name="DKButton">
-        <item name="android:layout_height">56dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/fontColorOnSecondaryColor</item>
@@ -35,7 +36,7 @@
     </style>
 
     <style name="DKButton.Secondary" parent="DKButton">
-        <item name="android:textColor">@color/secondaryColor</item>-->
+        <item name="android:textColor">@color/secondaryColor</item>
     </style>
 
     <style name="DKCard">

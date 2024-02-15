@@ -50,7 +50,7 @@
 
         <TextView
             android:id="@+id/dk_text_view_title"
-            android:maxLines="1"
+            android:maxLines="2"
             android:ellipsize="end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

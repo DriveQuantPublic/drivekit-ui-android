@@ -10,7 +10,6 @@
         android:id="@+id/dk_swipe_refresh_odometer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dk_margin"
         android:paddingHorizontal="@dimen/dk_screen_border">
 
         <LinearLayout

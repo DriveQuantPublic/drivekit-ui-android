@@ -54,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dk_ic_xbig"
             android:layout_gravity="center"
-            android:textAllCaps="false"
             android:textSize="@dimen/dk_text_small" />
     </LinearLayout>
 

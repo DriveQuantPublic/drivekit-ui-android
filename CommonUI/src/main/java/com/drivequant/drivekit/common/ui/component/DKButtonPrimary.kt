@@ -41,9 +41,7 @@ class DKButtonPrimary : androidx.appcompat.widget.AppCompatButton {
         this.path.reset()
         this.path.addRoundRect(this.rect, corners, Path.Direction.CW)
 
-
         shape.cornerRadii = corners
-        //shape.setStroke(3, borderColor)
     }
 
     override fun dispatchDraw(canvas: Canvas) {

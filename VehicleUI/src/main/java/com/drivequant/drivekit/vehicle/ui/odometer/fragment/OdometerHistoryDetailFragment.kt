@@ -171,8 +171,6 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     private fun onCancelButtonClicked() {
         binding.buttonCancelAction.apply {
-            normalText(DriveKitUI.colors.secondaryColor())
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
             visibility = if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
             setOnClickListener {
                 activity?.let {
