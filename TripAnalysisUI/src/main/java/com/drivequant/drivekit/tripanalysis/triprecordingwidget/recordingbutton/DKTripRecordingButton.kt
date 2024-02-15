@@ -61,7 +61,6 @@ class DKTripRecordingButton : Fragment() {
         this.stateImageGroup = this.view.findViewById(R.id.iconGroup)
         this.container = this.view.findViewById(R.id.container)
 
-        //(this.view.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
         (this.stateImageBackground.background as GradientDrawable).setColor(DriveKitUI.colors.fontColorOnSecondaryColor())
         this.stateImageView.setColorFilter(DriveKitUI.colors.secondaryColor())
         (this.stateImageBorder.background as GradientDrawable).setStroke(1.5F.convertDpToPx(), view.context.getColor(R.color.dkTripRecordingButtonBorder).tintFromHueOfColor(DriveKitUI.colors.secondaryColor()))
