@@ -73,7 +73,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
     fun initialize(
         vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR),
         maxVehicles: Int? = null,
-        categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG,
+        categoryConfigType: CategoryConfigType = CategoryConfigType.LITE_CONFIG_ONLY,
         detectionModes: List<DetectionMode> = DetectionMode.values().toList()
     ) {
         configureVehiclesTypes(vehicleTypes)

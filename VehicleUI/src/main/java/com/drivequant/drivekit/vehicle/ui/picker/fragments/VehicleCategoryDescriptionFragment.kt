@@ -59,7 +59,6 @@ class VehicleCategoryDescriptionFragment : Fragment() {
 
         if (DriveKitVehicleUI.categoryConfigType == CategoryConfigType.LITE_CONFIG_ONLY) {
             val buttonValidate = validateButton as Button
-            buttonValidate.button()
             buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             textViewBrands.visibility = View.GONE
         } else {

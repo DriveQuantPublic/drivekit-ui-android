@@ -229,19 +229,14 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <Button
+            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
                 android:id="@+id/button_validate"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="@dimen/dk_margin"
-                android:layout_marginBottom="@dimen/dk_margin"
+                style="@style/DKButton"
+                android:layout_marginVertical="@dimen/dk_margin"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:gravity="center"
                 android:onClick="onValidateClicked"
-                android:textAllCaps="true"
-                android:textSize="@dimen/dk_text_medium"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>

@@ -56,8 +56,6 @@
             <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
                 style="@style/DKButton"
                 android:id="@+id/button_request_activity_permission"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onRequestPermissionClicked"

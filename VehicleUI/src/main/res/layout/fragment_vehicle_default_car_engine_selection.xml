@@ -60,8 +60,6 @@
     <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_validate"
         style="@style/DKButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:paddingVertical="@dimen/dk_margin_half"

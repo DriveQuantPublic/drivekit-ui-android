@@ -22,8 +22,6 @@
     <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_cancel"
         style="@style/DKButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin_half"
         android:text="@string/dk_common_cancel"
         android:foreground="?attr/selectableItemBackground" />
