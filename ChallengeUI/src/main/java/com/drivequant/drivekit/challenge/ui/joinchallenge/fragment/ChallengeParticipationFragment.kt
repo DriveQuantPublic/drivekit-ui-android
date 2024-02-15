@@ -19,6 +19,7 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.common.TitleProgressBa
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationDisplayState
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -138,19 +139,12 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun join() {
-        binding.textViewJoinChallenge.apply {
-            setText(R.string.dk_challenge_participate_button)
-            visibility = View.VISIBLE
-        }
+        binding.textViewJoinChallenge.visibility = View.VISIBLE
     }
 
     private fun progress(context: Context) {
         binding.containerConditionsInfo.visibility = View.VISIBLE
-        binding.textViewJoinChallenge.apply {
-            setText(R.string.dk_challenge_registered_confirmation)
-            visibility = View.VISIBLE
-            isEnabled = false
-        }
+        binding.textViewJoinChallenge.visibility = View.GONE
 
         viewModel.challenge?.let {
             for (key in it.conditions.keys.reversed()) {
@@ -174,12 +168,9 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun countDown(context: Context) {
-        binding.textViewJoinChallenge.apply {
-            setText(R.string.dk_challenge_registered_confirmation)
-            //setBackgroundColor(DriveKitUI.colors.primaryColor())
-            //headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
-            isEnabled = false
-        }
+        binding.textViewJoinChallenge.visibility = View.GONE
+        binding.challengeJoined.headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
+
         if (viewModel.getTimeLeft() > 0) {
             startCountDown(context)
             binding.timerContainer.apply {
