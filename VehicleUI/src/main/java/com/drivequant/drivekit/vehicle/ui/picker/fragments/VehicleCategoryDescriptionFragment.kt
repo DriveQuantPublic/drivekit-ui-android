@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle

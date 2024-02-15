@@ -2,15 +2,17 @@ package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 
-class DKButtonPrimary : androidx.appcompat.widget.AppCompatButton {
+class DKButtonSecondary : androidx.appcompat.widget.AppCompatButton {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -25,10 +27,6 @@ class DKButtonPrimary : androidx.appcompat.widget.AppCompatButton {
     private val rect = RectF(0f, 0f, 0f, 0f)
 
     init {
-        shape.apply {
-            GradientDrawable.RECTANGLE
-            setColor(DriveKitUI.colors.secondaryColor())
-        }
         background = shape
     }
 
@@ -41,9 +39,8 @@ class DKButtonPrimary : androidx.appcompat.widget.AppCompatButton {
         this.path.reset()
         this.path.addRoundRect(this.rect, corners, Path.Direction.CW)
 
-
         shape.cornerRadii = corners
-        //shape.setStroke(3, borderColor)
+        shape.setStroke(3, ContextCompat.getColor(context, R.color.secondaryColor))
     }
 
     override fun dispatchDraw(canvas: Canvas) {

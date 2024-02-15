@@ -16,7 +16,6 @@ import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorVi
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
@@ -123,7 +122,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
                     viewModel.selectedDate
                 )
             }
-            button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
+            //button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
         }
     }
 

@@ -31,8 +31,7 @@
     </style>
 
     <style name="DKButton.Secondary" parent="DKButton">
-        <item name="android:textColor">@color/secondaryColor</item>
-        <item name="android:background">@drawable/dk_test</item>
+        <item name="android:textColor">@color/secondaryColor</item>-->
     </style>
 
     <style name="DKCard">
