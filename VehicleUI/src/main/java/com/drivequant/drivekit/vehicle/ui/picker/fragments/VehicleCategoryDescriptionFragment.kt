@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
@@ -79,6 +80,7 @@ class VehicleCategoryDescriptionFragment : Fragment() {
     }
 
     private fun customizeButton(button: View, @StringRes titleId: Int, @StringRes descriptionId: Int) {
+        button.background = ContextCompat.getDrawable(button.context, R.drawable.dk_vehicle_category_button_action_border)
         button.background.tintDrawable(DriveKitUI.colors.secondaryColor())
         button.findViewById<TextView>(R.id.buttonTitle).run {
             isAllCaps = true
