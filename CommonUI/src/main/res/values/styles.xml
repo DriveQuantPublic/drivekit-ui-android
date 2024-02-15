@@ -20,6 +20,10 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="DKAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dk_alert_dialog_background</item>
+    </style>
+
     <style name="DKButton">
         <item name="android:layout_height">56dp</item>
         <item name="android:layout_width">match_parent</item>
