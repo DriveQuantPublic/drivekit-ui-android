@@ -49,7 +49,7 @@ class DKTripRecordingButton : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cornerRadius = view.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_rounded_corner)
+        val cornerRadius = view.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_button_corner)
         this.view.roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
 
         this.titleTextView = this.view.findViewById(R.id.title)

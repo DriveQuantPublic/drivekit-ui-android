@@ -31,7 +31,7 @@
                 android:id="@+id/description_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/dk_rounded_edges"
+                android:background="@drawable/dk_placeholder_rounded_edges"
                 android:padding="@dimen/dk_margin_half" />
 
             <TextView
