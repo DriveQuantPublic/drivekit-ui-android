@@ -28,6 +28,9 @@
         <item name="android:minHeight">48dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/fontColorOnSecondaryColor</item>
         <item name="android:textSize">@dimen/dk_text_normal</item>

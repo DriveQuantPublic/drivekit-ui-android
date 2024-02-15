@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid />
-    <corners android:radius="8dp" />
+    <corners android:radius="48dp" />
     <padding
         android:left="@dimen/dk_margin_eigth"
         android:top="@dimen/dk_margin_eigth"
