@@ -2,14 +2,11 @@ package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 
 class DKButtonSecondary : androidx.appcompat.widget.AppCompatButton {
