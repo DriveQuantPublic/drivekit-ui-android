@@ -573,6 +573,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         this.helpTitle.headLine1()
         this.helpDescription.normalText(DriveKitUI.colors.complementaryFontColor())
         this.diagViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        this.summaryViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         this.batteryViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         this.diagnosisRoot.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }

@@ -57,7 +57,6 @@
                 style="@style/DKButton"
                 android:id="@+id/button_request_activity_permission"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onRequestPermissionClicked"
                 android:paddingVertical="@dimen/dk_margin"
                 android:text="@string/dk_perm_utils_permissions_phone_settings_activity_button"

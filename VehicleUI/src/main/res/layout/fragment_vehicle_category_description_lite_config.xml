@@ -34,7 +34,6 @@
         android:id="@+id/button_validate"
         style="@style/DKButton"
         android:layout_marginVertical="@dimen/dk_margin_half"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_view_description" />

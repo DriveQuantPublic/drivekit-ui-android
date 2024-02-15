@@ -95,10 +95,6 @@
             android:id="@+id/button_begin"
             style="@style/DKButton"
             android:layout_marginBottom="@dimen/dk_margin_medium"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:longClickable="true"
             android:text="@string/dk_vehicle_begin" />
     </LinearLayout>
 </ScrollView>

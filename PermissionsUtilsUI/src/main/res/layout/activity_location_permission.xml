@@ -69,7 +69,6 @@
                 android:id="@+id/button_request_location_permission"
                 style="@style/DKButton"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onRequestPermissionClicked"
                 android:text="@string/dk_perm_utils_permissions_location_button_android"
                 app:layout_constraintBottom_toBottomOf="parent"

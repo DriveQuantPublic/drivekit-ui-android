@@ -69,7 +69,6 @@
                 android:id="@+id/button_request_notifications_permission"
                 style="@style/DKButton"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onRequestPermissionClicked"
                 android:paddingVertical="@dimen/dk_margin"
                 android:text="@string/dk_perm_utils_permissions_phone_settings_notifications_button"

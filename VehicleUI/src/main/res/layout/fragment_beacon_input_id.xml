@@ -37,6 +37,5 @@
         android:id="@+id/button_validate"
         style="@style/DKButton"
         android:layout_marginVertical="@dimen/dk_margin_half"
-        android:text="@string/dk_common_validate"
-        android:foreground="?android:attr/selectableItemBackground" />
+        android:text="@string/dk_common_validate" />
 </LinearLayout>

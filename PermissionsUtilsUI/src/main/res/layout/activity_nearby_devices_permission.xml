@@ -68,7 +68,6 @@
                 android:id="@+id/button_request_nearby_devices_permission"
                 style="@style/DKButton"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onRequestPermissionClicked"
                 android:text="@string/dk_common_app_diag_nearby_link"
                 app:layout_constraintBottom_toBottomOf="parent"

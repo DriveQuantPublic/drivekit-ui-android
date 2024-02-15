@@ -48,7 +48,6 @@
         android:id="@+id/button_finish"
         style="@style/DKButton"
         android:layout_marginTop="@dimen/dk_margin_half"
-        android:foreground="?attr/selectableItemBackground"
         android:text="@string/dk_common_finish"
         android:visibility="visible" />
 </LinearLayout>

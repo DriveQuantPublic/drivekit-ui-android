@@ -61,8 +61,6 @@
     <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_start"
         style="@style/DKButton"
-        android:clickable="true"
-        android:focusable="true"
         android:layout_marginHorizontal="@dimen/dk_screen_border"
         android:text="@string/dk_vehicle_begin" />
 </LinearLayout>

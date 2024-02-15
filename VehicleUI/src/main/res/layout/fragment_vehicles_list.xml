@@ -48,8 +48,6 @@
             android:id="@+id/button_vehicle"
             style="@style/DKButton"
             android:layout_gravity="bottom"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
             android:paddingHorizontal="@dimen/dk_screen_border"
             android:layout_margin="@dimen/dk_margin"
             android:visibility="gone"

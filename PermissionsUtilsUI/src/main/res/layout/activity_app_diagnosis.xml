@@ -237,7 +237,6 @@
                 style="@style/DKButton"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:paddingVertical="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_app_diag_help_request_button"
                 app:layout_constraintBottom_toBottomOf="parent"

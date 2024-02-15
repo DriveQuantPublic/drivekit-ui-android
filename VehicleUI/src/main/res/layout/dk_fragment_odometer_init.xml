@@ -58,8 +58,7 @@
                 android:id="@+id/button_validate_reference"
                 style="@style/DKButton"
                 android:text="@string/dk_common_validate"
-                android:layout_marginVertical="10dp"
-                android:gravity="center" />
+                android:layout_marginVertical="10dp" />
         </LinearLayout>
 
         <ProgressBar

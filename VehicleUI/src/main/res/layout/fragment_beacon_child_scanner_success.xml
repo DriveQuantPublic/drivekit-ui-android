@@ -16,6 +16,5 @@
     <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_validate"
         style="@style/DKButton"
-        android:layout_marginTop="@dimen/dk_margin_half"
-        android:foreground="?android:attr/selectableItemBackground" />
+        android:layout_marginTop="@dimen/dk_margin_half" />
 </LinearLayout>
