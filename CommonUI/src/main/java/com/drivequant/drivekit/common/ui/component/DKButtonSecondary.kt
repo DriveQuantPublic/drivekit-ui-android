@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 
 class DKButtonSecondary : androidx.appcompat.widget.AppCompatButton {
 
@@ -37,7 +38,7 @@ class DKButtonSecondary : androidx.appcompat.widget.AppCompatButton {
         this.path.addRoundRect(this.rect, corners, Path.Direction.CW)
 
         shape.cornerRadii = corners
-        shape.setStroke(3, ContextCompat.getColor(context, R.color.secondaryColor))
+        shape.setStroke(2.convertDpToPx(), ContextCompat.getColor(context, R.color.secondaryColor))
     }
 
     override fun dispatchDraw(canvas: Canvas) {

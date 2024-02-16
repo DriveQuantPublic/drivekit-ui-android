@@ -15,7 +15,7 @@
         android:id="@+id/view_group_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dk_margin_medium">
+        android:padding="@dimen/dk_screen_border">
 
         <ImageView
             android:id="@+id/dk_image_view_icon"

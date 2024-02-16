@@ -7,8 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dk_ic_big"
         android:gravity="center"
-        android:paddingEnd="@dimen/dk_margin_medium"
-        android:paddingStart="@dimen/dk_margin_medium"
+        android:paddingHorizontal="@dimen/dk_screen_border"
         android:background="@drawable/dk_ranking_rounded_edges" />
 </LinearLayout>
 
