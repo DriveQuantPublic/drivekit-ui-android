@@ -3,6 +3,7 @@
     <color name="primaryColor">#0B4D6E</color>
     <color name="secondaryColor">#77E2B0</color>
     <color name="fontColorOnSecondaryColor">@android:color/white</color>
+    <color name="neutralColor">#F0F0F0</color>
 
     <color name="dkGaugeBackColor">#E0E0E0</color>
     <color name="dkVeryBad">#FF6E57</color>

@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import com.drivequant.drivekit.common.ui.DriveKitUI
 
@@ -16,9 +15,6 @@ class DKButtonPrimary : DKButtonBase {
     )
 
     init {
-        shape.apply {
-            GradientDrawable.RECTANGLE
-            setColor(DriveKitUI.colors.secondaryColor())
-        }
+        super.shape.setColor(DriveKitUI.colors.secondaryColor())
     }
 }

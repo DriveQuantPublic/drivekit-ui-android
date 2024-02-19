@@ -23,7 +23,7 @@ open class DKButtonBase : androidx.appcompat.widget.AppCompatButton {
     val shape = GradientDrawable()
 
     init {
-        background = shape
+        this.background = shape
     }
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
@@ -32,10 +32,11 @@ open class DKButtonBase : androidx.appcompat.widget.AppCompatButton {
         val corners = floatArrayOf(radius, radius, radius, radius, radius, radius, radius, radius)
 
         this.rect.set(0f, 0f, width.toFloat(), height.toFloat())
+        
         this.path.reset()
         this.path.addRoundRect(this.rect, corners, Path.Direction.CW)
 
-        shape.cornerRadii = corners
+        this.shape.cornerRadii = corners
     }
 
     override fun dispatchDraw(canvas: Canvas) {

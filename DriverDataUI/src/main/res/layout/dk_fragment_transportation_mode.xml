@@ -233,8 +233,7 @@
                 android:id="@+id/button_validate"
                 style="@style/DKButton"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:onClick="onValidateClicked"
-                tools:ignore="UnusedAttribute" />
+                android:onClick="onValidateClicked" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
