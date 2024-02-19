@@ -47,12 +47,9 @@
         <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
             android:id="@+id/button_vehicle"
             style="@style/DKButton"
-            android:layout_gravity="bottom"
             android:paddingHorizontal="@dimen/dk_screen_border"
             android:layout_margin="@dimen/dk_margin"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             tools:text="New vehicle" />
     </LinearLayout>
 </FrameLayout>

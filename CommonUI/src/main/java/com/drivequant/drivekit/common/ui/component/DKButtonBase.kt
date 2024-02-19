@@ -17,9 +17,10 @@ open class DKButtonBase : androidx.appcompat.widget.AppCompatButton {
         defStyleAttr
     )
 
-    val path = Path()
-    val shape = GradientDrawable()
+    private val path = Path()
     private val rect = RectF(0f, 0f, 0f, 0f)
+
+    val shape = GradientDrawable()
 
     init {
         background = shape
