@@ -16,8 +16,7 @@
             style="@style/DKCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dk_margin_half"
-            android:orientation="vertical">
+            android:layout_marginBottom="@dimen/dk_margin_half">
 
             <include
                 android:id="@+id/spinnerItem"
