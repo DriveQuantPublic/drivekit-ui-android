@@ -2,8 +2,15 @@
 <resources>
     <color name="primaryColor">#0B4D6E</color>
     <color name="secondaryColor">#77E2B0</color>
+    <color name="mainFontColor">#161616</color>
+    <color name="complementaryFontColor">#9E9E9E</color>
+    <color name="fontColorOnPrimaryColor">@android:color/white</color>
     <color name="fontColorOnSecondaryColor">@android:color/white</color>
     <color name="neutralColor">#F0F0F0</color>
+    <color name="backgroundViewColor">#FAFAFA</color>
+    <color name="warningColor">#F7A334</color>
+    <color name="criticalColor">#E52027</color>
+    <color name="transparentColor">#000000FF</color>
 
     <color name="dkGaugeBackColor">#E0E0E0</color>
     <color name="dkVeryBad">#FF6E57</color>

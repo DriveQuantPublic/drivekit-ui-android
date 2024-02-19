@@ -13,7 +13,7 @@ object DriveKitUI {
 
     var analyticsListener: DriveKitAnalyticsListener? = null
     var distanceUnit: DistanceUnit = DistanceUnit.KM
-    var colors: DKColors = DKColors()
+    lateinit var colors: DKColors
 
     var scores: List<DKScoreType> = DKScoreType.values().toList()
         get() = field.filter { it.hasAccess() }
@@ -26,7 +26,7 @@ object DriveKitUI {
     private var fonts = DKFonts()
 
     @JvmOverloads
-    fun initialize(colors: DKColors = DKColors(), fonts: DKFonts = DKFonts()) {
+    fun initialize(context: Context, colors: DKColors = DKColors(context), fonts: DKFonts = DKFonts()) {
         this.colors = colors
         this.fonts = fonts
     }
