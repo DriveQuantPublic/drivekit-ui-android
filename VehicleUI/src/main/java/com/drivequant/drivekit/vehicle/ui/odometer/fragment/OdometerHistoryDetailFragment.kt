@@ -188,7 +188,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                 if (viewModel.canEditOrAddHistory()) {
                     val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                     val view = inflater.inflate(com.drivequant.drivekit.common.ui.R.layout.dk_alert_dialog_edit_value, null)
-                    val builder = androidx.appcompat.app.AlertDialog.Builder(context)
+                    val builder = androidx.appcompat.app.AlertDialog.Builder(context, com.drivequant.drivekit.common.ui.R.style.DKAlertDialog)
                     builder.setView(view)
                     val alertDialog = builder.create()
                     val titleTextView = view.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_title)
