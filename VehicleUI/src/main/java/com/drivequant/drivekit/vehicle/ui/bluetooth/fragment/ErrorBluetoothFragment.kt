@@ -8,10 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothErrorBinding
 
 class ErrorBluetoothFragment : Fragment() {
@@ -39,20 +37,13 @@ class ErrorBluetoothFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val secondaryColor = DriveKitUI.colors.secondaryColor()
+        binding.textViewBluetoothFailed.normalText(DriveKitUI.colors.mainFontColor())
 
-        binding.textViewBluetoothFailed.setText(R.string.dk_vehicle_bluetooth_not_found)
-        binding.textViewBluetoothFailed.normalText(mainFontColor)
-
-        binding.buttonCancel.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
-        binding.buttonCancel.button()
         binding.buttonCancel.setOnClickListener {
             activity?.finish()
         }
 
-        binding.textViewOpenSettings.setText(R.string.dk_vehicle_open_bluetooth_settings)
-        binding.textViewOpenSettings.normalText(secondaryColor)
+        binding.textViewOpenSettings.normalText(DriveKitUI.colors.secondaryColor())
         binding.textViewOpenSettings.setOnClickListener {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT)
         }

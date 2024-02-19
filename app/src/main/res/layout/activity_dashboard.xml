@@ -18,14 +18,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:padding="@dimen/dk_margin_half">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dk_screen_border">
 
             <FrameLayout
                 android:id="@+id/container_synthesis"
@@ -51,13 +51,13 @@
         android:name="com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginHorizontal="@dimen/dk_margin"
+        android:layout_marginHorizontal="@dimen/dk_screen_border"
         android:layout_marginVertical="@dimen/dk_margin_half" />
 
     <include
         android:id="@+id/button_trip_simulator"
-        layout="@layout/layout_button_action"
+        layout="@layout/layout_button_secondary_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin_medium" />
+        android:layout_marginBottom="@dimen/dk_margin" />
 </LinearLayout>

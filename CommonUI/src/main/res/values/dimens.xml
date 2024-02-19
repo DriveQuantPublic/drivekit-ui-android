@@ -26,4 +26,9 @@
     <dimen name="dk_separator_stroke">1dp</dimen>
     <dimen name="dk_default_gauge_stroke">5dp</dimen>
     <dimen name="dk_default_gauge_image_stroke">8dp</dimen>
+
+    <dimen name="dk_card_corner">8dp</dimen>
+    <dimen name="dk_button_corner">48dp</dimen>
+
+    <dimen name="dk_screen_border">10dp</dimen>
 </resources>

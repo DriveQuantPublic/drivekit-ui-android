@@ -3,7 +3,7 @@
 
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
-            <corners android:radius="8dp" />
+            <corners android:radius="@dimen/dk_card_corner" />
             <solid android:color="@color/dkProgressBarBackgroundColor" />
         </shape>
     </item>
@@ -11,7 +11,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape android:shape="rectangle">
-                <corners android:radius="8dp" />
+                <corners android:radius="@dimen/dk_card_corner" />
             </shape>
         </clip>
     </item>

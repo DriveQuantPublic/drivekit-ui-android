@@ -46,7 +46,6 @@ internal class VehiclesActivity : AppCompatActivity() {
             normalText(DriveKitUI.colors.complementaryFontColor())
         }
         binding.buttonAddVehicle.apply {
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 VehiclePickerActivity.launchActivity(
                     this@VehiclesActivity,

@@ -50,8 +50,6 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
 
         spinner.adapter = WorkingHoursSpinnerAdapter(context, items)
 
-        spinnerContainer.setBackgroundColor(DriveKitUI.colors.neutralColor())
-
         spinner.setOnTouchListener(OnTouchListener setOnTouchListener@{ v: View, event: MotionEvent ->
             if (event.action == MotionEvent.ACTION_UP) {
                 touched  = true

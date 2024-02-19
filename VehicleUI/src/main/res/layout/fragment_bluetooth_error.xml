@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
+    android:paddingHorizontal="@dimen/dk_screen_border"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".bluetooth.activity.BluetoothActivity">
 
@@ -13,23 +14,20 @@
         android:id="@+id/text_view_bluetooth_failed"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/dk_margin"
+        android:layout_marginVertical="@dimen/dk_margin"
         android:layout_weight="0.65"
-        android:gravity="center" />
+        android:gravity="center"
+        android:text="@string/dk_vehicle_bluetooth_not_found" />
 
-    <Button
+    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginEnd="@dimen/dk_margin"
+        style="@style/DKButton"
         android:layout_marginBottom="@dimen/dk_margin_half"
-        android:foreground="?attr/selectableItemBackground" />
+        android:text="@string/dk_common_cancel" />
 
-    <TextView
+    <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
         android:id="@+id/text_view_open_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin"
-        android:gravity="center_horizontal" />
+        style="@style/DKButton.Secondary"
+        android:layout_marginVertical="@dimen/dk_margin"
+        android:text="@string/dk_vehicle_open_bluetooth_settings" />
 </LinearLayout>

@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.bigText
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -77,20 +76,12 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
             }
         }
 
-        binding.textViewBeaconCodeText.apply {
-            bigText(DriveKitUI.colors.mainFontColor())
-            setText(R.string.dk_vehicle_beacon_setup_code_title)
-        }
+        binding.textViewBeaconCodeText.bigText(DriveKitUI.colors.mainFontColor())
         binding.codeWrapper.apply {
-            setHint(R.string.dk_vehicle_beacon_setup_code_hint)
             typeface = DriveKitUI.primaryFont(context)
         }
-        binding.buttonValidate.apply {
-            button()
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            setOnClickListener {
-                manageValidateClick(it)
-            }
+        binding.buttonValidate.setOnClickListener {
+            manageValidateClick(it)
         }
     }
 

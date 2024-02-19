@@ -8,12 +8,9 @@
     tools:viewBindingIgnore="true">
 
     <androidx.cardview.widget.CardView
-        style="@style/DKCard"
+        style="@style/DKCard.NoElevation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dk_margin"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

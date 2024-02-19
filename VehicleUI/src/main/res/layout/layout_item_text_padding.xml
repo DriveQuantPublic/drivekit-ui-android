@@ -5,7 +5,6 @@
     style="@style/VehiclePickerTextItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/dk_margin_half"
     android:layout_marginVertical="@dimen/dk_margin"
     android:padding="@dimen/dk_margin"
     tools:text="Button simple"

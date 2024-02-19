@@ -9,10 +9,9 @@
         android:id="@+id/trip_list_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_half"
-        android:layout_marginBottom="@dimen/dk_margin_half"
-        android:paddingStart="@dimen/dk_margin"
-        android:paddingEnd="@dimen/dk_margin">
+        android:layout_marginVertical="@dimen/dk_margin_half"
+        android:layout_marginHorizontal="@dimen/dk_screen_border"
+        android:paddingHorizontal="@dimen/dk_margin">
 
         <TextView
             android:id="@+id/text_view_date"
@@ -22,7 +21,8 @@
             android:maxLines="1"
             android:paddingTop="@dimen/dk_margin_quarter"
             android:paddingBottom="@dimen/dk_margin_quarter"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            tools:text="Date"/>
 
         <TextView
             android:id="@+id/text_view_informations"

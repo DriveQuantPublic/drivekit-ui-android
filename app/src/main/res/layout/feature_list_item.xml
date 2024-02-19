@@ -4,5 +4,5 @@
     android:id="@+id/feature_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dk_margin"
+    android:layout_marginBottom="@dimen/dk_margin_half"
     tools:viewBindingIgnore="true" />

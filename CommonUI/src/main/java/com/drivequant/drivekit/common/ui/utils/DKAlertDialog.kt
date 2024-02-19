@@ -26,7 +26,7 @@ object DKAlertDialog {
             this.context = context
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = inflater.inflate(R.layout.empty_alert_dialog_layout,null)
-            builder = AlertDialog.Builder(context)
+            builder = AlertDialog.Builder(context, R.style.DKAlertDialog)
             layout = view.findViewById(R.id.items_wrapper)
             builder?.setView(view)
             alertDialog = builder?.create()

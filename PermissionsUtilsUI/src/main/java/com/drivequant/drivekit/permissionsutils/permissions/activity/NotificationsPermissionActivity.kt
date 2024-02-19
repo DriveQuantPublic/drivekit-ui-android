@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
@@ -81,7 +80,6 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
         binding.textViewNotificationsPermissionTitle.highlightMedium()
         binding.textViewNotificationsPermissionText1.normalText()
         binding.textViewNotificationsPermissionText2.normalText()
-        binding.buttonRequestNotificationsPermission.button()
         binding.buttonSkip.normalText(DriveKitUI.colors.secondaryColor())
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }

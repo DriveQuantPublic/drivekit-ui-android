@@ -5,10 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="280dp"
     android:paddingHorizontal="@dimen/dk_margin"
-    android:paddingTop="@dimen/dk_margin_half"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="2dp"
-    app:cardUseCompatPadding="true">
+    android:paddingTop="@dimen/dk_margin_half">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"

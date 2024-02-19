@@ -10,7 +10,7 @@
         android:id="@+id/dk_swipe_refresh_odometer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dk_margin">
+        android:paddingHorizontal="@dimen/dk_screen_border">
 
         <LinearLayout
             android:id="@+id/container"
@@ -27,6 +27,7 @@
                 android:id="@+id/mileage_vehicle_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin_quarter"
                 app:odometerCornerIcon="@drawable/dk_common_dots"
                 app:odometerTitle="dk_vehicle_odometer_info_vehicle_distance_title" />
         </LinearLayout>

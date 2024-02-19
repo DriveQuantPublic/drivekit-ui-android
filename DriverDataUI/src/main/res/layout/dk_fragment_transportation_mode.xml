@@ -31,7 +31,7 @@
                 android:id="@+id/description_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/dk_rounded_edges"
+                android:background="@drawable/dk_placeholder_rounded_edges"
                 android:padding="@dimen/dk_margin_half" />
 
             <TextView
@@ -229,20 +229,11 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <Button
+            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
                 android:id="@+id/button_validate"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="@dimen/dk_margin"
-                android:layout_marginBottom="@dimen/dk_margin"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:onClick="onValidateClicked"
-                android:textAllCaps="true"
-                android:textSize="@dimen/dk_text_medium"
-                tools:ignore="UnusedAttribute" />
+                style="@style/DKButton"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:onClick="onValidateClicked" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

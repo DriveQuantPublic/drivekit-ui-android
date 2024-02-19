@@ -267,7 +267,7 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun displayErrorMessageAndGoBack(stringResId: Int, goBack: Boolean = true) {
-        AlertDialog.Builder(context)
+        AlertDialog.Builder(context, com.drivequant.drivekit.common.ui.R.style.DKAlertDialog)
             .setTitle(this.getString(R.string.app_name))
             .setMessage(stringResId)
             .setCancelable(false)
@@ -297,7 +297,7 @@ class TripDetailFragment : Fragment() {
             val adviceView = View.inflate(context, R.layout.view_trip_advice_message, null)
             val headerText = adviceView.findViewById<TextView>(R.id.text_view_advice_header)
             val feedbackButtonsLayout = adviceView.findViewById<LinearLayout>(R.id.linear_layout_advice_feedback)
-            val builder = AlertDialog.Builder(context).setView(adviceView)
+            val builder = AlertDialog.Builder(context, com.drivequant.drivekit.common.ui.R.style.DKAlertDialog).setView(adviceView)
 
             headerText.apply {
                 text = viewModel.getAdviceTitle(mapItem)
@@ -357,8 +357,7 @@ class TripDetailFragment : Fragment() {
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
 
         header.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        header.text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)
-            ?.uppercase(Locale.getDefault())
+        header.text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)?.uppercase(Locale.getDefault())
         feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).hint = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = context?.getString(R.string.dk_driverdata_advice_feedback_02)
@@ -372,7 +371,7 @@ class TripDetailFragment : Fragment() {
             handleClassicFeedbackAnswer(checkedId, feedbackView)
         }
 
-        val builder = AlertDialog.Builder(context)
+        val builder = AlertDialog.Builder(context, com.drivequant.drivekit.common.ui.R.style.DKAlertDialog)
             .setView(feedbackView)
             .setNegativeButton(context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
             .setPositiveButton(context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) { _, _ ->

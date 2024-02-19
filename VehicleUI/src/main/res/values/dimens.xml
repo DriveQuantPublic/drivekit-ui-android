@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dk_screen_border_vehicle">16dp</dimen>
+</resources>

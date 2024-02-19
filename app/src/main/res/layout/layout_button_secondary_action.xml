@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
+        android:id="@+id/button_action"
+        style="@style/DKButton.Secondary"
+        android:layout_marginHorizontal="@dimen/dk_screen_border"
+        android:layout_marginVertical="@dimen/dk_margin_half">
+    </com.drivequant.drivekit.common.ui.component.DKButtonSecondary>
+</FrameLayout>

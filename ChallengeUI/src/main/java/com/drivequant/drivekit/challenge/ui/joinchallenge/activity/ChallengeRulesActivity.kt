@@ -73,10 +73,8 @@ class ChallengeRulesActivity : AppCompatActivity() {
             R.string.dk_challenge_optin_title
         }
 
-        binding.textViewAcceptRule.apply {
-            setText(acceptRulesText)
-            headLine1(DriveKitUI.colors.fontColorOnSecondaryColor())
-        }
+        binding.textViewAcceptRule.setText(acceptRulesText)
+
         (savedInstanceState?.getString("challengeId"))?.let {
             challengeId = it
         }
@@ -135,7 +133,6 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 descriptionTextView?.normalText()
             }
         }
-        binding.textViewAcceptRule.setBackgroundColor(DriveKitUI.colors.secondaryColor())
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

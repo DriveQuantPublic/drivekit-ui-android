@@ -117,7 +117,7 @@ internal object DriveKitConfig {
         configureTripAnalysis(context)
 
         // UI modules configuration:
-        configureCommonUI()
+        configureCommonUI(context)
         configureDriverDataUI()
         configureDriverDataTimelineUI()
         configureVehicleUI()
@@ -163,8 +163,8 @@ internal object DriveKitConfig {
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
     }
 
-    private fun configureCommonUI() {
-        DriveKitUI.initialize()
+    private fun configureCommonUI(context: Context) {
+        DriveKitUI.initialize(context)
         DriveKitUI.scores = listOf(
             DKScoreType.SAFETY,
             DKScoreType.ECO_DRIVING,

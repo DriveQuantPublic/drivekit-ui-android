@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.R
@@ -44,12 +43,9 @@ internal class DefaultCarEngineSelectionFragment : Fragment() {
         descriptionTextView.normalText()
         yesChoice.normalText()
         noChoice.normalText()
-        validateButton.apply {
-            button()
-            setOnClickListener {
-                viewModel.isElectric = yesChoice.isChecked
-                viewModel.computeNextScreen(requireContext(), VehiclePickerStep.DEFAULT_CAR_ENGINE)
-            }
+        validateButton.setOnClickListener {
+            viewModel.isElectric = yesChoice.isChecked
+            viewModel.computeNextScreen(requireContext(), VehiclePickerStep.DEFAULT_CAR_ENGINE)
         }
     }
 }

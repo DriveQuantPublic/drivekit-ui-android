@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.CircularButtonItemView
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
@@ -94,7 +93,6 @@ internal class TransportationModeFragment : Fragment() {
         binding.textCommentError.smallText(DriveKitUI.colors.criticalColor())
         binding.textCommentError.setText(R.string.dk_driverdata_transportation_mode_declaration_comment_error)
 
-        binding.buttonValidate.button()
         binding.buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
 
         updateTransportationProfileVisibility()

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -44,7 +43,6 @@ class SuccessBluetoothFragment : Fragment() {
         val btDeviceName = vehicle.bluetooth?.name ?: ""
 
         binding.textViewCongratsTitle.headLine1(mainFontColor)
-        binding.textViewCongratsTitle.setText(R.string.dk_vehicle_bluetooth_congrats_title)
 
         binding.textViewCongratsDescription.normalText(mainFontColor)
         binding.textViewCongratsDescription.text = DKResource.buildString(
@@ -64,7 +62,6 @@ class SuccessBluetoothFragment : Fragment() {
 
         binding.buttonFinish.apply {
             setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
-            button()
             setOnClickListener {
                 activity?.finish()
             }

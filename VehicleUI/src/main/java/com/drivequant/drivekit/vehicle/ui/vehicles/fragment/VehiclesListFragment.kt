@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
@@ -64,6 +63,7 @@ class VehiclesListFragment : Fragment() {
                 viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
             }
         }
+        binding.vehiclesList.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onDestroyView() {
@@ -100,7 +100,6 @@ class VehiclesListFragment : Fragment() {
             if (it.isNullOrEmpty()) {
                 getVehicleListHeaderBinding().linearLayoutHeaderVehicleList.visibility = View.VISIBLE
             } else {
-                binding.vehiclesList.layoutManager = LinearLayoutManager(context)
                 displayVehiclesList()
                 adapter?.let { adapter ->
                     adapter.setVehicles(it)
@@ -129,7 +128,6 @@ class VehiclesListFragment : Fragment() {
         if (viewModel.shouldDisplayAddReplaceButton()) {
             binding.buttonVehicle.apply {
                 visibility = View.VISIBLE
-                button()
                 setText(viewModel.getAddReplaceButtonTextResId())
                 setOnClickListener {
                     if (viewModel.shouldReplaceVehicle()) {

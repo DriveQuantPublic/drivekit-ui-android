@@ -155,7 +155,6 @@ internal class DashboardActivity : AppCompatActivity() {
 
     private fun initTripSimulatorButton() {
         tripSimulatorButtonContainer.findViewById<Button>(R.id.button_action).apply {
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             tripSimulatorButton = this
             tripSimulatorButton.text = getString(R.string.simulate_trip)
             setOnClickListener {
