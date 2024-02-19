@@ -31,7 +31,7 @@
                 android:id="@+id/container_synthesis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal" />
 
             <FrameLayout
                 android:id="@+id/container_last_trips"
