@@ -6,7 +6,6 @@ import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
-import androidx.core.content.res.ResourcesCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 
 open class DKButtonBase : androidx.appcompat.widget.AppCompatButton {
