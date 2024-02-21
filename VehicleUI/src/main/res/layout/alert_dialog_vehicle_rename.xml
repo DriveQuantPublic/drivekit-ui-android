@@ -21,8 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin_half"
         android:orientation="vertical"
-        android:paddingStart="@dimen/dk_margin_medium"
-        android:paddingEnd="@dimen/dk_margin_medium">
+        android:paddingHorizontal="@dimen/dk_screen_border">
 
         <TextView
             android:id="@+id/text_view_alert_description"

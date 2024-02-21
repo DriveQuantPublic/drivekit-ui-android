@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/dk_margin"
-        android:paddingVertical="@dimen/dk_margin_medium">
+        android:paddingVertical="@dimen/dk_screen_border">
 
         <ImageView
             android:id="@+id/icon"
