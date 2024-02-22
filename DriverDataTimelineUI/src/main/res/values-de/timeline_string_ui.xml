@@ -21,8 +21,6 @@
    <string name="dk_timeline_overspeeding_duration">Überdrehzahl relative Dauer: %s</string>
    <string name="dk_timeline_road_context_city">Städtisch</string>
    <string name="dk_timeline_road_context_description_empty_data">Machen Sie eine erste Fahrt, um zu sehen, wie Ihre ersten Grafiken angezeigt werden.</string>
-   <string name="dk_timeline_road_context_description_no_data_ecodriving">Die Fahrten für die ausgewählten Daten sind zu kurz, um einen Eco-Drive-Score zu erhalten.</string>
-   <string name="dk_timeline_road_context_description_no_data_safety">Die Fahrten für die ausgewählten Daten sind zu kurz, um eine Sicherheitsbewertung zu erhalten.</string>
    <string name="dk_timeline_road_context_expressways">Autobahnen</string>
    <string name="dk_timeline_road_context_heavy_urban_traffic">dichtem Stadtverkehr</string>
    <string name="dk_timeline_road_context_no_context_description">In diesem Zeitraum gibt es nicht genügend Daten, um die Verteilung der Straßenkontexte zu berechnen.</string>

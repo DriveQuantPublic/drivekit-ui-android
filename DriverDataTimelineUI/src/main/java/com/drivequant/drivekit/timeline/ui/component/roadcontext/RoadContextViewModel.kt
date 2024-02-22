@@ -9,9 +9,7 @@ import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
-
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
@@ -23,33 +21,26 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
 
     val changeObserver: MutableLiveData<Any> = MutableLiveData()
 
-    var distanceByContext = mapOf<TimelineRoadContext, Double>()
-        private set(value) {
+    private var distanceByContext = mapOf<TimelineRoadContext, Double>()
+        set(value) {
             field = value.filterNot { it.value <= 0.0 }
         }
 
     private var contextCards: List<DKContextCardItem> = emptyList()
     private var totalDistanceForAllContext = 0.0
     private var distance = 0.0
-    private var selectedScore: DKScoreType = DKScoreType.SAFETY
-    var emptyRoadContextType: EmptyRoadContextType? = null
-        private set
+    private var emptyRoadContextType: EmptyRoadContextType? = null
 
-    fun configure(timeline: DKRawTimeline?, selectedScore: DKScoreType, selectedIndex: Int?) {
+    fun configure(timeline: DKRawTimeline?, selectedIndex: Int?) {
         if (timeline != null && selectedIndex != null && timeline.hasData()) {
-            this.selectedScore = selectedScore
-            this.totalDistanceForAllContext = timeline.totalDistanceForAllContexts(selectedScore, selectedIndex)
-            this.distanceByContext = timeline.distanceByRoadContext(selectedScore, selectedIndex)
+            this.totalDistanceForAllContext = timeline.totalDistanceForAllContexts(selectedIndex)
+            this.distanceByContext = timeline.distanceByRoadContext(selectedIndex)
             this.distance = 0.0
             this.distanceByContext.forEach {
                 this.distance += it.value
             }
             this.emptyRoadContextType = if (this.distanceByContext.isEmpty()) {
-                when (selectedScore) {
-                    DKScoreType.DISTRACTION, DKScoreType.SPEEDING -> EmptyRoadContextType.NO_DATA
-                    DKScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
-                    DKScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
-                }
+                EmptyRoadContextType.NO_DATA
             } else {
                 null
             }
@@ -109,8 +100,6 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
         return this.emptyRoadContextType?.let {
             when (it) {
                 EmptyRoadContextType.EMPTY_DATA -> com.drivequant.drivekit.common.ui.R.string.dk_common_no_data_yet
-                EmptyRoadContextType.NO_DATA_SAFETY,
-                EmptyRoadContextType.NO_DATA_ECODRIVING-> R.string.dk_timeline_road_context_title_no_data
                 EmptyRoadContextType.NO_DATA -> null
             }?.let { titleResId ->
                 context.getString(titleResId)
@@ -122,8 +111,6 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
         return this.emptyRoadContextType?.let {
             when (it) {
                 EmptyRoadContextType.EMPTY_DATA -> R.string.dk_timeline_road_context_description_empty_data
-                EmptyRoadContextType.NO_DATA_SAFETY -> R.string.dk_timeline_road_context_description_no_data_safety
-                EmptyRoadContextType.NO_DATA_ECODRIVING-> R.string.dk_timeline_road_context_description_no_data_ecodriving
                 EmptyRoadContextType.NO_DATA -> R.string.dk_timeline_road_context_no_context_description
             }.let { titleResId ->
                 context.getString(titleResId)
