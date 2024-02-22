@@ -21,8 +21,6 @@
    <string name="dk_timeline_overspeeding_duration">Overspeeding relative duration: %s</string>
    <string name="dk_timeline_road_context_city">City</string>
    <string name="dk_timeline_road_context_description_empty_data">Make a first trip to see your first graphs displayed.</string>
-   <string name="dk_timeline_road_context_description_no_data_ecodriving">The trips for the selected dates are too short to have an eco-driving score</string>
-   <string name="dk_timeline_road_context_description_no_data_safety">The trips for the selected dates are too short to have a safety score</string>
    <string name="dk_timeline_road_context_expressways">Expressways</string>
    <string name="dk_timeline_road_context_heavy_urban_traffic">Heavy urban traffic</string>
    <string name="dk_timeline_road_context_no_context_description">There is not enough data in this period to calculate the distribution of road contexts.</string>

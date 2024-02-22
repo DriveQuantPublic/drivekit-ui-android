@@ -6,19 +6,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
-import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
-import com.drivequant.drivekit.timeline.ui.TimelineUtils
-import com.drivequant.drivekit.timeline.ui.associatedScoreItemTypes
-import com.drivequant.drivekit.timeline.ui.cleanedTimeline
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
 import com.drivequant.drivekit.common.ui.extension.getTitleId
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
+import com.drivequant.drivekit.timeline.ui.TimelineUtils
+import com.drivequant.drivekit.timeline.ui.associatedScoreItemTypes
+import com.drivequant.drivekit.timeline.ui.cleanedTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
@@ -29,7 +29,7 @@ import java.util.Date
 
 internal class TimelineDetailViewModel(
     application: Application,
-    var selectedScore: DKScoreType,
+    selectedScore: DKScoreType,
     var selectedPeriod: DKPeriod,
     var selectedDate: Date
 ) : AndroidViewModel(application), TimelineGraphListener {
@@ -44,7 +44,7 @@ internal class TimelineDetailViewModel(
     var timelineGraphViewModelByScoreItem: Map<TimelineScoreItemType, TimelineGraphViewModel> = mapOf()
     private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
     private val timelineByPeriod = mutableMapOf<DKPeriod, DKRawTimeline>()
-    private val orderedScoreItemTypeToDisplay = this.selectedScore.associatedScoreItemTypes()
+    private val orderedScoreItemTypeToDisplay = selectedScore.associatedScoreItemTypes()
 
     init {
         DriveKitDriverData.getRawTimelines(this.periods, object :
@@ -75,7 +75,7 @@ internal class TimelineDetailViewModel(
             var selectedDateIndex = sourceDates.indexOf(this.selectedDate)
             if (selectedDateIndex >= 0) {
                 val cleanedTimeline =
-                    selectedTimeline.cleanedTimeline(this.selectedScore, selectedDateIndex)
+                    selectedTimeline.cleanedTimeline(selectedDateIndex)
 
                 // Compute selected index.
                 val dates = cleanedTimeline.allContext.date.map { it.toTimelineDate()!! }
@@ -98,7 +98,6 @@ internal class TimelineDetailViewModel(
 
                     this.roadContextViewModel.configure(
                         cleanedTimeline,
-                        this.selectedScore,
                         selectedDateIndex
                     )
 
@@ -135,8 +134,7 @@ internal class TimelineDetailViewModel(
                 val date = TimelineUtils.updateSelectedDate(
                     this.selectedPeriod,
                     this.selectedDate,
-                    timeline,
-                    this.selectedScore
+                    timeline
                 )
                 if (date != null) {
                     this.selectedPeriod = period
@@ -150,7 +148,7 @@ internal class TimelineDetailViewModel(
 
     //- DateSelectorListener
 
-    fun onDateSelected(date: Date) {
+    private fun onDateSelected(date: Date) {
         this.selectedDate = date
         updateViewModels()
         this.listener?.onUpdateSelectedDate(date)

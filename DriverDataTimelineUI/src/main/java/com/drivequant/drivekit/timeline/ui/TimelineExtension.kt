@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.timeline.ui
 
-import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKRawAllContextItem
 import com.drivequant.drivekit.databaseutils.entity.DKRawRoadContextItem
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
@@ -8,18 +7,16 @@ import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRo
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
 
 
-internal fun DKRawTimeline.hasValidTripScored(selectedScore: DKScoreType, selectedIndex: Int) =
-    selectedScore == DKScoreType.DISTRACTION
-            || selectedScore == DKScoreType.SPEEDING
-            || this.allContext.numberTripScored[selectedIndex, 0] > 0
+internal fun DKRawTimeline.hasValidTripScored(selectedIndex: Int) =
+    this.allContext.numberTripScored[selectedIndex, 0] > 0
 
 internal fun DKRawTimeline.hasData(): Boolean {
     return this.allContext.numberTripTotal.isNotEmpty()
 }
 
-internal fun DKRawTimeline.distanceByRoadContext(selectedScore: DKScoreType, selectedIndex: Int): Map<TimelineRoadContext, Double> {
+internal fun DKRawTimeline.distanceByRoadContext(selectedIndex: Int): Map<TimelineRoadContext, Double> {
     val distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
-    if (this.hasValidTripScored(selectedScore, selectedIndex)) {
+    if (this.hasValidTripScored(selectedIndex)) {
         this.roadContexts.forEach {
             val distance = it.distance[selectedIndex, 0.0]
             if (distance > 0) {
@@ -30,15 +27,15 @@ internal fun DKRawTimeline.distanceByRoadContext(selectedScore: DKScoreType, sel
     return distanceByContext
 }
 
-internal fun DKRawTimeline.totalDistanceForAllContexts(selectedScore: DKScoreType, selectedIndex: Int) : Double {
+internal fun DKRawTimeline.totalDistanceForAllContexts(selectedIndex: Int) : Double {
     var totalDistanceForAllContexts = 0.0
-    if (this.hasValidTripScored(selectedScore, selectedIndex)) {
+    if (this.hasValidTripScored(selectedIndex)) {
         totalDistanceForAllContexts = this.allContext.distance[selectedIndex, 0.0]
     }
     return totalDistanceForAllContexts
 }
 
-internal fun DKRawTimeline.cleanedTimeline(score: DKScoreType, selectedDateIndex: Int?): DKRawTimeline {
+internal fun DKRawTimeline.cleanedTimeline(selectedDateIndex: Int?): DKRawTimeline {
     val date = mutableListOf<String>()
     val numberTripTotal = mutableListOf<Int>()
     val numberTripScored = mutableListOf<Int>()
@@ -76,10 +73,7 @@ internal fun DKRawTimeline.cleanedTimeline(score: DKScoreType, selectedDateIndex
     val allContextItem = this.allContext
 
     val canInsertAtIndex: (Int) -> Boolean = { pos ->
-        this.allContext.numberTripScored[pos] > 0
-                || score == DKScoreType.DISTRACTION
-                || score == DKScoreType.SPEEDING
-                || selectedDateIndex == pos
+        this.allContext.numberTripScored[pos] > 0 || selectedDateIndex == pos
     }
 
     allContextItem.date.forEachIndexed { index, _ ->
