@@ -25,6 +25,7 @@ import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorVi
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.updateTabsFont
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.google.android.material.tabs.TabLayout
@@ -44,6 +45,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = DkFragmentChallengeBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
         return binding.root
     }
 
