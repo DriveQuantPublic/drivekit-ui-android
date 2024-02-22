@@ -6,25 +6,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
+import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.startingFrom
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
-import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
-import com.drivequant.drivekit.core.extension.CalendarField
-import com.drivequant.drivekit.core.extension.startingFrom
-import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
-import com.drivequant.drivekit.timeline.ui.*
-import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
-import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
-import com.drivequant.drivekit.core.scoreslevels.DKScoreType
-import com.drivequant.drivekit.databaseutils.entity.DKPeriod
+import com.drivequant.drivekit.timeline.ui.TimelineUtils
+import com.drivequant.drivekit.timeline.ui.cleanedTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
-import java.util.*
+import java.util.Date
 
 internal class TimelineViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -69,8 +70,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                     TimelineUtils.updateSelectedDate(
                         oldPeriod,
                         this.selectedDate,
-                        timeline,
-                        this.selectedScore
+                        timeline
                     )?.let { newDate ->
                         this.selectedDate = newDate
                     }
@@ -142,7 +142,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 it.toTimelineDate()!!
             }
             val initialSelectedDateIndex = selectedDate?.let { sourceDates.indexOf(it) }
-            val cleanedTimeline = timelineSource.cleanedTimeline(selectedScore, initialSelectedDateIndex)
+            val cleanedTimeline = timelineSource.cleanedTimeline(initialSelectedDateIndex)
 
             // Compute selected index
             val dates = cleanedTimeline.allContext.date.map {
@@ -160,7 +160,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 // Update view models
                 periodSelectorViewModel.select(this.currentPeriod)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
-                roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex)
+                roadContextViewModel.configure(cleanedTimeline, selectedDateIndex)
                 graphViewModel.configure(getApplication(), cleanedTimeline, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)
             } else {
                 configureWithNoData()
@@ -213,7 +213,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
-            roadContextViewModel.configure(null, selectedScore, null)
+            roadContextViewModel.configure(null, null)
             graphViewModel.showEmptyGraph(GraphItem.Score(this.selectedScore), this.currentPeriod)
         }
     }

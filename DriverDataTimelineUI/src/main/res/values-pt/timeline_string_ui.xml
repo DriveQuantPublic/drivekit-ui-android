@@ -21,8 +21,6 @@
    <string name="dk_timeline_overspeeding_duration">Tempo acima da velocidade permitida: %s</string>
    <string name="dk_timeline_road_context_city">Cidade</string>
    <string name="dk_timeline_road_context_description_empty_data">Faça uma primeira viagem para ver seus primeiros gráficos exibidos.</string>
-   <string name="dk_timeline_road_context_description_no_data_ecodriving">As viagens para as datas selecionadas são muito curtas para ter uma pontuação ecológica</string>
-   <string name="dk_timeline_road_context_description_no_data_safety">As viagens para as datas selecionadas são muito curtas para ter uma pontuação de segurança</string>
    <string name="dk_timeline_road_context_expressways">Via expressa</string>
    <string name="dk_timeline_road_context_heavy_urban_traffic">Tráfego urbano pesado</string>
    <string name="dk_timeline_road_context_no_context_description">Não há dados suficientes neste período para calcular a distribuição dos contextos rodoviários.</string>

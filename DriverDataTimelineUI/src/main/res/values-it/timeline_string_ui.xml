@@ -21,8 +21,6 @@
    <string name="dk_timeline_overspeeding_duration">Durata relativa dell\'eccesso di velocità: %s</string>
    <string name="dk_timeline_road_context_city">Urbano fluido</string>
    <string name="dk_timeline_road_context_description_empty_data">Fate un primo viaggio per vedere apparire i primi grafici.</string>
-   <string name="dk_timeline_road_context_description_no_data_ecodriving">I viaggi per le date selezionate sono troppo brevi per ottenere un punteggio di guida ecologica.</string>
-   <string name="dk_timeline_road_context_description_no_data_safety">I viaggi per le date selezionate sono troppo brevi per ottenere un punteggio di guida sicurezza.</string>
    <string name="dk_timeline_road_context_expressways">Corsie veloci</string>
    <string name="dk_timeline_road_context_heavy_urban_traffic">Urbano denso</string>
    <string name="dk_timeline_road_context_no_context_description">In questo periodo non ci sono dati sufficienti per calcolare la distribuzione dei contesti stradali.</string>
