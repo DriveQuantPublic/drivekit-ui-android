@@ -30,5 +30,5 @@
     <dimen name="dk_card_corner">8dp</dimen>
     <dimen name="dk_button_corner">48dp</dimen>
 
-    <dimen name="dk_screen_border">10dp</dimen>
+    <dimen name="dk_screen_border">8dp</dimen>
 </resources>

@@ -62,11 +62,7 @@ class UnscoredTripFragment : Fragment() {
         binding.tripStartEnd.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
             .plus(" - ")
             .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER))
-        binding.tripMessage.text = context?.getString(viewModel.getNoScoreTripMessage())
 
-        binding.tripMessage.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-        binding.tripMessage.setBackgroundColor(DriveKitUI.colors.warningColor())
-        binding.tripStartEnd.setTextColor(DriveKitUI.colors.primaryColor())
         binding.tripDuration.highlightMedium(DriveKitUI.colors.primaryColor())
         binding.imageViewUnscoredTripInfo.background.tintDrawable(DriveKitUI.colors.warningColor())
     }

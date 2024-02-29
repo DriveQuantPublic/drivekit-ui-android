@@ -64,8 +64,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="0.8"
         android:gravity="center_vertical"
-        android:paddingStart="@dimen/dk_margin_medium"
-        android:paddingEnd="@dimen/dk_margin_medium"
+        android:paddingHorizontal="@dimen/dk_screen_border"
         android:textSize="@dimen/dk_text_small" />
 
     <LinearLayout

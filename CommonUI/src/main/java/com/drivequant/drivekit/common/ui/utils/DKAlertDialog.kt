@@ -84,9 +84,13 @@ object DKAlertDialog {
                 show()
                 listOf(
                     DialogInterface.BUTTON_POSITIVE,
-                    DialogInterface.BUTTON_NEGATIVE
+                    DialogInterface.BUTTON_NEGATIVE,
+                    DialogInterface.BUTTON_NEUTRAL
                 ).forEach { buttonType ->
-                    getButton(buttonType)?.typeface = DriveKitUI.primaryFont(context)
+                    getButton(buttonType)?.apply {
+                        typeface = DriveKitUI.primaryFont(context)
+                        setTextColor(DriveKitUI.colors.secondaryColor())
+                    }
                 }
             }
             return alertDialog!!
