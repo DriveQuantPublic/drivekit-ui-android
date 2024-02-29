@@ -48,13 +48,12 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <Button
+        <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
             android:id="@+id/button_change"
+            style="@style/DKButton"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dk_ic_xbig"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:textAllCaps="false"
             android:textSize="@dimen/dk_text_small" />
     </LinearLayout>
 
@@ -65,8 +64,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="0.8"
         android:gravity="center_vertical"
-        android:paddingStart="@dimen/dk_margin_medium"
-        android:paddingEnd="@dimen/dk_margin_medium"
+        android:paddingHorizontal="@dimen/dk_screen_border"
         android:textSize="@dimen/dk_text_small" />
 
     <LinearLayout

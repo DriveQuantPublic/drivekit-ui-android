@@ -23,21 +23,19 @@
             android:layout_height="wrap_content"
             android:autoLink="all"
             android:padding="@dimen/dk_margin_half"
+            android:paddingHorizontal="@dimen/dk_screen_border"
             tools:text="Rules text" />
     </ScrollView>
 
-    <TextView
+    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/text_view_accept_rule"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        style="@style/DKButton"
         android:visibility="gone"
+        android:layout_marginHorizontal="@dimen/dk_screen_border"
+        android:layout_marginBottom="@dimen/dk_screen_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:textColor="@android:color/white" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progress_circular"

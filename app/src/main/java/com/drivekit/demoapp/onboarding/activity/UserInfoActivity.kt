@@ -64,7 +64,6 @@ internal class UserInfoActivity : AppCompatActivity() {
 
         binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 val firstName = binding.textViewFirstnameField.editableText.toString()
                 val lastName = binding.textViewLastnameField.editableText.toString()

@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/dk_margin_quarter" />
+        android:paddingHorizontal="@dimen/dk_screen_border"
+        android:paddingVertical="@dimen/dk_margin_quarter" />
 
     <LinearLayout
         android:id="@+id/date_selector_container"
@@ -29,7 +30,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/dk_margin_quarter" />
+        android:layout_marginHorizontal="@dimen/dk_screen_border"
+        android:paddingVertical="@dimen/dk_margin_quarter" />
 
     <LinearLayout
         android:id="@+id/road_context_container"
@@ -37,7 +39,8 @@
         android:layout_height="190dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/dk_margin_quarter" />
+        android:paddingHorizontal="@dimen/dk_screen_border"
+        android:paddingVertical="@dimen/dk_margin_quarter" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
@@ -55,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/dk_margin_quarter" />
+                android:paddingVertical="@dimen/dk_margin_quarter"
+                android:paddingHorizontal="@dimen/dk_screen_border"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout>

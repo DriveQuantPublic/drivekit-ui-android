@@ -46,7 +46,6 @@ internal class TripSimulatorActivity : AppCompatActivity() {
 
         binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.trip_simulator_start_button)
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 when {
                     viewModel.shouldShowDeveloperModeErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_dev_mode)

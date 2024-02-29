@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -89,8 +88,6 @@ internal class DriverProfileFragment : Fragment() {
     }
 
     private fun configureDrivingConditionsButton() {
-        this.drivingConditionsButton.button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
-        this.drivingConditionsButton.setText(R.string.dk_driverdata_drivingconditions_show)
         this.drivingConditionsButton.setOnClickListener {
             context?.let {
                 DriverDataUI.startDrivingConditionsActivity(it)

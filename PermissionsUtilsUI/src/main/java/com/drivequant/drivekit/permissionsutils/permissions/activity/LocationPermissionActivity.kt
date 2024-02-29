@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -147,7 +146,6 @@ class LocationPermissionActivity : BasePermissionActivity() {
         binding.textViewPermissionLocationTitle.highlightMedium()
         binding.textViewLocationPermissionText1.normalText()
         binding.textViewLocationPermissionText2.normalText()
-        binding.buttonRequestLocationPermission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }

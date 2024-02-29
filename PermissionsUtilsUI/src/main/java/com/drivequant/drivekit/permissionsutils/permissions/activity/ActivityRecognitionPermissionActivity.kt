@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
@@ -60,7 +59,6 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     private fun setStyle() {
         binding.textViewActivityPermissionTitle.highlightMedium()
         binding.textViewActivityPermissionText.normalText()
-        binding.buttonRequestActivityPermission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }

@@ -43,12 +43,10 @@ class SelectBluetoothFragment : Fragment() {
 
         view.findViewById<TextView>(R.id.text_view_select_description).apply {
             normalText(DriveKitUI.colors.mainFontColor())
-            setText(R.string.dk_vehicle_select_bluetooth_description)
         }
 
         view.findViewById<TextView>(R.id.text_view_select_list_title).apply {
             headLine1(DriveKitUI.colors.primaryColor())
-            setText(R.string.dk_vehicle_bluetooth_devices_list_title)
         }
 
         setupRecyclerView()

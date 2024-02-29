@@ -7,7 +7,9 @@ import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import kotlin.math.ceil
 
 internal fun String.toTimelineDate(): Date? = TimelineUtils.getBackendDateFormat().parse(this)
@@ -20,7 +22,7 @@ internal object TimelineUtils {
         return backendDateFormat
     }
 
-    fun updateSelectedDate(oldPeriod: DKPeriod, previousSelectedDate: Date?, timeline: DKRawTimeline, score: DKScoreType): Date? {
+    fun updateSelectedDate(oldPeriod: DKPeriod, previousSelectedDate: Date?, timeline: DKRawTimeline): Date? {
         return if (previousSelectedDate != null) {
             val dates: MutableList<Date> = mutableListOf()
             val dateToIndex: MutableMap<Date, Int> = mutableMapOf()
@@ -35,7 +37,7 @@ internal object TimelineUtils {
                 dates
             ) { _, date ->
                 dateToIndex[date]?.let { index ->
-                    timeline.hasValidTripScored(score, index)
+                    timeline.hasValidTripScored(index)
                 } ?: false
             }
         } else {

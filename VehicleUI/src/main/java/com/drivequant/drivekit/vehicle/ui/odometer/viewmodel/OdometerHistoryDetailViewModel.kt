@@ -52,7 +52,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
 
     private fun getMostRecentHistory() = DriveKitVehicle.odometerHistoriesQuery()
         .whereEqualTo("vehicleId", vehicleId)
-        .orderBy("distance", Query.Direction.DESCENDING)
+        .orderBy("updateDate", Query.Direction.DESCENDING)
         .queryOne()
         .executeOne()
 

@@ -65,8 +65,6 @@ internal class AlternativeTripFragment : Fragment() {
                 AlternativeTripViewModel.AlternativeTripViewModelFactory(trip)
             )[AlternativeTripViewModel::class.java]
         }
-        binding.buttonChange.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-        binding.buttonChange.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         binding.buttonChange.setText(R.string.dk_driverdata_change_transportation_mode)
         binding.buttonChange.setOnClickListener { launchTransportationMode() }
         binding.itemCondition.setValueItem(viewModel.getConditionValue(requireContext()))

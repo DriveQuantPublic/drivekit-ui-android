@@ -85,20 +85,16 @@
         </LinearLayout>
 
         <include
-            layout="@layout/layout_button_action"
+            layout="@layout/layout_button_primary_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
             android:id="@+id/button_next_step"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/DKButton.Secondary"
             android:layout_marginTop="@dimen/dk_margin_medium"
-            android:gravity="center"
-            android:text="@string/button_next_step"
-            android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/dk_text_normal" />
+            android:layout_marginHorizontal="@dimen/dk_margin"
+            android:text="@string/button_next_step" />
     </LinearLayout>
 
     <ProgressBar

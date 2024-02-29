@@ -18,7 +18,6 @@
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/dk_margin_quarter"
             android:fillViewport="true"
-            android:paddingHorizontal="@dimen/dk_margin_quarter"
             app:layout_constraintBottom_toTopOf="@+id/button_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +26,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dk_screen_border" >
 
                 <include
                     android:id="@+id/driverProfileFeatureContainer"
@@ -53,12 +53,11 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <Button
+        <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
             android:id="@+id/button_detail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dk_margin_quarter"
-            android:gravity="center"
+            style="@style/DKButton.Secondary"
+            android:layout_marginVertical="@dimen/dk_margin_half"
+            android:layout_marginHorizontal="@dimen/dk_screen_border"
             android:text="@string/dk_driverdata_drivingconditions_show"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,5 +65,4 @@
             app:layout_constraintTop_toBottomOf="@id/nested_scroll_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

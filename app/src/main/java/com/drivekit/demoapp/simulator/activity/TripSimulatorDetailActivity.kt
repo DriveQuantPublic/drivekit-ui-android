@@ -99,7 +99,6 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
 
     private fun startStopSimulation() {
         binding.root.findViewById<Button>(R.id.button_action).apply {
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 if (viewModel.isSimulating) {
                     showStopSimulationPopup { updateContent() }

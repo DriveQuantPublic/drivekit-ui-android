@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.R
@@ -49,12 +48,10 @@ class VehicleNameChooserFragment : Fragment() {
         }
         binding.dkImageViewVehicleName.setImageResource(R.drawable.dk_vehicle_name_chooser)
         binding.textViewDescription.normalText()
-        binding.textViewDescription.setText(R.string.dk_vehicle_name_chooser_description)
 
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
         binding.buttonValidate.apply {
-            button()
             setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             isEnabled = true
             setOnClickListener {

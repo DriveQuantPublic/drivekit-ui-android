@@ -59,7 +59,7 @@
                 android:layout_marginStart="@dimen/dk_margin"
                 android:layout_marginTop="@dimen/dk_margin_double"
                 android:layout_marginEnd="@dimen/dk_margin"
-                android:background="@drawable/spinner_background">
+                android:background="@drawable/dk_spinner_background">
 
                 <Spinner
                     android:id="@+id/trips_dropdown_spinner"
@@ -82,7 +82,7 @@
     </ScrollView>
 
     <include
-        layout="@layout/layout_button_action"
+        layout="@layout/layout_button_primary_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

@@ -39,5 +39,4 @@ internal class TripStopButton(context: Context, attrs: AttributeSet?) :
         this.buttonDescription.smallText(DriveKitUI.colors.complementaryFontColor())
         this.background.tintDrawable(DriveKitUI.colors.secondaryColor())
     }
-
 }

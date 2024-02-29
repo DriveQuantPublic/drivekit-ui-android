@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/dk_screen_border"
     tools:viewBindingIgnore="true">
 
     <LinearLayout

@@ -47,7 +47,7 @@ object PseudoUtils {
     fun show(context: Context, listener: PseudoChangeListener) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.dk_alert_dialog_pseudo, null)
-        val builder = AlertDialog.Builder(context)
+        val builder = AlertDialog.Builder(context, R.style.DKAlertDialog)
         builder.setView(view)
 
         val alertDialog = builder.create()

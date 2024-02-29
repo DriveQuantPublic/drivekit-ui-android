@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -111,23 +110,19 @@ class OdometerInitFragment : Fragment() {
     }
 
     private fun addOdometerReading(context: Context) {
-        binding.buttonValidateReference.apply {
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            setOnClickListener {
-                val isEditTextDistanceBlank = binding.textViewVehicleDistanceField.editableText.toString().isBlank()
-                viewModel.mileageDistance = if (isEditTextDistanceBlank) 0.0 else binding.textViewVehicleDistanceField.editableText.toString().toDouble()
-                if (viewModel.showMileageDistanceErrorMessage() || isEditTextDistanceBlank) {
-                    binding.textInputLayoutDistance.apply {
-                        isErrorEnabled = true
-                        error = getString(R.string.dk_vehicle_odometer_history_error)
-                        typeface = DriveKitUI.primaryFont(context)
-                    }
-                } else {
-                    updateProgressVisibility(true)
-                    viewModel.addOdometerHistory()
+        binding.buttonValidateReference.setOnClickListener {
+            val isEditTextDistanceBlank = binding.textViewVehicleDistanceField.editableText.toString().isBlank()
+            viewModel.mileageDistance =
+                if (isEditTextDistanceBlank) 0.0 else binding.textViewVehicleDistanceField.editableText.toString().toDouble()
+            if (viewModel.showMileageDistanceErrorMessage() || isEditTextDistanceBlank) {
+                binding.textInputLayoutDistance.apply {
+                    isErrorEnabled = true
+                    error = getString(R.string.dk_vehicle_odometer_history_error)
+                    typeface = DriveKitUI.primaryFont(context)
                 }
+            } else {
+                updateProgressVisibility(true)
+                viewModel.addOdometerHistory()
             }
         }
     }

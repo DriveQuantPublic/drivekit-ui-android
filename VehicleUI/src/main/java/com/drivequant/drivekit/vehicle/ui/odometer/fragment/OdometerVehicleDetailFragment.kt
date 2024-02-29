@@ -99,8 +99,6 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     private fun displayOdometerReadings(vehicleId: String) {
         binding.buttonDisplayOdometerReadings.apply {
             visibility = if(viewModel.shouldShowDisplayReadingButton()) View.VISIBLE else View.GONE
-            setText(R.string.dk_vehicle_odometer_histories_link)
-            headLine2(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 activity?.let { activity ->
                     OdometerHistoriesListActivity.launchActivity(activity, vehicleId, this@OdometerVehicleDetailFragment)
@@ -110,13 +108,8 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     }
 
     private fun updateOdometerClicked(vehicleId: String) {
-        binding.buttonUpdateOdometerReading.apply {
-            setText(R.string.dk_vehicle_odometer_history_update)
-            headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            setOnClickListener {
-                OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerVehicleDetailFragment)
-            }
+        binding.buttonUpdateOdometerReading.setOnClickListener {
+            OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerVehicleDetailFragment)
         }
     }
 

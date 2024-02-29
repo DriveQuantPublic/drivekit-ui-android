@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="@color/primaryColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trip_duration"
@@ -53,6 +54,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="@dimen/dk_margin_half" />
+            android:background="@drawable/dk_placeholder_rounded_edges"
+            android:backgroundTint="@color/warningColor"
+            android:padding="@dimen/dk_margin_half"
+            android:text="@string/dk_driverdata_trip_detail_no_score"
+            android:textColor="@color/fontColorOnSecondaryColor" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

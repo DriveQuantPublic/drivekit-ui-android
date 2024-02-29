@@ -217,7 +217,7 @@ internal class SettingsActivity : AppCompatActivity() {
     private fun manageEditUserInfo(type: UserInfoType, data: String?) {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(com.drivequant.drivekit.common.ui.R.layout.dk_alert_dialog_edit_value, null)
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this, com.drivequant.drivekit.common.ui.R.style.DKAlertDialog)
         builder.setView(view)
         val alertDialog = builder.create()
         val titleTextView = view.findViewById<TextView>(R.id.text_view_title)

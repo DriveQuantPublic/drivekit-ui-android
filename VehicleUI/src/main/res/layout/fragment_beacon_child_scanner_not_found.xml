@@ -9,28 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/dk_margin_half" />
+        android:paddingVertical="@dimen/dk_margin_half" />
 
     <ImageView
         android:id="@+id/button_retry"
         android:layout_width="@dimen/dk_ic_medium"
         android:layout_height="@dimen/dk_ic_medium"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/dk_margin_half" />
+        android:layout_marginVertical="@dimen/dk_margin_half" />
 
-    <Button
+    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dk_margin"
+        style="@style/DKButton"
         android:layout_marginTop="@dimen/dk_margin_medium"
-        android:layout_marginEnd="@dimen/dk_margin"
         android:foreground="?android:attr/selectableItemBackground" />
 
-    <TextView
+    <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
         android:id="@+id/button_abort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_medium"
-        android:gravity="center" />
+        style="@style/DKButton.Secondary"
+        android:layout_marginTop="@dimen/dk_margin_medium" />
 </LinearLayout>

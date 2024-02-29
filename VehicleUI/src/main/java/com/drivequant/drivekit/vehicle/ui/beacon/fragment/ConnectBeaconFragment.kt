@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -64,25 +63,10 @@ class ConnectBeaconFragment : Fragment() {
             }
         }
 
-        binding.textViewConnectTitle.apply {
-            headLine1()
-            setText(R.string.dk_vehicle_beacon_setup_guide_title)
-        }
-        binding.textViewConnectDesc1.apply {
-            setText(R.string.dk_vehicle_beacon_setup_guide_desc1)
-            normalText()
-        }
-        binding.textViewConnectDesc2.apply {
-            setText(R.string.dk_vehicle_beacon_setup_guide_desc2)
-            normalText()
-        }
-        binding.textViewConnectDesc3.apply {
-            normalText()
-            setText(R.string.dk_vehicle_beacon_setup_guide_desc3)
-        }
-
-        binding.buttonBegin.button()
-        binding.buttonBegin.setText(R.string.dk_vehicle_begin)
+        binding.textViewConnectTitle.headLine1()
+        binding.textViewConnectDesc1.normalText()
+        binding.textViewConnectDesc2.normalText()
+        binding.textViewConnectDesc3.normalText()
         binding.buttonBegin.setOnClickListener {
             if (!viewModel.isBluetoothSensorEnabled()) {
                 val alertDialog = DKAlertDialog.LayoutBuilder()

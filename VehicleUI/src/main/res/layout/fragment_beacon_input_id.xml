@@ -7,22 +7,23 @@
     android:orientation="vertical"
     android:weightSum="1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:paddingHorizontal="@dimen/dk_screen_border"
     tools:context=".beacon.activity.BeaconActivity">
 
     <TextView
         android:id="@+id/text_view_beacon_code_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/dk_margin"
+        android:layout_marginVertical="@dimen/dk_margin"
         android:layout_weight="0.4"
+        android:text="@string/dk_vehicle_beacon_setup_code_title"
         android:gravity="center" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/code_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginEnd="@dimen/dk_margin"
+        android:hint="@string/dk_vehicle_beacon_setup_code_hint"
         app:errorTextAppearance="@style/Error_Appearance">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -32,12 +33,9 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_validate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginTop="@dimen/dk_margin_half"
-        android:layout_marginEnd="@dimen/dk_margin"
-        android:foreground="?android:attr/selectableItemBackground" />
+        style="@style/DKButton"
+        android:layout_marginVertical="@dimen/dk_margin_half"
+        android:text="@string/dk_common_validate" />
 </LinearLayout>

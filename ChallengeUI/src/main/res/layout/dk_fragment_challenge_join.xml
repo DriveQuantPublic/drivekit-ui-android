@@ -21,7 +21,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/dk_margin_half">
+                android:paddingBottom="@dimen/dk_margin_half"
+                android:paddingHorizontal="@dimen/dk_screen_border">
 
                 <LinearLayout
                     android:id="@+id/challenge_header_view_container"
@@ -66,15 +67,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
             android:id="@+id/text_view_join_challenge"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:text="@string/dk_challenge_registered_confirmation"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:textColor="@android:color/white" />
+            style="@style/DKButton"
+            android:layout_marginBottom="@dimen/dk_margin_medium"
+            android:layout_marginHorizontal="@dimen/dk_screen_border"
+            android:text="@string/dk_challenge_participate_button" />
 
         <LinearLayout
             android:id="@+id/timer_container"
@@ -85,21 +83,29 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/challenge_joined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/dk_challenge_registered_confirmation"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:paddingHorizontal="@dimen/dk_margin" />
+
+            <TextView
                 android:id="@+id/challenge_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="@dimen/dk_margin"
-                android:paddingRight="@dimen/dk_margin" />
+                android:text="@string/dk_challenge_start"
+                android:paddingHorizontal="@dimen/dk_margin" />
 
             <TextView
                 android:id="@+id/text_view_countdown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="@dimen/dk_margin"
-                android:paddingTop="@dimen/dk_margin_half"
-                android:paddingRight="@dimen/dk_margin" />
+                android:paddingHorizontal="@dimen/dk_margin"
+                android:paddingTop="@dimen/dk_margin_half" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -5,8 +5,7 @@
     android:id="@+id/trip_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="4dp"
-    android:paddingEnd="4dp"
+    android:paddingHorizontal="@dimen/dk_screen_border"
     tools:viewBindingIgnore="true">
 
     <FrameLayout

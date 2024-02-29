@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <include
-            layout="@layout/layout_button_action"
+            layout="@layout/layout_button_primary_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

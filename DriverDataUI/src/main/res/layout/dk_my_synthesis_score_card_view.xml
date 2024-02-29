@@ -13,9 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foreground="?android:attr/selectableItemBackground"
-        android:paddingVertical="@dimen/dk_margin"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp">
+        android:paddingVertical="@dimen/dk_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

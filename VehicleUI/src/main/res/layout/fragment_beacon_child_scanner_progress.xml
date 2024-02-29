@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/dk_margin_half" />
+        android:paddingVertical="@dimen/dk_margin_half" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin_half"
+        android:layout_marginVertical="@dimen/dk_margin_half"
         android:max="100" />
 </LinearLayout>

@@ -23,12 +23,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/dk_margin_quarter" />
+            android:paddingHorizontal="@dimen/dk_screen_border" />
 
         <FrameLayout
             android:id="@+id/challenge_list_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/dk_screen_border">
 
             <include
                 android:id="@+id/no_challenges"

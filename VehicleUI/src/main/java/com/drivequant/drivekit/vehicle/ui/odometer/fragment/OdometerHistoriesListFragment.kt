@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerHistoriesListBinding
@@ -74,8 +73,8 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
                 viewModel = ViewModelProvider(this,
                 OdometerHistoriesViewModel.OdometerHistoriesViewModelFactory(vehicleId))[OdometerHistoriesViewModel::class.java]
                 initReadingsList(context)
-                addOdometerReading(context, vehicleId)
             }
+            addOdometerReading(vehicleId)
         }
     }
 
@@ -84,14 +83,9 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
         _binding = null
     }
 
-    private fun addOdometerReading(context: Context, vehicleId: String) {
-        binding.dkButtonAddReference.apply {
-            setText(R.string.dk_vehicle_odometer_add_history)
-            headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            setOnClickListener {
-                OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerHistoriesListFragment)
-            }
+    private fun addOdometerReading(vehicleId: String) {
+        binding.dkButtonAddReference.setOnClickListener {
+            OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerHistoriesListFragment)
         }
     }
 

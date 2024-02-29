@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dk_margin"
         android:layout_marginVertical="@dimen/dk_margin_half"
-        android:background="@drawable/dk_rounded_edges"
+        android:background="@drawable/dk_placeholder_rounded_edges"
         android:foreground="?android:attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

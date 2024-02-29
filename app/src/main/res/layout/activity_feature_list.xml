@@ -14,5 +14,6 @@
         android:id="@+id/features_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dk_margin_half" />
+        android:paddingVertical="@dimen/dk_margin_half"
+        android:paddingHorizontal="@dimen/dk_screen_border" />
 </LinearLayout>

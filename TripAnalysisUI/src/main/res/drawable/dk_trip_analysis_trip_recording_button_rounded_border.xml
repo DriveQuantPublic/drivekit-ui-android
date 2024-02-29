@@ -4,5 +4,5 @@
     <stroke
         android:width="2dp"
         android:color="@color/dkTripRecordingButtonBorder" />
-    <corners android:radius="@dimen/dk_margin_half" />
+    <corners android:radius="@dimen/dk_button_corner" />
 </shape>
