@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.formatDateWithPattern
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
@@ -20,43 +21,18 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-fun List<Trip>.computeSafetyScoreAverage(): Double {
-    val scoredTrips = this.filter { it.safety?.safetyScore != null && it.safety?.safetyScore!! <= 10.0 }
-    return if (this.isEmpty() || scoredTrips.isEmpty()){
+fun List<Trip>.computeAverageScore(scoreType: DKScoreType): Double =
+    if (this.isEmpty()) {
         11.0
     } else {
-        val sumScore = scoredTrips.mapNotNull { it.safety?.safetyScore }.sum()
-        sumScore.div(scoredTrips.size)
-    }
-}
-
-fun List<Trip>.computeEcoDrivingScoreAverage(): Double {
-    val scoredTrips = this.filter { it.ecoDriving?.score != null && it.ecoDriving?.score!! <= 10.0 }
-    return if (this.isEmpty() || scoredTrips.isEmpty()) {
-        11.0
-    } else {
-        val sumScore = scoredTrips.mapNotNull { it.ecoDriving?.score }.sum()
-        sumScore.div(scoredTrips.size)
-    }
-}
-
-fun List<Trip>.computeDistractionScoreAverage(): Double {
-    return if (this.isEmpty()) {
-        11.0
-    } else {
-        val sumScore = this.mapNotNull { it.driverDistraction?.score }.sum()
+        val sumScore = when (scoreType) {
+            DKScoreType.SAFETY -> this.mapNotNull { it.safety?.safetyScore }.sum()
+            DKScoreType.ECO_DRIVING -> this.mapNotNull { it.ecoDriving?.score }.sum()
+            DKScoreType.DISTRACTION -> this.mapNotNull { it.driverDistraction?.score }.sum()
+            DKScoreType.SPEEDING -> this.mapNotNull { it.speedingStatistics?.score }.sum()
+        }
         sumScore.div(this.size)
     }
-}
-
-fun List<Trip>.computeSpeedingScoreAverage(): Double {
-    return if (this.isEmpty()) {
-        11.0
-    } else {
-        val sumScore = this.mapNotNull { it.speedingStatistics?.score }.sum()
-        sumScore.div(this.size)
-    }
-}
 
 fun List<Trip>.computeActiveDays(): Int {
     val sdf = SimpleDateFormat(DKDatePattern.STANDARD_DATE.getPattern(), Locale.getDefault())
@@ -214,7 +190,7 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
 
     override fun isInfoDisplayable(): Boolean =
         (DriverDataUI.customTripInfo?.isInfoDisplayable(trip)
-            ?: !trip.tripAdvices.isNullOrEmpty()) && !trip.transportationMode.isAlternative()
+            ?: trip.tripAdvices.isNotEmpty()) && !trip.transportationMode.isAlternative()
 }
 
 internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem() }
