@@ -25,13 +25,13 @@ fun List<Trip>.computeAverageScore(scoreType: DKScoreType): Double =
     if (this.isEmpty()) {
         11.0
     } else {
-        val sumScore = when (scoreType) {
-            DKScoreType.SAFETY -> this.mapNotNull { it.safety?.safetyScore }.sum()
-            DKScoreType.ECO_DRIVING -> this.mapNotNull { it.ecoDriving?.score }.sum()
-            DKScoreType.DISTRACTION -> this.mapNotNull { it.driverDistraction?.score }.sum()
-            DKScoreType.SPEEDING -> this.mapNotNull { it.speedingStatistics?.score }.sum()
+        val tripsWithScore = when (scoreType) {
+            DKScoreType.SAFETY -> this.mapNotNull { it.safety?.safetyScore }
+            DKScoreType.ECO_DRIVING -> this.mapNotNull { it.ecoDriving?.score }
+            DKScoreType.DISTRACTION -> this.mapNotNull { it.driverDistraction?.score }
+            DKScoreType.SPEEDING -> this.mapNotNull { it.speedingStatistics?.score }
         }
-        sumScore.div(this.size)
+        tripsWithScore.sum().div(tripsWithScore.size)
     }
 
 fun List<Trip>.computeActiveDays(): Int {
