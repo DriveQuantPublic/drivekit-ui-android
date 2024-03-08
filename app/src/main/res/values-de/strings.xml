@@ -190,6 +190,8 @@ Um Ihnen bei der Implementierung eines.\n\nTBerechtigungspfads zu helfen, haben 
    <string name="trip_simulator_crash_20_title">Unfall bei 20 km/h bestätigt</string>
    <string name="trip_simulator_crash_30_description">Bei diesem Beispiel handelt es sich um eine kurze Strecke mit einem bestätigten Unfall bei einer Geschwindigkeit von 30 km/h.</string>
    <string name="trip_simulator_crash_30_title">Unfall bei 30 km/h bestätigt</string>
+   <string name="trip_simulator_crash_followed_by_driving_description">In diesem Beispiel geht es um einen Unfall, der weniger als zwei Minuten nach Beginn der Fahrt bestätigt wurde und nach dem der Fahrer seine Fahrt fortgesetzt hat.</string>
+   <string name="trip_simulator_crash_followed_by_driving_title">Unfall bestätigt und Reise fortgesetzt</string>
    <string name="trip_simulator_description">Der Simulator soll Ihnen helfen, eine Fahrt nachzuvollziehen und den Lebenszyklus der DriveKit-Komponente Trip Analysis zu verstehen. Wir empfehlen Ihnen, ihn nach der Integration des SDK zu verwenden. Es reproduziert echte GPS-Daten für verschiedene Arten von Fahrten.\n\nEs ist ein Testwerkzeug und sollte nicht in eine Produktionsanwendung eingebaut werden.\n\nWir empfehlen Ihnen außerdem, Ihre Anwendung immer unter realen Bedingungen zu testen, bevor Sie sie veröffentlichen.</string>
    <string name="trip_simulator_error_auto_mode">Der automatische Modus ist deaktiviert. Es können keine Fahrten automatisch analysiert werden.</string>
    <string name="trip_simulator_error_dev_mode">Sie müssen den Entwicklermodus aktivieren, um auf die Option zuzugreifen, eine fiktive Anwendung auszuwählen, und damit die Anwendung ordnungsgemäß funktionieren kann. Folgen Sie dazu der offiziellen Dokumentation.</string>

@@ -120,7 +120,7 @@
    <string name="notif_trip_finished_distraction">Score for distraktion</string>
    <string name="notif_trip_finished_efficiency">Score for miljøvenlig kørsel</string>
    <string name="notif_trip_finished_no_beacon">Din rejse er ikke blevet foretaget med dit køretøj</string>
-   <string name="notif_trip_finished_no_bluetooth_device">Your trip has not been made with your vehicle</string>
+   <string name="notif_trip_finished_no_bluetooth_device">Din rejse blev ikke foretaget med dit køretøj</string>
    <string name="notif_trip_finished_safety">Sikkerhedsscore</string>
    <string name="notif_trip_finished_title">Ny rute</string>
    <string name="notif_trip_idle_detected">Turdataene svarer ikke til en biltur.</string>
@@ -189,6 +189,8 @@
    <string name="trip_simulator_crash_20_title">Crash bekræftet ved 20 km/t</string>
    <string name="trip_simulator_crash_30_description">Dette eksempel er en kort tur med en bekræftet ulykke ved en hastighed på 30 km/t.</string>
    <string name="trip_simulator_crash_30_title">Crash bekræftet ved 30 km/t</string>
+   <string name="trip_simulator_crash_followed_by_driving_description">Dette eksempel omfatter en ulykke, der er bekræftet mindre end to minutter efter turens start, hvorefter føreren har fortsat med at køre.</string>
+   <string name="trip_simulator_crash_followed_by_driving_title">Ulykke bekræftet og turen genoptaget</string>
    <string name="trip_simulator_description">Formålet med simulatoren er at hjælpe dig med at reproducere en tur og forstå livscyklussen for Trip Analysis-komponenten i DriveKit. Vi anbefaler, at du bruger den efter SDK-integrationen. Den gengiver ægte GPS-data for flere typer ture.\n\nDet er et testværktøj, du bør ikke integrere det i en produktionsapplikation.\n\nVi anbefaler også, at du altid tester din applikation under virkelige forhold, før du offentliggør den.</string>
    <string name="trip_simulator_error_auto_mode">Automatisk tilstand er deaktiveret. Ingen ture kan analyseres automatisk.</string>
    <string name="trip_simulator_error_dev_mode">Du skal aktivere udviklertilstanden for at få adgang til muligheden for at vælge en mock-applikation og lade applikationen fungere korrekt. For at gøre dette skal du følge den officielle dokumentation.</string>

@@ -189,6 +189,8 @@
    <string name="trip_simulator_crash_20_title">Crash confirmed at 20 km/h</string>
    <string name="trip_simulator_crash_30_description">This example is a short trip with a confirmed accident at a speed of 30 km/h.</string>
    <string name="trip_simulator_crash_30_title">Crash confirmed at 30 km/h</string>
+   <string name="trip_simulator_crash_followed_by_driving_description">This example includes an accident confirmed less than two minutes after the start of the trip, after which the driver has continued to drive.</string>
+   <string name="trip_simulator_crash_followed_by_driving_title">Accident confirmed and trip resumed</string>
    <string name="trip_simulator_description">The purpose of the simulator is to help you reproduce a trip and understand the life cycle of the Trip Analysis component of DriveKit. We advise you to use it after the SDK integration. It reproduces real GPS data for several types of trips.\n\nIt is a test tool, you should not embed it in a production application.\n\nWe also recommend that you always test your application in real conditions before publishing it.</string>
    <string name="trip_simulator_error_auto_mode">Automatic mode is disabled. No trips can be analyzed automatically.</string>
    <string name="trip_simulator_error_dev_mode">You must activate the developer mode to access the option to select a mock application and allow the application to work properly. To do this, follow the official documentation.</string>
