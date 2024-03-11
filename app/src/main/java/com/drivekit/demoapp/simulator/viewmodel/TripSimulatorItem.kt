@@ -1,9 +1,9 @@
 package com.drivekit.demoapp.simulator.viewmodel
 
+import androidx.annotation.StringRes
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.tripsimulator.PresetTrip
 import com.drivequant.drivekit.tripsimulator.model.PresetTripCrash1
-
 
 internal enum class PresetTripType {
     SHORT_TRIP,
@@ -17,8 +17,10 @@ internal enum class PresetTripType {
     TRIP_WITH_CRASH_CONFIRMED_10KMH,
     TRIP_WITH_CRASH_CONFIRMED_20KMH,
     TRIP_WITH_CRASH_CONFIRMED_30KMH,
-    TRIP_WITH_CRASH_UNCONFIRMED_0KMH;
+    TRIP_WITH_CRASH_UNCONFIRMED_0KMH,
+    TRIP_WITH_CRASH_STILL_DRIVING;
 
+    @StringRes
     fun getTitleResId() = when (this) {
         SHORT_TRIP -> R.string.trip_simulator_short_trip_title
         MIXED_TRIP -> R.string.trip_simulator_city_suburban_title
@@ -32,8 +34,10 @@ internal enum class PresetTripType {
         TRIP_WITH_CRASH_CONFIRMED_20KMH -> R.string.trip_simulator_crash_20_title
         TRIP_WITH_CRASH_CONFIRMED_30KMH -> R.string.trip_simulator_crash_30_title
         TRIP_WITH_CRASH_UNCONFIRMED_0KMH -> R.string.trip_simulator_crash_0_title
+        TRIP_WITH_CRASH_STILL_DRIVING -> R.string.trip_simulator_crash_followed_by_driving_title
     }
 
+    @StringRes
     fun getDescriptionResId() = when (this) {
         SHORT_TRIP -> R.string.trip_simulator_short_trip_description
         MIXED_TRIP -> R.string.trip_simulator_city_suburban_description
@@ -47,6 +51,7 @@ internal enum class PresetTripType {
         TRIP_WITH_CRASH_CONFIRMED_20KMH -> R.string.trip_simulator_crash_20_description
         TRIP_WITH_CRASH_CONFIRMED_30KMH -> R.string.trip_simulator_crash_30_description
         TRIP_WITH_CRASH_UNCONFIRMED_0KMH -> R.string.trip_simulator_crash_0_description
+        TRIP_WITH_CRASH_STILL_DRIVING -> R.string.trip_simulator_crash_followed_by_driving_description
     }
 
     companion object {
@@ -63,6 +68,7 @@ internal enum class PresetTripType {
             TRIP_WITH_CRASH_CONFIRMED_20KMH -> PresetTrip.TRIP_WITH_CRASH_1(PresetTripCrash1.CONFIRMED_20KMH)
             TRIP_WITH_CRASH_CONFIRMED_30KMH -> PresetTrip.TRIP_WITH_CRASH_1(PresetTripCrash1.CONFIRMED_30KMH)
             TRIP_WITH_CRASH_UNCONFIRMED_0KMH -> PresetTrip.TRIP_WITH_CRASH_1(PresetTripCrash1.UNCONFIRMED_0KMH)
+            TRIP_WITH_CRASH_STILL_DRIVING -> PresetTrip.TRIP_WITH_CRASH_STILL_DRIVING
         }
     }
 }
