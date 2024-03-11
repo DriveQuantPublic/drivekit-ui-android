@@ -31,7 +31,11 @@ fun List<Trip>.computeAverageScore(scoreType: DKScoreType): Double =
             DKScoreType.DISTRACTION -> this.mapNotNull { it.driverDistraction?.score }
             DKScoreType.SPEEDING -> this.mapNotNull { it.speedingStatistics?.score }
         }
-        tripsWithScore.sum().div(tripsWithScore.size)
+        if (tripsWithScore.isEmpty()) {
+            11.0
+        } else {
+            tripsWithScore.sum().div(tripsWithScore.size)
+        }
     }
 
 fun List<Trip>.computeActiveDays(): Int {
