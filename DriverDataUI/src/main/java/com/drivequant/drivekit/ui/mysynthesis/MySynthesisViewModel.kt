@@ -37,8 +37,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val communityCardViewModel = MySynthesisCommunityCardViewModel()
     val syncStatus = MutableLiveData<Any>()
     val updateData = MutableLiveData<Any>()
-    var selectedDate: Date? = null
-        private set
+    private var selectedDate: Date? = null
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
     private var communityStatistics: DKCommunityStatistics? = null
 
@@ -48,7 +47,12 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         configureDateSelector()
         configureScoreCardViewModel()
         configureCommunityCardViewModel()
-        DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.CACHE) { status, timelines ->
+
+        DriveKitDriverData.getDriverTimelines(
+            this.periods,
+            ignoreItemsWithoutTripScored = true,
+            SynchronizationType.CACHE
+        ) { status, timelines ->
             if (status == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 this.timelineByPeriod = timelines.associateBy { it.period }
 
@@ -64,7 +68,11 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     }
 
     fun updateData() {
-        DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { _, timelines ->
+        DriveKitDriverData.getDriverTimelines(
+            this.periods,
+            ignoreItemsWithoutTripScored = true,
+            SynchronizationType.DEFAULT
+        ) { _, timelines ->
             this.timelineByPeriod = timelines.associateBy { it.period }
             DriveKitDriverData.getCommunityStatistics { _, statistics ->
                 this.communityStatistics = statistics
@@ -117,13 +125,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
 
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
 
-                val previousPeriodContext = timelineSource.previousAllContextItemFrom(date, this.selectedScore)
-                val currentPeriodContext = timelineSource.allContextItemAt(date)
-
-                val hasOnlyShortTripsForPreviousPeriod = previousPeriodContext?.numberTripScored == 0
-                val hasOnlyShortTripsForCurrentPeriod = currentPeriodContext?.numberTripScored == 0
-
-                updateScoreCardViewModel(hasOnlyShortTripsForPreviousPeriod, hasOnlyShortTripsForCurrentPeriod)
+                updateScoreCardViewModel()
                 updateCommunityCardViewModel()
             } else {
                 val date = when (this.selectedPeriod) {
@@ -134,13 +136,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(listOf(date), 0, this.selectedPeriod)
 
-                val previousPeriodContext = timelineSource.previousAllContextItemFrom(date, this.selectedScore)
-                val currentPeriodContext = timelineSource.allContextItemAt(date)
-
-                val hasOnlyShortTripsForPreviousPeriod = previousPeriodContext?.numberTripScored == 0
-                val hasOnlyShortTripsForCurrentPeriod = currentPeriodContext?.numberTripScored == 0
-
-                updateScoreCardViewModel(hasOnlyShortTripsForPreviousPeriod, hasOnlyShortTripsForCurrentPeriod)
+                updateScoreCardViewModel()
                 updateCommunityCardViewModel()
             }
         } ?: run {
@@ -155,8 +151,6 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             this.selectedScore,
             this.selectedPeriod,
             scoreSynthesis = null,
-            hasOnlyShortTripsForCurrentPeriod = false,
-            hasOnlyShortTripsForPreviousPeriod = false,
             previousPeriodDate = null
         )
         communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics ?: DKCommunityStatistics.buildDefault())
@@ -200,16 +194,10 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     }
 
     private fun configureScoreCardViewModel() {
-        updateScoreCardViewModel(
-            hasOnlyShortTripsForPreviousPeriod = false,
-            hasOnlyShortTripsForCurrentPeriod = false
-        )
+        updateScoreCardViewModel()
     }
 
-    private fun updateScoreCardViewModel(
-        hasOnlyShortTripsForPreviousPeriod: Boolean,
-        hasOnlyShortTripsForCurrentPeriod: Boolean
-    ) {
+    private fun updateScoreCardViewModel() {
         var scoreSynthesis: DKScoreSynthesis? = null
         var previousDate: Date? = null
 
@@ -222,8 +210,6 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             score = this.selectedScore,
             period = this.selectedPeriod,
             scoreSynthesis = scoreSynthesis,
-            hasOnlyShortTripsForCurrentPeriod = hasOnlyShortTripsForCurrentPeriod,
-            hasOnlyShortTripsForPreviousPeriod = hasOnlyShortTripsForPreviousPeriod,
             previousPeriodDate = previousDate
         )
     }

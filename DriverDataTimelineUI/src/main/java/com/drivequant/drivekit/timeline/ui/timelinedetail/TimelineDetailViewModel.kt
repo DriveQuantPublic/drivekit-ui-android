@@ -12,19 +12,15 @@ import com.drivequant.drivekit.common.ui.extension.getTitleId
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
-import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
-import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
+import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.timeline.ui.TimelineUtils
 import com.drivequant.drivekit.timeline.ui.associatedScoreItemTypes
-import com.drivequant.drivekit.timeline.ui.cleanedTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
-import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.Date
 
 internal class TimelineDetailViewModel(
@@ -43,22 +39,14 @@ internal class TimelineDetailViewModel(
     val roadContextViewModel: RoadContextViewModel = RoadContextViewModel()
     var timelineGraphViewModelByScoreItem: Map<TimelineScoreItemType, TimelineGraphViewModel> = mapOf()
     private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
-    private val timelineByPeriod = mutableMapOf<DKPeriod, DKRawTimeline>()
+    private var timelines = listOf<DKDriverTimeline>()
     private val orderedScoreItemTypeToDisplay = selectedScore.associatedScoreItemTypes()
 
     init {
-        DriveKitDriverData.getRawTimelines(this.periods, object :
-            TimelineQueryListener {
-            override fun onResponse(
-                timelineSyncStatus: TimelineSyncStatus,
-                timelines: List<DKRawTimeline>
-            ) {
-                for (timeline in timelines) {
-                    timelineByPeriod[timeline.period] = timeline
-                }
-                updateViewModels()
-            }
-        }, SynchronizationType.CACHE)
+        DriveKitDriverData.getDriverTimelines(this.periods, synchronizationType = SynchronizationType.CACHE) { _, timelines ->
+            this.timelines = timelines
+            updateViewModels()
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -71,60 +59,49 @@ internal class TimelineDetailViewModel(
 
     private fun updateViewModels() {
         getTimelineSource()?.let { selectedTimeline ->
-            val sourceDates = selectedTimeline.allContext.date.map { it.toTimelineDate()!! }
-            var selectedDateIndex = sourceDates.indexOf(this.selectedDate)
+            val dates = selectedTimeline.allContext.map { it.date }
+            val selectedDateIndex = dates.indexOf(this.selectedDate)
             if (selectedDateIndex >= 0) {
-                val cleanedTimeline =
-                    selectedTimeline.cleanedTimeline(selectedDateIndex)
-
-                // Compute selected index.
-                val dates = cleanedTimeline.allContext.date.map { it.toTimelineDate()!! }
-                selectedDateIndex = dates.indexOf(this.selectedDate)
-
                 // Update view models.
-                if (selectedDateIndex >= 0) {
-                    this.periodSelectorViewModel.configure(this.periods)
-                    this.periodSelectorViewModel.select(this.selectedPeriod)
-                    this.periodSelectorViewModel.onPeriodSelected = { _, newPeriod ->
-                        onPeriodSelected(newPeriod)
-                    }
+                this.periodSelectorViewModel.configure(this.periods)
+                this.periodSelectorViewModel.select(this.selectedPeriod)
+                this.periodSelectorViewModel.onPeriodSelected = { _, newPeriod ->
+                    onPeriodSelected(newPeriod)
+                }
 
-                    this.dateSelectorViewModel.configure(
+                this.dateSelectorViewModel.configure(
+                    dates,
+                    selectedDateIndex,
+                    this.selectedPeriod
+                )
+                this.dateSelectorViewModel.onDateSelected = this::onDateSelected
+
+                this.roadContextViewModel.configure(selectedTimeline, this.selectedDate)
+
+                val timelineGraphViewModelByScoreItem: MutableMap<TimelineScoreItemType, TimelineGraphViewModel> =
+                    mutableMapOf()
+                this.orderedScoreItemTypeToDisplay.forEach { scoreItemType ->
+                    val timelineGraphViewModel = TimelineGraphViewModel()
+                    timelineGraphViewModel.configure(
+                        getApplication(),
+                        selectedTimeline,
                         dates,
                         selectedDateIndex,
+                        GraphItem.ScoreItem(scoreItemType),
                         this.selectedPeriod
                     )
-                    this.dateSelectorViewModel.onDateSelected = this::onDateSelected
-
-                    this.roadContextViewModel.configure(
-                        cleanedTimeline,
-                        selectedDateIndex
-                    )
-
-                    val timelineGraphViewModelByScoreItem: MutableMap<TimelineScoreItemType, TimelineGraphViewModel> =
-                        mutableMapOf()
-                    this.orderedScoreItemTypeToDisplay.forEach { scoreItemType ->
-                        val timelineGraphViewModel = TimelineGraphViewModel()
-                        timelineGraphViewModel.configure(
-                            getApplication(),
-                            cleanedTimeline,
-                            selectedDateIndex,
-                            GraphItem.ScoreItem(scoreItemType),
-                            this.selectedPeriod
-                        )
-                        timelineGraphViewModel.listener = this
-                        timelineGraphViewModelByScoreItem[scoreItemType] = timelineGraphViewModel
-                    }
-                    this.timelineGraphViewModelByScoreItem = timelineGraphViewModelByScoreItem
+                    timelineGraphViewModel.listener = this
+                    timelineGraphViewModelByScoreItem[scoreItemType] = timelineGraphViewModel
                 }
+                this.timelineGraphViewModelByScoreItem = timelineGraphViewModelByScoreItem
             }
             updateData.postValue(Any())
         }
     }
 
-    private fun getTimelineSource(period: DKPeriod = this.selectedPeriod): DKRawTimeline? = when (period) {
+    private fun getTimelineSource(period: DKPeriod = this.selectedPeriod): DKDriverTimeline? = when (period) {
         DKPeriod.MONTH,
-        DKPeriod.WEEK -> this.timelineByPeriod[period]
+        DKPeriod.WEEK -> this.timelines.firstOrNull { it.period == period }
         DKPeriod.YEAR -> throw IllegalAccessException("Not managed in Timeline")
     }
 

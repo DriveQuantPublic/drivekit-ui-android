@@ -40,7 +40,7 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
         DriveKitDriverData.getDriverProfile(SynchronizationType.CACHE) { status, driverProfile ->
             if (status == DKDriverProfileStatus.SUCCESS) {
                 this.driverProfile = driverProfile
-                DriveKitDriverData.getDriverTimelines(timelinePeriods, SynchronizationType.CACHE) { timelineStatus, timelines ->
+                DriveKitDriverData.getDriverTimelines(timelinePeriods, synchronizationType = SynchronizationType.CACHE) { timelineStatus, timelines ->
                     if (timelineStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
                         updateDrivenDistances(timelines)
                     }
@@ -59,7 +59,7 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
                 DKDriverProfileStatus.FORBIDDEN_ACCESS -> onNewState(DataState.FORBIDDEN)
                 DKDriverProfileStatus.SUCCESS, DKDriverProfileStatus.FAILED_TO_SYNC_DRIVER_PROFILE_CACHE_ONLY -> {
                     this.driverProfile = driverProfile
-                    DriveKitDriverData.getDriverTimelines(timelinePeriods, SynchronizationType.DEFAULT) { timelineStatus, timelines ->
+                    DriveKitDriverData.getDriverTimelines(timelinePeriods, synchronizationType = SynchronizationType.DEFAULT) { timelineStatus, timelines ->
                         if (timelineStatus == TimelineSyncStatus.NO_ERROR) {
                             updateDrivenDistances(timelines)
                         }

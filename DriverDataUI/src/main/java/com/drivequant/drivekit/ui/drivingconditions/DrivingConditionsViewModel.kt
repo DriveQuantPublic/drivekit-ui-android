@@ -43,7 +43,7 @@ internal class DrivingConditionsViewModel(
         configureDateSelector()
         DriveKitDriverData.getDriverTimelines(
             this.periods,
-            SynchronizationType.CACHE
+            synchronizationType = SynchronizationType.CACHE
         ) { status, timelines ->
             if (status == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 this.timelineByPeriod = timelines.associateBy { it.period }
@@ -60,7 +60,7 @@ internal class DrivingConditionsViewModel(
     }
 
     fun updateData() {
-        DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { _, timelines ->
+        DriveKitDriverData.getDriverTimelines(this.periods, synchronizationType = SynchronizationType.DEFAULT) { _, timelines ->
             this.timelineByPeriod = timelines.associateBy { it.period }
             update(true)
             syncStatus.postValue(Any())

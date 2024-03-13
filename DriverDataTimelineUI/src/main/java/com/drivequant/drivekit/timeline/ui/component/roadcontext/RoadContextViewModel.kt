@@ -9,36 +9,36 @@ import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
+import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
-import com.drivequant.drivekit.timeline.ui.distanceByRoadContext
-import com.drivequant.drivekit.timeline.ui.hasData
-import com.drivequant.drivekit.timeline.ui.totalDistanceForAllContexts
+import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
+import java.util.Date
 
 internal class RoadContextViewModel : ViewModel(), DKContextCard {
 
     val changeObserver: MutableLiveData<Any> = MutableLiveData()
 
-    private var distanceByContext = mapOf<TimelineRoadContext, Double>()
-        set(value) {
-            field = value.filterNot { it.value <= 0.0 }
-        }
-
+    private var distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
     private var contextCards: List<DKContextCardItem> = emptyList()
     private var totalDistanceForAllContext = 0.0
-    private var distance = 0.0
     private var emptyRoadContextType: EmptyRoadContextType? = null
 
-    fun configure(timeline: DKRawTimeline?, selectedIndex: Int?) {
-        if (timeline != null && selectedIndex != null && timeline.hasData()) {
-            this.totalDistanceForAllContext = timeline.totalDistanceForAllContexts(selectedIndex)
-            this.distanceByContext = timeline.distanceByRoadContext(selectedIndex)
-            this.distance = 0.0
-            this.distanceByContext.forEach {
-                this.distance += it.value
+    fun configure(timeline: DKDriverTimeline?, selectedDate: Date?) {
+        if (timeline != null && selectedDate != null) {
+            this.distanceByContext = mutableMapOf()
+            this.totalDistanceForAllContext = 0.0
+
+            timeline.roadContexts.forEach { it ->
+                val distance = it.value.sumOf { it.distance }
+                if (distance > 0) {
+                    this.distanceByContext[it.key.toTimelineRoadContext()] = distance
+                }
             }
+
+            this.totalDistanceForAllContext = timeline.allContext.firstOrNull { it.date == selectedDate }?.distance ?: 0.0
+
             this.emptyRoadContextType = if (this.distanceByContext.isEmpty()) {
                 EmptyRoadContextType.NO_DATA
             } else {
@@ -46,8 +46,7 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
             }
         } else {
             this.totalDistanceForAllContext = 0.0
-            this.distanceByContext = emptyMap()
-            this.distance = 0.0
+            this.distanceByContext = mutableMapOf()
             this.emptyRoadContextType = EmptyRoadContextType.EMPTY_DATA
         }
         updateContextCards()
@@ -89,7 +88,7 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
         if (distanceByContext.isEmpty()) {
             0.0
         } else {
-            distanceByContext[roadContext]?.div(distance)?.let {
+            distanceByContext[roadContext]?.div(this.totalDistanceForAllContext)?.let {
                 it * 100
             } ?: run { 0.0 }
         }

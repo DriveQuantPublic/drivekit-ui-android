@@ -14,17 +14,14 @@ import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
-import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
+import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.timeline.ui.TimelineUtils
-import com.drivequant.drivekit.timeline.ui.cleanedTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
-import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.Date
 
 internal class TimelineViewModel(application: Application) : AndroidViewModel(application) {
@@ -42,10 +39,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     var selectedScore: DKScoreType = scores.first()
         private set
 
-    var weekTimeline: DKRawTimeline? = null
-        private set
-    var monthTimeline: DKRawTimeline? = null
-        private set
+    private var timelineByPeriod: MutableMap<DKPeriod, DKDriverTimeline> = mutableMapOf()
 
     var selectedDate: Date? = null
         private set
@@ -67,11 +61,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 currentPeriod = newPeriod
 
                 getTimelineSource()?.let { timeline ->
-                    TimelineUtils.updateSelectedDate(
-                        oldPeriod,
-                        this.selectedDate,
-                        timeline
-                    )?.let { newDate ->
+                    TimelineUtils.updateSelectedDate(oldPeriod, this.selectedDate, timeline)?.let { newDate ->
                         this.selectedDate = newDate
                     }
                 }
@@ -84,84 +74,57 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 update()
             }
         }
-        DriveKitDriverData.getRawTimelines(
-            this.periods,
-            object : TimelineQueryListener {
-                override fun onResponse(
-                    timelineSyncStatus: TimelineSyncStatus,
-                    timelines: List<DKRawTimeline>
-                ) {
-                    if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
-                        timelines.forEach {
-                            when (it.period) {
-                                DKPeriod.WEEK -> weekTimeline = it
-                                DKPeriod.MONTH -> monthTimeline = it
-                                DKPeriod.YEAR -> {}
-                            }
-                        }
-                        update()
-                    }
+        DriveKitDriverData.getDriverTimelines(this.periods, synchronizationType = SynchronizationType.CACHE) { timelineSyncStatus, timelines ->
+            if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
+                timelines.forEach {
+                    timelineByPeriod[it.period] = it
                 }
-            },
-            SynchronizationType.CACHE
-        )
+                update()
+            }
+        }
         updateTimeline()
     }
 
     fun updateTimeline() {
-        DriveKitDriverData.getRawTimelines(
-            this.periods,
-            object : TimelineQueryListener {
-                override fun onResponse(
-                    timelineSyncStatus: TimelineSyncStatus,
-                    timelines: List<DKRawTimeline>
-                ) {
-                    if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
-                        timelines.forEach {
-                            when (it.period) {
-                                DKPeriod.WEEK -> weekTimeline = it
-                                DKPeriod.MONTH -> monthTimeline = it
-                                DKPeriod.YEAR -> {}
-                            }
-                        }
-                        update(resettingSelectedDate = true)
-                    }
-                    syncStatus.postValue(timelineSyncStatus)
+        DriveKitDriverData.getDriverTimelines(this.periods) { timelineSyncStatus, timelines ->
+            if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
+                timelines.forEach {
+                    timelineByPeriod[it.period] = it
                 }
-            })
+                update(resettingSelectedDate = true)
+            }
+            syncStatus.postValue(timelineSyncStatus)
+        }
     }
 
     private fun update(resettingSelectedDate: Boolean = false) {
-        getTimelineSource()?.let { timelineSource ->
+        getTimelineSource()?.let { timeline ->
             if (resettingSelectedDate) {
                 selectedDate = null
             }
 
-            // Clean timeline to remove, if needed, values where there are only unscored trips
-            val sourceDates = timelineSource.allContext.date.map {
-                it.toTimelineDate()!!
-            }
-            val initialSelectedDateIndex = selectedDate?.let { sourceDates.indexOf(it) }
-            val cleanedTimeline = timelineSource.cleanedTimeline(initialSelectedDateIndex)
+            // Update view models
+            var selectedAllContextItem: DKDriverTimeline.DKAllContextItem? = null
+            var selectedDateIndex: Int? = null
 
-            // Compute selected index
-            val dates = cleanedTimeline.allContext.date.map {
-                it.toTimelineDate()!!
-            }
-            val selectedDateIndex = if (selectedDate != null) {
-                dates.indexOf(selectedDate)
-            } else if (dates.isNotEmpty()) {
-                dates.count() - 1
+            if (this.selectedDate != null) {
+                val matchingAllContextItemIndex = timeline.allContext.indexOfFirst { it.date == this.selectedDate }
+                if (matchingAllContextItemIndex != -1) {
+                    selectedAllContextItem = timeline.allContext[matchingAllContextItemIndex]
+                    selectedDateIndex = matchingAllContextItemIndex
+                }
             } else {
-                null
+                selectedAllContextItem = timeline.allContext.last()
+                selectedDateIndex = if (timeline.allContext.isEmpty()) null else timeline.allContext.lastIndex
             }
-            if (selectedDateIndex != null && selectedDateIndex >= 0) {
-                this.selectedDate = dates[selectedDateIndex]
-                // Update view models
+
+            if (selectedAllContextItem != null && selectedDateIndex != null) {
+                this.selectedDate = selectedAllContextItem.date
+                val dates = timeline.allContext.map { it.date }
                 periodSelectorViewModel.select(this.currentPeriod)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
-                roadContextViewModel.configure(cleanedTimeline, selectedDateIndex)
-                graphViewModel.configure(getApplication(), cleanedTimeline, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)
+                roadContextViewModel.configure(timeline, this.selectedDate)
+                graphViewModel.configure(getApplication(), timeline, dates, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)
             } else {
                 configureWithNoData()
             }
@@ -200,11 +163,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
-    private fun getTimelineSource() = when (currentPeriod) {
-        DKPeriod.WEEK -> weekTimeline
-        DKPeriod.MONTH -> monthTimeline
-        DKPeriod.YEAR -> throw IllegalAccessException("Not managed in Timeline")
-    }
+    private fun getTimelineSource() = timelineByPeriod[currentPeriod]
 
     private fun configureWithNoData() {
         when (currentPeriod) {

@@ -26,8 +26,6 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     private var selectedPeriod: DKPeriod = DKPeriod.WEEK
     private var scoreSynthesis: DKScoreSynthesis? = null
     private var previousPeriodDate: Date? = null
-    private var hasOnlyShortTripsForCurrentPeriod: Boolean = false
-    private var hasOnlyShortTripsForPreviousPeriod: Boolean = false
 
     private val hasCurrentScore: Boolean
         get() = this.scoreSynthesis?.scoreValue != null
@@ -40,20 +38,11 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     val previousScore: Double?
         get() = scoreSynthesis?.previousScoreValue
 
-    fun configure(
-        score: DKScoreType,
-        period: DKPeriod,
-        scoreSynthesis: DKScoreSynthesis?,
-        hasOnlyShortTripsForCurrentPeriod: Boolean = false,
-        hasOnlyShortTripsForPreviousPeriod: Boolean = false,
-        previousPeriodDate: Date?
-    ) {
+    fun configure(score: DKScoreType, period: DKPeriod, scoreSynthesis: DKScoreSynthesis?, previousPeriodDate: Date?) {
         this.selectedScore = score
         this.selectedPeriod = period
         this.scoreSynthesis = scoreSynthesis
         this.previousPeriodDate = previousPeriodDate
-        this.hasOnlyShortTripsForCurrentPeriod = hasOnlyShortTripsForCurrentPeriod
-        this.hasOnlyShortTripsForPreviousPeriod = hasOnlyShortTripsForPreviousPeriod
         this.onViewModelUpdated?.invoke()
     }
 
@@ -91,12 +80,8 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
             .plus(context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_unit_score))
 
     private fun getEvolutionPrefixText(context: Context): String? {
-        val previousPeriod: TripKind = if (hasPreviousScore) TripKind.SCORED_TRIPS else {
-            if (hasOnlyShortTripsForPreviousPeriod) TripKind.ONLY_SHORT_TRIPS else TripKind.NO_TRIP
-        }
-        val currentPeriod: TripKind = if (hasCurrentScore) TripKind.SCORED_TRIPS else {
-            if (hasOnlyShortTripsForCurrentPeriod) TripKind.ONLY_SHORT_TRIPS else TripKind.NO_TRIP
-        }
+        val previousPeriod: TripKind = if (hasPreviousScore) TripKind.SCORED_TRIPS else TripKind.NO_TRIP
+        val currentPeriod: TripKind = if (hasCurrentScore) TripKind.SCORED_TRIPS  else TripKind.NO_TRIP
 
         if (hasNoTripAtAll(previousPeriod, currentPeriod)) {
             return context.getString(R.string.dk_driverdata_mysynthesis_no_trip_at_all)
@@ -132,21 +117,17 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     }
 
     private enum class TripKind {
-        NO_TRIP, ONLY_SHORT_TRIPS, SCORED_TRIPS
+        NO_TRIP, SCORED_TRIPS
     }
 
     private fun hasNoTripAtAll(previousPeriod: TripKind, currentPeriod: TripKind) =
-        (previousPeriod == TripKind.NO_TRIP && currentPeriod == TripKind.NO_TRIP) ||
-                (previousPeriod == TripKind.ONLY_SHORT_TRIPS && currentPeriod == TripKind.ONLY_SHORT_TRIPS) ||
-                (previousPeriod == TripKind.ONLY_SHORT_TRIPS && currentPeriod == TripKind.SCORED_TRIPS) // TODO impossible case before
+        (previousPeriod == TripKind.NO_TRIP && currentPeriod == TripKind.NO_TRIP)
 
     // Can be simplified with previousPeriod == TripKind.NO_TRIP
     private fun hasNoPreviousTrip(previousPeriod: TripKind, currentPeriod: TripKind) =
-        (previousPeriod == TripKind.NO_TRIP && currentPeriod == TripKind.SCORED_TRIPS) ||
-                (previousPeriod == TripKind.NO_TRIP && currentPeriod == TripKind.ONLY_SHORT_TRIPS)
+        (previousPeriod == TripKind.NO_TRIP && currentPeriod == TripKind.SCORED_TRIPS)
 
     // Can be simplified with previousPeriod == TripKind.SCORED_TRIPS
     private fun hasPreviousTrip(previousPeriod: TripKind, currentPeriod: TripKind) =
-        (previousPeriod == TripKind.SCORED_TRIPS && currentPeriod == TripKind.SCORED_TRIPS) ||
-                (previousPeriod == TripKind.SCORED_TRIPS && currentPeriod == TripKind.ONLY_SHORT_TRIPS)
+        (previousPeriod == TripKind.SCORED_TRIPS && currentPeriod == TripKind.SCORED_TRIPS)
 }
