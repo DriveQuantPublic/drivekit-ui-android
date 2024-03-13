@@ -74,7 +74,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 update()
             }
         }
-        DriveKitDriverData.getDriverTimelines(this.periods, ignoreItemsWithoutTripScored = true, synchronizationType = SynchronizationType.CACHE) { timelineSyncStatus, timelines ->
+        DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.CACHE, true) { timelineSyncStatus, timelines ->
             if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 timelines.forEach {
                     timelineByPeriod[it.period] = it

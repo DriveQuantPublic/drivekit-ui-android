@@ -45,8 +45,8 @@ internal class TimelineDetailViewModel(
     init {
         DriveKitDriverData.getDriverTimelines(
             this.periods,
-            ignoreItemsWithoutTripScored = true,
-            synchronizationType = SynchronizationType.CACHE
+            SynchronizationType.CACHE,
+            true
         ) { _, timelines ->
             this.timelines = timelines
             updateViewModels()

@@ -50,8 +50,8 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
 
         DriveKitDriverData.getDriverTimelines(
             this.periods,
-            ignoreItemsWithoutTripScored = true,
-            SynchronizationType.CACHE
+            SynchronizationType.CACHE,
+            ignoreItemsWithoutTripScored = true
         ) { status, timelines ->
             if (status == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 this.timelineByPeriod = timelines.associateBy { it.period }
@@ -71,7 +71,6 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         DriveKitDriverData.getDriverTimelines(
             this.periods,
             ignoreItemsWithoutTripScored = true,
-            SynchronizationType.DEFAULT
         ) { _, timelines ->
             this.timelineByPeriod = timelines.associateBy { it.period }
             DriveKitDriverData.getCommunityStatistics { _, statistics ->
