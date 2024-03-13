@@ -9,6 +9,7 @@ import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
@@ -31,7 +32,7 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
             this.totalDistanceForAllContext = 0.0
 
             timeline.roadContexts.forEach { it ->
-                val distance = it.value.sumOf { it.distance }
+                val distance = it.value.firstOrNull { it.date == selectedDate }?.distance ?: 0.0
                 if (distance > 0) {
                     this.distanceByContext[it.key.toTimelineRoadContext()] = distance
                 }

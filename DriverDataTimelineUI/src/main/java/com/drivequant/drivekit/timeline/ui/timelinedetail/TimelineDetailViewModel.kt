@@ -43,7 +43,11 @@ internal class TimelineDetailViewModel(
     private val orderedScoreItemTypeToDisplay = selectedScore.associatedScoreItemTypes()
 
     init {
-        DriveKitDriverData.getDriverTimelines(this.periods, synchronizationType = SynchronizationType.CACHE) { _, timelines ->
+        DriveKitDriverData.getDriverTimelines(
+            this.periods,
+            ignoreItemsWithoutTripScored = true,
+            synchronizationType = SynchronizationType.CACHE
+        ) { _, timelines ->
             this.timelines = timelines
             updateViewModels()
         }

@@ -12,12 +12,7 @@ internal object TimelineUtils {
 
     fun updateSelectedDate(oldPeriod: DKPeriod, previousSelectedDate: Date?, timeline: DKDriverTimeline): Date? {
         return if (previousSelectedDate != null) {
-            val dates: MutableList<Date> = mutableListOf()
-            val dateToIndex: MutableMap<Date, Int> = mutableMapOf()
-            for ((index, rawDate) in timeline.allContext.map { it.date }.withIndex()) {
-                dates.add(rawDate)
-                dateToIndex[rawDate] = index
-            }
+            val dates: List<Date> = timeline.allContext.map { it.date }
             DKDateSelectorViewModel.newSelectedDate(previousSelectedDate, oldPeriod, dates)
         } else {
             return null

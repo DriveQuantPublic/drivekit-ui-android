@@ -74,7 +74,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 update()
             }
         }
-        DriveKitDriverData.getDriverTimelines(this.periods, synchronizationType = SynchronizationType.CACHE) { timelineSyncStatus, timelines ->
+        DriveKitDriverData.getDriverTimelines(this.periods, ignoreItemsWithoutTripScored = true, synchronizationType = SynchronizationType.CACHE) { timelineSyncStatus, timelines ->
             if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 timelines.forEach {
                     timelineByPeriod[it.period] = it
@@ -86,7 +86,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun updateTimeline() {
-        DriveKitDriverData.getDriverTimelines(this.periods) { timelineSyncStatus, timelines ->
+        DriveKitDriverData.getDriverTimelines(this.periods, ignoreItemsWithoutTripScored = true) { timelineSyncStatus, timelines ->
             if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
                 timelines.forEach {
                     timelineByPeriod[it.period] = it
@@ -114,8 +114,13 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                     selectedDateIndex = matchingAllContextItemIndex
                 }
             } else {
-                selectedAllContextItem = timeline.allContext.last()
-                selectedDateIndex = if (timeline.allContext.isEmpty()) null else timeline.allContext.lastIndex
+                if (timeline.allContext.isNotEmpty()) {
+                    selectedAllContextItem = timeline.allContext.last()
+                    selectedDateIndex = timeline.allContext.lastIndex
+                } else {
+                    selectedAllContextItem = null
+                    selectedDateIndex = null
+                }
             }
 
             if (selectedAllContextItem != null && selectedDateIndex != null) {
@@ -172,6 +177,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
+            periodSelectorViewModel.select(currentPeriod)
             roadContextViewModel.configure(null, null)
             graphViewModel.showEmptyGraph(GraphItem.Score(this.selectedScore), this.currentPeriod)
         }
