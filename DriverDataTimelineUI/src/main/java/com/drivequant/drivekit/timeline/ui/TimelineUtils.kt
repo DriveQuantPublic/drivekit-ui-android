@@ -18,17 +18,7 @@ internal object TimelineUtils {
                 dates.add(rawDate)
                 dateToIndex[rawDate] = index
             }
-            DKDateSelectorViewModel.newSelectedDate(
-                previousSelectedDate,
-                oldPeriod,
-                dates
-            ) { _, date ->
-                //TODO understand that code
-                /*dateToIndex[date]?.let { index ->
-                    timeline.hasValidTripScored(index)
-                } ?: false*/
-                true
-            }
+            DKDateSelectorViewModel.newSelectedDate(previousSelectedDate, oldPeriod, dates)
         } else {
             return null
         }

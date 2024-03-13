@@ -169,9 +169,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             val selectedDate = this.selectedDate
             val sourceTimeline = getTimelineSource(newPeriod)
             if (selectedDate != null && sourceTimeline != null) {
-                this.selectedDate = DKDateSelectorViewModel.newSelectedDate(selectedDate, oldPeriod, sourceTimeline.allContext.map { it.date }) { _, date ->
-                    sourceTimeline.allContextItemAt(date)?.hasValueForScoreType(this.selectedScore) ?: false
-                }
+                this.selectedDate = DKDateSelectorViewModel.newSelectedDate(selectedDate, oldPeriod, sourceTimeline.allContext.map { it.date })
             }
             update()
         }
