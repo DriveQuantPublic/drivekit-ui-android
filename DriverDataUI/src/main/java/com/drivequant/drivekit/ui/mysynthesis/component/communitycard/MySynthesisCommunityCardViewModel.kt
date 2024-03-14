@@ -62,19 +62,12 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) =
         allContextItem == null
 
-    private fun hasData(
-        score: DKScoreType,
-        allContextItem: DKDriverTimeline.DKAllContextItem?
-    ) = allContextItem?.hasValueForScoreType(score) ?: false
-
     fun getTitleText(context: Context): String {
         val bestThanCommunityThreshold = 55
         val worstThanCommunityThreshold = 45
 
         if (hasNoTrip(this.allContextItem)) {
             return context.getString(R.string.dk_driverdata_mysynthesis_no_driving)
-        } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
-            return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else {
             val score = allContextItem?.getValue(this.selectedScoreType)
             val scoreStatistics = this.statistics.getScoreStatistics(this.selectedScoreType)
@@ -103,8 +96,6 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     @ColorInt
     fun getTitleColor(): Int = if (hasNoTrip(this.allContextItem)) {
-        DriveKitUI.colors.complementaryFontColor()
-    } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
         DriveKitUI.colors.complementaryFontColor()
     } else {
         DriveKitUI.colors.mainFontColor()

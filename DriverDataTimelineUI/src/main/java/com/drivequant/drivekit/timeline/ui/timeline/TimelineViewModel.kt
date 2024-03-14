@@ -39,7 +39,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     var selectedScore: DKScoreType = scores.first()
         private set
 
-    private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mutableMapOf()
+    private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
 
     var selectedDate: Date? = null
         private set
@@ -109,14 +109,9 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                     selectedAllContextItem = timeline.allContext[matchingAllContextItemIndex]
                     selectedDateIndex = matchingAllContextItemIndex
                 }
-            } else {
-                if (timeline.allContext.isNotEmpty()) {
-                    selectedAllContextItem = timeline.allContext.last()
-                    selectedDateIndex = timeline.allContext.lastIndex
-                } else {
-                    selectedAllContextItem = null
-                    selectedDateIndex = null
-                }
+            } else if (timeline.allContext.isNotEmpty()) {
+                selectedAllContextItem = timeline.allContext.last()
+                selectedDateIndex = timeline.allContext.lastIndex
             }
 
             if (selectedAllContextItem != null && selectedDateIndex != null) {

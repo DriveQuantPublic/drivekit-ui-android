@@ -123,11 +123,9 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     private fun hasNoTripAtAll(previousPeriod: TripKind, currentPeriod: TripKind) =
         (previousPeriod == TripKind.NO_TRIP && currentPeriod == TripKind.NO_TRIP)
 
-    // Can be simplified with previousPeriod == TripKind.NO_TRIP
     private fun hasNoPreviousTrip(previousPeriod: TripKind, currentPeriod: TripKind) =
         (previousPeriod == TripKind.NO_TRIP && currentPeriod == TripKind.SCORED_TRIPS)
 
-    // Can be simplified with previousPeriod == TripKind.SCORED_TRIPS
     private fun hasPreviousTrip(previousPeriod: TripKind, currentPeriod: TripKind) =
         (previousPeriod == TripKind.SCORED_TRIPS && currentPeriod == TripKind.SCORED_TRIPS)
 }

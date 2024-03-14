@@ -46,7 +46,7 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
             }
         } else {
             this.totalDistanceForAllContext = 0.0
-            this.distanceByContext = emptyMap()
+            this.distanceByContext = mapOf()
             this.emptyRoadContextType = EmptyRoadContextType.EMPTY_DATA
         }
         updateContextCards()
