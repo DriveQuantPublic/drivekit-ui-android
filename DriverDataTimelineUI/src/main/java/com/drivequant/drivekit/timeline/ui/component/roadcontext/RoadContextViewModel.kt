@@ -28,13 +28,12 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
 
     fun configure(timeline: DKDriverTimeline?, selectedDate: Date?) {
         if (timeline != null && selectedDate != null) {
-            this.distanceByContext = mutableMapOf()
-            this.totalDistanceForAllContext = 0.0
-
-            timeline.roadContexts.forEach { it ->
-                val distance = it.value.firstOrNull { it.date == selectedDate }?.distance ?: 0.0
-                if (distance > 0) {
-                    this.distanceByContext[it.key.toTimelineRoadContext()] = distance
+            this.distanceByContext = buildMap {
+                timeline.roadContexts.forEach { roadContextItem ->
+                    val distance = roadContextItem.value.firstOrNull { it.date == selectedDate }?.distance ?: 0.0
+                    if (distance > 0) {
+                        this[roadContextItem.key.toTimelineRoadContext()] = distance
+                    }
                 }
             }
 
