@@ -21,7 +21,7 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
 
     val changeObserver: MutableLiveData<Any> = MutableLiveData()
 
-    private var distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
+    private var distanceByContext = mapOf<TimelineRoadContext, Double>()
     private var contextCards: List<DKContextCardItem> = emptyList()
     private var totalDistanceForAllContext = 0.0
     private var emptyRoadContextType: EmptyRoadContextType? = null
