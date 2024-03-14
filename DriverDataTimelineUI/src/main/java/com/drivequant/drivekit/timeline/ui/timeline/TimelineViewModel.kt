@@ -39,7 +39,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     var selectedScore: DKScoreType = scores.first()
         private set
 
-    private var timelineByPeriod: MutableMap<DKPeriod, DKDriverTimeline> = mutableMapOf()
+    private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mutableMapOf()
 
     var selectedDate: Date? = null
         private set
@@ -86,9 +86,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     fun updateTimeline() {
         DriveKitDriverData.getDriverTimelines(this.periods, ignoreItemsWithoutTripScored = true) { timelineSyncStatus, timelines ->
             if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
-                timelines.forEach {
-                    timelineByPeriod = timelines.associateBy { it.period }
-                }
+                timelineByPeriod = timelines.associateBy { it.period }
                 update(resettingSelectedDate = true)
             }
             syncStatus.postValue(timelineSyncStatus)
