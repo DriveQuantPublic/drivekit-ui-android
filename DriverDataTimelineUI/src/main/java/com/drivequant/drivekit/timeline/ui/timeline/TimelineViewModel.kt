@@ -87,7 +87,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         DriveKitDriverData.getDriverTimelines(this.periods, ignoreItemsWithoutTripScored = true) { timelineSyncStatus, timelines ->
             if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
                 timelines.forEach {
-                    timelineByPeriod[it.period] = it
+                    timelineByPeriod = timelines.associateBy { it.period }
                 }
                 update(resettingSelectedDate = true)
             }
