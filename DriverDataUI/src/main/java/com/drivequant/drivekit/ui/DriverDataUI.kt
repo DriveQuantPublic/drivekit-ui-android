@@ -31,8 +31,7 @@ import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 
 object DriverDataUI : DriverDataUIEntryPoint {
-
-    private const val TAG = "DriveKit DriverData UI"
+    internal const val TAG = "DriveKit Driver Data UI"
 
     var contextKinds: List<DKContextKind> = DKContextKind.values().toList()
         private set
@@ -69,19 +68,15 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var mapTraceWarningColor: Int = R.color.dkMapTraceWarningColor
     internal var mapTraceAuthorizedCallColor: Int = R.color.dkMapTraceAuthorizedCallColor
 
-    @JvmOverloads
-    fun initialize(tripData: TripData = TripData.SAFETY, mapItems: List<MapItem> = listOf(
-            MapItem.SAFETY,
-            MapItem.ECO_DRIVING,
-            MapItem.DISTRACTION,
-            MapItem.SPEEDING,
-            MapItem.INTERACTIVE_MAP,
-            MapItem.SYNTHESIS)) {
-        this.tripData = tripData
-        this.mapItems = mapItems
+    init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.driverDataUIEntryPoint = this
-
         checkGoogleApiKey()
+    }
+
+    fun initialize() {
+        // Nothing to do currently.
     }
 
     fun enableAdviceFeedback(enableAdviceFeedback: Boolean) {
@@ -98,6 +93,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     fun configureTripData(tripData: TripData) {
         this.tripData = tripData
+    }
+
+    fun configureMapItems(mapItems: List<MapItem>) {
+        this.mapItems = mapItems
     }
 
     fun configureHeaderDay(headerDay: HeaderDay) {
@@ -153,7 +152,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     private fun checkGoogleApiKey() {
         try {
-            val bundle= DriveKit.applicationContext.packageManager.getApplicationInfoCompat(DriveKit.applicationContext.packageName, PackageManager.GET_META_DATA).metaData
+            val bundle = DriveKit.applicationContext.packageManager.getApplicationInfoCompat(DriveKit.applicationContext.packageName, PackageManager.GET_META_DATA).metaData
             val apiKey = bundle.getString("com.google.android.geo.API_KEY")
             if (apiKey.isNullOrBlank()) {
                 DriveKitLog.e(TAG, "A Google API key must be provided in your AndroidManifest.xml. Please refer to the DriveKit documentation.")
@@ -167,13 +166,12 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     @JvmOverloads
     fun getLastTripsSynthesisCardsView(
-        synthesisCards: List<LastTripsSynthesisCard> =
-            listOf(
-                LastTripsSynthesisCard.SAFETY,
-                LastTripsSynthesisCard.DISTRACTION,
-                LastTripsSynthesisCard.ECO_DRIVING,
-                LastTripsSynthesisCard.SPEEDING
-            ), listener: SynthesisCardsViewListener
+        synthesisCards: List<LastTripsSynthesisCard> = listOf(
+            LastTripsSynthesisCard.SAFETY,
+            LastTripsSynthesisCard.DISTRACTION,
+            LastTripsSynthesisCard.ECO_DRIVING,
+            LastTripsSynthesisCard.SPEEDING
+        ), listener: SynthesisCardsViewListener
     ) {
         DriverDataSynthesisCardsUI.getLastTripsSynthesisCardsView(synthesisCards, listener)
     }
@@ -181,7 +179,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
     @JvmOverloads
     fun getLastTripsView(
         headerDay: HeaderDay = HeaderDay.DISTANCE,
-        lastTripMaxNumber: Int = 10): Fragment {
+        lastTripMaxNumber: Int = 10
+    ): Fragment {
         val trips = LastTripsWidgetUtils.getLastTrips(lastTripMaxNumber)
         return DKLastTripsUI.getLastTripWidget(trips.toDKTripList(), headerDay, tripData)
     }

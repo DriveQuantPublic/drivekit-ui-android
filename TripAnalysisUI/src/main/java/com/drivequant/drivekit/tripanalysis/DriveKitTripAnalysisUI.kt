@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.TripAnalysisUIEntryPoint
+import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.common.DKDay
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHours
@@ -14,8 +16,7 @@ import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.
 import com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity
 
 object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
-
-    internal const val TAG = "DriveKit TripAnalysis UI"
+    internal const val TAG = "DriveKit Trip Analysis UI"
 
     var defaultWorkHours = getDefaultWorkingHours()
     internal var crashFeedbackRoadsideAssistanceNumber: String? = null
@@ -28,8 +29,14 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
             DKTripRecordingUserMode.STOP_ONLY, DKTripRecordingUserMode.NONE -> false
         }
 
-    fun initialize() {
+    init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.tripAnalysisUIEntryPoint = this
+    }
+
+    fun initialize() {
+        // Nothing to do currently.
     }
 
     override fun startWorkingHoursActivity(context: Context) {

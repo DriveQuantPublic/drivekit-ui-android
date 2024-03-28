@@ -12,7 +12,7 @@ import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 
-class ChallengeRulesFragment : Fragment() {
+internal class ChallengeRulesFragment : Fragment() {
 
     private lateinit var challengeId: String
     private lateinit var viewModel: ChallengeParticipationViewModel
@@ -57,10 +57,7 @@ class ChallengeRulesFragment : Fragment() {
             )[ChallengeParticipationViewModel::class.java]
         }
 
-        val challengeHeaderView =
-            ChallengeHeaderView(
-                requireContext()
-            )
+        val challengeHeaderView = ChallengeHeaderView(requireContext())
         challengeHeaderView.configure(viewModel, requireActivity())
         container.addView(challengeHeaderView)
     }

@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.DriveKitVehicleListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentVehiclesListBinding
@@ -24,7 +26,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 
-class VehiclesListFragment : Fragment() {
+class VehiclesListFragment : Fragment(), DriveKitVehicleListener {
 
     private lateinit var viewModel: VehiclesListViewModel
     private var adapter: VehiclesListAdapter? = null
@@ -32,6 +34,11 @@ class VehiclesListFragment : Fragment() {
     private lateinit var synchronizationType: SynchronizationType
     private var _binding: FragmentVehiclesListBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        DriveKitVehicle.addListener(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentVehiclesListBinding.inflate(inflater, container, false)
@@ -81,13 +88,18 @@ class VehiclesListFragment : Fragment() {
         updateVehicles(synchronizationType)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        DriveKitVehicle.removeListener(this)
+    }
+
     private fun updateTitle(title: String) {
         if (activity is VehiclesListActivity) {
             (activity as VehiclesListActivity).updateTitle(title)
         }
     }
 
-    fun updateVehicles(synchronizationType: SynchronizationType) {
+    private fun updateVehicles(synchronizationType: SynchronizationType) {
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(viewLifecycleOwner) {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
@@ -192,5 +204,9 @@ class VehiclesListFragment : Fragment() {
     private fun getVehicleListHeaderBinding(): HeaderVehicleListBinding {
         @Suppress("USELESS_CAST")
         return binding.vehicleListHeader as HeaderVehicleListBinding // DO NOT REMOVE THIS "USELESS CAST". It's actually necessary for compilation.
+    }
+
+    override fun vehiclesUpdated() {
+        updateVehicles(SynchronizationType.CACHE)
     }
 }

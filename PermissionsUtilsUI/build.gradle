@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation "androidx.startup:startup-runtime:$startup_runtime"
+
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.drivekit.demoapp.manager.*
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.DriveKitListenerManager
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
@@ -24,25 +23,25 @@ internal class UserIdViewModel : ViewModel(), DriveKitListener {
     var syncUserInfo: MutableLiveData<Boolean> = MutableLiveData()
 
     fun sendUserId(userId: String, listener: UserIdDriveKitListener) {
-        DriveKitListenerManager.addListener(this)
+        DriveKit.addDriveKitListener(this)
         this.listener = listener
         DriveKit.setUserId(userId)
     }
 
     override fun onConnected() {
-        DriveKitListenerManager.removeListener(this)
+        DriveKit.removeDriveKitListener(this)
         this.listener?.onSetUserId(true, null)
         this.listener = null
     }
 
     override fun onAuthenticationError(errorType: RequestError) {
-        DriveKitListenerManager.removeListener(this)
+        DriveKit.removeDriveKitListener(this)
         this.listener?.onSetUserId(false, errorType)
         this.listener = null
     }
 
     override fun onDisconnected() {
-        DriveKitListenerManager.removeListener(this)
+        DriveKit.removeDriveKitListener(this)
         this.listener?.onSetUserId(false, null)
         this.listener = null
     }

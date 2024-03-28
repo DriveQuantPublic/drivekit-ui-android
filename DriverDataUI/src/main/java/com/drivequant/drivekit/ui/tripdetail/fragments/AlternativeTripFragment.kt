@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
@@ -37,7 +36,7 @@ internal class AlternativeTripFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DkAlternativeTripFragmentBinding.inflate(inflater, container, false)
         binding.root.setDKStyle(Color.WHITE)
         return binding.root

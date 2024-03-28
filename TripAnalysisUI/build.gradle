@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation "androidx.startup:startup-runtime:$startup_runtime"
     implementation "com.github.PhilJay:MPAndroidChart:$mp_chart"
 
     debugApi project(':CommonUI')
