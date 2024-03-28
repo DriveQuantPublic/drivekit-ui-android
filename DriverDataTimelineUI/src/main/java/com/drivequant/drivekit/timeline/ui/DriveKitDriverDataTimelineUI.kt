@@ -11,12 +11,13 @@ object DriveKitDriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
     internal const val TAG = "DriveKit Driver Data Timeline UI"
 
     init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.driverDataTimelineUIEntryPoint = this
     }
 
     fun initialize() {
-        DriveKit.checkInitialization()
-        DriveKitLog.i(TAG, "Initialization")
+        // Nothing to do currently.
     }
 
     override fun startTimelineActivity(context: Context) {

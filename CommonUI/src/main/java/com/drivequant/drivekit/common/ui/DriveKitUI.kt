@@ -32,11 +32,12 @@ object DriveKitUI {
 
     init {
         DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         this.colors = DKColors(DriveKit.applicationContext)
     }
 
     fun initialize() {
-        DriveKitLog.i(TAG, "Initialization")
+        // Nothing to do currently.
     }
 
     fun configureColors(colors: DKColors) {

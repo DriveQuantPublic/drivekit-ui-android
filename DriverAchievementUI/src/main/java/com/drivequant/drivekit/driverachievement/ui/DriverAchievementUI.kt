@@ -34,12 +34,13 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     internal var rankingDepth: Int = 5
 
     init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.driverAchievementUIEntryPoint = this
     }
 
     fun initialize() {
-        DriveKit.checkInitialization()
-        DriveKitLog.i(TAG, "Initialization")
+        // Nothing to do currently.
     }
 
     fun configureStreakThemes(streakThemes: List<StreakTheme>) {

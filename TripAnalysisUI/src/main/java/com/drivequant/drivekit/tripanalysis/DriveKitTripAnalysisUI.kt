@@ -30,12 +30,13 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
         }
 
     init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.tripAnalysisUIEntryPoint = this
     }
 
     fun initialize() {
-        DriveKit.checkInitialization()
-        DriveKitLog.i(TAG, "Initialization")
+        // Nothing to do currently.
     }
 
     override fun startWorkingHoursActivity(context: Context) {

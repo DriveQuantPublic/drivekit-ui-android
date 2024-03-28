@@ -70,12 +70,13 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     init {
         DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.driverDataUIEntryPoint = this
         checkGoogleApiKey()
     }
 
     fun initialize() {
-        DriveKitLog.i(TAG, "Initialization")
+        // Nothing to do currently.
     }
 
     fun enableAdviceFeedback(enableAdviceFeedback: Boolean) {

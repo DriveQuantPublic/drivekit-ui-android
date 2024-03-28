@@ -38,12 +38,13 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal var tutorialUrl: String? = null
 
     init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.permissionsUtilsUIEntryPoint = this
     }
 
     fun initialize() {
-        DriveKit.checkInitialization()
-        DriveKitLog.i(TAG, "Initialization")
+        // Nothing to do currently.
     }
 
     fun showPermissionViews(

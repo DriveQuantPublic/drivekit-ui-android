@@ -17,12 +17,13 @@ object ChallengeUI: ChallengeUIEntryPoint {
     internal const val TAG = "DriveKit Challenge UI"
 
     init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.challengeUIEntryPoint = this
     }
 
     fun initialize() {
-        DriveKit.checkInitialization()
-        DriveKitLog.i(TAG, "Initialization")
+        // Nothing to do currently.
     }
 
     internal val challengeDetailItems = listOf(

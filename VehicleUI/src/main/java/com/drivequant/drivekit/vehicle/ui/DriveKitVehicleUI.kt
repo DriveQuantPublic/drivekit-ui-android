@@ -68,12 +68,13 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
     init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.vehicleUIEntryPoint = this
     }
 
     fun initialize() {
-        DriveKit.checkInitialization()
-        DriveKitLog.i(TAG, "Initialization")
+        // Nothing to do currently.
     }
 
     fun configureVehiclesTypes(vehicleTypes: List<VehicleType>) {
