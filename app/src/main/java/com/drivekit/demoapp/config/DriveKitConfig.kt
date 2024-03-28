@@ -19,7 +19,6 @@ import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.DriveKitListenerManager
 import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
 import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
@@ -82,7 +81,7 @@ internal object DriveKitConfig {
 
     private fun initializeModules(application: Application) {
         DriveKitTripAnalysis.tripNotification = createForegroundNotification(application)
-        DriveKitListenerManager.addListener(object : DriveKitListener {
+        DriveKit.addDriveKitListener(object : DriveKitListener {
             override fun onDisconnected() {
                 // Data needs to be cleaned
                 logout(application)
