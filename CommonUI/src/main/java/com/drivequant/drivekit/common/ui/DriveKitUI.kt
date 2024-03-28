@@ -7,13 +7,17 @@ import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKFonts
 import com.drivequant.drivekit.common.ui.utils.DistanceUnit
+import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 
 object DriveKitUI {
+    internal const val TAG = "DriveKit UI"
 
     var analyticsListener: DriveKitAnalyticsListener? = null
     var distanceUnit: DistanceUnit = DistanceUnit.KM
-    lateinit var colors: DKColors
+    var colors: DKColors
+        private set
 
     var scores: List<DKScoreType> = DKScoreType.values().toList()
         get() = field.filter { it.hasAccess() }
@@ -23,11 +27,23 @@ object DriveKitUI {
             }
         }
 
-    private var fonts = DKFonts()
+    var fonts = DKFonts()
+        private set
 
-    @JvmOverloads
-    fun initialize(context: Context, colors: DKColors = DKColors(context), fonts: DKFonts = DKFonts()) {
+    init {
+        DriveKit.checkInitialization()
+        this.colors = DKColors(DriveKit.applicationContext)
+    }
+
+    fun initialize() {
+        DriveKitLog.i(TAG, "Initialization")
+    }
+
+    fun configureColors(colors: DKColors) {
         this.colors = colors
+    }
+
+    fun configureFonts(fonts: DKFonts) {
         this.fonts = fonts
     }
 

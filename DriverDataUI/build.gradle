@@ -45,6 +45,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-maps:$play_services_maps"
     implementation "com.google.android.material:material:$material"
     implementation "androidx.core:core-ktx:$core_ktx"
+    implementation "androidx.startup:startup-runtime:$startup_runtime"
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"

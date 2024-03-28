@@ -4,18 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController.permissionsUtilsUIEntryPoint
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.module.BluetoothUsage
-import com.drivequant.drivekit.core.utils.*
+import com.drivequant.drivekit.core.utils.ConnectivityType
+import com.drivequant.drivekit.core.utils.DiagnosisHelper
+import com.drivequant.drivekit.core.utils.PermissionStatus
+import com.drivequant.drivekit.core.utils.PermissionType
+import com.drivequant.drivekit.core.utils.getPackageInfoCompat
 import com.drivequant.drivekit.permissionsutils.diagnosis.activity.AppDiagnosisActivity
 import com.drivequant.drivekit.permissionsutils.diagnosisnotification.DKDeviceConfigurationEventNotificationManager
 import com.drivequant.drivekit.permissionsutils.diagnosisnotification.model.DKDiagnosisNotificationInfo
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by Mohamed on 2020-04-02.
@@ -23,7 +28,7 @@ import java.util.*
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
-    internal const val TAG = "DriveKit PermissionsUtils UI"
+    internal const val TAG = "DriveKit Permissions Utils UI"
     internal var permissionViewListener: PermissionViewListener? = null
     internal val isBluetoothNeeded: Boolean
         get() {
@@ -32,21 +37,13 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal var contactType: ContactType = ContactType.NONE
     internal var tutorialUrl: String? = null
 
-    fun initialize() {
-        permissionsUtilsUIEntryPoint = this
+    init {
+        DriveKitNavigationController.permissionsUtilsUIEntryPoint = this
     }
 
-    @Deprecated("The method is deprecated: permissionView parameter is now ignored",
-        ReplaceWith(
-        "PermissionsUtilsUI.showPermissionViews(context, permissionViewListener)",
-        "com.drivequant.drivekit.permissionsutils")
-    )
-    fun showPermissionViews(
-        context: Context,
-        @Suppress("UNUSED_PARAMETER") permissionView: ArrayList<PermissionView>,
-        permissionViewListener: PermissionViewListener
-    ) {
-        showPermissionViews(context, permissionViewListener)
+    fun initialize() {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
     }
 
     fun showPermissionViews(
@@ -70,18 +67,9 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     override fun startAppDiagnosisActivity(context: Context) =
         context.startActivity(Intent(context, AppDiagnosisActivity::class.java))
 
-    @Deprecated("`isBluetoothNeeded` is now dynamically computed")
-    fun configureBluetooth(@Suppress("UNUSED_PARAMETER") isBluetoothNeeded: Boolean) {}
-
-    @Deprecated("Logs are now enabled by default. To disable logging, just call DriveKit.disableLogging()")
-    fun configureDiagnosisLogs(@Suppress("UNUSED_PARAMETER") shouldDisplayDiagnosisLogs: Boolean) { }
-
     fun configureContactType(contactType: ContactType) {
         this.contactType = contactType
     }
-
-    @Deprecated("Logs are now only driven by DriveKit Core module.")
-    fun configureLogPathFile(@Suppress("UNUSED_PARAMETER") logPathFile: String) { }
 
     fun configureTutorialUrl(tutorialUrl: String) {
         this.tutorialUrl = tutorialUrl

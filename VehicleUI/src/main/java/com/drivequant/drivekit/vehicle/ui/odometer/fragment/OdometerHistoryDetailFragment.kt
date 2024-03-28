@@ -92,7 +92,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                 initVehicle(context, vehicleId)
                 initMileageRecord(context)
                 onValidateButtonClicked(context)
-                onDeleteOdometerHistory(context)
+                onDeleteOdometerHistory()
                 onDistanceClicked(context)
                 onCancelButtonClicked()
                 binding.vehicleItem.setBackgroundColor(DriveKitUI.colors.neutralColor())
@@ -228,7 +228,7 @@ class OdometerHistoryDetailFragment : Fragment() {
         }
     }
 
-    private fun onDeleteOdometerHistory(context: Context) {
+    private fun onDeleteOdometerHistory() {
         binding.buttonDeleteReference.apply {
             normalText(DriveKitUI.colors.secondaryColor())
             setText(com.drivequant.drivekit.common.ui.R.string.dk_common_delete)

@@ -11,8 +11,6 @@ import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.challenge.DriveKitChallenge
-import com.drivequant.drivekit.challenge.ui.ChallengeUI
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
@@ -29,13 +27,10 @@ import com.drivequant.drivekit.core.networking.RequestError
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
 import com.drivequant.drivekit.databaseutils.entity.RankingType
-import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
-import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
@@ -45,7 +40,6 @@ import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedback
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackNotification
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
 import com.drivequant.drivekit.ui.DriverDataUI
-import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -87,28 +81,17 @@ internal object DriveKitConfig {
     }
 
     private fun initializeModules(application: Application) {
-        // DriveKit Core Initialization:
-        DriveKit.initialize(application)
+        DriveKitTripAnalysis.tripNotification = createForegroundNotification(application)
         DriveKitListenerManager.addListener(object : DriveKitListener {
-            override fun onAccountDeleted(status: DeleteAccountStatus) {}
-
-            override fun onAuthenticationError(errorType: RequestError) {}
-
-            override fun onConnected() {}
-
             override fun onDisconnected() {
                 // Data needs to be cleaned
                 logout(application)
             }
-
+            override fun onAccountDeleted(status: DeleteAccountStatus) {}
+            override fun onAuthenticationError(errorType: RequestError) {}
+            override fun onConnected() {}
             override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
         })
-
-        // TripAnalysis initialization:
-        DriveKitTripAnalysis.initialize(createForegroundNotification(application))
-
-        // Initialize DriverData:
-        DriveKitDriverData.initialize()
     }
 
     fun configureModules(context: Context) {
@@ -117,14 +100,12 @@ internal object DriveKitConfig {
         configureTripAnalysis(context)
 
         // UI modules configuration:
-        configureCommonUI(context)
+        configureCommonUI()
         configureDriverDataUI()
-        configureDriverDataTimelineUI()
         configureVehicleUI()
         configureTripAnalysisUI(context)
         configureDriverAchievementUI()
         configurePermissionsUtilsUI()
-        configureChallengeUI()
     }
 
     fun isTripAnalysisAutoStartedEnabled(context: Context) =
@@ -163,8 +144,7 @@ internal object DriveKitConfig {
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
     }
 
-    private fun configureCommonUI(context: Context) {
-        DriveKitUI.initialize(context)
+    private fun configureCommonUI() {
         DriveKitUI.scores = listOf(
             DKScoreType.SAFETY,
             DKScoreType.ECO_DRIVING,
@@ -183,16 +163,11 @@ internal object DriveKitConfig {
     }
 
     private fun configureDriverDataUI() {
-        DriverDataUI.initialize(tripData = tripData)
+        DriverDataUI.configureTripData(tripData)
         DriverDataUI.enableAlternativeTrips(enableAlternativeTrips)
     }
 
-    private fun configureDriverDataTimelineUI() {
-        DriveKitDriverDataTimelineUI.initialize()
-    }
-
     private fun configureVehicleUI() {
-        DriveKitVehicleUI.initialize()
         DriveKitVehicleUI.enableOdometer(enableVehicleOdometer)
         DriveKitVehicleUI.configureVehiclesTypes(vehicleTypes)
         DriveKitVehicleUI.configureBrands(vehicleBrands)
@@ -206,7 +181,6 @@ internal object DriveKitConfig {
     }
 
     private fun configureTripAnalysisUI(context: Context) {
-        DriveKitTripAnalysisUI.initialize()
         DriveKitTripAnalysisUI.enableCrashFeedback(
             roadsideAssistanceNumber = "0000000000",
             DKCrashFeedbackConfig(
@@ -226,7 +200,6 @@ internal object DriveKitConfig {
     }
 
     private fun configureDriverAchievementUI() {
-        DriverAchievementUI.initialize()
         DriverAchievementUI.configureRankingTypes(RankingType.values().toList())
         val rankingPeriods = listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
         DriverAchievementUI.configureRankingSelector(RankingSelectorType.PERIOD(rankingPeriods))
@@ -235,7 +208,6 @@ internal object DriveKitConfig {
     }
 
     private fun configurePermissionsUtilsUI() {
-        PermissionsUtilsUI.initialize()
         PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
             override fun getBccRecipients(): List<String> = listOf("")
             override fun getMailBody() = "Mail body to configure"
@@ -243,10 +215,6 @@ internal object DriveKitConfig {
             override fun getSubject() = "Subject to configure"
             override fun overrideMailBodyContent(): Boolean = false
         }))
-    }
-
-    private fun configureChallengeUI() {
-        ChallengeUI.initialize()
     }
 
     private fun createForegroundNotification(context: Context): TripNotification {
@@ -283,11 +251,6 @@ internal object DriveKitConfig {
     private fun reset(context: Context) {
         // Reset DriveKit
         DriveKit.reset()
-        DriveKitTripAnalysis.reset()
-        DriveKitDriverData.reset()
-        DriveKitVehicle.reset()
-        DriveKitDriverAchievement.reset()
-        DriveKitChallenge.reset()
 
         // Reset the Demo App NotificationManager
         DKNotificationManager.reset(context)
