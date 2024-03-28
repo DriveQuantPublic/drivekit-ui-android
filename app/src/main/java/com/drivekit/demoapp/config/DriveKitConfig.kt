@@ -68,19 +68,10 @@ internal object DriveKitConfig {
     private val vehicleBrands: List<VehicleBrand> = VehicleBrand.values().toList()
     private const val enableVehicleOdometer: Boolean = true
 
-    fun initialize(application: Application) {
-        // DriveKit modules initialization:
-        initializeModules(application)
-
-        // DriveKit modules configuration:
-        configureModules(application)
-
-        // Manage notifications for DriveKit SDK events, for example when a trip is finished, cancelled or saved for repost
-        DKNotificationManager.configure()
-    }
-
-    private fun initializeModules(application: Application) {
+    fun configure(application: Application) {
+        // You have to configure the trip notification in your onCreate() Application class even if DriveKit auto-init is enabled:
         DriveKitTripAnalysis.tripNotification = createForegroundNotification(application)
+        // Add DriveKitListener to logout from app when the user is logged-out from DriveKit:
         DriveKit.addDriveKitListener(object : DriveKitListener {
             override fun onDisconnected() {
                 // Data needs to be cleaned
@@ -91,6 +82,13 @@ internal object DriveKitConfig {
             override fun onConnected() {}
             override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
         })
+
+        // DriveKit modules configuration:
+        configureModules(application)
+
+        // Manage notifications for DriveKit SDK events, for example when a trip is finished, cancelled or saved for repost:
+        DKNotificationManager.createChannels(application)
+        DKNotificationManager.configure()
     }
 
     fun configureModules(context: Context) {
