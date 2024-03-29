@@ -1,23 +1,23 @@
 package com.drivequant.drivekit.timeline.ui
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataTimelineUIEntryPoint
-import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
 
 object DriveKitDriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
+    internal const val TAG = "DriveKit Driver Data Timeline UI"
 
-    @Deprecated("You should use DriveKitUI.scores now.", ReplaceWith("DriveKitUI.scores"))
-    var scores: List<DKScoreType>
-        get() = DriveKitUI.scores
-        set(value) {
-            DriveKitUI.scores = value
-        }
+    init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
+        DriveKitNavigationController.driverDataTimelineUIEntryPoint = this
+    }
 
     fun initialize() {
-        DriveKitNavigationController.driverDataTimelineUIEntryPoint = this
+        // Nothing to do currently.
     }
 
     override fun startTimelineActivity(context: Context) {
