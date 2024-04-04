@@ -43,10 +43,12 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         DriveKitNavigationController.permissionsUtilsUIEntryPoint = this
     }
 
+    @JvmStatic
     fun initialize() {
         // Nothing to do currently.
     }
 
+    @JvmStatic
     fun showPermissionViews(
         context: Context,
         permissionViewListener: PermissionViewListener
@@ -68,14 +70,17 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     override fun startAppDiagnosisActivity(context: Context) =
         context.startActivity(Intent(context, AppDiagnosisActivity::class.java))
 
+    @JvmStatic
     fun configureContactType(contactType: ContactType) {
         this.contactType = contactType
     }
 
+    @JvmStatic
     fun configureTutorialUrl(tutorialUrl: String) {
         this.tutorialUrl = tutorialUrl
     }
 
+    @JvmStatic
     fun hasError(context: Context): Boolean {
         PermissionType.values().forEach {
             if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
@@ -99,9 +104,11 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         return !DiagnosisHelper.isNetworkReachable(context)
     }
 
+    @JvmStatic
     fun getDeviceConfigurationEventNotification(): DKDiagnosisNotificationInfo? =
         DKDeviceConfigurationEventNotificationManager.getNotificationInfo()
 
+    @JvmStatic
     fun getDiagnosisDescription(context: Context): String {
         val locationMail =
             when (DiagnosisHelper.getPermissionStatus(context, PermissionType.LOCATION)) {

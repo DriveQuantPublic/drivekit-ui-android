@@ -49,8 +49,9 @@ object DriverDataUI : DriverDataUIEntryPoint {
     )
         private set
 
-    internal var customMapItem: DKMapItem? = null
-        private set
+    @JvmStatic
+    var customMapItem: DKMapItem? = null
+
     internal var customHeader: DKHeader? = null
         private set
     internal var customTripInfo: DKTripInfo? = null
@@ -62,6 +63,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var enableVehicleFilter: Boolean = true
     internal var headerDay: HeaderDay = HeaderDay.DURATION_DISTANCE
 
+    @JvmStatic
     var alternativeTripsDepthInDays: Int? = null
 
     internal var mapTraceMainColor: Int = R.color.dkMapTraceMainColor
@@ -75,56 +77,64 @@ object DriverDataUI : DriverDataUIEntryPoint {
         checkGoogleApiKey()
     }
 
+    @JvmStatic
     fun initialize() {
         // Nothing to do currently.
     }
 
+    @JvmStatic
     fun enableAdviceFeedback(enableAdviceFeedback: Boolean) {
         this.enableAdviceFeedback = enableAdviceFeedback
     }
 
+    @JvmStatic
     fun enableDeleteTrip(enableDeleteTrip: Boolean) {
         this.enableDeleteTrip = enableDeleteTrip
     }
 
+    @JvmStatic
     fun dayTripDescendingOrder(dayTripDescendingOrder: Boolean) {
         this.dayTripDescendingOrder = dayTripDescendingOrder
     }
 
+    @JvmStatic
     fun configureTripData(tripData: TripData) {
         this.tripData = tripData
     }
 
+    @JvmStatic
     fun configureMapItems(mapItems: List<MapItem>) {
         this.mapItems = mapItems
     }
 
+    @JvmStatic
     fun configureHeaderDay(headerDay: HeaderDay) {
         this.headerDay = headerDay
     }
 
+    @JvmStatic
     fun configureContextKinds(contextKinds: List<DKContextKind>) {
         this.contextKinds = contextKinds
     }
 
+    @JvmStatic
     fun enableVehicleFilter(enableVehicleFilter: Boolean) {
         this.enableVehicleFilter = enableVehicleFilter
     }
 
+    @JvmStatic
     fun enableAlternativeTrips(enableAlternativeTrips: Boolean) {
         this.enableAlternativeTrips = enableAlternativeTrips
     }
 
+    @JvmStatic
     fun setCustomMapScreen(customMapItem: DKMapItem?) {
         this.customMapItem = customMapItem
     }
 
+    @JvmStatic
     fun customizeHeader(header: DKHeader?) {
         this.customHeader = header
-    }
-
-    fun setCustomTripInfo(tripInfo: DKTripInfo?) {
-        this.customTripInfo = tripInfo
     }
 
     override fun startTripListActivity(context: Context) {
@@ -165,6 +175,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     }
 
     @JvmOverloads
+    @JvmStatic
     fun getLastTripsSynthesisCardsView(
         synthesisCards: List<LastTripsSynthesisCard> = listOf(
             LastTripsSynthesisCard.SAFETY,
@@ -177,6 +188,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     }
 
     @JvmOverloads
+    @JvmStatic
     fun getLastTripsView(
         headerDay: HeaderDay = HeaderDay.DISTANCE,
         lastTripMaxNumber: Int = 10

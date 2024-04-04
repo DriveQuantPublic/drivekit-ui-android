@@ -16,6 +16,7 @@ object DriveKitDriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
         DriveKitNavigationController.driverDataTimelineUIEntryPoint = this
     }
 
+    @JvmStatic
     fun initialize() {
         // Nothing to do currently.
     }
