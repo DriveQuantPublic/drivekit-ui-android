@@ -51,7 +51,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     @JvmStatic
     var customMapItem: DKMapItem? = null
-
+        private set
     internal var customHeader: DKHeader? = null
         private set
     internal var customTripInfo: DKTripInfo? = null
