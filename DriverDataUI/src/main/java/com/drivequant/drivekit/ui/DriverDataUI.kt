@@ -55,8 +55,6 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var customHeader: DKHeader? = null
         private set
     internal var customTripInfo: DKTripInfo? = null
-        private set
-
     internal var enableDeleteTrip: Boolean = true
     internal var dayTripDescendingOrder: Boolean = false
     internal var enableAdviceFeedback: Boolean = true
