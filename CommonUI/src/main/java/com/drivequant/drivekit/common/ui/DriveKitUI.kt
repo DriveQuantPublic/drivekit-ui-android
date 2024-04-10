@@ -15,10 +15,14 @@ object DriveKitUI {
     internal const val TAG = "DriveKit UI"
 
     var analyticsListener: DriveKitAnalyticsListener? = null
+        private set
+
+    @JvmStatic
     var distanceUnit: DistanceUnit = DistanceUnit.KM
     var colors: DKColors
         private set
 
+    @JvmStatic
     var scores: List<DKScoreType> = DKScoreType.values().toList()
         get() = field.filter { it.hasAccess() }
         set(value) {
@@ -27,6 +31,7 @@ object DriveKitUI {
             }
         }
 
+    @JvmStatic
     var fonts = DKFonts()
         private set
 
@@ -36,23 +41,29 @@ object DriveKitUI {
         this.colors = DKColors(DriveKit.applicationContext)
     }
 
+    @JvmStatic
     fun initialize() {
         // Nothing to do currently.
     }
 
+    @JvmStatic
     fun configureColors(colors: DKColors) {
         this.colors = colors
     }
 
+    @JvmStatic
     fun configureFonts(fonts: DKFonts) {
         this.fonts = fonts
     }
 
+    @JvmStatic
     fun configureAnalytics(listener: DriveKitAnalyticsListener) {
         this.analyticsListener = listener
     }
 
+    @JvmStatic
     fun primaryFont(context: Context): Typeface? = ResourcesCompat.getFont(context, fonts.primaryFont())
 
+    @JvmStatic
     fun secondaryFont(context: Context): Typeface? = ResourcesCompat.getFont(context, fonts.secondaryFont())
 }

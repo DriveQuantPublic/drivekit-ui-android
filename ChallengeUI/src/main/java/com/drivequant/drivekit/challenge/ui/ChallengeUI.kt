@@ -22,6 +22,7 @@ object ChallengeUI: ChallengeUIEntryPoint {
         DriveKitNavigationController.challengeUIEntryPoint = this
     }
 
+    @JvmStatic
     fun initialize() {
         // Nothing to do currently.
     }
@@ -39,6 +40,7 @@ object ChallengeUI: ChallengeUIEntryPoint {
         context.startActivity(intent)
     }
 
+    @JvmStatic
     fun createChallengeListFragment(): Fragment {
         return ChallengeListFragment()
     }

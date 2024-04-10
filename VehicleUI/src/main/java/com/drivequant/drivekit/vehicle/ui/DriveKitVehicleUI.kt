@@ -73,10 +73,12 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         DriveKitNavigationController.vehicleUIEntryPoint = this
     }
 
+    @JvmStatic
     fun initialize() {
         // Nothing to do currently.
     }
 
+    @JvmStatic
     fun configureVehiclesTypes(vehicleTypes: List<VehicleType>) {
         if (vehicleTypes.isNotEmpty()) {
             this.vehicleTypes = vehicleTypes
@@ -85,34 +87,41 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
     }
 
+    @JvmStatic
     fun configureBrands(vehicleBrands: List<VehicleBrand>) {
         if (vehicleBrands.isNotEmpty()) {
             this.brands = vehicleBrands
         }
     }
 
+    @JvmStatic
     fun configureCategoryConfigType(categoryConfigType: CategoryConfigType) {
         this.categoryConfigType = categoryConfigType
     }
 
+    @JvmStatic
     fun configureEngineIndexes(vehicleEnginesIndex: List<VehicleEngineIndex>) {
         if (vehicleEnginesIndex.isNotEmpty()) {
             this.vehicleEngineIndexes = vehicleEnginesIndex
         }
     }
 
+    @JvmStatic
     fun showBrandsWithIcons(displayBrandsWithIcons: Boolean) {
         this.brandsWithIcons = displayBrandsWithIcons
     }
 
+    @JvmStatic
     fun enableAddVehicle(canAddVehicle: Boolean) {
         this.canAddVehicle = canAddVehicle
     }
 
+    @JvmStatic
     fun enableRemoveBeacon(canRemoveBeacon: Boolean) {
         this.canRemoveBeacon = canRemoveBeacon
     }
 
+    @JvmStatic
     fun configureMaxVehicles(maxVehicles: Int?) {
         val previousConfiguration = this.maxVehicles
         if (maxVehicles != null && maxVehicles >= 0) {
@@ -127,10 +136,12 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
     }
 
+    @JvmStatic
     fun configureVehicleActions(vehicleActions: List<VehicleActionItem>) {
         this.vehicleActions = vehicleActions
     }
 
+    @JvmStatic
     fun configureDetectionModes(detectionModes: List<DetectionMode>) {
         this.userDetectionModes = detectionModes
         val fixedModes: List<DetectionMode> = if (detectionModes.isEmpty()) {
@@ -147,14 +158,17 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         this.detectionModes = fixedModes
     }
 
+    @JvmStatic
     fun addCustomFieldsToGroup(groupField: GroupField, fieldsToAdd: List<Field>){
         this.customFields[groupField] = fieldsToAdd
     }
 
+    @JvmStatic
     fun configureBeaconDetailEmail(beaconDiagnosticMail: ContentMail){
         this.beaconDiagnosticMail = beaconDiagnosticMail
     }
 
+    @JvmStatic
     fun enableOdometer(hasOdometer: Boolean) {
         this.hasOdometer = hasOdometer
     }
@@ -213,11 +227,13 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     @JvmOverloads
+    @JvmStatic
     fun startOdometerUIActivity(activity: Activity, vehicleId: String? = null) {
         OdometerVehicleListActivity.launchActivity(activity, vehicleId)
     }
 
     @JvmOverloads
+    @JvmStatic
     fun startOdometerUIActivity(context: Context, vehicleId: String? = null) {
         OdometerVehicleListActivity.launchActivity(context, vehicleId)
     }

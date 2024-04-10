@@ -18,11 +18,15 @@ import com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursAc
 object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
     internal const val TAG = "DriveKit Trip Analysis UI"
 
+    @JvmStatic
     var defaultWorkHours = getDefaultWorkingHours()
     internal var crashFeedbackRoadsideAssistanceNumber: String? = null
+    @JvmStatic
     var tripRecordingUserMode: DKTripRecordingUserMode = DKTripRecordingUserMode.START_STOP
+    @JvmStatic
     val isUserAllowedToCancelTrip: Boolean
         get() = isUserAllowedToCancelTrip(this.tripRecordingUserMode)
+    @JvmStatic
     val isUserAllowedToStartTripManually: Boolean
         get() = when (this.tripRecordingUserMode) {
             DKTripRecordingUserMode.START_STOP, DKTripRecordingUserMode.START_ONLY -> true
@@ -35,6 +39,7 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
         DriveKitNavigationController.tripAnalysisUIEntryPoint = this
     }
 
+    @JvmStatic
     fun initialize() {
         // Nothing to do currently.
     }
@@ -66,18 +71,22 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
         )
     }
 
+    @JvmStatic
     fun enableCrashFeedback(roadsideAssistanceNumber: String, config: DKCrashFeedbackConfig) {
         this.crashFeedbackRoadsideAssistanceNumber = roadsideAssistanceNumber
         DriveKitTripAnalysis.enableCrashFeedback(config)
     }
 
+    @JvmStatic
     fun disableCrashFeedback() {
         this.crashFeedbackRoadsideAssistanceNumber = null
         DriveKitTripAnalysis.disableCrashFeedback()
     }
 
+    @JvmStatic
     fun newTripRecordingButtonFragment(): DKTripRecordingButton = DKTripRecordingButton()
 
+    @JvmStatic
     fun isUserAllowedToCancelTrip(tripRecordingUserMode: DKTripRecordingUserMode): Boolean =
         when (tripRecordingUserMode) {
             DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.START_ONLY -> false
