@@ -8,14 +8,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.vehicle.DriveKitVehicleListener
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 
-class VehiclesListActivity : AppCompatActivity(), DriveKitVehicleListener {
-
-   private lateinit var fragment: VehiclesListFragment
+class VehiclesListActivity : AppCompatActivity() {
 
     companion object {
         fun launchActivity(context: Context) {
@@ -37,7 +33,7 @@ class VehiclesListActivity : AppCompatActivity(), DriveKitVehicleListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        fragment = VehiclesListFragment()
+        val fragment = VehiclesListFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
@@ -50,11 +46,5 @@ class VehiclesListActivity : AppCompatActivity(), DriveKitVehicleListener {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    override fun vehiclesUpdated() {
-        if (this::fragment.isInitialized) {
-            fragment.updateVehicles(SynchronizationType.CACHE)
-        }
     }
 }

@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.DriveKitListenerManager
 import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
 import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
@@ -13,7 +12,7 @@ import com.drivequant.drivekit.core.networking.RequestError
 internal class DeleteAccountViewModel : ViewModel(), DriveKitListener {
 
     init {
-        DriveKitListenerManager.addListener(this)
+        DriveKit.addDriveKitListener(this)
     }
 
     val accountDeletionError = MutableLiveData<Int>()
@@ -50,6 +49,6 @@ internal class DeleteAccountViewModel : ViewModel(), DriveKitListener {
 
     override fun onCleared() {
         super.onCleared()
-        DriveKitListenerManager.removeListener(this)
+        DriveKit.removeDriveKitListener(this)
     }
 }

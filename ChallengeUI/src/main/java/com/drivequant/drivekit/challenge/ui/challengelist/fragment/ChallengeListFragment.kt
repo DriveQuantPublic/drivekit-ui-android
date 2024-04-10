@@ -11,6 +11,8 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.drivequant.drivekit.challenge.DriveKitChallenge
+import com.drivequant.drivekit.challenge.DriveKitChallengeListener
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.activity.ChallengeDetailActivity
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
@@ -31,7 +33,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
-class ChallengeListFragment : Fragment(), ChallengeListener {
+class ChallengeListFragment : Fragment(), DriveKitChallengeListener, ChallengeListener {
 
     private lateinit var viewModel: ChallengeListViewModel
     private var _binding: DkFragmentChallengeBinding? = null
@@ -39,6 +41,12 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
 
     private lateinit var dateSelectorView: DKDateSelectorView
     private var adapter: ChallengeListAdapter? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        DriveKitChallenge.addListener(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +87,12 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         _binding = null
     }
 
-    fun updateChallenge() {
+    override fun onDestroy() {
+        super.onDestroy()
+        DriveKitChallenge.removeListener(this)
+    }
+
+    private fun updateChallenge() {
         if (this::viewModel.isInitialized) {
             viewModel.updateLocalData()
         }
@@ -236,5 +249,9 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 challengeData.challengeId
             )
         }
+    }
+
+    override fun challengesUpdated() {
+        updateChallenge()
     }
 }

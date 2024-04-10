@@ -38,7 +38,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation "androidx.startup:startup-runtime:$startup_runtime"
+    implementation "com.github.PhilJay:MPAndroidChart:$mp_chart"
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"

@@ -60,7 +60,7 @@ internal class DrivingConditionsViewModel(
     }
 
     fun updateData() {
-        DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { _, timelines ->
+        DriveKitDriverData.getDriverTimelines(this.periods) { _, timelines ->
             this.timelineByPeriod = timelines.associateBy { it.period }
             update(true)
             syncStatus.postValue(Any())
@@ -127,7 +127,7 @@ internal class DrivingConditionsViewModel(
             val selectedDate = this.selectedDate
             val sourceTimeline = getTimelineSource(newPeriod)
             if (selectedDate != null && sourceTimeline != null) {
-                this.selectedDate = DKDateSelectorViewModel.newSelectedDate(selectedDate, oldPeriod, sourceTimeline.allContext.map { it.date }) { _, _ -> true }
+                this.selectedDate = DKDateSelectorViewModel.newSelectedDate(selectedDate, oldPeriod, sourceTimeline.allContext.map { it.date })
             }
             update()
         }

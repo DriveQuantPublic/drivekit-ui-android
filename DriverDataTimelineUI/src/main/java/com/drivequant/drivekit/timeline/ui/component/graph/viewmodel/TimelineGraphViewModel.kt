@@ -12,7 +12,7 @@ import com.drivequant.drivekit.core.extension.removeTime
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
-import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
+import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
@@ -23,8 +23,6 @@ import com.drivequant.drivekit.timeline.ui.component.graph.PointData
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewListener
-import com.drivequant.drivekit.timeline.ui.getSafe
-import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.Collections.max
 import java.util.Date
 import kotlin.math.ceil
@@ -47,16 +45,15 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
     private var indexOfFirstPointInTimeline: Int? = null
     private var indexOfLastPointInTimeline: Int? = null
 
-    fun configure(context: Context, timeline: DKRawTimeline, timelineSelectedIndex: Int, graphItem: GraphItem, period: DKPeriod) {
-        val sourceDates = timeline.allContext.date.map { it.toTimelineDate()!! }
-        val dates: List<Date> = sourceDates.map { it.removeTime() }
+    fun configure(context: Context, timeline: DKDriverTimeline, dates: List<Date>, timelineSelectedIndex: Int, graphItem: GraphItem, period: DKPeriod) {
+        val internalDates: List<Date> = dates.map { it.removeTime() }
         val calendarField = getCalendarField(period)
         val graphPointNumber = GraphConstants.GRAPH_POINT_NUMBER
-        val selectedDate = dates[timelineSelectedIndex]
+        val selectedDate = internalDates[timelineSelectedIndex]
         val now = Date()
         val currentDate = now.startingFrom(calendarField)
         val delta = selectedDate.diffWith(currentDate.removeTime(), calendarField).toInt()
-        this.sourceDates = sourceDates
+        this.sourceDates = dates
         this.timelineSelectedIndex = timelineSelectedIndex
         val selectedIndexInGraph = (graphPointNumber - 1) - ((-delta) % graphPointNumber)
         val graphStartDate = selectedDate.add(-selectedIndexInGraph, calendarField)
@@ -66,19 +63,19 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
             val xLabelDate: Date = graphStartDate.add(i, calendarField)
             var point: GraphPoint? = null
             val shouldInterpolate = graphItem.graphType == GraphType.LINE
-            val xLabelDateIndex = dates.indexOf(xLabelDate)
+            val xLabelDateIndex = internalDates.indexOf(xLabelDate)
             if (xLabelDateIndex != -1) {
                 val value = getValue(xLabelDateIndex, graphItem, timeline)
                 point = if (value != null) {
-                    GraphPoint(i.toDouble(), value, PointData(sourceDates[xLabelDateIndex], false))
+                    GraphPoint(i.toDouble(), value, PointData(dates[xLabelDateIndex], false))
                 } else {
-                    getInterpolatedSelectableDateWithoutValue(xLabelDateIndex, graphItem, timeline, dates, calendarField, i.toDouble(), sourceDates )
+                    getInterpolatedSelectableDateWithoutValue(xLabelDateIndex, graphItem, timeline, internalDates, calendarField, i.toDouble(), dates )
                 }
             } else if (shouldInterpolate) {
                 if (i == 0) {
-                    point = getInterpolatedStartOfGraphPoint(graphStartDate, calendarField, dates, graphItem, timeline, xLabelDate)
+                    point = getInterpolatedStartOfGraphPoint(graphStartDate, calendarField, internalDates, graphItem, timeline, xLabelDate)
                 } else if (i == graphPointNumber - 1) {
-                    point = getInterpolatedEndOfGraphPoint(graphStartDate, calendarField, dates, graphItem, timeline, xLabelDate)
+                    point = getInterpolatedEndOfGraphPoint(graphStartDate, calendarField, internalDates, graphItem, timeline, xLabelDate)
                 }
             }
             graphPoints.add(point)
@@ -198,7 +195,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         return null
     }
 
-    private fun getInterpolatedStartOfGraphPoint(graphStartDate: Date, calendarField: CalendarField, dates: List<Date>, graphItem: GraphItem, timeline: DKRawTimeline, xLabelDate: Date): GraphPoint? {
+    private fun getInterpolatedStartOfGraphPoint(graphStartDate: Date, calendarField: CalendarField, dates: List<Date>, graphItem: GraphItem, timeline: DKDriverTimeline, xLabelDate: Date): GraphPoint? {
         // Find next valid index
         var point: GraphPoint? = null
         var nextValidIndex: Int = -1
@@ -231,7 +228,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         return point
     }
 
-    private fun getInterpolatedEndOfGraphPoint(graphStartDate: Date, calendarField: CalendarField, dates: List<Date>, graphItem: GraphItem, timeline: DKRawTimeline, xLabelDate: Date): GraphPoint? {
+    private fun getInterpolatedEndOfGraphPoint(graphStartDate: Date, calendarField: CalendarField, dates: List<Date>, graphItem: GraphItem, timeline: DKDriverTimeline, xLabelDate: Date): GraphPoint? {
         // Find previous valid index
         var point: GraphPoint? = null
         var previousValidIndex: Int = -1
@@ -265,7 +262,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         return point
     }
 
-    private fun getInterpolatedSelectableDateWithoutValue(dateIndex: Int, graphItem: GraphItem, timeline: DKRawTimeline, dates: List<Date>, calendarField: CalendarField, pointX: Double, sourceDates: List<Date>): GraphPoint? {
+    private fun getInterpolatedSelectableDateWithoutValue(dateIndex: Int, graphItem: GraphItem, timeline: DKDriverTimeline, dates: List<Date>, calendarField: CalendarField, pointX: Double, sourceDates: List<Date>): GraphPoint? {
         val point: GraphPoint?
         if (dates.size == 1) {
             point = GraphPoint(pointX, 0.0, null)
@@ -305,38 +302,23 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         }
     }
 
-    private fun getValue(index: Int, graphItem: GraphItem, timeline: DKRawTimeline): Double? {
-        val totalDuration = timeline.allContext.duration.getSafe(index)?.toDouble() ?: 0.0
-        val totalDistance = timeline.allContext.distance.getSafe(index) ?: 0.0
+    private fun getValue(index: Int, graphItem: GraphItem, timeline: DKDriverTimeline): Double? {
+        val allContextItem = timeline.allContext[index]
+        val totalDuration = allContextItem.duration.toDouble()
+        val totalDistance = allContextItem.distance
         return when (graphItem) {
             is GraphItem.Score -> when (graphItem.scoreType) {
-                DKScoreType.SAFETY -> {
-                    return timeline.allContext.numberTripScored.getSafe(index)?.let { numberTripScored ->
-                        if (numberTripScored > 0) {
-                            timeline.allContext.safety.getSafe(index)
-                        } else {
-                            null
-                        }
-                    }
-                }
-                DKScoreType.ECO_DRIVING -> {
-                    return timeline.allContext.numberTripScored.getSafe(index)?.let { numberTripScored ->
-                        if (numberTripScored > 0) {
-                            timeline.allContext.efficiency.getSafe(index)
-                        } else {
-                            null
-                        }
-                    }
-                }
-                DKScoreType.DISTRACTION -> timeline.allContext.phoneDistraction.getSafe(index)
-                DKScoreType.SPEEDING -> timeline.allContext.speeding.getSafe(index)
+                DKScoreType.SAFETY -> allContextItem.safety?.score
+                DKScoreType.ECO_DRIVING -> allContextItem.ecoDriving?.score
+                DKScoreType.DISTRACTION -> allContextItem.phoneDistraction?.score
+                DKScoreType.SPEEDING -> allContextItem.speeding?.score
             }
             is GraphItem.ScoreItem -> when (graphItem.scoreItemType) {
                 TimelineScoreItemType.SAFETY_ACCELERATION -> {
                     if (totalDistance <= 0) {
                         return 0.0
                     }
-                    return timeline.allContext.acceleration.getSafe(index)?.let { acceleration ->
+                    return allContextItem.safety?.acceleration?.let { acceleration ->
                         acceleration / totalDistance * 100.0
                     }
                 }
@@ -344,7 +326,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     if (totalDistance <= 0) {
                         return 0.0
                     }
-                    return timeline.allContext.braking.getSafe(index)?.let { braking ->
+                    return allContextItem.safety?.braking?.let { braking ->
                         braking / totalDistance * 100.0
                     }
                 }
@@ -352,21 +334,21 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     if (totalDistance <= 0) {
                         return 0.0
                     }
-                    return timeline.allContext.adherence.getSafe(index)?.let { adherence ->
+                    return allContextItem.safety?.adherence?.let { adherence ->
                         adherence / totalDistance * 100.0
                     }
                 }
-                TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> timeline.allContext.efficiencyAcceleration.getSafe(index)
-                TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> timeline.allContext.efficiencyBrake.getSafe(index)
-                TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> timeline.allContext.efficiencySpeedMaintain.getSafe(index)
-                TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> timeline.allContext.fuelVolume.getSafe(index)
-                TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> timeline.allContext.fuelSaving.getSafe(index)
-                TimelineScoreItemType.ECODRIVING_CO2MASS -> timeline.allContext.co2Mass.getSafe(index)
+                TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> allContextItem.ecoDriving?.efficiencyAcceleration
+                TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> allContextItem.ecoDriving?.efficiencyBrake
+                TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> allContextItem.ecoDriving?.efficiencySpeedMaintain
+                TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> allContextItem.ecoDriving?.fuelVolume
+                TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> allContextItem.ecoDriving?.fuelSaving
+                TimelineScoreItemType.ECODRIVING_CO2MASS -> allContextItem.ecoDriving?.co2Mass
                 TimelineScoreItemType.DISTRACTION_UNLOCK -> {
                     if (totalDistance <= 0) {
                         return 0.0
                     }
-                    return timeline.allContext.unlock.getSafe(index)?.let { unlock ->
+                    return allContextItem.phoneDistraction?.unlock?.let { unlock ->
                         unlock / totalDistance * 100.0
                     }
                 }
@@ -374,15 +356,15 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     if (totalDistance <= 0) {
                         return 0.0
                     }
-                    return timeline.allContext.callForbiddenDuration.getSafe(index)?.let { callForbiddenDuration ->
+                    return allContextItem.phoneDistraction?.callForbiddenDuration?.let { callForbiddenDuration ->
                         // The result is converted in minute and rounded up to greater integer value
                         ceil((callForbiddenDuration / 60).toDouble() / totalDistance * 100.0)
                     }
                 }
                 TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> {
-                    val numberTripWithForbiddenCall =  timeline.allContext.numberTripWithForbiddenCall.getSafe(index)
-                    val numberTripTotal = timeline.allContext.numberTripTotal.getSafe(index)
-                    if (numberTripWithForbiddenCall == null || numberTripTotal == null) {
+                    val numberTripWithForbiddenCall = allContextItem.phoneDistraction?.numberTripWithForbiddenCall
+                    val numberTripTotal = allContextItem.numberTripTotal
+                    if (numberTripWithForbiddenCall == null) {
                         return null
                     }
                     if (numberTripTotal <= 0) {
@@ -394,7 +376,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     if (totalDuration <= 0) {
                         return 0.0
                     }
-                    return timeline.allContext.speedingDuration.getSafe(index)?.let { speedingDuration ->
+                    return allContextItem.speeding?.speedingDuration?.let { speedingDuration ->
                         (speedingDuration.toDouble() / 60.0) / totalDuration * 100.0
                     }
                 }
@@ -402,7 +384,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     if (totalDistance <= 0) {
                         return 0.0
                     }
-                    return timeline.allContext.speedingDistance.getSafe(index)?.let { speedingDistance ->
+                    return allContextItem.speeding?.speedingDistance?.let { speedingDistance ->
                         (speedingDistance / 1000.0) / totalDistance * 100.0
                     }
                 }
@@ -410,7 +392,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         }
     }
 
-    private fun getInterpolatedValue(date: Date, previousValidIndex: Int, nextValidIndex: Int, dates: List<Date>, calenderUnit: CalendarField, graphItem: GraphItem, timeline: DKRawTimeline): Double? {
+    private fun getInterpolatedValue(date: Date, previousValidIndex: Int, nextValidIndex: Int, dates: List<Date>, calenderUnit: CalendarField, graphItem: GraphItem, timeline: DKDriverTimeline): Double? {
         val previousValidDate: Date = dates[previousValidIndex]
         val nextValidDate: Date = dates[nextValidIndex]
         val diffBetweenPreviousAndNext = nextValidDate.diffWith(previousValidDate, calenderUnit)

@@ -15,8 +15,7 @@ class DKDateSelectorViewModel : ViewModel() {
     var period: DKPeriod? = null
         private set
     private var dates: List<Date>? = null
-    var selectedDateIndex: Int = -1
-        private set
+    private var selectedDateIndex: Int = -1
     var hasPreviousDate = false
         private set
     var hasNextDate = false
@@ -88,12 +87,7 @@ class DKDateSelectorViewModel : ViewModel() {
     }
 
     companion object {
-        fun newSelectedDate(
-            date: Date,
-            period: DKPeriod,
-            dates: List<Date>,
-            isDateValid: (DKPeriod, Date) -> Boolean
-        ): Date {
+        fun newSelectedDate(date: Date, period: DKPeriod, dates: List<Date>): Date {
             val calendarField = when (period) {
                 DKPeriod.WEEK -> CalendarField.WEEK
                 DKPeriod.MONTH -> CalendarField.MONTH
@@ -102,9 +96,8 @@ class DKDateSelectorViewModel : ViewModel() {
             val compareDate: Date =
                 date.startingFrom(calendarField).add(1, calendarField).add(-1, CalendarField.DAY)
             return dates.lastOrNull {
-                it.removeTime() <= compareDate && isDateValid(period, it)
+                it.removeTime() <= compareDate
             } ?: date
         }
     }
-
 }

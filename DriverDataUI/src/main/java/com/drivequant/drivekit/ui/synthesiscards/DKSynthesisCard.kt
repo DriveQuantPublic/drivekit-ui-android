@@ -9,13 +9,11 @@ import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.access.AccessType
 import com.drivequant.drivekit.core.access.DriveKitAccess
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.enums.DKRoadCondition
-import com.drivequant.drivekit.ui.extension.computeDistractionScoreAverage
-import com.drivequant.drivekit.ui.extension.computeEcoDrivingScoreAverage
-import com.drivequant.drivekit.ui.extension.computeSafetyScoreAverage
-import com.drivequant.drivekit.ui.extension.computeSpeedingScoreAverage
+import com.drivequant.drivekit.ui.extension.computeAverageScore
 import java.io.Serializable
 import kotlin.math.roundToInt
 
@@ -87,13 +85,15 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
             context.getString(it)
         }
 
-    override fun getGaugeConfiguration(): DKGaugeConfiguration =
-        when (this) {
-            is SAFETY -> GaugeConfiguration.SAFETY(trips.computeSafetyScoreAverage())
-            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING(trips.computeEcoDrivingScoreAverage())
-            is DISTRACTION -> GaugeConfiguration.DISTRACTION(trips.computeDistractionScoreAverage())
-            is SPEEDING -> GaugeConfiguration.SPEEDING(trips.computeSpeedingScoreAverage())
+    override fun getGaugeConfiguration(): DKGaugeConfiguration {
+        val scoredTrips = trips.filterNot { it.unscored }
+        return when (this) {
+            is SAFETY -> GaugeConfiguration.SAFETY(scoredTrips.computeAverageScore(DKScoreType.SAFETY))
+            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING(scoredTrips.computeAverageScore(DKScoreType.ECO_DRIVING))
+            is DISTRACTION -> GaugeConfiguration.DISTRACTION(scoredTrips.computeAverageScore(DKScoreType.DISTRACTION))
+            is SPEEDING -> GaugeConfiguration.SPEEDING(scoredTrips.computeAverageScore(DKScoreType.SPEEDING))
         }
+    }
 
     override fun getTopSynthesisCardInfo(context: Context) = SynthesisCardInfo.TRIPS(trips)
 

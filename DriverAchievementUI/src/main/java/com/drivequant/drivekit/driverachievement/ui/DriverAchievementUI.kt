@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverAchievementUIEntryPoint
+import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
@@ -17,14 +19,11 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.activity.StreaksList
 import com.drivequant.drivekit.driverachievement.ui.streaks.fragment.StreaksListFragment
 
 object DriverAchievementUI : DriverAchievementUIEntryPoint {
+    internal const val TAG = "DriveKit Driver Achievement UI"
 
     internal var streakThemes: List<StreakTheme> = StreakTheme.values().toList()
     internal var badgeCategories: List<BadgeCategory> = BadgeCategory.values().toList()
-    internal var rankingTypes = listOf(
-        RankingType.SAFETY,
-        RankingType.ECO_DRIVING,
-        RankingType.DISTRACTION
-    )
+    internal var rankingTypes = listOf(RankingType.SAFETY, RankingType.ECO_DRIVING, RankingType.DISTRACTION)
         get() = field.sanitize()
         private set
 
@@ -34,14 +33,23 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
 
     internal var rankingDepth: Int = 5
 
-    fun initialize() {
+    init {
+        DriveKit.checkInitialization()
+        DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.driverAchievementUIEntryPoint = this
     }
 
+    @JvmStatic
+    fun initialize() {
+        // Nothing to do currently.
+    }
+
+    @JvmStatic
     fun configureStreakThemes(streakThemes: List<StreakTheme>) {
         this.streakThemes = streakThemes
     }
 
+    @JvmStatic
     fun configureBadgeCategories(badgeCategories: MutableList<BadgeCategory>) {
         if (!badgeCategories.contains(BadgeCategory.GENERIC)) {
             badgeCategories.add(BadgeCategory.GENERIC)
@@ -49,10 +57,12 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         this.badgeCategories = badgeCategories
     }
 
+    @JvmStatic
     fun configureRankingSelector(rankingSelector: RankingSelectorType) {
         this.rankingSelector = rankingSelector
     }
 
+    @JvmStatic
     fun configureRankingTypes(rankingTypes: List<RankingType>) {
         if (rankingTypes.isEmpty()) {
             this.rankingTypes = listOf(RankingType.SAFETY)
@@ -61,6 +71,7 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         }
     }
 
+    @JvmStatic
     fun configureRankingDepth(rankingDepth: Int) {
         this.rankingDepth = rankingDepth
     }
@@ -74,10 +85,12 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     override fun createStreakListFragment(): Fragment = StreaksListFragment()
 
     @JvmOverloads
+    @JvmStatic
     fun startRankingActivity(context: Context, groupName: String? = null) {
         RankingActivity.launchActivity(context, groupName)
     }
 
     @JvmOverloads
+    @JvmStatic
     fun createRankingFragment(groupName: String? = null) = RankingFragment.newInstance(groupName)
 }
