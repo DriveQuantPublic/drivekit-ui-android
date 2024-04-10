@@ -178,8 +178,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
     fun getLastTripsSynthesisCardsView(
         synthesisCards: List<LastTripsSynthesisCard> = listOf(
             LastTripsSynthesisCard.SAFETY,
-            LastTripsSynthesisCard.DISTRACTION,
             LastTripsSynthesisCard.ECO_DRIVING,
+            LastTripsSynthesisCard.DISTRACTION,
             LastTripsSynthesisCard.SPEEDING
         ), listener: SynthesisCardsViewListener
     ) {
