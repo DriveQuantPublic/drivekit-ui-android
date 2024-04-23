@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="@dimen/dk_screen_border"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical"
-    android:layout_marginHorizontal="@dimen/dk_screen_border">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_view_badge_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/dk_badge_header_background"
         android:gravity="center"
         android:maxLines="1"
         android:paddingVertical="@dimen/dk_margin_quarter"
-        android:background="@drawable/dk_badge_header_background"
-        tools:text="@string/badge_trip_number_theme"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/badge_trip_number_theme" />
 
     <com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
         android:id="@+id/badge_bronze"

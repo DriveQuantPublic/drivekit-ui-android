@@ -277,4 +277,9 @@
    <string name="badge_your_progress_title">Your progress</string>
    <string name="dk_achievements_failed_to_sync_badges">Failed to synchronize badges, please retry later.</string>
    <string name="menu_mybadges">My badges</string>
+   <string name="dk_badge_earned_badges_number_title_singular" translatable="false">Vous avez remporté %d badge</string>
+   <string name="dk_badge_earned_badges_number_title_plural" translatable="false">Vous avez remporté %d badges</string>
+   <string name="dk_badge_bronze" translatable="false">Bronze</string>
+   <string name="dk_badge_silver" translatable="false">Argent</string>
+   <string name="dk_badge_gold" translatable="false">Or</string>
 </resources>

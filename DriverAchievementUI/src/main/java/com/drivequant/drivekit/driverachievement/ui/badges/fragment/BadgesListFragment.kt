@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +15,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.IntArg
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
+import com.drivequant.drivekit.driverachievement.ui.badges.BadgeCounterView
 import com.drivequant.drivekit.driverachievement.ui.badges.adapter.BadgesListAdapter
 import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesListViewModel
 
@@ -27,11 +30,16 @@ class BadgesListFragment : Fragment() {
     private lateinit var badgesRecyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var progressView: ProgressBar
+    private lateinit var badgeCounterContainer: View
+    private lateinit var badgeCounterTitle: TextView
+    private lateinit var bronzeBadgeCounter: BadgeCounterView
+    private lateinit var silverBadgeCounter: BadgeCounterView
+    private lateinit var goldBadgeCounter: BadgeCounterView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.dk_fragment_badges_list, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.dk_fragment_badges_list, container, false).setDKStyle()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,6 +49,13 @@ class BadgesListFragment : Fragment() {
         this.badgesRecyclerView = view.findViewById(R.id.recycler_view_badges)
         this.swipeRefreshLayout = view.findViewById(R.id.refresh_badges)
         this.progressView = view.findViewById(R.id.progress_circular)
+        this.badgeCounterContainer = view.findViewById(R.id.badgeCounterContainer)
+        this.badgeCounterTitle = view.findViewById(R.id.badgeCounterTitle)
+        this.bronzeBadgeCounter = view.findViewById(R.id.bronzeContainer)
+        this.silverBadgeCounter = view.findViewById(R.id.silverContainer)
+        this.goldBadgeCounter = view.findViewById(R.id.goldContainer)
+
+        this.badgeCounterTitle.typeface = DriveKitUI.primaryFont(view.context)
 
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_badges), javaClass.simpleName)
         badgesRecyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -56,10 +71,43 @@ class BadgesListFragment : Fragment() {
 
     private fun updateBadges() {
         listViewModel.badgesData.observe(viewLifecycleOwner) {
-            if (listViewModel.syncStatus != BadgeSyncStatus.NO_ERROR) {
-                Toast.makeText(context,
-                    context?.getString(R.string.dk_achievements_failed_to_sync_badges),
-                    Toast.LENGTH_LONG).show()
+            context?.let { context ->
+                if (listViewModel.syncStatus == BadgeSyncStatus.NO_ERROR) {
+                    val statistics = listViewModel.badgesStatistics
+                    if (statistics != null) {
+                        this.badgeCounterTitle.text = DKResource.buildString(
+                            context = context,
+                            string = resources.getQuantityString(R.plurals.dk_badge_earned_badges_number_title, statistics.acquired),
+                            textColor = DriveKitUI.colors.primaryColor(),
+                            textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal,
+                            IntArg(statistics.acquired, color = DriveKitUI.colors.primaryColor(), size = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
+                        )
+                        this.bronzeBadgeCounter.update(
+                            R.string.dk_badge_bronze,
+                            R.color.dkBadgeLevel1Color,
+                            statistics.acquiredBronze,
+                            statistics.totalBronze
+                        )
+                        this.silverBadgeCounter.update(
+                            R.string.dk_badge_silver,
+                            R.color.dkBadgeLevel2Color,
+                            statistics.acquiredSilver,
+                            statistics.totalSilver
+                        )
+                        this.goldBadgeCounter.update(
+                            R.string.dk_badge_gold,
+                            R.color.dkBadgeLevel3Color,
+                            statistics.acquiredGold,
+                            statistics.totalGold
+                        )
+                        this.badgeCounterContainer.visibility = View.VISIBLE
+                    } else {
+                        this.badgeCounterContainer.visibility = View.GONE
+                    }
+                } else {
+                    this.badgeCounterContainer.visibility = View.GONE
+                    Toast.makeText(context, context.getString(R.string.dk_achievements_failed_to_sync_badges), Toast.LENGTH_LONG).show()
+                }
             }
             if (this::listAdapter.isInitialized) {
                 listAdapter.notifyDataSetChanged()

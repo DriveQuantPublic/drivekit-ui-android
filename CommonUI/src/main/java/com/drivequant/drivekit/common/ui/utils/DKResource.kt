@@ -36,7 +36,7 @@ object DKResource {
         context: Context,
         @ColorInt textColor: Int,
         @StringRes identifier: Int,
-        @DimenRes textSize: Int = R.dimen.dk_text_normal,
+        @DimenRes textSize: Int = R.dimen.dk_text_normal
     ): Spannable {
         return buildString(
             context,

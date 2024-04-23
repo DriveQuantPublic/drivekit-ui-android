@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="dk_badge_earned_badges_number_title" translatable="false">
+        <item quantity="one">@string/dk_badge_earned_badges_number_title_singular</item>
+        <item quantity="other">@string/dk_badge_earned_badges_number_title_plural</item>
+    </plurals>
+</resources>
