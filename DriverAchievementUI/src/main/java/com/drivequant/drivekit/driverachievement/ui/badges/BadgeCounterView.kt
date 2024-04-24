@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.driverachievement.ui.badges
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
@@ -28,12 +27,12 @@ internal class BadgeCounterView(context: Context?, attrs: AttributeSet?) : Linea
         this.badgeCountTextView.headLine1()
     }
 
-    @SuppressLint("SetTextI18n")
     fun update(@StringRes levelTitleResId: Int, @ColorRes colorResId: Int, acquired: Int, total: Int) {
         val color = ContextCompat.getColor(context, colorResId)
         badgeTypeTextView.text = resources.getString(levelTitleResId)
         badgeTypeTextView.setTextColor(color)
-        badgeCountTextView.text = "$acquired / $total"
+        val badgeCountText = "$acquired / $total"
+        badgeCountTextView.text = badgeCountText
         badgeCountTextView.setTextColor(color)
         (this.background as? GradientDrawable)?.setStroke(1.convertDpToPx(), ContextCompat.getColor(context, colorResId))
     }
