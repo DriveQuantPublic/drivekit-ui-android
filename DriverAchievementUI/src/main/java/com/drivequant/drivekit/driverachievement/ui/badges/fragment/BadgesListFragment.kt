@@ -98,28 +98,28 @@ class BadgesListFragment : Fragment() {
                     context = context,
                     string = resources.getQuantityString(R.plurals.dk_badge_earned_badges_number_title, statistics.acquired),
                     textColor = DriveKitUI.colors.primaryColor(),
-                    textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal,
+                    textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium,
                     IntArg(
                         statistics.acquired,
                         color = DriveKitUI.colors.primaryColor(),
-                        size = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal
+                        size = com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium
                     )
                 )
                 this.bronzeBadgeCounter.update(
                     R.string.dk_badge_bronze,
-                    R.color.dkBadgeLevel1Color,
+                    R.color.dkBadgeLevel1DarkColor,
                     statistics.acquiredBronze,
                     statistics.totalBronze
                 )
                 this.silverBadgeCounter.update(
                     R.string.dk_badge_silver,
-                    R.color.dkBadgeLevel2Color,
+                    R.color.dkBadgeLevel2DarkColor,
                     statistics.acquiredSilver,
                     statistics.totalSilver
                 )
                 this.goldBadgeCounter.update(
                     R.string.dk_badge_gold,
-                    R.color.dkBadgeLevel3Color,
+                    R.color.dkBadgeLevel3DarkColor,
                     statistics.acquiredGold,
                     statistics.totalGold
                 )
