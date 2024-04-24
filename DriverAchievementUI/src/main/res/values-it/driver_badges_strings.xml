@@ -276,5 +276,10 @@
    <string name="badge_urban_distance_theme">Guidare nelle aree urbane</string>
    <string name="badge_your_progress_title">Il tuo progresso</string>
    <string name="dk_achievements_failed_to_sync_badges">Impossibile sincronizzare i badge, si prega di riprovare più tardi.</string>
+   <string name="dk_badge_bronze">Bronzo</string>
+   <string name="dk_badge_earned_badges_number_title_plural">Hai vinto %d badge</string>
+   <string name="dk_badge_earned_badges_number_title_singular">Hai vinto %d badge</string>
+   <string name="dk_badge_gold">Oro</string>
+   <string name="dk_badge_silver">Argento</string>
    <string name="menu_mybadges">I miei distintivi</string>
 </resources>

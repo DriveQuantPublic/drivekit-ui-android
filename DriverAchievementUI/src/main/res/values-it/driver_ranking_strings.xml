@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dk_achievements_failed_to_sync_rankings">Non è stato possibile sincronizzare le classifiche, riprovare più tardi.</string>
-    <string name="dk_achievements_ranking_legacy">Bimestrale</string>
-    <string name="dk_achievements_ranking_legacy_info">Questa classifica è calcolata dalla media dei punteggi dei viaggi delle ultime due settimane. Per essere incluso nella classifica, devi aver fatto almeno un viaggio negli ultimi 14 giorni.</string>
-    <string name="dk_achievements_ranking_menu_ranking">La mia posizione in classifica</string>
-    <string name="dk_achievements_ranking_month">Mensile</string>
-    <string name="dk_achievements_ranking_month_info">La classifica mensile è calcolata dalla media dei punteggi di tutti i viaggi fatti in un mese. Per apparire in questa classifica, devi percorrere almeno 20 km e aver completato 5 viaggi.</string>
-    <string name="dk_achievements_ranking_no_pseudo_set">Devi inserire un nickname per accedere a questa pagina.</string>
-    <string name="dk_achievements_ranking_permanent">Permanente</string>
-    <string name="dk_achievements_ranking_permanent_info">La classifica permanente è calcolata dalla media dei punteggi di tutti i viaggi. Per essere inclusi in questa classifica, è necessario percorrere almeno 50 km e aver completato 10 viaggi.</string>
-    <string name="dk_achievements_ranking_week">Settimanale</string>
-    <string name="dk_achievements_ranking_week_info">La classifica settimanale è calcolata dalla media dei punteggi di tutti i viaggi fatti in una settimana. Per apparire in questa classifica, devi percorrere almeno 10 km e aver completato 2 viaggi.</string>
+   <string name="dk_achievements_failed_to_sync_rankings">Non è stato possibile sincronizzare le classifiche, riprovare più tardi.</string>
+   <string name="dk_achievements_ranking_legacy">Bimestrale</string>
+   <string name="dk_achievements_ranking_legacy_info">Questa classifica è calcolata dalla media dei punteggi dei viaggi delle ultime due settimane. Per essere incluso nella classifica, devi aver fatto almeno un viaggio negli ultimi 14 giorni.</string>
+   <string name="dk_achievements_ranking_menu_ranking">La mia posizione in classifica</string>
+   <string name="dk_achievements_ranking_month">Mensile</string>
+   <string name="dk_achievements_ranking_month_info">La classifica mensile è calcolata dalla media dei punteggi di tutti i viaggi fatti in un mese. Per apparire in questa classifica, devi percorrere almeno 20 km e aver completato 5 viaggi.</string>
+   <string name="dk_achievements_ranking_no_pseudo_set">Devi inserire un nickname per accedere a questa pagina.</string>
+   <string name="dk_achievements_ranking_permanent">Permanente</string>
+   <string name="dk_achievements_ranking_permanent_info">La classifica permanente è calcolata dalla media dei punteggi di tutti i viaggi. Per essere inclusi in questa classifica, è necessario percorrere almeno 50 km e aver completato 10 viaggi.</string>
+   <string name="dk_achievements_ranking_week">Settimanale</string>
+   <string name="dk_achievements_ranking_week_info">La classifica settimanale è calcolata dalla media dei punteggi di tutti i viaggi fatti in una settimana. Per apparire in questa classifica, devi percorrere almeno 10 km e aver completato 2 viaggi.</string>
 </resources>

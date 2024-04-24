@@ -276,5 +276,10 @@
    <string name="badge_urban_distance_theme">Dirigindo em uma área urbana</string>
    <string name="badge_your_progress_title">Seu progresso</string>
    <string name="dk_achievements_failed_to_sync_badges">Falha ao sincronizar os crachás, tente novamente.</string>
+   <string name="dk_badge_bronze">Bronze</string>
+   <string name="dk_badge_earned_badges_number_title_plural">Ganhou %d crachás</string>
+   <string name="dk_badge_earned_badges_number_title_singular">Ganhou %d crachá</string>
+   <string name="dk_badge_gold">Ouro</string>
+   <string name="dk_badge_silver">Prata</string>
    <string name="menu_mybadges">Meus crachás</string>
 </resources>
