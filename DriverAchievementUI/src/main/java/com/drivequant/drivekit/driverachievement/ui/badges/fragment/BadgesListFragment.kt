@@ -62,6 +62,22 @@ class BadgesListFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener {
             updateBadges()
         }
+
+        listViewModel.badgesData.observe(viewLifecycleOwner) {
+            context?.let { context ->
+                updateStatistics()
+                if (listViewModel.syncStatus != BadgeSyncStatus.NO_ERROR) {
+                    Toast.makeText(context, context.getString(R.string.dk_achievements_failed_to_sync_badges), Toast.LENGTH_LONG).show()
+                }
+            }
+            if (this::listAdapter.isInitialized) {
+                listAdapter.notifyDataSetChanged()
+            } else {
+                listAdapter = BadgesListAdapter(view.context, listViewModel)
+                badgesRecyclerView.adapter = listAdapter
+            }
+            updateProgressVisibility(false)
+        }
     }
 
     override fun onResume() {
@@ -70,55 +86,48 @@ class BadgesListFragment : Fragment() {
     }
 
     private fun updateBadges() {
-        listViewModel.badgesData.observe(viewLifecycleOwner) {
-            context?.let { context ->
-                if (listViewModel.syncStatus == BadgeSyncStatus.NO_ERROR) {
-                    val statistics = listViewModel.badgesStatistics
-                    if (statistics != null) {
-                        this.badgeCounterTitle.text = DKResource.buildString(
-                            context = context,
-                            string = resources.getQuantityString(R.plurals.dk_badge_earned_badges_number_title, statistics.acquired),
-                            textColor = DriveKitUI.colors.primaryColor(),
-                            textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal,
-                            IntArg(statistics.acquired, color = DriveKitUI.colors.primaryColor(), size = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
-                        )
-                        this.bronzeBadgeCounter.update(
-                            R.string.dk_badge_bronze,
-                            R.color.dkBadgeLevel1Color,
-                            statistics.acquiredBronze,
-                            statistics.totalBronze
-                        )
-                        this.silverBadgeCounter.update(
-                            R.string.dk_badge_silver,
-                            R.color.dkBadgeLevel2Color,
-                            statistics.acquiredSilver,
-                            statistics.totalSilver
-                        )
-                        this.goldBadgeCounter.update(
-                            R.string.dk_badge_gold,
-                            R.color.dkBadgeLevel3Color,
-                            statistics.acquiredGold,
-                            statistics.totalGold
-                        )
-                        this.badgeCounterContainer.visibility = View.VISIBLE
-                    } else {
-                        this.badgeCounterContainer.visibility = View.GONE
-                    }
-                } else {
-                    this.badgeCounterContainer.visibility = View.GONE
-                    Toast.makeText(context, context.getString(R.string.dk_achievements_failed_to_sync_badges), Toast.LENGTH_LONG).show()
-                }
-            }
-            if (this::listAdapter.isInitialized) {
-                listAdapter.notifyDataSetChanged()
-            } else {
-                listAdapter = BadgesListAdapter(view?.context, listViewModel)
-                badgesRecyclerView.adapter = listAdapter
-            }
-            updateProgressVisibility(false)
-        }
         updateProgressVisibility(true)
         listViewModel.fetchBadges()
+    }
+
+    private fun updateStatistics() {
+        context?.let { context ->
+            val statistics = listViewModel.badgesStatistics
+            if (statistics != null && statistics.total > 0) {
+                this.badgeCounterTitle.text = DKResource.buildString(
+                    context = context,
+                    string = resources.getQuantityString(R.plurals.dk_badge_earned_badges_number_title, statistics.acquired),
+                    textColor = DriveKitUI.colors.primaryColor(),
+                    textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal,
+                    IntArg(
+                        statistics.acquired,
+                        color = DriveKitUI.colors.primaryColor(),
+                        size = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal
+                    )
+                )
+                this.bronzeBadgeCounter.update(
+                    R.string.dk_badge_bronze,
+                    R.color.dkBadgeLevel1Color,
+                    statistics.acquiredBronze,
+                    statistics.totalBronze
+                )
+                this.silverBadgeCounter.update(
+                    R.string.dk_badge_silver,
+                    R.color.dkBadgeLevel2Color,
+                    statistics.acquiredSilver,
+                    statistics.totalSilver
+                )
+                this.goldBadgeCounter.update(
+                    R.string.dk_badge_gold,
+                    R.color.dkBadgeLevel3Color,
+                    statistics.acquiredGold,
+                    statistics.totalGold
+                )
+                this.badgeCounterContainer.visibility = View.VISIBLE
+            } else {
+                this.badgeCounterContainer.visibility = View.GONE
+            }
+        }
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
