@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -29,7 +28,6 @@ class BadgesListFragment : Fragment() {
     private lateinit var listAdapter: BadgesListAdapter
     private lateinit var badgesRecyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var progressView: ProgressBar
     private lateinit var badgeCounterContainer: View
     private lateinit var badgeCounterTitle: TextView
     private lateinit var bronzeBadgeCounter: BadgeCounterView
@@ -48,7 +46,6 @@ class BadgesListFragment : Fragment() {
 
         this.badgesRecyclerView = view.findViewById(R.id.recycler_view_badges)
         this.swipeRefreshLayout = view.findViewById(R.id.refresh_badges)
-        this.progressView = view.findViewById(R.id.progress_circular)
         this.badgeCounterContainer = view.findViewById(R.id.badgeCounterContainer)
         this.badgeCounterTitle = view.findViewById(R.id.badgeCounterTitle)
         this.bronzeBadgeCounter = view.findViewById(R.id.bronzeContainer)
@@ -132,11 +129,8 @@ class BadgesListFragment : Fragment() {
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
         if (displayProgress) {
-            progressView.visibility = View.VISIBLE
             swipeRefreshLayout.isRefreshing = true
         } else {
-            progressView.visibility = View.GONE
-            swipeRefreshLayout.visibility = View.VISIBLE
             swipeRefreshLayout.isRefreshing = false
         }
     }
