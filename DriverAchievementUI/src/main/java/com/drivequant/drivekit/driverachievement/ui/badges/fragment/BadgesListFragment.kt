@@ -128,10 +128,6 @@ class BadgesListFragment : Fragment() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            swipeRefreshLayout.isRefreshing = true
-        } else {
-            swipeRefreshLayout.isRefreshing = false
-        }
+        swipeRefreshLayout.isRefreshing = displayProgress
     }
 }

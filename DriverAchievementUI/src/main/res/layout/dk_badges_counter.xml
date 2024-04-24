@@ -3,6 +3,7 @@
     android:id="@+id/badgeCounterContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/dk_badge_counter_border"
     android:orientation="vertical"
     android:padding="@dimen/dk_margin_quarter">
 

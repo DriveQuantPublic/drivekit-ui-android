@@ -17,7 +17,6 @@ import com.drivequant.drivekit.driverachievement.ui.R
 internal class BadgeCounterView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     private lateinit var badgeTypeTextView: TextView
     private lateinit var badgeCountTextView: TextView
-    private val border = GradientDrawable()
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -27,10 +26,6 @@ internal class BadgeCounterView(context: Context?, attrs: AttributeSet?) : Linea
 
         this.badgeTypeTextView.smallText()
         this.badgeCountTextView.headLine1()
-
-        val radius = 4.convertDpToPx().toFloat()
-        border.cornerRadii = floatArrayOf(radius, radius, radius, radius, radius, radius, radius, radius)
-        this.background = border
     }
 
     @SuppressLint("SetTextI18n")
@@ -40,6 +35,6 @@ internal class BadgeCounterView(context: Context?, attrs: AttributeSet?) : Linea
         badgeTypeTextView.setTextColor(color)
         badgeCountTextView.text = "$acquired / $total"
         badgeCountTextView.setTextColor(color)
-        border.setStroke(1.convertDpToPx(), ContextCompat.getColor(context, colorResId))
+        (this.background as? GradientDrawable)?.setStroke(1.convertDpToPx(), ContextCompat.getColor(context, colorResId))
     }
 }
