@@ -24,7 +24,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dk_margin"
+                android:paddingHorizontal="24dp"
                 android:paddingVertical="@dimen/dk_margin_medium">
 
                 <TextView
@@ -41,7 +41,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dk_margin_medium"
-                    android:layout_marginEnd="@dimen/dk_margin_half"
+                    android:layout_marginEnd="@dimen/dk_margin_medium"
                     app:layout_constraintEnd_toStartOf="@+id/silverContainer"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/badgeCounterTitle" />
@@ -51,8 +51,8 @@
                     layout="@layout/dk_badges_counter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dk_margin_half"
-                    android:layout_marginEnd="@dimen/dk_margin_half"
+                    android:layout_marginStart="@dimen/dk_margin_medium"
+                    android:layout_marginEnd="@dimen/dk_margin_medium"
                     app:layout_constraintEnd_toStartOf="@+id/goldContainer"
                     app:layout_constraintStart_toEndOf="@id/bronzeContainer"
                     app:layout_constraintTop_toTopOf="@id/bronzeContainer" />
@@ -62,7 +62,7 @@
                     layout="@layout/dk_badges_counter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dk_margin_half"
+                    android:layout_marginStart="@dimen/dk_margin_medium"
                     android:orientation="vertical"
                     android:padding="@dimen/dk_margin_quarter"
                     app:layout_constraintEnd_toEndOf="parent"

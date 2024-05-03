@@ -34,6 +34,6 @@ internal class BadgeCounterView(context: Context?, attrs: AttributeSet?) : Linea
         val badgeCountText = "$acquired / $total"
         badgeCountTextView.text = badgeCountText
         badgeCountTextView.setTextColor(color)
-        (this.background as? GradientDrawable)?.setStroke(1.convertDpToPx(), ContextCompat.getColor(context, colorResId))
+        (this.background as? GradientDrawable)?.setStroke(2.convertDpToPx(), ContextCompat.getColor(context, colorResId))
     }
 }
