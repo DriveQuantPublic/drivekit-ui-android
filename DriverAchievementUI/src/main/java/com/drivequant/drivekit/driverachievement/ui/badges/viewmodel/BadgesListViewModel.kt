@@ -7,13 +7,15 @@ import com.drivequant.drivekit.databaseutils.entity.Badge
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.BadgesQueryListener
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
+import com.drivequant.drivekit.driverachievement.badge.model.DKBadgeStatistics
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 
 
 internal class BadgesListViewModel : ViewModel() {
-    var filteredBadgesData: MutableList<BadgesData> = mutableListOf()
+    var filteredBadgesData: List<BadgesData> = listOf()
     val badgesData: MutableLiveData<List<BadgesData>> = MutableLiveData()
     var syncStatus: BadgeSyncStatus = BadgeSyncStatus.NO_ERROR
+    var badgesStatistics: DKBadgeStatistics? = null
 
     fun fetchBadges() {
         if (DriveKit.isConfigured()) {
@@ -25,6 +27,7 @@ internal class BadgesListViewModel : ViewModel() {
                 ) {
                     syncStatus = badgeSyncStatus
                     filteredBadgesData = getFilteredBadges(badges)
+                    badgesStatistics = DriveKitDriverAchievement.getBadgeStatistics()
                     badgesData.postValue(filteredBadgesData)
                 }
             })
@@ -33,20 +36,12 @@ internal class BadgesListViewModel : ViewModel() {
         }
     }
 
-    private fun getFilteredBadges(fetchedBadges: List<Badge>): MutableList<BadgesData> {
-        if (fetchedBadges.isNotEmpty()) {
-            val filteredBadges =
-                fetchedBadges.filter { badge -> badge.category in DriverAchievementUI.badgeCategories }
-            filteredBadgesData.clear()
-            for (badge in filteredBadges) {
-                filteredBadgesData.add(
-                    BadgesData(
-                        badge.theme,
-                        badge.badgeCharacteristics
-                    )
-                )
-            }
+    private fun getFilteredBadges(fetchedBadges: List<Badge>): List<BadgesData> {
+        return if (fetchedBadges.isNotEmpty()) {
+            val filteredBadges = fetchedBadges.filter { badge -> badge.category in DriverAchievementUI.badgeCategories }
+            filteredBadges.map { BadgesData(it.theme, it.badgeCharacteristics) }
+        } else {
+            emptyList()
         }
-        return filteredBadgesData
     }
 }

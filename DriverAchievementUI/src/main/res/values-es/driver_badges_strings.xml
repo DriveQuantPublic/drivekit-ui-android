@@ -276,5 +276,10 @@
    <string name="badge_urban_distance_theme">Conducción en zonas urbanas</string>
    <string name="badge_your_progress_title">Su progreso</string>
    <string name="dk_achievements_failed_to_sync_badges">Incapaz de sincronizar las placas, por favor, inténtelo de nuevo más tarde.</string>
+   <string name="dk_badge_bronze">Bronce</string>
+   <string name="dk_badge_earned_badges_number_title_plural">Has ganado %d insignias</string>
+   <string name="dk_badge_earned_badges_number_title_singular">Ha ganado %d insignia</string>
+   <string name="dk_badge_gold">Oro</string>
+   <string name="dk_badge_silver">Silver</string>
    <string name="menu_mybadges">Mis insignias</string>
 </resources>

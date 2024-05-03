@@ -3,5 +3,8 @@
     <color name="dkBadgeLevel1Color">#BD5E4A</color>
     <color name="dkBadgeLevel2Color">#A8A8A3</color>
     <color name="dkBadgeLevel3Color">#F9ED9E</color>
+    <color name="dkBadgeLevel1DarkColor">#C16955</color>
+    <color name="dkBadgeLevel2DarkColor">#858681</color>
+    <color name="dkBadgeLevel3DarkColor">#B4831F</color>
     <color name="dkRankingBackgroundColor">#FAFAFA</color>
 </resources>
