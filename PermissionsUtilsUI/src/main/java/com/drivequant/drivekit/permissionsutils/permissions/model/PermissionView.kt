@@ -17,8 +17,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermiss
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 enum class PermissionView {
-    NOTIFICATIONS, ACTIVITY, LOCATION, BACKGROUND_TASK, NEARBY_DEVICES;
-
+    ACTIVITY, LOCATION, BACKGROUND_TASK, NEARBY_DEVICES, NOTIFICATIONS, FULL_SCREEN_INTENT;
 
     fun launchActivity(context: Context, permissionViews: ArrayList<PermissionView>) {
         when (getCurrentPermissionStatus(context)) {
@@ -50,7 +49,11 @@ enum class PermissionView {
 
     private fun getIgnoreSharedPrefsKey() = when (this) {
         NOTIFICATIONS -> "dk_ignore_permission_notifications_key"
-        else -> null
+        FULL_SCREEN_INTENT -> "dk_ignore_full_screen_intent_notifications_key"
+        ACTIVITY,
+        LOCATION,
+        BACKGROUND_TASK,
+        NEARBY_DEVICES -> null
     }
 
     private fun launchNextPermission(context: Context, permissionViews: ArrayList<PermissionView>) {
@@ -69,6 +72,7 @@ enum class PermissionView {
             ACTIVITY -> DiagnosisHelper.getActivityStatus(context)
             BACKGROUND_TASK -> DiagnosisHelper.getBatteryOptimizationsStatus(context)
             NEARBY_DEVICES -> DiagnosisHelper.getNearbyDevicesStatus(context)
+            FULL_SCREEN_INTENT -> DiagnosisHelper.getFullScreenIntentStatus(context)
         }
     }
 
@@ -80,6 +84,7 @@ enum class PermissionView {
             ACTIVITY -> ActivityRecognitionPermissionActivity::class.java
             BACKGROUND_TASK -> BackgroundTaskPermissionActivity::class.java
             NEARBY_DEVICES -> NearbyDevicesPermissionActivity::class.java
+            FULL_SCREEN_INTENT -> FullScreenIntentPermissionActivity::class.java
         }
         val intent = Intent(context, selectedClass)
         intent.putExtra(PERMISSION_VIEWS_LIST_EXTRA, permissionViews)

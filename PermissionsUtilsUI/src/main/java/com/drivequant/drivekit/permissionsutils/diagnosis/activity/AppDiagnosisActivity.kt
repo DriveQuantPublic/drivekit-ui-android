@@ -24,6 +24,7 @@ import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.TextArg
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
@@ -47,6 +48,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private lateinit var itemAutoResetPermissions: DiagnosisItemView
     private lateinit var itemNearbyDevices: DiagnosisItemView
     private lateinit var itemNotification: DiagnosisItemView
+    private lateinit var itemFullScreenIntent: DiagnosisItemView
     private lateinit var itemBluetooth: DiagnosisItemView
     private lateinit var itemLocationSensor: DiagnosisItemView
     private lateinit var itemConnectivity: DiagnosisItemView
@@ -83,6 +85,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         this.itemLocationSensor = findViewById(R.id.diag_item_location_sensor)
         this.itemConnectivity = findViewById(R.id.diag_item_connectivity)
         this.itemBatteryOptimization = findViewById(R.id.diag_item_battery_optimization)
+        this.itemFullScreenIntent = findViewById(R.id.diag_item_full_screen_intent)
         this.summaryIcon = findViewById(R.id.image_view_summary_icon)
         this.summaryTitle = findViewById(R.id.text_view_summary_title)
         this.summaryDescription = findViewById(R.id.text_view_summary_description)
@@ -102,6 +105,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayActivityItem()
         displayAutoResetItem()
         displayNearbyDevicesItem()
+        displayFullScreenIntentItem()
         displayBatteryOptimizationItem()
         displayBatteryOptimizationSection()
         displayReportSection()
@@ -121,6 +125,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         checkPermissionItem(PermissionType.AUTO_RESET, this.itemAutoResetPermissions)
         checkPermissionItem(PermissionType.NEARBY, this.itemNearbyDevices)
         checkPermissionItem(PermissionType.NOTIFICATION, this.itemNotification)
+        checkPermissionItem(PermissionType.FULL_SCREEN_INTENT, this.itemFullScreenIntent)
         checkGPS()
         checkBluetooth()
         checkNetwork()
@@ -321,6 +326,13 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             }
     }
 
+    private fun displayFullScreenIntentItem() {
+        val display = DriveKit.modules.tripAnalysis?.isCrashDetectionFeedbackEnabled() ?: false
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+                && DiagnosisHelper.getNotificationStatus(this) == PermissionStatus.VALID
+        this.itemFullScreenIntent.visibility = if (display) View.VISIBLE else View.GONE
+    }
+
     private fun displayReportSection() {
         when (val contactType = PermissionsUtilsUI.contactType) {
             is ContactType.NONE -> {
@@ -426,6 +438,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             PermissionType.AUTO_RESET -> requestAutoResetPermission()
             PermissionType.NOTIFICATION -> requestNotificationPermission()
             PermissionType.NEARBY -> requestNearbyPermission()
+            PermissionType.FULL_SCREEN_INTENT -> requestFullScreenIntentPermission()
         }
     }
 
@@ -498,6 +511,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             this,
             Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT
         )
+    }
+
+    private fun requestFullScreenIntentPermission() {
+        DiagnosisHelper.requestFullScreenPermission(this)
     }
 
     private fun requestLocationPermission() {

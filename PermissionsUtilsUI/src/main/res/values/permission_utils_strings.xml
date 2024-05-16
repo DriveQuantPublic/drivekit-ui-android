@@ -140,4 +140,14 @@
    <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Open the settings</string>
    <string name="dk_perm_utils_permissions_text_button_notifications_settings">Open the settings</string>
    <string name="dk_perm_utils_permissions_text_button_skip">Skip and don\'t ask again</string>
+
+   <string name="dk_perm_utils_app_diag_fsi_title">Notifications en plein écran</string>
+   <string name="dk_perm_utils_permissions_text_button_fsi_settings">Ouvrir les réglages</string>
+
+   <string name="dk_perm_utils_permissions_fsi_text1">Lorsque l\'appli détecte un accident et que votre appareil est verrouillé, elle peut afficher une notification occupant tout l\'écran afin de vous demander si tout va bien. Le cas échéant, il est possible de contacter un numéro d\'assistance.</string>
+   <string name="dk_perm_utils_permissions_fsi_text2">Pour cela, autorisez l\'appli à afficher les notifications en plein écran après avoir appuyé sur le bouton ci-dessous.</string>
+
+   <string name="dk_perm_utils_permissions_fsi_button">Autoriser l\'affichage de notifications en plein écran</string>
+   <string name="dk_perm_utils_app_diag_fsi_ok">L\'affichage de notifications occupant tout l\'écran est autorisé.\n\nL\'appli affiche une notification occupant tout l\'écran vous demandant des informations supplémentaires lorsqu\'un accident est détecté et que l\'appareil est verrouillé.</string>
+   <string name="dk_perm_utils_app_diag_fsi_ko">Pour afficher une notification occupant tout l\'écran lorsqu\'un accident est détecté et que votre appareil est verrouillé, vous devez autoriser cette permission. Sinon, une notification classique s\'affichera.</string>
 </resources>
