@@ -7,6 +7,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
+import com.drivequant.drivekit.core.utils.PermissionType
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.activity.*
 import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermissionActivity.Companion.PERMISSION_VIEWS_LIST_EXTRA
@@ -29,7 +30,12 @@ enum class PermissionView {
                     if (DriveKitSharedPreferencesUtils.getBoolean(it, false)) {
                         launchNextPermission(context, permissionViews)
                     } else {
-                        context.startActivity(this.buildIntent(context, permissionViews))
+                        val isPermissionPresent = getPermissionType()?.isManifestValid(context) ?: true
+                        if (isPermissionPresent) {
+                            context.startActivity(this.buildIntent(context, permissionViews))
+                        } else {
+                            launchNextPermission(context, permissionViews)
+                        }
                     }
                 } ?: run {
                     launchNextPermission(context, permissionViews)
@@ -63,6 +69,15 @@ enum class PermissionView {
         } else {
             permissionViews.first().launchActivity(context, permissionViews)
         }
+    }
+
+    private fun getPermissionType() = when (this) {
+        ACTIVITY -> PermissionType.ACTIVITY
+        LOCATION -> PermissionType.LOCATION
+        BACKGROUND_TASK -> null
+        NEARBY_DEVICES -> PermissionType.NEARBY
+        NOTIFICATIONS -> PermissionType.NOTIFICATION
+        FULL_SCREEN_INTENT -> PermissionType.FULL_SCREEN_INTENT
     }
 
     private fun getCurrentPermissionStatus(context: Context): PermissionStatus {
