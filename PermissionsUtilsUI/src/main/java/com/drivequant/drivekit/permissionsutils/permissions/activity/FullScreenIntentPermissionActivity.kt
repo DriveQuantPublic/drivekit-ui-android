@@ -23,7 +23,7 @@ class FullScreenIntentPermissionActivity : BasePermissionActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFullScreenIntentPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setToolbar(R.string.dk_perm_utils_app_diag_fsi_title)
+        setToolbar(R.string.dk_perm_utils_fsi_activity_title)
         setStyle()
         manageSkipButton()
     }
@@ -49,8 +49,7 @@ class FullScreenIntentPermissionActivity : BasePermissionActivity() {
 
     private fun setStyle() {
         binding.textViewFullScreenIntentPermissionTitle.highlightMedium()
-        binding.textViewFullScreenIntentPermissionText1.normalText()
-        binding.textViewFullScreenIntentPermissionText2.normalText()
+        binding.textViewFullScreenIntentPermissionText.normalText()
         binding.buttonSkip.normalText(DriveKitUI.colors.secondaryColor())
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }

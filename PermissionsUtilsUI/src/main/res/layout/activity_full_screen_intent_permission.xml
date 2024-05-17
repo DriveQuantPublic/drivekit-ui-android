@@ -39,31 +39,21 @@
                 android:layout_marginTop="@dimen/dk_margin"
                 android:gravity="center"
                 android:paddingVertical="@dimen/dk_margin"
-                android:text="@string/dk_perm_utils_app_diag_fsi_title"
+                android:text="@string/dk_perm_utils_fsi_activity_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_permission_full_screen_intent" />
 
             <TextView
-                android:id="@+id/text_view_full_screen_intent_permission_text1"
+                android:id="@+id/text_view_full_screen_intent_permission_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
                 android:paddingVertical="@dimen/dk_margin"
-                android:text="@string/dk_perm_utils_permissions_fsi_text1"
+                android:text="@string/dk_perm_utils_permissions_fsi_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_full_screen_intent_permission_title" />
-
-            <TextView
-                android:id="@+id/text_view_full_screen_intent_permission_text2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dk_margin"
-                android:text="@string/dk_perm_utils_permissions_fsi_text2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_full_screen_intent_permission_text1" />
 
             <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
                 android:id="@+id/button_request_full_screen_intent_permission"
@@ -71,11 +61,11 @@
                 android:layout_marginVertical="@dimen/dk_margin"
                 android:onClick="onRequestPermissionClicked"
                 android:paddingVertical="@dimen/dk_margin"
-                android:text="@string/dk_perm_utils_permissions_text_button_fsi_settings"
+                android:text="@string/dk_perm_utils_text_button_fsi_settings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_full_screen_intent_permission_text2" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_full_screen_intent_permission_text" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

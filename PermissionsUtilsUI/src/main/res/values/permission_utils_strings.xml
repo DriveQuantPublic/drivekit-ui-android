@@ -41,6 +41,9 @@
    <string name="dk_perm_utils_app_diag_email_os_version">Software version:</string>
    <string name="dk_perm_utils_app_diag_email_phone">Phone number :</string>
    <string name="dk_perm_utils_app_diag_email_societaire">Contract number :</string>
+   <string name="dk_perm_utils_app_diag_fsi_ko">To display a full-screen notification when an accident is detected and your smartphone is locked, you must enable this permission. Otherwise, a standard notification will be displayed.</string>
+   <string name="dk_perm_utils_app_diag_fsi_ok">Full-screen notifications are now allowed. Thanks to this authorization, the app can display a full-screen notification when an accident is detected, even if your smartphone is locked.</string>
+   <string name="dk_perm_utils_app_diag_fsi_title">Full-screen notifications</string>
    <string name="dk_perm_utils_app_diag_help_request_button">Contact support</string>
    <string name="dk_perm_utils_app_diag_help_request_text">If the application does not work after following the recommendations above, you can contact us by email. It\'s fast and the email will contain all the necessary information to analyze the origin of your problem.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">The app does not record your trips?</string>
@@ -91,6 +94,7 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">this link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">If the app does not record your trips, we invite you to disable the energy saver of your iPhone using the guide available via %s.</string>
    <string name="dk_perm_utils_energy_saver_title">How do I disable energy saver?</string>
+   <string name="dk_perm_utils_fsi_activity_title">Car accident alert</string>
    <string name="dk_perm_utils_notification_activity_recognition_permission">The app is not authorized to access phone activity. This may limit the trip recording.</string>
    <string name="dk_perm_utils_notification_app_battery_optimization">The app is not allowed to run in the background. This may limit the trip recording.</string>
    <string name="dk_perm_utils_notification_bluetooth_permission">Trip recording is not possible because the app is not authorized to access the Bluetooth sensor.</string>
@@ -101,6 +105,8 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">Trip recording is not possible because the app is not authorized to access the Bluetooth sensor.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Open the settings</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permissions</string>
+   <string name="dk_perm_utils_permissions_fsi_button">Allow full-screen notification display</string>
+   <string name="dk_perm_utils_permissions_fsi_text">If the app detects an accident, it can display a full-screen notification even when your smartphone is locked.\n\nIn this way, you can contact a support number or report that you\'re okay.\n\nPress the button below to authorize the app to display full-screen notifications.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Allow location</string>
    <string name="dk_perm_utils_permissions_location_button_ios">Open the settings</string>
    <string name="dk_perm_utils_permissions_location_ios13_ko">To enjoy automatic recording of your trips, the application must access the phone\'s position. To do this, select \"Always\" in the phone settings by following the steps below</string>
@@ -140,14 +146,5 @@
    <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Open the settings</string>
    <string name="dk_perm_utils_permissions_text_button_notifications_settings">Open the settings</string>
    <string name="dk_perm_utils_permissions_text_button_skip">Skip and don\'t ask again</string>
-
-   <string name="dk_perm_utils_app_diag_fsi_title">Notifications en plein écran</string>
-   <string name="dk_perm_utils_permissions_text_button_fsi_settings">Ouvrir les réglages</string>
-
-   <string name="dk_perm_utils_permissions_fsi_text1">Lorsque l\'appli détecte un accident et que votre appareil est verrouillé, elle peut afficher une notification occupant tout l\'écran afin de vous demander si tout va bien. Le cas échéant, il est possible de contacter un numéro d\'assistance.</string>
-   <string name="dk_perm_utils_permissions_fsi_text2">Pour cela, autorisez l\'appli à afficher les notifications en plein écran après avoir appuyé sur le bouton ci-dessous.</string>
-
-   <string name="dk_perm_utils_permissions_fsi_button">Autoriser l\'affichage de notifications en plein écran</string>
-   <string name="dk_perm_utils_app_diag_fsi_ok">L\'affichage de notifications occupant tout l\'écran est autorisé.\n\nL\'appli affiche une notification occupant tout l\'écran vous demandant des informations supplémentaires lorsqu\'un accident est détecté et que l\'appareil est verrouillé.</string>
-   <string name="dk_perm_utils_app_diag_fsi_ko">Pour afficher une notification occupant tout l\'écran lorsqu\'un accident est détecté et que votre appareil est verrouillé, vous devez autoriser cette permission. Sinon, une notification classique s\'affichera.</string>
+   <string name="dk_perm_utils_text_button_fsi_settings">Open the settings</string>
 </resources>

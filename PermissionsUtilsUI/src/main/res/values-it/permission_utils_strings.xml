@@ -41,6 +41,9 @@
    <string name="dk_perm_utils_app_diag_email_os_version">Versione del software:</string>
    <string name="dk_perm_utils_app_diag_email_phone">Numero di telefono:</string>
    <string name="dk_perm_utils_app_diag_email_societaire">Numero membro :</string>
+   <string name="dk_perm_utils_app_diag_fsi_ko">Per visualizzare una notifica a schermo intero quando viene rilevato un incidente e lo smartphone è bloccato, è necessario autorizzare questa autorizzazione. In caso contrario, verrà visualizzata una notifica standard.</string>
+   <string name="dk_perm_utils_app_diag_fsi_ok">È ora possibile visualizzare le notifiche a schermo intero. Grazie a questa autorizzazione, l\'app può visualizzare una notifica a schermo intero quando viene rilevato un incidente, anche se lo smartphone è bloccato.</string>
+   <string name="dk_perm_utils_app_diag_fsi_title">Notifiche a schermo intero</string>
    <string name="dk_perm_utils_app_diag_help_request_button">Contatta l\'assistenza</string>
    <string name="dk_perm_utils_app_diag_help_request_text">Se il tuo telefono funziona su una versione di Android che include un\'interfaccia software personalizzata del produttore, ti invitiamo a cercare nel menu batteria per disabilitare le ottimizzazioni.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">L\'app non registra i tuoi viaggi?</string>
@@ -91,6 +94,7 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">questo link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Se l\'applicazione non registra i vostri viaggi, vi invitiamo a disattivare il risparmio energetico del vostro iPhone utilizzando la guida disponibile tramite %s.</string>
    <string name="dk_perm_utils_energy_saver_title">Come si disattiva il risparmio energetico?</string>
+   <string name="dk_perm_utils_fsi_activity_title">Allarme incidente stradale</string>
    <string name="dk_perm_utils_notification_activity_recognition_permission">L\'app non è autorizzata ad accedere all\'attività del telefono. Ciò può limitare la registrazione del viaggio.</string>
    <string name="dk_perm_utils_notification_app_battery_optimization">L\'app non può essere eseguita in background. Questo potrebbe limitare la registrazione del viaggio.</string>
    <string name="dk_perm_utils_notification_bluetooth_permission">La registrazione del viaggio non è possibile perché l\'app non è autorizzata ad accedere al sensore Bluetooth.</string>
@@ -101,6 +105,8 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">La registrazione del viaggio non è possibile perché l\'app non è autorizzata ad accedere al sensore Bluetooth.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Aprire le impostazioni</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permessi</string>
+   <string name="dk_perm_utils_permissions_fsi_button">Consentire la visualizzazione delle notifiche a schermo intero</string>
+   <string name="dk_perm_utils_permissions_fsi_text">Se l\'app rileva un incidente, può visualizzare una notifica a schermo intero anche quando lo smartphone è bloccato.\n\nIn questo modo è possibile contattare un numero verde o far sapere che si sta bene.\n\nPremere il pulsante sottostante per autorizzare l\'app a visualizzare le notifiche a schermo intero.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autorizzare la posizione</string>
    <string name="dk_perm_utils_permissions_location_button_ios">Aprire le impostazioni</string>
    <string name="dk_perm_utils_permissions_location_ios13_ko">Per usufruire della registrazione automatica dei vostri viaggi, l\'applicazione deve accedere alla posizione del telefono. Per fare questo, selezionare \"Sempre\" nelle impostazioni del telefono seguendo i passi seguenti</string>
@@ -140,4 +146,5 @@
    <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Aprire le impostazioni</string>
    <string name="dk_perm_utils_permissions_text_button_notifications_settings">Aprire le impostazioni</string>
    <string name="dk_perm_utils_permissions_text_button_skip">Salta e non chiedere più</string>
+   <string name="dk_perm_utils_text_button_fsi_settings">Aprire le impostazioni</string>
 </resources>
