@@ -42,7 +42,7 @@
    <string name="dk_perm_utils_app_diag_email_phone">Numéro de téléphone :</string>
    <string name="dk_perm_utils_app_diag_email_societaire">Numéro de sociétaire :</string>
    <string name="dk_perm_utils_app_diag_fsi_ko">Pour afficher une notification occupant tout l\'écran lorsqu\'un accident est détecté et que votre smartphone est verrouillé, vous devez autoriser cette permission. Sinon, une notification classique s\'affichera.</string>
-   <string name="dk_perm_utils_app_diag_fsi_ok">L\'affichage de notifications occupant tout l\'écran est autorisé. Grace a cette autorisation, l\'appli peut afficher une notification en plein écran lorsqu\'un accident est détecté même si votre smartphone est verouillé.</string>
+   <string name="dk_perm_utils_app_diag_fsi_ok">L\'affichage de notifications occupant tout l\'écran est autorisé. Grâce à cette autorisation, l\'appli peut afficher une notification en plein écran lorsqu\'un accident est détecté même si votre smartphone est verrouillé.</string>
    <string name="dk_perm_utils_app_diag_fsi_title">Notifications en plein écran</string>
    <string name="dk_perm_utils_app_diag_help_request_button">Contacter le support</string>
    <string name="dk_perm_utils_app_diag_help_request_text">Si l\'application ne fonctionne pas après avoir suivi les recommandations ci-dessus, vous pouvez contacter notre support par email. En un clic, nous aurons les informations nécessaires pour une première analyse de l\'origine du problème et vous aider à le résoudre.</string>
@@ -106,7 +106,7 @@
    <string name="dk_perm_utils_permissions_activity_button_ios">Ouvrir les réglages</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Autorisations</string>
    <string name="dk_perm_utils_permissions_fsi_button">Autoriser l\'affichage de notifications en plein écran</string>
-   <string name="dk_perm_utils_permissions_fsi_text">Si l\'appli détecte un accident elle peut afficher une notification qui occupe tout l\'écran même lorsque votre smartphone est verrouillé.\n\nAinsi, vous pouvez contacter un numéro d\'assistance ou indiquez que vous allez bien.\n\nAppuyez sur le bouton ci-dessous pour autorisez l\'appli à afficher les notifications en plein écran.</string>
+   <string name="dk_perm_utils_permissions_fsi_text">Si l\'appli détecte un accident elle peut afficher une notification qui occupe tout l\'écran même lorsque votre smartphone est verrouillé.\n\nAinsi, vous pouvez contacter un numéro d\'assistance ou indiquer que vous allez bien.\n\nAppuyez sur le bouton ci-dessous pour autoriser l\'appli à afficher les notifications en plein écran.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autoriser la localisation</string>
    <string name="dk_perm_utils_permissions_location_button_ios">Ouvrir les réglages</string>
    <string name="dk_perm_utils_permissions_location_ios13_ko">Pour bénéficier de l\'enregistrement automatique de vos trajets, l\'application doit accéder à la position du téléphone. Pour cela, sélectionnez \"Toujours\" dans les réglages du téléphone en suivant les étapes ci-dessous.</string>
