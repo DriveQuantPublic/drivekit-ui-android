@@ -30,8 +30,8 @@ enum class PermissionView {
                     if (DriveKitSharedPreferencesUtils.getBoolean(it, false)) {
                         launchNextPermission(context, permissionViews)
                     } else {
-                        val isPermissionPresent = getPermissionType()?.isManifestValid(context) ?: true
-                        if (isPermissionPresent) {
+                        val isPermissionValid = getPermissionType()?.isManifestValid(context) ?: true
+                        if (isPermissionValid) {
                             context.startActivity(this.buildIntent(context, permissionViews))
                         } else {
                             launchNextPermission(context, permissionViews)
