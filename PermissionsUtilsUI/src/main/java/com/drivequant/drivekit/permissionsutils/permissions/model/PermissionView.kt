@@ -31,7 +31,7 @@ enum class PermissionView {
                         launchNextPermission(context, permissionViews)
                     } else {
                         val isPermissionValid = getPermissionType()?.isManifestValid(context) ?: true
-                        if (isPermissionValid) {
+                        if (isPermissionValid && canDisplay(context)) {
                             context.startActivity(this.buildIntent(context, permissionViews))
                         } else {
                             launchNextPermission(context, permissionViews)
@@ -52,6 +52,18 @@ enum class PermissionView {
             DriveKitSharedPreferencesUtils.setBoolean(sharedPrefsKey, true)
         }
     }
+
+    // The full screen intent permission screen can be requested only if notification permission has been granted before
+    private fun canDisplay(context: Context) =
+        when (this) {
+            ACTIVITY,
+            LOCATION,
+            BACKGROUND_TASK,
+            NEARBY_DEVICES,
+            NOTIFICATIONS -> true
+
+            FULL_SCREEN_INTENT -> DiagnosisHelper.getNotificationStatus(context) == PermissionStatus.VALID
+        }
 
     private fun getIgnoreSharedPrefsKey() = when (this) {
         NOTIFICATIONS -> "dk_ignore_permission_notifications_key"

@@ -106,7 +106,7 @@
    <string name="dk_perm_utils_permissions_activity_button_ios">Ouvrir les réglages</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Autorisations</string>
    <string name="dk_perm_utils_permissions_fsi_button">Autoriser l\'affichage de notifications en plein écran</string>
-   <string name="dk_perm_utils_permissions_fsi_text">Si l\'appli détecte un accident elle peut afficher une notification qui occupe tout l\'écran même lorsque votre smartphone est verrouillé.\n\nAinsi, vous pouvez contacter un numéro d\'assistance ou indiquer que vous allez bien.\n\nAppuyez sur le bouton ci-dessous pour autoriser l\'appli à afficher les notifications en plein écran.</string>
+   <string name="dk_perm_utils_permissions_fsi_text">Si l\'appli détecte un accident, elle peut afficher une notification qui occupe tout l\'écran même lorsque votre smartphone est verrouillé.\n\nAinsi, vous pouvez contacter un numéro d\'assistance ou indiquer que vous allez bien.\n\nAppuyez sur le bouton ci-dessous pour autoriser l\'appli à afficher les notifications en plein écran.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autoriser la localisation</string>
    <string name="dk_perm_utils_permissions_location_button_ios">Ouvrir les réglages</string>
    <string name="dk_perm_utils_permissions_location_ios13_ko">Pour bénéficier de l\'enregistrement automatique de vos trajets, l\'application doit accéder à la position du téléphone. Pour cela, sélectionnez \"Toujours\" dans les réglages du téléphone en suivant les étapes ci-dessous.</string>

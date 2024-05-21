@@ -28,7 +28,6 @@ import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
-import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.core.utils.PermissionType
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -39,6 +38,8 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPerm
 import com.drivequant.drivekit.permissionsutils.permissions.receiver.SensorsReceiver
 
 class AppDiagnosisActivity : RequestPermissionActivity() {
+
+    private val REQUEST_NOTIFICATIONS = 6
 
     private var sensorsReceiver: SensorsReceiver? = null
     private var errorsCount = 0
@@ -473,7 +474,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val intent = DiagnosisHelper.buildSettingsIntent(this)
             intent.action = Intent.ACTION_AUTO_REVOKE_PERMISSIONS
-            startActivityForResult(intent, REQUEST_PERMISSIONS_OPEN_SETTINGS)
+            startActivityForResult(intent, DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS)
         }
     }
 
@@ -483,7 +484,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         notificationIntent.putExtra("app_package", packageName)
         notificationIntent.putExtra("app_uid", applicationInfo.uid)
         notificationIntent.putExtra("android.provider.extra.APP_PACKAGE", packageName)
-        startActivity(notificationIntent)
+        startActivityForResult(notificationIntent, REQUEST_NOTIFICATIONS)
     }
 
     private fun requestNearbyPermission() {
@@ -609,7 +610,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_PERMISSIONS_OPEN_SETTINGS) {
+        var dismissAlertDialog = false
+        when (requestCode) {
+            DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS -> dismissAlertDialog = true
+            DiagnosisHelper.REQUEST_FULL_SCREEN_INTENT -> dismissAlertDialog = true
+            REQUEST_NOTIFICATIONS -> {
+                dismissAlertDialog = true
+                displayFullScreenIntentItem()
+            }
+        }
+        if (dismissAlertDialog) {
             alertDialog?.dismiss()
         }
     }
