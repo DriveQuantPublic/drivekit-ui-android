@@ -175,7 +175,7 @@ internal class TripsListViewModel(
         TripListConfiguration.MOTORIZED().getTransportationModes().forEach {
             if (DriveKitDriverData.tripsQuery()
                     .whereEqualTo("DeclaredTransportationMode_transportationMode", it.value)
-                    .query().execute().isNotEmpty()
+                    .countQuery().execute() > 0
             ) {
                 transportationModes.add(it)
             }

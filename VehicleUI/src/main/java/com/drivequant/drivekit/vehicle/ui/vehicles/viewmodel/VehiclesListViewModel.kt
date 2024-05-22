@@ -52,7 +52,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         }
     }
 
-    fun hasLocalVehicles() = DriveKitVehicle.vehiclesQuery().noFilter().query().execute().isNotEmpty()
+    fun hasLocalVehicles() = DriveKitVehicle.vehiclesQuery().noFilter().countQuery().execute() > 0
 
     fun getScreenTitle(context: Context) =
         if (vehiclesList.size > 1) {

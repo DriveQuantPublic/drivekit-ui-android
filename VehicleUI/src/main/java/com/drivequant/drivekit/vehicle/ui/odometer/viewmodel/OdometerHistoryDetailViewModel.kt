@@ -39,10 +39,8 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
             .executeOne()
     }
 
-    fun canDeleteHistory() = DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
-            .execute().let {
-                it.size > 1 && historyId > -1
-            }
+    fun canDeleteHistory() = historyId > -1 && DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).countQuery()
+            .execute().let { it > 1 }
 
     fun canEditHistory() = historyId == getMostRecentHistory()?.historyId
 
