@@ -41,6 +41,9 @@
    <string name="dk_perm_utils_app_diag_email_os_version">Softwareversion:</string>
    <string name="dk_perm_utils_app_diag_email_phone">Telefonnummer :</string>
    <string name="dk_perm_utils_app_diag_email_societaire">Medlemsnr.</string>
+   <string name="dk_perm_utils_app_diag_fsi_ko">For at få vist en meddelelse i fuld skærm, når der registreres en ulykke, og din smartphone er låst, skal du godkende denne tilladelse. Ellers vil der blive vist en standardmeddelelse.</string>
+   <string name="dk_perm_utils_app_diag_fsi_ok">Notifikationer kan nu vises i fuld skærm. Takket være denne tilladelse kan appen vise en meddelelse i fuld skærm, når der registreres en ulykke, selv om din smartphone er låst.</string>
+   <string name="dk_perm_utils_app_diag_fsi_title">Notifikationer i fuld skærm</string>
    <string name="dk_perm_utils_app_diag_help_request_button">Kontakt support</string>
    <string name="dk_perm_utils_app_diag_help_request_text">Hvis appen stadig ikke fungerer efter at have fulgt anbefalingerne ovenfor, kan du kontakte os via e -mail. Vi vender hurtigst muligt tilbage, og e-mailen vil indeholde alle de nødvendige oplysninger til at fejlfinde på ​​dit problem.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">Registrerer appen ikke dine ture?</string>
@@ -91,6 +94,7 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">dette link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Hvis appen ikke registrerer dine ture, opfordrer vi dig til at deaktivere din iPhones energisparefunktion ved hjælp af den vejledning, der er tilgængelig via %s.</string>
    <string name="dk_perm_utils_energy_saver_title">Hvordan deaktiverer jeg energibespareren?</string>
+   <string name="dk_perm_utils_fsi_activity_title">Advarsel om bilulykke</string>
    <string name="dk_perm_utils_notification_activity_recognition_permission">Appen er ikke autoriseret til at få adgang til telefonaktivitet. Det kan begrænse optagelsen af turen.</string>
    <string name="dk_perm_utils_notification_app_battery_optimization">Appen må ikke køre i baggrunden. Det kan begrænse optagelsen af turen.</string>
    <string name="dk_perm_utils_notification_bluetooth_permission">Turoptagelse er ikke mulig, fordi appen ikke er autoriseret til at få adgang til Bluetooth-sensoren.</string>
@@ -101,6 +105,8 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">Turoptagelse er ikke mulig, fordi appen ikke er autoriseret til at få adgang til Bluetooth-sensoren.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Åbn indstillingerne</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Tilladelser</string>
+   <string name="dk_perm_utils_permissions_fsi_button">Tillad, at notifikationer vises i fuldskærmstilstand</string>
+   <string name="dk_perm_utils_permissions_fsi_text">Hvis appen registrerer en ulykke, kan den vise en meddelelse i fuld skærm, selv når din smartphone er låst.\n\nPå den måde kan du kontakte en hjælpelinje eller lade dem vide, at du er okay.\n\nTryk på knappen nedenfor for at give appen tilladelse til at vise notifikationer i fuldskærmstilstand.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Tillad lokation</string>
    <string name="dk_perm_utils_permissions_location_button_ios">Åbn indstillingerne</string>
    <string name="dk_perm_utils_permissions_location_ios13_ko">For at lave automatisk optagelse af dine ture skal appen have adgang til telefonens position. For at gøre dette skal du vælge \"Altid \" i telefonindstillingerne ved at følge nedenstående trin</string>
@@ -140,4 +146,5 @@
    <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Åbn indstillingerne</string>
    <string name="dk_perm_utils_permissions_text_button_notifications_settings">Åbn indstillingerne</string>
    <string name="dk_perm_utils_permissions_text_button_skip">Spring over og spørg ikke igen</string>
+   <string name="dk_perm_utils_text_button_fsi_settings">Åbn indstillingerne</string>
 </resources>

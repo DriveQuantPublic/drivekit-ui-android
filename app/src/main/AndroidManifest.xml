@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Add the Full Screen Intent in your app manifest only if you are using the Crash Detection Feedback feature -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
     <application
         android:name="com.drivekit.demoapp.DriveKitDemoApplication"
         android:icon="@mipmap/ic_launcher"

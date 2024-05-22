@@ -41,6 +41,9 @@
    <string name="dk_perm_utils_app_diag_email_os_version">Versión de software:</string>
    <string name="dk_perm_utils_app_diag_email_phone">Número de teléfono:</string>
    <string name="dk_perm_utils_app_diag_email_societaire">Número de miembro :</string>
+   <string name="dk_perm_utils_app_diag_fsi_ko">Para mostrar una notificación a pantalla completa cuando se detecta un accidente y el smartphone está bloqueado, debe autorizar este permiso. De lo contrario, se mostrará una notificación estándar.</string>
+   <string name="dk_perm_utils_app_diag_fsi_ok">Ahora se pueden mostrar notificaciones a pantalla completa. Gracias a esta autorización, la aplicación puede mostrar una notificación a pantalla completa cuando se detecta un accidente, incluso si el smartphone está bloqueado.</string>
+   <string name="dk_perm_utils_app_diag_fsi_title">Notificaciones a pantalla completa</string>
    <string name="dk_perm_utils_app_diag_help_request_button">Contacto de soporte</string>
    <string name="dk_perm_utils_app_diag_help_request_text">Si su teléfono se ejecuta en una versión de Android que incluye una interfaz de software personalizada del fabricante, lo invitamos a buscar en el menú de la batería para deshabilitar las optimizaciones.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">La aplicación no registra tus viajes?</string>
@@ -91,6 +94,7 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">este enlace</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Si la aplicación no registra tus viajes, te invitamos a desactivar el ahorro de energía de tu iPhone utilizando la guía disponible a través de %s.</string>
    <string name="dk_perm_utils_energy_saver_title">¿Cómo desactivo el ahorro de energía?</string>
+   <string name="dk_perm_utils_fsi_activity_title">Alerta de accidente de coche</string>
    <string name="dk_perm_utils_notification_activity_recognition_permission">La aplicación no está autorizada a acceder a la actividad del teléfono. Esto puede limitar la grabación del viaje.</string>
    <string name="dk_perm_utils_notification_app_battery_optimization">La aplicación no puede ejecutarse en segundo plano. Esto puede limitar la grabación del viaje.</string>
    <string name="dk_perm_utils_notification_bluetooth_permission">La grabación del viaje no es posible porque la aplicación no está autorizada a acceder al sensor Bluetooth.</string>
@@ -101,6 +105,8 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">La grabación del viaje no es posible porque la aplicación no está autorizada a acceder al sensor Bluetooth.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Abrir los ajustes</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permisos</string>
+   <string name="dk_perm_utils_permissions_fsi_button">Permitir que las notificaciones se muestren a pantalla completa</string>
+   <string name="dk_perm_utils_permissions_fsi_text">Si la aplicación detecta un accidente, puede mostrar una notificación a pantalla completa incluso con el smartphone bloqueado.\n\nAsí podrás ponerte en contacto con una línea de ayuda o avisar de que estás bien.\n\nPulsa el botón de abajo para autorizar a la aplicación a mostrar notificaciones a pantalla completa.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autorizar la ubicación</string>
    <string name="dk_perm_utils_permissions_location_button_ios">Abrir los ajustes</string>
    <string name="dk_perm_utils_permissions_location_ios13_ko">Para aprovechar la grabación automática de sus viajes, la aplicación debe acceder a la posición del teléfono. Para ello, seleccione \"Siempre\" en la configuración del teléfono siguiendo los siguientes pasos</string>
@@ -140,4 +146,5 @@
    <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Abrir los ajustes</string>
    <string name="dk_perm_utils_permissions_text_button_notifications_settings">Abrir los ajustes</string>
    <string name="dk_perm_utils_permissions_text_button_skip">Omitir y no volver a preguntar</string>
+   <string name="dk_perm_utils_text_button_fsi_settings">Abrir los ajustes</string>
 </resources>

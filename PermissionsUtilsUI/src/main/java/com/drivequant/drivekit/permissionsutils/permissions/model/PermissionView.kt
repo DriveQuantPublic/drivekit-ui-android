@@ -7,6 +7,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
+import com.drivequant.drivekit.core.utils.PermissionType
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.activity.*
 import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermissionActivity.Companion.PERMISSION_VIEWS_LIST_EXTRA
@@ -17,8 +18,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermiss
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 enum class PermissionView {
-    NOTIFICATIONS, ACTIVITY, LOCATION, BACKGROUND_TASK, NEARBY_DEVICES;
-
+    ACTIVITY, LOCATION, BACKGROUND_TASK, NEARBY_DEVICES, NOTIFICATIONS, FULL_SCREEN_INTENT;
 
     fun launchActivity(context: Context, permissionViews: ArrayList<PermissionView>) {
         when (getCurrentPermissionStatus(context)) {
@@ -30,7 +30,12 @@ enum class PermissionView {
                     if (DriveKitSharedPreferencesUtils.getBoolean(it, false)) {
                         launchNextPermission(context, permissionViews)
                     } else {
-                        context.startActivity(this.buildIntent(context, permissionViews))
+                        val isPermissionValid = getPermissionType()?.isManifestValid(context) ?: true
+                        if (isPermissionValid && canDisplay(context)) {
+                            context.startActivity(this.buildIntent(context, permissionViews))
+                        } else {
+                            launchNextPermission(context, permissionViews)
+                        }
                     }
                 } ?: run {
                     launchNextPermission(context, permissionViews)
@@ -48,9 +53,25 @@ enum class PermissionView {
         }
     }
 
+    // The full screen intent permission screen can be requested only if notification permission has been granted before
+    private fun canDisplay(context: Context) =
+        when (this) {
+            ACTIVITY,
+            LOCATION,
+            BACKGROUND_TASK,
+            NEARBY_DEVICES,
+            NOTIFICATIONS -> true
+
+            FULL_SCREEN_INTENT -> DiagnosisHelper.getNotificationStatus(context) == PermissionStatus.VALID
+        }
+
     private fun getIgnoreSharedPrefsKey() = when (this) {
         NOTIFICATIONS -> "dk_ignore_permission_notifications_key"
-        else -> null
+        FULL_SCREEN_INTENT -> "dk_ignore_full_screen_intent_notifications_key"
+        ACTIVITY,
+        LOCATION,
+        BACKGROUND_TASK,
+        NEARBY_DEVICES -> null
     }
 
     private fun launchNextPermission(context: Context, permissionViews: ArrayList<PermissionView>) {
@@ -62,6 +83,15 @@ enum class PermissionView {
         }
     }
 
+    private fun getPermissionType() = when (this) {
+        ACTIVITY -> PermissionType.ACTIVITY
+        LOCATION -> PermissionType.LOCATION
+        BACKGROUND_TASK -> null
+        NEARBY_DEVICES -> PermissionType.NEARBY
+        NOTIFICATIONS -> PermissionType.NOTIFICATION
+        FULL_SCREEN_INTENT -> PermissionType.FULL_SCREEN_INTENT
+    }
+
     private fun getCurrentPermissionStatus(context: Context): PermissionStatus {
         return when (this) {
             NOTIFICATIONS -> DiagnosisHelper.getNotificationStatus(context)
@@ -69,6 +99,7 @@ enum class PermissionView {
             ACTIVITY -> DiagnosisHelper.getActivityStatus(context)
             BACKGROUND_TASK -> DiagnosisHelper.getBatteryOptimizationsStatus(context)
             NEARBY_DEVICES -> DiagnosisHelper.getNearbyDevicesStatus(context)
+            FULL_SCREEN_INTENT -> DiagnosisHelper.getFullScreenIntentStatus(context)
         }
     }
 
@@ -80,6 +111,7 @@ enum class PermissionView {
             ACTIVITY -> ActivityRecognitionPermissionActivity::class.java
             BACKGROUND_TASK -> BackgroundTaskPermissionActivity::class.java
             NEARBY_DEVICES -> NearbyDevicesPermissionActivity::class.java
+            FULL_SCREEN_INTENT -> FullScreenIntentPermissionActivity::class.java
         }
         val intent = Intent(context, selectedClass)
         intent.putExtra(PERMISSION_VIEWS_LIST_EXTRA, permissionViews)
