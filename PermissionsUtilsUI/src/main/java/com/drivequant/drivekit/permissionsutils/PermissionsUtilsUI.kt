@@ -61,7 +61,8 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 PermissionView.ACTIVITY,
                 PermissionView.BACKGROUND_TASK,
                 PermissionView.NEARBY_DEVICES,
-                PermissionView.NOTIFICATIONS
+                PermissionView.NOTIFICATIONS,
+                PermissionView.FULL_SCREEN_INTENT
             )
         )
         permissions.first().launchActivity(context, permissions)

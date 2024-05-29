@@ -41,6 +41,9 @@
    <string name="dk_perm_utils_app_diag_email_os_version">Softwareversion:</string>
    <string name="dk_perm_utils_app_diag_email_phone">Telefonnummer :</string>
    <string name="dk_perm_utils_app_diag_email_societaire">Mitgliedsnummer :</string>
+   <string name="dk_perm_utils_app_diag_fsi_ko">Um eine Benachrichtigung anzuzeigen, die den gesamten Bildschirm einnimmt, wenn ein Unfall erkannt wird und Ihr Smartphone gesperrt ist, müssen Sie diese Erlaubnis erteilen. Andernfalls wird eine normale Benachrichtigung angezeigt.</string>
+   <string name="dk_perm_utils_app_diag_fsi_ok">Die Anzeige von Benachrichtigungen, die den gesamten Bildschirm einnehmen, ist erlaubt. Mit dieser Berechtigung kann die App eine Benachrichtigung im Vollbildmodus anzeigen, wenn ein Unfall erkannt wurde, selbst wenn Ihr Smartphone gesperrt ist.</string>
+   <string name="dk_perm_utils_app_diag_fsi_title">Vollbild-Benachrichtigungen</string>
    <string name="dk_perm_utils_app_diag_help_request_button">Kontaktieren Sie den Support</string>
    <string name="dk_perm_utils_app_diag_help_request_text">Wenn Ihr Telefon auf einer Android-Version läuft, die eine benutzerdefinierte Softwareschnittstelle vom Hersteller enthält, laden wir Sie ein, das Batteriemenü zu durchsuchen, um Optimierungen zu deaktivieren.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">Die App zeichnet deine Fahrten nicht auf?</string>
@@ -91,6 +94,7 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">dieser Link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Wenn die App Ihre Fahrten nicht aufzeichnet, bitten wir Sie, den Energiesparmodus Ihres iPhones mithilfe der über %s verfügbaren Anleitung zu deaktivieren.</string>
    <string name="dk_perm_utils_energy_saver_title">Wie kann ich den Energiesparmodus deaktivieren?</string>
+   <string name="dk_perm_utils_fsi_activity_title">Autounfall-Alarm</string>
    <string name="dk_perm_utils_notification_activity_recognition_permission">Die App ist nicht berechtigt, auf Telefonaktivitäten zuzugreifen. Dies kann die Aufzeichnung der Reise einschränken.</string>
    <string name="dk_perm_utils_notification_app_battery_optimization">Die App darf nicht im Hintergrund laufen. Dies kann die Aufzeichnung der Fahrt einschränken.</string>
    <string name="dk_perm_utils_notification_bluetooth_permission">Eine Fahrtenaufzeichnung ist nicht möglich, da die App nicht berechtigt ist, auf den Bluetooth-Sensor zuzugreifen.</string>
@@ -101,6 +105,8 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">Eine Fahrtenaufzeichnung ist nicht möglich, da die App nicht berechtigt ist, auf den Bluetooth-Sensor zuzugreifen.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Öffnen Sie die Einstellungen</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Genehmigungen</string>
+   <string name="dk_perm_utils_permissions_fsi_button">Erlauben, dass Benachrichtigungen im Vollbildmodus angezeigt werden</string>
+   <string name="dk_perm_utils_permissions_fsi_text">Wenn die App einen Unfall erkennt, kann sie eine Benachrichtigung anzeigen, die den gesamten Bildschirm einnimmt, selbst wenn Ihr Smartphone gesperrt ist.\n\nAuf diese Weise können Sie eine Notfallnummer anrufen oder mitteilen, dass es Ihnen gut geht.\n\nTippen Sie auf die Schaltfläche unten, um der App zu erlauben, Benachrichtigungen im Vollbildmodus anzuzeigen.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Standort zulassen</string>
    <string name="dk_perm_utils_permissions_location_button_ios">Öffnen Sie die Einstellungen</string>
    <string name="dk_perm_utils_permissions_location_ios13_ko">Um die Vorteile der automatischen Aufzeichnung Ihrer Fahrten zu nutzen, muss die Anwendung auf die Position des Telefons zugreifen. Wählen Sie dazu in den Telefoneinstellungen \"Immer\", indem Sie die folgenden Schritte ausführen</string>
@@ -140,4 +146,5 @@
    <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Öffnen Sie die Einstellungen</string>
    <string name="dk_perm_utils_permissions_text_button_notifications_settings">Öffnen Sie die Einstellungen</string>
    <string name="dk_perm_utils_permissions_text_button_skip">Überspringen und nicht mehr nachfragen</string>
+   <string name="dk_perm_utils_text_button_fsi_settings">Öffnen Sie die Einstellungen</string>
 </resources>

@@ -37,7 +37,7 @@ enum class VehicleAction(
         SHOW -> !vehicle.liteConfig && DriveKitVehicleUI.vehicleActions.contains(SHOW)
         RENAME -> DriveKitVehicleUI.vehicleActions.contains(RENAME)
         REPLACE -> DriveKitVehicleUI.vehicleActions.contains(REPLACE)
-        DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().query().execute().size > 1
+        DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().countQuery().execute() > 1
                 && DriveKitVehicleUI.vehicleActions.contains(DELETE)
         ODOMETER -> DriveKitVehicleUI.hasOdometer && DriveKitVehicleUI.vehicleActions.contains(ODOMETER)
     }
