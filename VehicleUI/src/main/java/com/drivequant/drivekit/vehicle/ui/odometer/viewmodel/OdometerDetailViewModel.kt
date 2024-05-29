@@ -8,8 +8,8 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 internal class OdometerDetailViewModel(val vehicleId: String) : ViewModel() {
 
-    fun shouldShowDisplayReadingButton() = DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
-        .execute().isNotEmpty()
+    fun shouldShowDisplayReadingButton() = DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).countQuery()
+        .execute() > 0
 
     fun getVehicleDisplayName(context: Context) = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()?.let {
         VehicleUtils().buildFormattedName(context, it)
