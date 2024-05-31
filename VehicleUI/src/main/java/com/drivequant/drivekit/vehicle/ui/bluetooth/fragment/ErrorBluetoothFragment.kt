@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothErrorBinding
@@ -37,13 +36,13 @@ class ErrorBluetoothFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.textViewBluetoothFailed.normalText(DriveKitUI.colors.mainFontColor())
+        binding.textViewBluetoothFailed.normalText()
 
         binding.buttonCancel.setOnClickListener {
             activity?.finish()
         }
 
-        binding.textViewOpenSettings.normalText(DriveKitUI.colors.secondaryColor())
+        binding.textViewOpenSettings.normalText()
         binding.textViewOpenSettings.setOnClickListener {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT)
         }

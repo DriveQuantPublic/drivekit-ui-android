@@ -8,11 +8,12 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine1WithColor
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreakStatus
@@ -32,8 +33,7 @@ internal class StreakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val imageViewStreak = itemView.findViewById<ImageView>(R.id.image_view_streak_icon)
     private val seekBar = itemView.findViewById<SeekBar>(R.id.seek_bar)
     private val imageViewInfo = itemView.findViewById<ImageView>(R.id.image_view_info)
-    private val viewSeparator = itemView.findViewById<View>(R.id.view_separator)
-    private val background =  textViewTripsCount.background as GradientDrawable
+    private val background = textViewTripsCount.background as GradientDrawable
 
     fun bind(streaksData: StreaksData) {
         textViewStreakTitle.text = streaksData.getTitle(itemView.context)
@@ -55,8 +55,7 @@ internal class StreakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         textViewCurrentStreakDate.normalText()
         textViewBestStreakDate.normalText()
         textViewTripsCount.textSize = 20f
-        imageViewInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
-        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        imageViewInfo.setColorFilter(DKColors.secondaryColor)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -67,8 +66,8 @@ internal class StreakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         val progressBarDrawable = seekBar.progressDrawable as LayerDrawable
         val foregroundDrawable = progressBarDrawable.getDrawable(1)
         val backgroundDrawable = progressBarDrawable.getDrawable(0)
-        foregroundDrawable.tintDrawable(DriveKitUI.colors.secondaryColor())
-        backgroundDrawable.tintDrawable(DriveKitUI.colors.complementaryFontColor())
+        foregroundDrawable.tintDrawable(DKColors.secondaryColor)
+        backgroundDrawable.tintDrawable(DKColors.complementaryFontColor)
     }
 
     private fun setData(streaksData: StreaksData) {
@@ -112,13 +111,13 @@ internal class StreakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private fun setStyle(reset: Boolean = false) {
         if (reset) {
             textViewBestStreakData.normalText()
-            textViewTripsCount.setTextColor(DriveKitUI.colors.complementaryFontColor())
-            background.setStroke(5, DriveKitUI.colors.complementaryFontColor())
+            textViewTripsCount.setTextColor(DKColors.complementaryFontColor)
+            background.setStroke(5, DKColors.complementaryFontColor)
             seekBar.thumb.mutate().alpha = 255
         } else {
-            textViewBestStreakData.headLine1()
-            textViewTripsCount.setTextColor(DriveKitUI.colors.secondaryColor())
-            background.setStroke(5, DriveKitUI.colors.secondaryColor())
+            textViewBestStreakData.headLine1WithColor()
+            textViewTripsCount.setTextColor(DKColors.secondaryColor)
+            background.setStroke(5, DKColors.secondaryColor)
             seekBar.thumb.mutate().alpha = 0
         }
     }

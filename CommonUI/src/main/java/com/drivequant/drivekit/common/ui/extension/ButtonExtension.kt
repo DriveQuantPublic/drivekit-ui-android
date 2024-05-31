@@ -4,16 +4,18 @@ package com.drivequant.drivekit.common.ui.extension
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.widget.Button
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 /**
  * Created by Mohamed on 2020-03-11.
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-fun Button.button(textColor: Int = DriveKitUI.colors.fontColorOnSecondaryColor(), backgroundColor: Int = DriveKitUI.colors.secondaryColor()) {
+fun Button.button(@ColorInt textColor: Int = DKColors.fontColorOnSecondaryColor, @ColorInt backgroundColor: Int = DKColors.secondaryColor) {
     this.setTextColor(textColor)
     this.setBackgroundColor(backgroundColor)
     this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)

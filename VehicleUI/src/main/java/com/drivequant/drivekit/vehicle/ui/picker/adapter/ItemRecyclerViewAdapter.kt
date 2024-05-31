@@ -1,20 +1,24 @@
 package com.drivequant.drivekit.vehicle.ui.picker.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.bigText
-import com.drivequant.drivekit.common.ui.extension.normalText
+import androidx.recyclerview.widget.RecyclerView
+import com.drivequant.drivekit.common.ui.extension.bigTextWithColor
+import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
-import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment.AdapterType.*
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment.AdapterType.TEXT_IMAGE_ITEM
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment.AdapterType.TEXT_ITEM
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment.AdapterType.TEXT_ITEM_PADDING
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment.AdapterType.TEXT_OR_IMAGE_ITEM
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment.AdapterType.TRUCK_TYPE_ITEM
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 
 class ItemRecyclerViewAdapter(
@@ -26,7 +30,7 @@ class ItemRecyclerViewAdapter(
     private val adapterType = VehicleItemListFragment.AdapterType.getAdapterTypeByPickerStep(currentPickerStep)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layout = when (adapterType){
+        val layout = when (adapterType) {
             TEXT_ITEM_PADDING -> R.layout.layout_item_text_padding
             TEXT_ITEM -> R.layout.layout_item_text
             TEXT_IMAGE_ITEM,
@@ -57,19 +61,19 @@ class ItemRecyclerViewAdapter(
         }
 
         holder.textView.visibility = View.VISIBLE
-        when (adapterType){
+        when (adapterType) {
             TEXT_ITEM,
             TEXT_ITEM_PADDING -> {
-                holder.textView.bigText(DriveKitUI.colors.fontColorOnSecondaryColor())
-                holder.textView.background?.tintDrawable(DriveKitUI.colors.secondaryColor())
+                holder.textView.bigTextWithColor(DKColors.fontColorOnSecondaryColor)
+                holder.textView.background?.tintDrawable(DKColors.secondaryColor)
             }
             TEXT_IMAGE_ITEM -> {
-                holder.textView.normalText(DriveKitUI.colors.complementaryFontColor())
+                holder.textView.normalTextWithColor(DKColors.complementaryFontColor)
             }
             TEXT_OR_IMAGE_ITEM -> {
                 if (item.value.equals("OTHER_BRANDS", true)){
-                    holder.textView.normalText()
-                    holder.textView.bigText(DriveKitUI.colors.complementaryFontColor())
+                    holder.textView.normalTextWithColor()
+                    holder.textView.bigTextWithColor(DKColors.complementaryFontColor)
                 } else {
                     holder.textView.visibility = View.GONE
                 }

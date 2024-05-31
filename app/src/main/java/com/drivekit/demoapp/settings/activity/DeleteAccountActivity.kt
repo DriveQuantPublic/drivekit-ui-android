@@ -14,7 +14,7 @@ import com.drivekit.demoapp.settings.viewmodel.DeleteAccountViewModel
 import com.drivekit.demoapp.utils.restartApplication
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityDeleteAccountBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 
 internal class DeleteAccountActivity : AppCompatActivity() {
@@ -44,9 +44,6 @@ internal class DeleteAccountActivity : AppCompatActivity() {
         binding.buttonCancelAccountDeletion.setOnClickListener {
             finish()
         }
-
-        binding.textViewExplainingText.setTextColor(DriveKitUI.colors.mainFontColor())
-        binding.textViewWarningText.setTextColor(DriveKitUI.colors.mainFontColor())
 
         viewModel.accountDeletionError.observe(this) {
             updateProgressVisibility(false)
@@ -99,7 +96,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
         val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
         title?.text = getString(R.string.app_name)
         description?.text = getString(R.string.account_deletion_confirmation)
-        alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(DriveKitUI.colors.criticalColor())
+        alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(DKColors.criticalColor)
     }
 
     private fun displayAccountDeletionError(errorMessageResId: Int) {

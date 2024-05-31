@@ -11,9 +11,11 @@
         android:id="@+id/alert_dialog_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/primaryColor"
         android:gravity="center"
         android:paddingLeft="@dimen/dk_margin"
-        android:paddingRight="@dimen/dk_margin" />
+        android:paddingRight="@dimen/dk_margin"
+        android:textColor="@color/fontColorOnPrimaryColor" />
 
     <TextView
         android:id="@+id/alert_dialog_description"
@@ -33,7 +35,8 @@
 
         <View
             android:id="@+id/view_separator_description"
-            style="@style/Separator.Horizontal" />
+            style="@style/Separator.Horizontal"
+            android:background="@color/neutralColor" />
 
         <TextView
             android:id="@+id/text_view_verify"
@@ -44,12 +47,14 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
+            android:textColor="@color/primaryColor"
             android:visibility="gone"
             tools:visibility="visible" />
 
         <View
             android:id="@+id/view_separator_verify"
-            style="@style/Separator.Horizontal" />
+            style="@style/Separator.Horizontal"
+            android:background="@color/neutralColor" />
 
         <TextView
             android:id="@+id/text_view_replace"
@@ -60,12 +65,14 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
+            android:textColor="@color/primaryColor"
             android:visibility="gone"
             tools:visibility="visible" />
 
         <View
             android:id="@+id/view_separator_replace"
-            style="@style/Separator.Horizontal" />
+            style="@style/Separator.Horizontal"
+            android:background="@color/neutralColor" />
 
         <TextView
             android:id="@+id/text_view_delete"
@@ -76,6 +83,7 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
+            android:textColor="@color/primaryColor"
             android:visibility="gone"
             tools:visibility="visible" />
     </LinearLayout>

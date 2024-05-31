@@ -1,32 +1,32 @@
 package com.drivequant.drivekit.common.ui.graphical
 
-import android.content.Context
 import androidx.annotation.ColorInt
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.core.DriveKit
 
-open class DKColors(context: Context) {
+object DKColors {
+    private val appContext = DriveKit.applicationContext
 
-    private val appContext = context.applicationContext
     @ColorInt
-    open fun primaryColor(): Int = appContext.getColor(R.color.primaryColor)
+    val primaryColor: Int = appContext.getColor(R.color.primaryColor)
     @ColorInt
-    open fun secondaryColor(): Int = appContext.getColor(R.color.secondaryColor)
+    val secondaryColor: Int = appContext.getColor(R.color.secondaryColor)
     @ColorInt
-    open fun mainFontColor(): Int = appContext.getColor(R.color.mainFontColor)
+    val mainFontColor: Int = appContext.getColor(R.color.mainFontColor)
     @ColorInt
-    open fun complementaryFontColor(): Int = appContext.getColor(R.color.complementaryFontColor)
+    val complementaryFontColor: Int = appContext.getColor(R.color.complementaryFontColor)
     @ColorInt
-    open fun fontColorOnPrimaryColor(): Int = appContext.getColor(R.color.fontColorOnPrimaryColor)
+    val fontColorOnPrimaryColor: Int = appContext.getColor(R.color.fontColorOnPrimaryColor)
     @ColorInt
-    open fun fontColorOnSecondaryColor(): Int = appContext.getColor(R.color.fontColorOnSecondaryColor)
+    val fontColorOnSecondaryColor: Int = appContext.getColor(R.color.fontColorOnSecondaryColor)
     @ColorInt
-    open fun neutralColor(): Int = appContext.getColor(R.color.neutralColor)
+    val neutralColor: Int = appContext.getColor(R.color.neutralColor)
     @ColorInt
-    open fun backgroundViewColor(): Int = appContext.getColor(R.color.backgroundViewColor)
+    val backgroundViewColor: Int = appContext.getColor(R.color.backgroundViewColor)
     @ColorInt
-    open fun warningColor(): Int = appContext.getColor(R.color.warningColor)
+    val warningColor: Int = appContext.getColor(R.color.warningColor)
     @ColorInt
-    open fun criticalColor(): Int = appContext.getColor(R.color.criticalColor)
+    val criticalColor: Int = appContext.getColor(R.color.criticalColor)
     @ColorInt
-    open fun transparentColor(): Int = appContext.getColor(R.color.transparentColor)
+    val transparentColor: Int = appContext.getColor(R.color.transparentColor)
 }

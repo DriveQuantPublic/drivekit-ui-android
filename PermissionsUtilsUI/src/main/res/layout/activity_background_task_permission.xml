@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/dk_screen_border_permissionutils_onboarding" >
+            android:paddingHorizontal="@dimen/dk_screen_border_permissionutils_onboarding">
 
             <ImageView
                 android:id="@+id/image_view_permission_background_task"
@@ -39,6 +39,7 @@
                 android:gravity="center"
                 android:paddingVertical="@dimen/dk_margin"
                 android:text="@string/dk_perm_utils_permissions_phone_settings_background_title"
+                android:textColor="@color/mainFontColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_permission_background_task" />
@@ -50,6 +51,7 @@
                 android:layout_marginTop="@dimen/dk_margin"
                 android:paddingVertical="@dimen/dk_margin"
                 android:text="@string/dk_perm_utils_permissions_phone_settings_background_text1"
+                android:textColor="@color/mainFontColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_title" />
@@ -60,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dk_margin"
                 android:text="@string/dk_perm_utils_permissions_phone_settings_background_text2"
+                android:textColor="@color/mainFontColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_text1" />

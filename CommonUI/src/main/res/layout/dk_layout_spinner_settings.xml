@@ -32,7 +32,8 @@
                 android:id="@+id/spinner_settings_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dk_margin_quarter" />
+                android:layout_marginEnd="@dimen/dk_margin_quarter"
+                android:textColor="@color/primaryColor" />
         </LinearLayout>
 
         <TextView
@@ -40,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dk_margin_quarter"
+            android:textColor="@color/warningColor"
             android:visibility="gone" />
     </LinearLayout>
 
@@ -47,8 +49,8 @@
         android:id="@+id/spinner_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:background="@drawable/dk_spinner_background">
+        android:background="@drawable/dk_spinner_background"
+        android:gravity="end">
 
         <Spinner
             android:id="@+id/spinner"

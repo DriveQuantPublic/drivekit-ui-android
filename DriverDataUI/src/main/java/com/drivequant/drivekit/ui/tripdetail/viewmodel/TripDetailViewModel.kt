@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -413,8 +413,8 @@ internal class TripDetailViewModel(
         } else {
             val phoneCallContent = DKResource.buildString(
                 context,
-                DriveKitUI.colors.secondaryColor(),
-                DriveKitUI.colors.secondaryColor(),
+                DKColors.secondaryColor,
+                DKColors.secondaryColor,
                 R.string.dk_driverdata_distance_travelled,
                 getPhoneCallsDistance(context)
             )

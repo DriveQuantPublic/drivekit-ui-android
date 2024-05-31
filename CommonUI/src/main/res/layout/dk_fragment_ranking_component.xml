@@ -26,14 +26,16 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dk_margin"
             android:gravity="center"
-            android:text="@string/dk_common_ranking_rank" />
+            android:text="@string/dk_common_ranking_rank"
+            android:textColor="@color/complementaryFontColor" />
 
         <TextView
             android:id="@+id/dk_text_view_pseudo_header"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/dk_common_ranking_driver" />
+            android:text="@string/dk_common_ranking_driver"
+            android:textColor="@color/complementaryFontColor" />
 
         <TextView
             android:id="@+id/dk_text_view_score_header"
@@ -41,14 +43,16 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dk_margin_half"
             android:gravity="center"
-            android:text="@string/dk_common_ranking_score" />
+            android:text="@string/dk_common_ranking_score"
+            android:textColor="@color/complementaryFontColor" />
     </LinearLayout>
 
-    <TextView
+    <View
         android:id="@+id/dk_view_separator"
         style="@style/Separator.Horizontal"
         android:layout_marginStart="@dimen/dk_margin_half"
-        android:layout_marginEnd="@dimen/dk_margin_half" />
+        android:layout_marginEnd="@dimen/dk_margin_half"
+        android:background="@color/neutralColor" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dk_recycler_view_ranking"

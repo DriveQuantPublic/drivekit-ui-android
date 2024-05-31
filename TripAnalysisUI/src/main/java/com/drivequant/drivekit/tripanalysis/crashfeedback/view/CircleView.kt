@@ -5,8 +5,8 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.drivekit.tripanalysis.ui.R
+import com.drivequant.drivekit.common.ui.extension.intColor
 
 internal class CircleView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private val drawPaint: Paint = Paint()
@@ -22,7 +22,7 @@ internal class CircleView(context: Context, attrs: AttributeSet?) : View(context
     }
 
     init {
-        drawPaint.color = ContextCompat.getColor(context, R.color.dkCrashFeedbackAssistance_10)
+        drawPaint.color = R.color.dkCrashFeedbackAssistance_10.intColor(context)
         drawPaint.isAntiAlias = true
     }
 }

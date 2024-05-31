@@ -1,14 +1,18 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.viewholder
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.databaseutils.entity.BadgeCharacteristics
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
-import com.drivequant.drivekit.driverachievement.ui.badges.extension.*
+import com.drivequant.drivekit.driverachievement.ui.badges.extension.computePercent
+import com.drivequant.drivekit.driverachievement.ui.badges.extension.getColor
+import com.drivequant.drivekit.driverachievement.ui.badges.extension.getDescription
+import com.drivequant.drivekit.driverachievement.ui.badges.extension.getIcon
+import com.drivequant.drivekit.driverachievement.ui.badges.extension.getName
+import com.drivequant.drivekit.driverachievement.ui.badges.extension.getProgressCongrats
 import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesData
 
 

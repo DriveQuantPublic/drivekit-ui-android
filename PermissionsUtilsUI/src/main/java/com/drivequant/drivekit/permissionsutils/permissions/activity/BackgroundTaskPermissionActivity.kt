@@ -3,9 +3,9 @@ package com.drivequant.drivekit.permissionsutils.permissions.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
 import com.drivequant.drivekit.core.utils.PermissionStatus
@@ -40,6 +40,6 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
         binding.textViewBackgroundTaskPermissionTitle.highlightMedium()
         binding.textViewBackgroundTaskPermissionText1.normalText()
         binding.textViewBackgroundTaskPermissionText2.normalText()
-        window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        window.decorView.setBackgroundColor(DKColors.backgroundViewColor)
     }
 }

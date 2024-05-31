@@ -5,8 +5,8 @@ import android.graphics.Typeface
 import android.text.Spannable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
@@ -52,12 +52,12 @@ internal class DKSynthesisCardViewModel(
         data.forEach {
             when (it) {
                 is FormatType.VALUE -> spannable.append(it.value, context.resSpans {
-                    color(DriveKitUI.colors.primaryColor())
+                    color(DKColors.primaryColor)
                     typeface(Typeface.BOLD)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 })
                 is FormatType.UNIT -> spannable.append(it.value, context.resSpans {
-                    color(DriveKitUI.colors.complementaryFontColor())
+                    color(DKColors.complementaryFontColor)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 })
                 is FormatType.SEPARATOR -> spannable.append(it.value)

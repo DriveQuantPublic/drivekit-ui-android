@@ -19,7 +19,8 @@
             <View
                 android:id="@+id/view_border"
                 android:layout_width="@dimen/dk_margin_quarter"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@color/mainFontColor" />
 
             <LinearLayout
                 style="@style/MW"
@@ -34,6 +35,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/dk_margin_half"
+                        android:textColor="@color/mainFontColor"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -50,7 +52,8 @@
                     android:id="@+id/view_separator"
                     style="@style/Separator.Horizontal"
                     android:layout_marginTop="@dimen/dk_margin_quarter"
-                    android:layout_marginBottom="@dimen/dk_margin_quarter" />
+                    android:layout_marginBottom="@dimen/dk_margin_quarter"
+                    android:background="@color/neutralColor" />
 
                 <LinearLayout style="@style/MW">
 
@@ -62,14 +65,16 @@
                             android:id="@+id/text_view_major_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dk_margin_half" />
+                            android:padding="@dimen/dk_margin_half"
+                            android:textColor="@color/complementaryFontColor" />
 
                         <TextView
                             android:id="@+id/text_view_major_value"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="@dimen/dk_margin_half" />
+                            android:padding="@dimen/dk_margin_half"
+                            android:textColor="@color/mainFontColor" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -80,14 +85,16 @@
                             android:id="@+id/text_view_minor_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dk_margin_half" />
+                            android:padding="@dimen/dk_margin_half"
+                            android:textColor="@color/complementaryFontColor" />
 
                         <TextView
                             android:id="@+id/text_view_minor_value"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="@dimen/dk_margin_half" />
+                            android:padding="@dimen/dk_margin_half"
+                            android:textColor="@color/mainFontColor" />
                     </LinearLayout>
                 </LinearLayout>
 

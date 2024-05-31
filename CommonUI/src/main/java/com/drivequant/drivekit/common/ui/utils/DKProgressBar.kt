@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.normalText
 
@@ -42,7 +41,7 @@ class DKProgressBar : LinearLayout {
                 visibility = View.GONE
             } else {
                 text = message
-                normalText(DriveKitUI.colors.mainFontColor())
+                normalText()
                 visibility = View.VISIBLE
             }
         }

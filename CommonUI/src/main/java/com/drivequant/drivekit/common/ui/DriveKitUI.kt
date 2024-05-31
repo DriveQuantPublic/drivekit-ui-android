@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Typeface
 import androidx.core.content.res.ResourcesCompat
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
-import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKFonts
 import com.drivequant.drivekit.common.ui.utils.DistanceUnit
 import com.drivequant.drivekit.core.DriveKit
@@ -19,8 +18,6 @@ object DriveKitUI {
 
     @JvmStatic
     var distanceUnit: DistanceUnit = DistanceUnit.KM
-    var colors: DKColors
-        private set
 
     @JvmStatic
     var scores: List<DKScoreType> = DKScoreType.values().toList()
@@ -38,17 +35,11 @@ object DriveKitUI {
     init {
         DriveKit.checkInitialization()
         DriveKitLog.i(TAG, "Initialization")
-        this.colors = DKColors(DriveKit.applicationContext)
     }
 
     @JvmStatic
     fun initialize() {
         // Nothing to do currently.
-    }
-
-    @JvmStatic
-    fun configureColors(colors: DKColors) {
-        this.colors = colors
     }
 
     @JvmStatic

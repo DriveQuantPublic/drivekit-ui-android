@@ -25,12 +25,14 @@
             android:id="@+id/text_view_diagnosis_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dk_perm_utils_app_diag_network_title" />
+            android:text="@string/dk_perm_utils_app_diag_network_title"
+            android:textColor="@color/mainFontColor" />
 
         <TextView
             android:id="@+id/text_view_diagnosis_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dk_perm_utils_app_diag_learn_more" />
+            android:text="@string/dk_perm_utils_app_diag_learn_more"
+            android:textColor="@color/secondaryColor" />
     </LinearLayout>
 </LinearLayout>

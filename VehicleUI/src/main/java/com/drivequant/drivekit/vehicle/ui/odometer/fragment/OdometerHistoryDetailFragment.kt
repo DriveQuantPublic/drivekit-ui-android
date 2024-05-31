@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.view.KeyEvent
@@ -14,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -23,6 +21,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerHistoryDetailBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryDetailViewModel
@@ -59,7 +58,7 @@ class OdometerHistoryDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DkFragmentOdometerHistoryDetailBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
@@ -95,7 +94,6 @@ class OdometerHistoryDetailFragment : Fragment() {
                 onDeleteOdometerHistory()
                 onDistanceClicked(context)
                 onCancelButtonClicked()
-                binding.vehicleItem.setBackgroundColor(DriveKitUI.colors.neutralColor())
                 viewModel.odometerActionObserver.observe(viewLifecycleOwner) {
                     updateProgressVisibility(false)
                     Toast.makeText(context, it.first, Toast.LENGTH_LONG).show()
@@ -120,7 +118,7 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     private fun initVehicle(context: Context, vehicleId: String) {
         binding.spinnerItem.textViewItemDisplayName.apply {
-            smallText(ContextCompat.getColor(context, com.drivequant.drivekit.common.ui.R.color.dkGrayColor))
+            smallText()
             text = viewModel.getVehicleFormattedName(context)
         }
         VehicleUtils().getVehicleDrawable(context, vehicleId)?.let { drawable ->
@@ -135,7 +133,7 @@ class OdometerHistoryDetailFragment : Fragment() {
     private fun initMileageRecord(context: Context) {
         binding.editTextDistance.apply {
             if (viewModel.canEditOrAddHistory()) {
-                setEditTextTitle(viewModel.getHistoryDistance(context), DriveKitUI.colors.complementaryFontColor())
+                setEditTextTitle(viewModel.getHistoryDistance(context), DKColors.complementaryFontColor)
             } else {
                 setEditTextTitle(viewModel.getHistoryDistance(context))
             }
@@ -143,7 +141,7 @@ class OdometerHistoryDetailFragment : Fragment() {
         binding.editTextDate.setEditTextTitle(viewModel.getHistoryUpdateDate())
         binding.textViewHistoryDetailTitle.apply {
             setText(R.string.dk_vehicle_odometer_odometer_history_detail_title)
-            normalText(DriveKitUI.colors.secondaryColor())
+            normalText()
         }
     }
 
@@ -195,8 +193,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                     val editText = view.findViewById<TextInputEditText>(com.drivequant.drivekit.common.ui.R.id.edit_text_field)
                     titleTextView.apply {
                         setText(R.string.dk_vehicle_odometer_mileage_kilometer)
-                        normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-                        setBackgroundColor(DriveKitUI.colors.primaryColor())
+                        normalText()
                     }
                     editText.apply {
                         inputType = InputType.TYPE_CLASS_NUMBER
@@ -230,7 +227,7 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     private fun onDeleteOdometerHistory() {
         binding.buttonDeleteReference.apply {
-            normalText(DriveKitUI.colors.secondaryColor())
+            normalText()
             setText(com.drivequant.drivekit.common.ui.R.string.dk_common_delete)
             visibility = if (viewModel.canDeleteHistory()) View.VISIBLE else View.GONE
             setOnClickListener {

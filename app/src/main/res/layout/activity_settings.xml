@@ -23,14 +23,16 @@
                 android:id="@+id/title_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textColor="@color/mainFontColor" />
 
             <TextView
                 android:id="@+id/description_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:text="@string/parameters_account_description" />
+                android:text="@string/parameters_account_description"
+                android:textColor="@color/complementaryFontColor" />
 
             <LinearLayout
                 android:id="@+id/container_user_id"
@@ -43,18 +45,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/userId" />
+                    android:text="@string/userId"
+                    android:textColor="@color/mainFontColor" />
 
                 <TextView
                     android:id="@+id/text_user_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/complementaryFontColor"
                     tools:text="0RE8gf09gH" />
             </LinearLayout>
 
             <View
                 android:id="@+id/view_separator_1"
-                style="@style/Separator.Horizontal" />
+                style="@style/Separator.Horizontal"
+                android:background="@color/neutralColor" />
 
             <LinearLayout
                 android:id="@+id/container_firstname"
@@ -68,18 +73,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/firstname" />
+                    android:text="@string/firstname"
+                    android:textColor="@color/mainFontColor" />
 
                 <TextView
                     android:id="@+id/text_firstname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/warningColor"
                     tools:text="Firstname" />
             </LinearLayout>
 
             <View
                 android:id="@+id/view_separator_2"
-                style="@style/Separator.Horizontal" />
+                style="@style/Separator.Horizontal"
+                android:background="@color/neutralColor" />
 
             <LinearLayout
                 android:id="@+id/container_lastname"
@@ -92,18 +100,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/lastname" />
+                    android:text="@string/lastname"
+                    android:textColor="@color/mainFontColor" />
 
                 <TextView
                     android:id="@+id/text_lastname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/warningColor"
                     tools:text="Lastname" />
             </LinearLayout>
 
             <View
                 android:id="@+id/view_separator_3"
-                style="@style/Separator.Horizontal" />
+                style="@style/Separator.Horizontal"
+                android:background="@color/neutralColor" />
 
             <LinearLayout
                 android:id="@+id/container_pseudo"
@@ -116,18 +127,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/pseudo" />
+                    android:text="@string/pseudo"
+                    android:textColor="@color/mainFontColor" />
 
                 <TextView
                     android:id="@+id/text_pseudo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/warningColor"
                     tools:text="Pseudo" />
             </LinearLayout>
 
             <View
                 android:id="@+id/view_separator_4"
-                style="@style/Separator.Horizontal" />
+                style="@style/Separator.Horizontal"
+                android:background="@color/neutralColor" />
 
 
             <TextView
@@ -135,7 +149,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textColor="@color/mainFontColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -157,21 +172,24 @@
 
             <View
                 android:id="@+id/view_separator_5"
-                style="@style/Separator.Horizontal" />
+                style="@style/Separator.Horizontal"
+                android:background="@color/neutralColor" />
 
             <TextView
                 android:id="@+id/title_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textColor="@color/mainFontColor" />
 
             <TextView
                 android:id="@+id/description_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:text="@string/parameters_notification_description" />
+                android:text="@string/parameters_notification_description"
+                android:textColor="@color/complementaryFontColor" />
 
             <TextView
                 android:id="@+id/button_notifications"
@@ -180,18 +198,21 @@
                 android:layout_marginVertical="@dimen/dk_margin"
                 android:text="@string/see_settings"
                 android:textAlignment="viewStart"
-                android:textAllCaps="true" />
+                android:textAllCaps="true"
+                android:textColor="@color/secondaryColor" />
 
             <View
                 android:id="@+id/view_separator_6"
-                style="@style/Separator.Horizontal" />
+                style="@style/Separator.Horizontal"
+                android:background="@color/neutralColor" />
 
             <TextView
                 android:id="@+id/title_account_deletion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textColor="@color/mainFontColor" />
 
             <TextView
                 android:id="@+id/description_account_deletion"
@@ -205,7 +226,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
-                android:text="@string/account_deletion_api_key_info" />
+                android:text="@string/account_deletion_api_key_info"
+                android:textColor="@color/warningColor" />
 
             <TextView
                 android:id="@+id/button_delete_account"
@@ -214,14 +236,16 @@
                 android:layout_marginTop="@dimen/dk_margin"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:text="@string/button_delete_account"
-                android:textAllCaps="true" />
+                android:textAllCaps="true"
+                android:textColor="@color/criticalColor" />
         </LinearLayout>
 
     </ScrollView>
 
     <View
         android:id="@+id/view_separator_7"
-        style="@style/Separator.Horizontal" />
+        style="@style/Separator.Horizontal"
+        android:background="@color/neutralColor" />
 
     <TextView
         android:id="@+id/button_logout_account"
@@ -230,5 +254,6 @@
         android:layout_marginTop="@dimen/dk_margin"
         android:layout_marginBottom="@dimen/dk_margin"
         android:gravity="center"
-        android:text="@string/button_logout" />
+        android:text="@string/button_logout"
+        android:textColor="@color/criticalColor" />
 </LinearLayout>

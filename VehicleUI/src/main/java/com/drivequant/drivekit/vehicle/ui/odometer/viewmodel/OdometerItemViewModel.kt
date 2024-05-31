@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.viewmodel
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -41,8 +41,8 @@ internal class OdometerItemViewModel(val vehicleId: String) {
     private fun getEstimatedDistanceDescription(context: Context) = "${
         DKResource.buildString(
             context,
-            DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),
+            DKColors.mainFontColor,
+            DKColors.mainFontColor,
             R.string.dk_vehicle_odometer_estimated_distance_subtitle,
             "${Calendar.getInstance()[Calendar.YEAR]}"
         )
@@ -54,7 +54,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
                 false, minDistanceToRemoveFractions = 0.0).convertToString() } ?: ""
 
        return DKResource.buildString(
-            context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.mainFontColor(),
+            context, DKColors.mainFontColor, DKColors.mainFontColor,
            R.string.dk_vehicle_odometer_distance_analyzed_subtitle, analyzedDistance
         ).toString()
     }
@@ -65,8 +65,8 @@ internal class OdometerItemViewModel(val vehicleId: String) {
         )?.let {
             DKResource.buildString(
                 context,
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.mainFontColor(),
+                DKColors.mainFontColor,
+                DKColors.mainFontColor,
                 R.string.dk_vehicle_odometer_last_update,
                 it
             )

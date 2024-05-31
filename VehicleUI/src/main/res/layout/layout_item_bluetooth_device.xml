@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
             android:layout_weight="1"
+            android:textColor="@color/mainFontColor"
             android:textSize="@dimen/dk_text_medium"
             tools:text="Bluetooth Device Name" />
 
@@ -39,5 +40,6 @@
     <View
         android:id="@+id/view_separator"
         style="@style/Separator.Horizontal"
+        android:background="@color/neutralColor"
         android:visibility="gone" />
 </LinearLayout>

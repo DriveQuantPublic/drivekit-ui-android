@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitLog
@@ -80,8 +80,8 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
             val vehiclePairedName = it.buildFormattedName(requireContext())
             binding.textViewDescription.text = DKResource.buildString(
                 requireContext(),
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.mainFontColor(),
+                DKColors.mainFontColor,
+                DKColors.mainFontColor,
                 R.string.dk_vehicle_beacon_setup_replace_description,
                 beaconCode,
                 vehicleName,

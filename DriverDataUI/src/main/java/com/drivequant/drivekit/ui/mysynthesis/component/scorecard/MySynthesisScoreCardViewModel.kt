@@ -5,8 +5,8 @@ import android.text.SpannableString
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.extension.CalendarField
@@ -61,7 +61,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
             dkSpannable.append(
                 context,
                 evolutionTextPrefix.toString(),
-                DriveKitUI.colors.complementaryFontColor(),
+                DKColors.complementaryFontColor,
                 DKStyle.SMALL_TEXT
             )
         }
@@ -70,7 +70,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
             dkSpannable.toSpannable()
         } else {
             val score = computeScoreOutOfTen(context, scoreSynthesis?.previousScoreValue)
-            dkSpannable.space().append(context, score, DriveKitUI.colors.complementaryFontColor(), DKStyle.HEADLINE2).toSpannable()
+            dkSpannable.space().append(context, score, DKColors.complementaryFontColor, DKStyle.HEADLINE2).toSpannable()
         }
     }
 

@@ -30,6 +30,7 @@
         android:id="@+id/container_header_trip"
         android:layout_width="match_parent"
         android:layout_height="24dp"
+        android:background="@color/primaryColor"
         app:layout_constraintBottom_toTopOf="@id/pager_container"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -41,7 +42,7 @@
         android:foregroundGravity="center_vertical"
         android:gravity="start"
         android:padding="@dimen/dk_margin_quarter"
-        android:textColor="@android:color/white"
+        android:textColor="@color/fontColorOnPrimaryColor"
         app:layout_constraintBottom_toBottomOf="@id/container_header_trip"
         app:layout_constraintStart_toStartOf="@id/container_header_trip"
         app:layout_constraintTop_toTopOf="@id/container_header_trip"
@@ -54,7 +55,7 @@
         android:layout_marginEnd="@dimen/dk_margin_half"
         android:gravity="end|center_vertical"
         android:padding="@dimen/dk_margin_quarter"
-        android:textColor="@android:color/white"
+        android:textColor="@color/fontColorOnPrimaryColor"
         app:layout_constraintBottom_toBottomOf="@id/container_header_trip"
         app:layout_constraintEnd_toEndOf="@id/container_header_trip"
         app:layout_constraintTop_toTopOf="@id/container_header_trip"

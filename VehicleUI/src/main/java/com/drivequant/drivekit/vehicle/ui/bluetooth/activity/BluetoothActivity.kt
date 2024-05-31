@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.ActivityBluetoothBinding
@@ -51,7 +52,7 @@ class BluetoothActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(DKColors.primaryColor))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 

@@ -3,9 +3,9 @@ package com.drivequant.drivekit.ui.synthesiscards
 import android.content.Context
 import android.text.Spannable
 import android.text.style.AbsoluteSizeSpan
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.access.AccessType
 import com.drivequant.drivekit.core.access.DriveKitAccess
@@ -117,8 +117,8 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
             }
 
             val spannable = DKResource.buildString(context,
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.primaryColor(),
+                DKColors.complementaryFontColor,
+                DKColors.primaryColor,
                 identifier,
                 "${pair.second.roundToInt()}%"
             )

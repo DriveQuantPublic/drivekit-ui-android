@@ -30,6 +30,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:lines="2"
+        android:textColor="@color/mainFontColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dk_progress_circular"

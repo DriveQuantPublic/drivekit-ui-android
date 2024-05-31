@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.tint
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -36,7 +35,7 @@ internal class MySynthesisScoreLegendDialog {
 
         alertDialog.findViewById<TextView>(R.id.my_synthesis_score_legend_title)?.apply {
             text = context.getString(scoreType.getTitle())
-            headLine2(DriveKitUI.colors.mainFontColor())
+            headLine2()
         }
 
         alertDialog.findViewById<TextView>(R.id.my_synthesis_score_legend_description)?.apply {
@@ -58,12 +57,7 @@ internal class MySynthesisScoreLegendDialog {
         scoreLevel: DKScoreTypeLevel
     ) {
         val view = View.inflate(context, R.layout.dk_my_synthesis_scores_legend_item, null)
-        view.findViewById<View>(R.id.score_color)?.let { scoreColor ->
-            DrawableCompat.setTint(
-                scoreColor.background,
-                ContextCompat.getColor(scoreColor.context, scoreLevel.getColorResId())
-            )
-        }
+        view.findViewById<View>(R.id.score_color)?.background?.tint(context, scoreLevel.getColorResId())
         view.findViewById<TextView>(R.id.score_description)?.apply {
             val scoreLevels = scoreLevel.getScoreLevel(scoreType)
             val scoreValuesText: String = scoreLevel.getScoreLevelTitle().let {
@@ -74,14 +68,14 @@ internal class MySynthesisScoreLegendDialog {
                 )
             }
             this.text = DKSpannable().append(scoreValuesText, context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DKColors.mainFontColor)
                 typeface(Typeface.NORMAL)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
             }).space()
                 .append(
                     context.getString(scoreLevel.getScoreLevelDescription(scoreType)),
                     context.resSpans {
-                        color(DriveKitUI.colors.complementaryFontColor())
+                        color(DKColors.complementaryFontColor)
                         typeface(Typeface.NORMAL)
                         size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     }).toSpannable()

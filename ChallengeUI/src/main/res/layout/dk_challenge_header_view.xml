@@ -16,6 +16,7 @@
         android:layout_marginBottom="@dimen/dk_margin_quarter"
         android:gravity="center"
         android:padding="@dimen/dk_margin_half"
+        android:textColor="@color/mainFontColor"
         android:textSize="26sp"
         tools:text="King of eco-driving" />
 
@@ -25,12 +26,14 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/dk_margin_half"
+        android:textColor="@color/complementaryFontColor"
         tools:text="18/02/2017 - 22/02/2017" />
 
     <View
         android:id="@+id/view_separator"
         style="@style/Separator.Horizontal"
-        android:layout_margin="@dimen/dk_margin_half" />
+        android:layout_margin="@dimen/dk_margin_half"
+        android:background="@color/neutralColor" />
 
     <TextView
         android:id="@+id/text_view_rules"
@@ -41,6 +44,7 @@
         android:layout_marginBottom="@dimen/dk_margin_half"
         android:gravity="center"
         android:padding="@dimen/dk_margin_half"
+        android:textColor="@color/mainFontColor"
         tools:text="Text Rules" />
 
     <TextView
@@ -53,6 +57,7 @@
         android:layout_marginBottom="@dimen/dk_margin"
         android:gravity="center"
         android:padding="@dimen/dk_margin_half"
+        android:textColor="@color/mainFontColor"
         android:visibility="gone"
         tools:text="Conditions"
         tools:visibility="visible" />
@@ -63,6 +68,7 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:text="@string/dk_challenge_consult_rule_button"
+        android:textColor="@color/secondaryColor"
         android:visibility="gone"
         tools:text="Voir le règlement"
         tools:visibility="visible" />

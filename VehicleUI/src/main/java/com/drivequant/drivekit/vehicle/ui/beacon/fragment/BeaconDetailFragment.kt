@@ -9,7 +9,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.adapter.BeaconDetailAdapter
@@ -92,14 +92,11 @@ class BeaconDetailFragment : Fragment() {
             val menuInflater = activity?.menuInflater
             menuInflater?.inflate(R.menu.beacon_detail_menu_bar, menu)
 
-            menu.findItem(R.id.action_mail)?.icon?.let {
-                val wrapped = DrawableCompat.wrap(it)
-                DrawableCompat.setTint(wrapped, Color.WHITE)
-            }
+            menu.findItem(R.id.action_mail)?.icon?.tintDrawable(Color.WHITE)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_mail){
+        if (item.itemId == R.id.action_mail) {
             sendMail()
         }
         return super.onOptionsItemSelected(item)

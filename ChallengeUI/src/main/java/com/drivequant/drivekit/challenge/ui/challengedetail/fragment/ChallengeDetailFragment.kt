@@ -14,7 +14,9 @@ import com.drivequant.drivekit.challenge.ui.challengedetail.adapter.ChallengeDet
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeDetailBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.core.SynchronizationType
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -104,11 +106,12 @@ class ChallengeDetailFragment : Fragment() {
         )
 
         binding.tabLayoutChallengeDetail.setupWithViewPager(binding.viewPagerChallengeDetail)
+        val context = requireContext()
         for ((index, item) in ChallengeUI.challengeDetailItems.withIndex()) {
             binding.tabLayoutChallengeDetail.getTabAt(index)?.let {
-                val drawable = ContextCompat.getDrawable(requireContext(), item.getImageResource())
+                val drawable = ContextCompat.getDrawable(context, item.getImageResource())
                 if (index == 0) {
-                    drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
+                    drawable?.tint(context, com.drivequant.drivekit.common.ui.R.color.secondaryColor)
                 }
                 it.icon = drawable
             }
@@ -124,18 +127,17 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     private fun updateTabLayout(position: Int) {
-        for (i in 0 until binding.tabLayoutChallengeDetail.tabCount) {
-            binding.tabLayoutChallengeDetail.getTabAt(i)?.let {
-                if (i == position) {
-                    val drawable = ContextCompat.getDrawable(requireContext(),
-                        ChallengeUI.challengeDetailItems[i].getImageResource())?.mutate()
-                    drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
-                    binding.tabLayoutChallengeDetail.getTabAt(i)?.icon = drawable
-                } else {
-                    val drawable = ContextCompat.getDrawable(requireContext(),
-                        ChallengeUI.challengeDetailItems[i].getImageResource())?.mutate()
-                    drawable?.tintDrawable(DriveKitUI.colors.complementaryFontColor())
-                    binding.tabLayoutChallengeDetail.getTabAt(i)?.icon = drawable
+        context?.let { context ->
+            for (i in 0 until binding.tabLayoutChallengeDetail.tabCount) {
+                binding.tabLayoutChallengeDetail.getTabAt(i)?.let {
+                    val drawable = ContextCompat.getDrawable(context, ChallengeUI.challengeDetailItems[i].getImageResource())
+                    val color = if (i == position) {
+                        DKColors.secondaryColor
+                    } else {
+                        DKColors.complementaryFontColor
+                    }
+                    drawable?.tintDrawable(color)
+                    it.icon = drawable
                 }
             }
         }

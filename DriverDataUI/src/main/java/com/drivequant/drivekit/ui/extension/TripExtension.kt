@@ -5,12 +5,12 @@ import android.content.Context
 import android.graphics.Typeface.BOLD
 import android.graphics.drawable.Drawable
 import android.text.Spannable
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.ceilDuration
 import com.drivequant.drivekit.common.ui.extension.formatDateWithPattern
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
@@ -152,7 +152,7 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
         } ?: run {
             return if (trip.tripAdvices.size > 1) {
                 DKSpannable().append("${trip.tripAdvices.size}", context.resSpans {
-                    color(DriveKitUI.colors.fontColorOnSecondaryColor())
+                    color(DKColors.fontColorOnSecondaryColor)
                     typeface(BOLD)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_very_small)
                 }).toSpannable()

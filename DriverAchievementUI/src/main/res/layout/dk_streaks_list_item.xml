@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/DKCard"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DKCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="2dp"
-    android:layout_marginHorizontal="@dimen/dk_screen_border">
+    android:layout_marginHorizontal="@dimen/dk_screen_border"
+    android:layout_marginVertical="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,8 +17,8 @@
             android:id="@+id/image_view_streak_icon"
             android:layout_width="@dimen/dk_ic_medium"
             android:layout_height="@dimen/dk_ic_medium"
-            android:src="@drawable/dk_common_distraction_filled"
             android:layout_marginEnd="@dimen/dk_margin_half"
+            android:src="@drawable/dk_common_distraction_filled"
             app:layout_constraintEnd_toStartOf="@+id/text_view_streak_title"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,11 +30,12 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dk_margin_quarter"
             android:text="@string/dk_achievements_streaks_acceleration_title"
+            android:textColor="@color/mainFontColor"
             android:textSize="@dimen/dk_text_medium"
+            app:layout_constraintBottom_toBottomOf="@id/image_view_streak_icon"
             app:layout_constraintEnd_toStartOf="@+id/image_view_info"
             app:layout_constraintStart_toEndOf="@+id/image_view_streak_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/image_view_streak_icon"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/image_view_info"
@@ -44,15 +44,16 @@
             android:layout_marginTop="@dimen/dk_margin_quarter"
             android:layout_marginEnd="@dimen/dk_margin_quarter"
             android:src="@drawable/dk_common_info"
+            app:layout_constraintBottom_toBottomOf="@id/image_view_streak_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_streak_title"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/image_view_streak_icon" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/view_separator"
             style="@style/Separator.Horizontal"
             android:layout_marginTop="@dimen/dk_margin_half"
+            android:background="@color/neutralColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_streak_title" />
 
@@ -62,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
             android:text="@string/dk_achievements_streaks_best_title"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_separator" />
 
@@ -70,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/best_title"
             tools:text="345 trajet - 4583 km - 3j 9h 30 min" />
@@ -79,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_quarter"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_best_streak_trip"
             tools:text="Du 02/04/2020 au 23/04/2020" />
@@ -89,6 +93,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dk_margin"
             android:text="@string/dk_achievements_streaks_current_title"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_best_streak_date" />
 
@@ -107,6 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_quarter"
             android:layout_marginBottom="@dimen/dk_margin_half"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_current_streak_trip"
             tools:text="Du 02/04/2020 au 23/04/2020" />
@@ -129,6 +135,7 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_medium"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_current_streak_date"

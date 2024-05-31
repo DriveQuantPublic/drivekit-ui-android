@@ -23,6 +23,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
@@ -172,13 +173,9 @@ class ChallengeParticipationFragment : Fragment() {
 
         if (viewModel.getTimeLeft() > 0) {
             startCountDown(context)
-            binding.timerContainer.apply {
-                setBackgroundColor(DriveKitUI.colors.primaryColor())
-                visibility = View.VISIBLE
-            }
+            binding.timerContainer.visibility = View.VISIBLE
             binding.challengeStart.apply {
                 setText(R.string.dk_challenge_start)
-                setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
                 typeface = DriveKitUI.primaryFont(context)
             }
         }
@@ -194,22 +191,21 @@ class ChallengeParticipationFragment : Fragment() {
         val difference = viewModel.getTimeLeft()
         countDownTimer = object : CountDownTimer(difference, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                val data =
-                    DKDataFormatter.formatExactDuration(context, millisUntilFinished)
+                val data = DKDataFormatter.formatExactDuration(context, millisUntilFinished)
                 val spannable = DKSpannable()
                 data.forEach {
                     when (it) {
                         is FormatType.VALUE -> spannable.append(
                             it.value,
                             context.resSpans {
-                                color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                                color(DKColors.fontColorOnPrimaryColor)
                                 typeface(Typeface.BOLD)
                                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                             })
                         is FormatType.UNIT -> spannable.append(
                             it.value,
                             context.resSpans {
-                                color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                                color(DKColors.fontColorOnPrimaryColor)
                                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                             })
                         is FormatType.SEPARATOR -> spannable.append(it.value)
@@ -231,10 +227,9 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun setStyle() {
-        binding.challengeJoined.headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
-        binding.textViewConditionsInfo.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
-        binding.containerConditionsInfo.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        binding.textViewCountdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
+        binding.challengeJoined.headLine1()
+        binding.textViewConditionsInfo.headLine2()
+        binding.textViewCountdown.normalText()
     }
 
     override fun onPause() {

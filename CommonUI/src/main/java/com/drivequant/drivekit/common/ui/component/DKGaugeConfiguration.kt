@@ -2,12 +2,16 @@ package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.text.Spannable
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 
 interface DKGaugeConfiguration {
     fun getTitle(context: Context): Spannable
     fun getScore(): Double
+    @ColorRes
     fun getColor(value: Double): Int
     fun getMaxScore(): Double
+    @DrawableRes
     fun getIcon(): Int?
     fun getGaugeType(): DKGaugeType
 }

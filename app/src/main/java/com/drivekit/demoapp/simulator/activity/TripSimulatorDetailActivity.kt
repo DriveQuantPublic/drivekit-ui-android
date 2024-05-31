@@ -15,7 +15,6 @@ import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModel
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModelListener
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorDetailBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
@@ -89,7 +88,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         }
         binding.textViewDescription.apply {
             text = getString(presetTripType.getDescriptionResId())
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
         binding.simulationRunDuration.setItemTitle(getString(R.string.trip_simulator_run_duration))
         binding.simulationRunTime.setItemTitle(getString(R.string.trip_simulator_run_time))

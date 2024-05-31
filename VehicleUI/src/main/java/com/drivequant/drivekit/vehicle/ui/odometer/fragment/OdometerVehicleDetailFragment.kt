@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -184,8 +183,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppCompatActivity.RESULT_OK && (
             requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_HISTORY_LIST_REQUEST_CODE ||
-            requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE ||
-            requestCode == OdometerHistoriesListActivity.UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE)) {
+            requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE)) {
             initVehicleOdometerDetail()
             val intentData = Intent()
             activity?.setResult(Activity.RESULT_OK, intentData)

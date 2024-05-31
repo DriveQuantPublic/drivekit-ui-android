@@ -12,11 +12,11 @@ import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
@@ -61,12 +61,11 @@ class DKTripRecordingButton : Fragment() {
         this.stateImageGroup = this.view.findViewById(R.id.iconGroup)
         this.container = this.view.findViewById(R.id.container)
 
-        (this.stateImageBackground.background as GradientDrawable).setColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-        this.stateImageView.setColorFilter(DriveKitUI.colors.secondaryColor())
-        (this.stateImageBorder.background as GradientDrawable).setStroke(1.5F.convertDpToPx(), view.context.getColor(R.color.dkTripRecordingButtonBorder).tintFromHueOfColor(DriveKitUI.colors.secondaryColor()))
-        this.distanceTextView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-        this.durationTextView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-        this.container.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+        (this.stateImageBackground.background as GradientDrawable).setColor(DKColors.fontColorOnSecondaryColor)
+        this.stateImageView.setColorFilter(DKColors.secondaryColor)
+        (this.stateImageBorder.background as GradientDrawable).setStroke(1.5F.convertDpToPx(), R.color.dkTripRecordingButtonBorder.tintFromHueOfColor(view.context, com.drivequant.drivekit.common.ui.R.color.secondaryColor))
+        this.distanceTextView.normalText()
+        this.durationTextView.normalText()
 
         configure()
     }
@@ -92,14 +91,14 @@ class DKTripRecordingButton : Fragment() {
         activity?.let {
             this.titleTextView.text = this.viewModel.title(it)
             if (this.viewModel.hasSubtitle) {
-                this.titleTextView.headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
+                this.titleTextView.headLine2()
                 this.titleTextView.isAllCaps = false
                 this.distanceTextView.text = this.viewModel.distanceSubtitle(it)
                 this.durationTextView.text = this.viewModel.durationSubtitle()
                 this.distanceTextView.visibility = View.VISIBLE
                 this.durationTextView.visibility = View.VISIBLE
             } else {
-                this.titleTextView.headLine1(DriveKitUI.colors.fontColorOnSecondaryColor())
+                this.titleTextView.headLine1()
                 this.titleTextView.isAllCaps = true
                 this.distanceTextView.visibility = View.GONE
                 this.durationTextView.visibility = View.GONE

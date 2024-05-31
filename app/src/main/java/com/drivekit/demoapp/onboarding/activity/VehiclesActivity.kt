@@ -9,7 +9,6 @@ import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityVehiclesBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
@@ -43,7 +42,7 @@ internal class VehiclesActivity : AppCompatActivity() {
         }
         binding.textViewDescription.apply {
             text = getString(R.string.vehicle_intro_description)
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
         binding.buttonAddVehicle.apply {
             setOnClickListener {

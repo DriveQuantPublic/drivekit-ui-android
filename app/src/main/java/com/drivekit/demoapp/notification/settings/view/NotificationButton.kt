@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.graphics.drawable.DrawableCompat
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 internal class NotificationButton : LinearLayout {
 
@@ -47,7 +47,7 @@ internal class NotificationButton : LinearLayout {
             }
         }
 
-        DrawableCompat.setTint(arrowForward.drawable, DriveKitUI.colors.mainFontColor())
+        arrowForward.drawable.tintDrawable(DKColors.mainFontColor)
 
         addView(
             view, ViewGroup.LayoutParams(
@@ -64,7 +64,7 @@ internal class NotificationButton : LinearLayout {
     fun setNotificationDescription(description: String) {
         textViewDescription.apply {
             text = description
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalTextWithColor(DKColors.complementaryFontColor)
         }
     }
 

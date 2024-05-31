@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.graphics.drawable.DrawableCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
@@ -27,7 +25,6 @@ internal class TripInfoView : LinearLayout {
         val tripInfoImageView: ImageView = view.findViewById(R.id.image_view_trip_info)
         val tripInfoTextView: TextView = view.findViewById(R.id.text_view_trip_info)
 
-        DrawableCompat.setTint(view.background, DriveKitUI.colors.secondaryColor())
         trip.infoImageResource()?.let {
             tripInfoImageView.setImageResource(it)
         }

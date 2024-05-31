@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getScoreInfoContent
@@ -26,7 +26,7 @@ class ScoreInfoView : LinearLayout {
     fun init(gaugeConfiguration: GaugeConfiguration) {
         val view = View.inflate(context, R.layout.score_info_item, null)
         val scoreInfoImageView = view.findViewById<ImageView>(R.id.image_view_score_info)
-        scoreInfoImageView.setColorFilter(DriveKitUI.colors.secondaryColor())
+        scoreInfoImageView.setColorFilter(DKColors.secondaryColor)
         view.setOnClickListener {
             val alert = DKAlertDialog.LayoutBuilder()
                 .init(context)
@@ -44,7 +44,6 @@ class ScoreInfoView : LinearLayout {
             icon?.setImageResource(gaugeConfiguration.getIcon())
             title?.headLine1()
             description?.normalText()
-
         }
         addView(
             view, ViewGroup.LayoutParams(

@@ -6,10 +6,10 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.drivekit.tripanalysis.ui.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 internal class TripStopButton(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
@@ -33,10 +33,10 @@ internal class TripStopButton(context: Context, attrs: AttributeSet?) :
 
     private fun configure() {
         this.buttonTitle.apply {
-            headLine1(DriveKitUI.colors.secondaryColor())
+            headLine1()
             isAllCaps = true
         }
-        this.buttonDescription.smallText(DriveKitUI.colors.complementaryFontColor())
-        this.background.tintDrawable(DriveKitUI.colors.secondaryColor())
+        this.buttonDescription.smallText()
+        this.background.tintDrawable(DKColors.secondaryColor)
     }
 }

@@ -14,7 +14,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.drivekit.tripanalysis.ui.R
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine1WithColor
+import com.drivequant.drivekit.common.ui.extension.intColor
 
 
 internal class CrashFeedbackButton : FrameLayout {
@@ -99,12 +100,10 @@ internal class CrashFeedbackButton : FrameLayout {
 
     private fun tintBorder() {
         borderColor?.let {
-            if (borderColor != null) {
-                (container.background as GradientDrawable).setStroke(
-                    6,
-                    ContextCompat.getColor(context, it)
-                )
-            }
+            (container.background as GradientDrawable).setStroke(
+                6,
+                it.intColor(context)
+            )
         }
     }
 
@@ -136,7 +135,7 @@ internal class CrashFeedbackButton : FrameLayout {
             if (titleResId != 0) {
                 textView.setText(it)
                 borderColor?.let { borderColor ->
-                    textView.headLine1(ContextCompat.getColor(context, borderColor))
+                    textView.headLine1WithColor(borderColor.intColor(context))
                     textView.typeface = Typeface.DEFAULT
                 }
             }
@@ -146,7 +145,7 @@ internal class CrashFeedbackButton : FrameLayout {
     private fun setButtonBackground() {
         bgColor?.let {
             if (bgColor != 0) {
-                button.setBackgroundColor(ContextCompat.getColor(context, it))
+                button.setBackgroundColor(it.intColor(context))
             }
         }
     }

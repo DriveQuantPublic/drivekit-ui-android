@@ -7,9 +7,9 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.beaconutils.BeaconInfo
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
@@ -86,8 +86,8 @@ class BeaconDetailViewModel(
     }
 
     private fun buildValue(context: Context, value: String, unit: String) : Spannable {
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val primaryColor = DriveKitUI.colors.primaryColor()
+        val mainFontColor = DKColors.mainFontColor
+        val primaryColor = DKColors.primaryColor
 
         return DKSpannable()
             .append(value, context.resSpans {

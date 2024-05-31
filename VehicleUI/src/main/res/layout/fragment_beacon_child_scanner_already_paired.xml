@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingVertical="@dimen/dk_margin_half" />
+        android:paddingVertical="@dimen/dk_margin_half"
+        android:textColor="@color/mainFontColor" />
 
     <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_validate"

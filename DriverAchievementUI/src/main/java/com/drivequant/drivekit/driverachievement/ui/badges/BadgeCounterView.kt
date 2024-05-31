@@ -7,8 +7,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.intColor
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -28,12 +28,12 @@ internal class BadgeCounterView(context: Context?, attrs: AttributeSet?) : Linea
     }
 
     fun update(@StringRes levelTitleResId: Int, @ColorRes colorResId: Int, acquired: Int, total: Int) {
-        val color = ContextCompat.getColor(context, colorResId)
+        val color = colorResId.intColor(context)
         badgeTypeTextView.text = resources.getString(levelTitleResId)
         badgeTypeTextView.setTextColor(color)
         val badgeCountText = "$acquired / $total"
         badgeCountTextView.text = badgeCountText
         badgeCountTextView.setTextColor(color)
-        (this.background as? GradientDrawable)?.setStroke(2.convertDpToPx(), ContextCompat.getColor(context, colorResId))
+        (this.background as? GradientDrawable)?.setStroke(2.convertDpToPx(), colorResId.intColor(context))
     }
 }

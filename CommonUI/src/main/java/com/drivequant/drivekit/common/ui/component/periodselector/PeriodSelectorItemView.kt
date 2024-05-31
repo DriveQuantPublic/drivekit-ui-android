@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.DimenRes
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 
 @SuppressLint("ViewConstructor")
@@ -50,17 +50,16 @@ internal class PeriodSelectorItemView(
             params.bottomMargin
         )
         layoutParams = params
-        textViewSelector.normalText()
-        (textViewSelector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
+        setPeriodSelected(false)
     }
 
     fun setPeriodSelected(selected: Boolean) {
         if (selected) {
-            (textViewSelector.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
-            textViewSelector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+            (textViewSelector.background as GradientDrawable).setColor(DKColors.secondaryColor)
+            textViewSelector.normalTextWithColor(DKColors.fontColorOnSecondaryColor)
         } else {
-            (textViewSelector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
-            textViewSelector.normalText()
+            (textViewSelector.background as GradientDrawable).setColor(DKColors.neutralColor)
+            textViewSelector.normalTextWithColor()
         }
     }
 

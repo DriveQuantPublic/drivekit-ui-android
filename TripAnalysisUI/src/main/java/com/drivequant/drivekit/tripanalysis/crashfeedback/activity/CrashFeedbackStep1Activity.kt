@@ -10,6 +10,7 @@ import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityCrashFeedbackSte
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.pixelToSp
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DurationUnit
@@ -71,7 +72,6 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             binding.textViewTitle.apply {
                 setText(titleResId)
                 pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
-                setTextColor(DriveKitUI.colors.mainFontColor())
                 setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
             }
         }
@@ -115,7 +115,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
                 is FormatType.VALUE -> spannable.append(
                     it.value,
                     this.resSpans {
-                        color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                        color(DKColors.fontColorOnPrimaryColor)
                         typeface(Typeface.BOLD)
                         size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                     })
@@ -129,7 +129,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             highlightValues(arrayOf(Highlight(0f, 0f, 0)))
             centerText = spannable.toSpannable().toString()
             val textSize = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
-            setCenterTextColor(DriveKitUI.colors.mainFontColor())
+            setCenterTextColor(DKColors.mainFontColor)
             setCenterTextTypeface(DriveKitUI.primaryFont(context))
             setCenterTextSize(textSize)
         }

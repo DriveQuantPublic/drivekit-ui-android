@@ -10,10 +10,12 @@
         android:id="@+id/text_view_alert_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/primaryColor"
         android:gravity="center"
         android:padding="@dimen/dk_margin_half"
         android:paddingLeft="@dimen/dk_margin"
         android:paddingRight="@dimen/dk_margin"
+        android:textColor="@color/fontColorOnPrimaryColor"
         tools:text="Header title" />
 
     <LinearLayout
@@ -28,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dk_margin_half"
+            android:textColor="@color/mainFontColor"
             tools:text="Description text" />
 
         <com.google.android.material.textfield.TextInputEditText

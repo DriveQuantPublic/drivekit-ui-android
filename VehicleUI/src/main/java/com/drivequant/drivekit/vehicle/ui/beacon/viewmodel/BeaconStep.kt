@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable
 import android.text.Spannable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.children.BeaconScannerAlreadyPairedFragment
@@ -32,7 +32,7 @@ enum class BeaconStep {
     fun getTitle(context: Context, viewModel: BeaconViewModel): Spannable {
         val beaconCode = viewModel.beacon?.code ?: ""
         val vehicleName = viewModel.vehicleName ?: ""
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
+        val mainFontColor = DKColors.mainFontColor
 
         return when (this) {
             INITIAL -> DKResource.buildString(context,
@@ -60,7 +60,7 @@ enum class BeaconStep {
                 }
             }
             BEACON_ALREADY_PAIRED -> DKResource.buildString(context,
-                textColor = DriveKitUI.colors.mainFontColor(),
+                textColor = DKColors.mainFontColor,
                 identifier = R.string.dk_vehicle_beacon_already_paired)
             CONGRATS -> DKResource.buildString(
                 context,

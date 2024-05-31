@@ -31,7 +31,8 @@
                 android:layout_marginTop="@dimen/dk_margin_double"
                 android:paddingStart="@dimen/dk_margin"
                 android:paddingEnd="@dimen/dk_margin"
-                android:text="@string/trip_simulator_description" />
+                android:text="@string/trip_simulator_description"
+                android:textColor="@color/complementaryFontColor" />
 
             <TextView
                 android:id="@+id/text_view_error_message"
@@ -40,6 +41,7 @@
                 android:layout_marginTop="@dimen/dk_margin"
                 android:paddingStart="@dimen/dk_margin"
                 android:paddingEnd="@dimen/dk_margin"
+                android:textColor="@color/warningColor"
                 android:visibility="gone"
                 tools:text="@string/trip_simulator_error_dev_mode" />
 
@@ -50,7 +52,8 @@
                 android:layout_marginTop="@dimen/dk_margin_double"
                 android:paddingStart="@dimen/dk_margin"
                 android:paddingEnd="@dimen/dk_margin"
-                android:text="@string/trip_simulator_select_trip" />
+                android:text="@string/trip_simulator_select_trip"
+                android:textColor="@color/mainFontColor" />
 
             <FrameLayout
                 android:id="@+id/spinner_container"
@@ -75,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
                 android:paddingStart="@dimen/dk_margin"
-                android:paddingEnd="@dimen/dk_margin" />
+                android:paddingEnd="@dimen/dk_margin"
+                android:textColor="@color/complementaryFontColor" />
 
 
         </LinearLayout>

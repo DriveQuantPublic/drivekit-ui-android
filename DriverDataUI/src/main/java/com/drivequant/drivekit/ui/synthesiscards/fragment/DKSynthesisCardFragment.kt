@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
@@ -72,7 +72,7 @@ class DKSynthesisCardFragment : Fragment() {
             binding.explanationContent.visibility = View.VISIBLE
 
             ContextCompat.getDrawable(requireContext(), com.drivequant.drivekit.common.ui.R.drawable.dk_common_info)?.let {
-                DrawableCompat.setTint(it, DriveKitUI.colors.secondaryColor())
+                it.tintDrawable(DKColors.secondaryColor)
                 binding.explanationContent.setImageDrawable(it)
             }
 

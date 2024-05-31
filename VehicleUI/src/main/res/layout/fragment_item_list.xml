@@ -23,6 +23,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/dk_margin"
             android:textAlignment="center"
+            android:textColor="@color/mainFontColor"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -11,6 +11,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 
 
@@ -44,9 +45,9 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
         }
         titleConditionTextView.apply {
             text = DKSpannable().append("$titleProgressBar : ", context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DKColors.mainFontColor)
             }).append(condition, context.resSpans {
-                color(DriveKitUI.colors.primaryColor())
+                color(DKColors.primaryColor)
             }).toSpannable()
             typeface = DriveKitUI.primaryFont(context)
         }
@@ -54,7 +55,7 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
 
     private fun setStyle() {
         val foregroundDrawable = (conditionProgressBar.progressDrawable as LayerDrawable).getDrawable(1)
-        foregroundDrawable.tintDrawable(DriveKitUI.colors.primaryColor())
+        foregroundDrawable.tintDrawable(DKColors.primaryColor)
 
         val params = conditionProgressBar.layoutParams as MarginLayoutParams
         params.setMargins(

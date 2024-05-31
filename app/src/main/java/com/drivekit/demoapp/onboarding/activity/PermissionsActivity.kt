@@ -11,7 +11,6 @@ import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityPermissionsBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -46,7 +45,7 @@ internal class PermissionsActivity : AppCompatActivity() {
         }
         binding.textViewDescription.apply {
             text = getString(R.string.permissions_intro_description)
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
         binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.permissions_intro_button)

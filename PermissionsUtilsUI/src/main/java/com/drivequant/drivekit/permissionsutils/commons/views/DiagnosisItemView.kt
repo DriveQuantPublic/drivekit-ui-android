@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.R
@@ -78,9 +78,8 @@ class DiagnosisItemView : LinearLayout {
 
                 textViewDiagnosisSubTitle?.let {
                     it.text = diagnosisSubtitle
-                    it.normalText(DriveKitUI.colors.secondaryColor())
+                    it.normalText()
                 }
-
             } finally {
                 a.recycle()
             }
@@ -103,10 +102,10 @@ class DiagnosisItemView : LinearLayout {
     fun getDiagnosisLink(): String = diagnosisLink
 
     fun setDiagnosisDrawable(permissionStatus: PermissionStatus) {
-        val color = when (permissionStatus) {
-            PermissionStatus.VALID -> ContextCompat.getColor(context, com.drivequant.drivekit.common.ui.R.color.dkValid)
-            PermissionStatus.NOT_VALID -> DriveKitUI.colors.criticalColor()
-            PermissionStatus.WARNING -> DriveKitUI.colors.warningColor()
+        @ColorRes val color = when (permissionStatus) {
+            PermissionStatus.VALID -> com.drivequant.drivekit.common.ui.R.color.dkValid
+            PermissionStatus.NOT_VALID -> com.drivequant.drivekit.common.ui.R.color.criticalColor
+            PermissionStatus.WARNING -> com.drivequant.drivekit.common.ui.R.color.warningColor
         }
         val drawableItem = when (permissionStatus) {
             PermissionStatus.VALID -> R.drawable.dk_perm_utils_checked_generic
@@ -116,9 +115,8 @@ class DiagnosisItemView : LinearLayout {
             ContextCompat.getDrawable(context, it)
         }
         if (drawableItem != null) {
-            val wrapped = DrawableCompat.wrap(drawableItem)
-            DrawableCompat.setTint(wrapped, color)
-            imageViewDiagnosis?.setImageDrawable(wrapped)
+            drawableItem.tint(context, color)
+            imageViewDiagnosis?.setImageDrawable(drawableItem)
         }
     }
 

@@ -7,8 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
 import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityCrashFeedbackStep2Binding
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.extension.pixelToSp
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep2ViewModel
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.CrashFeedbackStatus
@@ -55,7 +54,6 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
             binding.textViewTitle.apply {
                 setText(titleResId)
                 pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
-                setTextColor(DriveKitUI.colors.mainFontColor())
                 setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
             }
         }
@@ -66,7 +64,6 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
             binding.textViewDescription.apply {
                 setText(descriptionResId)
                 pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
-                setTextColor(DriveKitUI.colors.mainFontColor())
                 setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
             }
         }

@@ -32,6 +32,7 @@
                 android:layout_width="96dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/mainFontColor"
                 tools:text="Eco-driving" />
 
             <com.drivequant.drivekit.ui.commons.views.ScoreInfoView
@@ -67,7 +68,8 @@
                 android:id="@+id/accelAdvice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_half" />
+                android:layout_marginStart="@dimen/dk_margin_half"
+                android:textColor="@color/mainFontColor" />
 
         </LinearLayout>
 
@@ -88,7 +90,8 @@
                 android:id="@+id/mainAdvice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_half" />
+                android:layout_marginStart="@dimen/dk_margin_half"
+                android:textColor="@color/mainFontColor" />
 
         </LinearLayout>
 
@@ -109,7 +112,8 @@
                 android:id="@+id/decelAdvice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_half" />
+                android:layout_marginStart="@dimen/dk_margin_half"
+                android:textColor="@color/mainFontColor" />
 
         </LinearLayout>
     </LinearLayout>

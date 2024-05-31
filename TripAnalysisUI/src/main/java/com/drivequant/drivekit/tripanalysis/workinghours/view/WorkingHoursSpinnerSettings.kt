@@ -82,12 +82,12 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
         }
 
         textViewTitle.apply {
-            bigText(DriveKitUI.colors.primaryColor())
+            bigText()
             setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
         }
 
         textViewDescription.apply {
-            smallText(DriveKitUI.colors.warningColor())
+            smallText()
             setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
         }
 

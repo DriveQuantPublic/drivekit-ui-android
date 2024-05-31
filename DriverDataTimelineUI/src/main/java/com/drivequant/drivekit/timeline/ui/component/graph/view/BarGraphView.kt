@@ -3,8 +3,8 @@ package com.drivequant.drivekit.timeline.ui.component.graph.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.intColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
@@ -15,7 +15,10 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
@@ -52,10 +55,10 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
 
         val bar = BarDataSet(entries, null)
         bar.colors = listOf(Color.WHITE)
-        bar.barBorderColor = ContextCompat.getColor(this.context, R.color.dkChartStrokeColor)
+        bar.barBorderColor = R.color.dkChartStrokeColor.intColor(this.context)
         bar.barBorderWidth = GraphConstants.GRAPH_LINE_WIDTH
         bar.isHighlightEnabled = true
-        bar.highLightColor = DriveKitUI.colors.secondaryColor()
+        bar.highLightColor = DKColors.secondaryColor
         bar.highLightAlpha = 255
         bar.setDrawValues(false)
 
@@ -84,7 +87,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
             this.setDrawAxisLine(false)
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
-            this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
+            this.textColor = R.color.dkAxisLabelColor.intColor(context)
             this.textSize = GraphConstants.GRAPH_LABEL_TEXT_SIZE
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)

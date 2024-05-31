@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +27,9 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.extension.updateTabsFont
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -131,12 +132,12 @@ class ChallengeListFragment : Fragment(), DriveKitChallengeListener, ChallengeLi
         binding.noChallenges.apply {
             dkTextViewNoChallenge.apply {
                 setText(this@ChallengeListFragment.viewModel.computeNoChallengeTextResId())
-                headLine2(DriveKitUI.colors.mainFontColor())
+                headLine2()
             }
             view?.resources?.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)?.let { cornerRadius ->
                 this.noChallenges.roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
             }
-            DrawableCompat.setTint(this.noChallenges.background, DriveKitUI.colors.neutralColor())
+            this.noChallenges.background.tintDrawable(DKColors.neutralColor)
             viewGroupEmptyScreen.visibility = View.VISIBLE
         }
         binding.dkRecyclerViewChallenge.visibility = View.GONE
@@ -174,11 +175,10 @@ class ChallengeListFragment : Fragment(), DriveKitChallengeListener, ChallengeLi
             }
 
             setTabTextColors(
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.secondaryColor()
+                DKColors.complementaryFontColor,
+                DKColors.secondaryColor
             )
-            setSelectedTabIndicatorColor(DriveKitUI.colors.secondaryColor())
-            setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+            setSelectedTabIndicatorColor(DKColors.secondaryColor)
             updateTabsFont()
 
             addOnTabSelectedListener(object : OnTabSelectedListener {

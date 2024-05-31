@@ -2,12 +2,11 @@ package com.drivequant.drivekit.ui.driverprofile.component.commontripfeature
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -22,8 +21,6 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
     private lateinit var distanceView: TextView
     private lateinit var durationView: TextView
     private lateinit var roadContextView: TextView
-    private lateinit var leftSeparator: View
-    private lateinit var rightSeparator: View
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -32,24 +29,22 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         this.distanceView = findViewById(R.id.distance)
         this.durationView = findViewById(R.id.duration)
         this.roadContextView = findViewById(R.id.roadContext)
-        this.leftSeparator = findViewById(R.id.leftSeparator)
-        this.rightSeparator = findViewById(R.id.rightSeparator)
 
         configureUi()
     }
 
     override fun configure(viewModel: DriverCommonTripFeatureViewModel) {
-        val noDataColor = DriveKitUI.colors.complementaryFontColor()
+        val noDataColor = DKColors.complementaryFontColor
         // Title.
         this.titleView.setText(viewModel.titleId)
         // Distance.
         this.distanceView.text = DKResource.buildString(
             context,
             "%s ${context.getString(viewModel.distanceUnitId)}",
-            if (viewModel.isRealData) DriveKitUI.colors.mainFontColor() else noDataColor,
+            if (viewModel.isRealData) DKColors.mainFontColor else noDataColor,
             TextArg(
                 viewModel.distance.toDouble().format(0),
-                if (viewModel.isRealData) DriveKitUI.colors.primaryColor() else noDataColor,
+                if (viewModel.isRealData) DKColors.primaryColor else noDataColor,
                 DKStyle.HIGHLIGHT_SMALL
             )
         )
@@ -61,14 +56,14 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
                 is FormatType.VALUE -> spannable.append(
                     context,
                     it.value,
-                    if (viewModel.isRealData) DriveKitUI.colors.primaryColor() else noDataColor,
+                    if (viewModel.isRealData) DKColors.primaryColor else noDataColor,
                     DKStyle.HIGHLIGHT_SMALL
                 )
 
                 is FormatType.UNIT -> spannable.append(
                     context,
                     it.value,
-                    if (viewModel.isRealData) DriveKitUI.colors.mainFontColor() else noDataColor,
+                    if (viewModel.isRealData) DKColors.mainFontColor else noDataColor,
                     DKStyle.NORMAL_TEXT
                 )
 
@@ -78,7 +73,7 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         this.durationView.text = spannable.toSpannable()
         // Road context.
         this.roadContextView.setText(viewModel.roadContextId)
-        val roadContextColor = if (viewModel.isRealData) DriveKitUI.colors.mainFontColor() else noDataColor
+        val roadContextColor = if (viewModel.isRealData) DKColors.mainFontColor else noDataColor
         this.roadContextView.setTextColor(roadContextColor)
     }
 
@@ -86,7 +81,5 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         this.titleView.headLine2()
         this.roadContextView.normalText()
         this.distanceView.normalText()
-        this.leftSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        this.rightSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 }

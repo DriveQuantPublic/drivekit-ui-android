@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -65,7 +64,7 @@ class BeaconScannerBeaconUnavailableFragment : Fragment() {
         }
 
         binding.buttonAbort.apply {
-            normalText(DriveKitUI.colors.secondaryColor())
+            normalText()
             setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
             setOnClickListener {
                 viewModel.scanValidationFinished()

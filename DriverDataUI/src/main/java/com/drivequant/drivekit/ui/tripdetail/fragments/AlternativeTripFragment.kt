@@ -1,14 +1,12 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
@@ -38,7 +36,7 @@ internal class AlternativeTripFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DkAlternativeTripFragmentBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
@@ -95,7 +93,6 @@ internal class AlternativeTripFragment : Fragment() {
         }
 
         binding.transportationModeDescription.text = viewModel.getDescription(requireContext())
-        binding.transportationModeDescription.setTextColor(DriveKitUI.colors.mainFontColor())
     }
 
     private fun launchTransportationMode() {

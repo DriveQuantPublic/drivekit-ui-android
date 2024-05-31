@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
@@ -39,25 +39,24 @@ class SuccessBluetoothFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
         val btDeviceName = vehicle.bluetooth?.name ?: ""
 
-        binding.textViewCongratsTitle.headLine1(mainFontColor)
+        binding.textViewCongratsTitle.headLine1()
 
-        binding.textViewCongratsDescription.normalText(mainFontColor)
+        binding.textViewCongratsDescription.normalText()
         binding.textViewCongratsDescription.text = DKResource.buildString(
             view.context,
-            DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),
+            DKColors.mainFontColor,
+            DKColors.mainFontColor,
             R.string.dk_vehicle_bluetooth_congrats_desc,
             btDeviceName,
             viewModel.vehicleName
         )
 
-        binding.textViewCongratsNotice.normalText(mainFontColor)
+        binding.textViewCongratsNotice.normalText()
         binding.textViewCongratsNotice.text = DKResource.buildString(
-            view.context, DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(), R.string.dk_vehicle_bluetooth_congrats_notice, btDeviceName
+            view.context, DKColors.mainFontColor,
+            DKColors.mainFontColor, R.string.dk_vehicle_bluetooth_congrats_notice, btDeviceName
         )
 
         binding.buttonFinish.apply {

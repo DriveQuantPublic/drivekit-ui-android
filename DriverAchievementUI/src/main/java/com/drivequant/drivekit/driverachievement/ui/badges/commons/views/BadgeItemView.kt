@@ -1,14 +1,13 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.commons.views
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import androidx.annotation.ColorRes
 import com.drivequant.drivekit.common.ui.component.GaugeImage
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -27,7 +26,8 @@ class BadgeItemView : LinearLayout {
     private lateinit var badgeDescription: String
     private lateinit var badgeProgressCongrats: String
 
-    private var gaugeColor: Int = Color.rgb(0, 0, 0)
+    @ColorRes
+    private var gaugeColor: Int = android.R.color.black
     private var gaugeProgress: Double = 0.0
 
     constructor(context: Context) : super(context) {
@@ -43,7 +43,7 @@ class BadgeItemView : LinearLayout {
         badgeGaugeImage = view.findViewById(R.id.gauge_image)
         badgeName = view.findViewById(R.id.text_view_badge_name)
 
-        badgeName.normalText(DriveKitUI.colors.complementaryFontColor())
+        badgeName.normalText()
 
         view.setOnClickListener {
             onBadgeClick()
@@ -57,7 +57,7 @@ class BadgeItemView : LinearLayout {
         )
     }
 
-    fun configureBadge(progress: Double, gaugeDrawable: Drawable, gaugeColor: Int, badgeName: String) {
+    fun configureBadge(progress: Double, gaugeDrawable: Drawable, @ColorRes gaugeColor: Int, badgeName: String) {
         this.gaugeDrawable = gaugeDrawable
         this.gaugeProgress = progress
         this.gaugeColor = gaugeColor
@@ -91,27 +91,22 @@ class BadgeItemView : LinearLayout {
         val gaugeImage = badgeDetails.findViewById<GaugeImage>(R.id.gauge_image)
         val goal = badgeDetails.findViewById<TextView>(R.id.text_view_goal)
         val progress = badgeDetails.findViewById<TextView>(R.id.text_view_progress)
-        val goalViewSeparator = badgeDetails.findViewById<TextView>(R.id.goal_view_separator)
-        val progressViewSeparator = badgeDetails.findViewById<TextView>(R.id.progress_view_separator)
 
         gaugeImage?.configure(gaugeProgress, gaugeDrawable, gaugeColor)
 
         badgeProgressCongrats?.apply {
             text = this@BadgeItemView.badgeProgressCongrats
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
         badgeDescription?.apply {
             text = this@BadgeItemView.badgeDescription
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
         badgeTitle?.apply {
             text = this@BadgeItemView.badgeTitle
-            normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
-            setBackgroundColor(DriveKitUI.colors.primaryColor())
+            normalText()
         }
-        progressViewSeparator?.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        goalViewSeparator?.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        goal?.headLine2(DriveKitUI.colors.primaryColor())
-        progress?.headLine2(DriveKitUI.colors.primaryColor())
+        goal?.headLine2()
+        progress?.headLine2()
     }
 }

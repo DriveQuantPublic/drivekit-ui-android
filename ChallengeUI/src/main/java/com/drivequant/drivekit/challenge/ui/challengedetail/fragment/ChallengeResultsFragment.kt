@@ -13,9 +13,11 @@ import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeD
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeResultsBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
+import com.drivequant.drivekit.common.ui.extension.intColor
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.tint
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -62,13 +64,7 @@ class ChallengeResultsFragment : Fragment() {
         }
 
         viewModel.syncChallengeDetailError.observe(viewLifecycleOwner) {
-            val colorStateList =
-                ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.dkRatingBarForegroundColor
-                    )
-                )
+            val colorStateList = ColorStateList.valueOf(R.color.dkRatingBarForegroundColor.intColor(requireContext()))
             binding.dkChallengeProgressBar.progressTintList = colorStateList
             binding.dkChallengeProgressBar.progress = viewModel.getDriverProgress()
             binding.dkChallengeRatingBar.rating = viewModel.computeRatingStartCount()
@@ -80,12 +76,7 @@ class ChallengeResultsFragment : Fragment() {
 
             ContextCompat.getDrawable(requireContext(), R.drawable.dk_challenge_first_driver)?.let {
                 if (viewModel.isUserTheFirst()) {
-                    it.tintDrawable(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.dkRatingBarForegroundColor
-                        )
-                    )
+                    it.tint(requireContext(), R.color.dkRatingBarForegroundColor)
                 }
                 binding.imageViewRewardIcon.setImageDrawable(it)
             }
@@ -113,15 +104,15 @@ class ChallengeResultsFragment : Fragment() {
         binding.cardViewDistance.textViewDescription.setText(R.string.dk_challenge_synthesis_total_distance)
 
         binding.cardViewRanking.textViewTitle.text = DKSpannable()
-            .append(context, "${viewModel.getNbDriverRanked()} ", DriveKitUI.colors.primaryColor(), DKStyle.HIGHLIGHT_SMALL)
-            .append(context, resources.getQuantityString(R.plurals.dk_challenge_synthesis_ranked, viewModel.getNbDriverRanked()), DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)
-            .append(context, " / ${viewModel.getNbDriverRegistered()} ", DriveKitUI.colors.primaryColor(), DKStyle.HIGHLIGHT_SMALL)
-            .append(context, resources.getQuantityString(R.plurals.dk_challenge_synthesis_registered, viewModel.getNbDriverRegistered()), DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)
+            .append(context, "${viewModel.getNbDriverRanked()} ", DKColors.primaryColor, DKStyle.HIGHLIGHT_SMALL)
+            .append(context, resources.getQuantityString(R.plurals.dk_challenge_synthesis_ranked, viewModel.getNbDriverRanked()), DKColors.complementaryFontColor, DKStyle.NORMAL_TEXT)
+            .append(context, " / ${viewModel.getNbDriverRegistered()} ", DKColors.primaryColor, DKStyle.HIGHLIGHT_SMALL)
+            .append(context, resources.getQuantityString(R.plurals.dk_challenge_synthesis_registered, viewModel.getNbDriverRegistered()), DKColors.complementaryFontColor, DKStyle.NORMAL_TEXT)
             .toSpannable()
         binding.cardViewRanking.textViewDescription.text = DKResource.buildString(
             context,
-            DriveKitUI.colors.complementaryFontColor(),
-            DriveKitUI.colors.primaryColor(),
+            DKColors.complementaryFontColor,
+            DKColors.primaryColor,
             R.string.dk_challenge_synthesis_ranked_percentage,
             viewModel.getNbDriverRankedPercentage(),
             textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_small,
@@ -130,9 +121,8 @@ class ChallengeResultsFragment : Fragment() {
     }
 
     private fun setStyle() {
-        binding.textViewCardTitle.setTextColor(DriveKitUI.colors.mainFontColor())
-        binding.cardViewUserStats.textViewTitle.highlightSmall(DriveKitUI.colors.primaryColor())
-        binding.cardViewDistance.textViewDescription.smallText(DriveKitUI.colors.complementaryFontColor())
-        binding.cardViewDistance.textViewTitle.highlightSmall(DriveKitUI.colors.primaryColor())
+        binding.cardViewUserStats.textViewTitle.highlightSmall()
+        binding.cardViewDistance.textViewDescription.smallText()
+        binding.cardViewDistance.textViewTitle.highlightSmall()
     }
 }

@@ -29,6 +29,7 @@
             android:layout_marginBottom="@dimen/dk_margin_half"
             android:gravity="center"
             android:text="@string/dk_vehicle_name_chooser_description"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dk_image_view_vehicle_name" />
@@ -54,11 +55,11 @@
         <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
             android:id="@+id/button_validate"
             style="@style/DKButton"
-            android:paddingVertical="@dimen/dk_margin_half"
             android:layout_marginBottom="@dimen/dk_margin"
+            android:paddingVertical="@dimen/dk_margin_half"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_input_layout"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

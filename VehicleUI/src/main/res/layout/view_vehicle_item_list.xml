@@ -26,6 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/mainFontColor"
                 tools:text="Véhicule 1" />
 
             <ImageView
@@ -43,13 +44,15 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textColor="@color/complementaryFontColor"
             tools:text="Brand model version of the vehicle, or category name if liteConfig" />
 
         <View
             android:id="@+id/view_separator"
             style="@style/Separator.Horizontal"
             android:layout_marginTop="@dimen/dk_margin"
-            android:layout_marginBottom="@dimen/dk_margin" />
+            android:layout_marginBottom="@dimen/dk_margin"
+            android:background="@color/neutralColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,7 +71,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textColor="@color/mainFontColor" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -95,6 +99,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="5"
+                android:textColor="@color/mainFontColor"
                 tools:text="This text describes state of the selected detection mode" />
 
             <Button

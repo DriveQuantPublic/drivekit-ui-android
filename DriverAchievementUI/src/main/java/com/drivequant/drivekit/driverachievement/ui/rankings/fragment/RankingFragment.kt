@@ -17,6 +17,7 @@ import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
 import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
 import com.drivequant.drivekit.common.ui.component.PseudoUtils
 import com.drivequant.drivekit.common.ui.component.ranking.views.DKRankingView
+import com.drivequant.drivekit.common.ui.extension.intColor
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -61,7 +62,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
             this.selectorsContainer.apply {
-                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkRankingBackgroundColor))
+                setBackgroundColor(R.color.dkRankingBackgroundColor.intColor(context))
                 visibility = View.VISIBLE
             }
         }
@@ -88,12 +89,6 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.dk_fragment_ranking, container, false)
-        view.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.dkRankingBackgroundColor
-            )
-        )
         return view
     }
 
@@ -116,12 +111,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
             this.tabLayoutLeaderBoard.visibility = View.GONE
         }
         this.tabLayoutLeaderBoard.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.dkRankingBackgroundColor
-                )
-            )
+            setBackgroundColor(R.color.dkRankingBackgroundColor.intColor(context))
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
 

@@ -13,7 +13,6 @@ import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityUserInfoBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 
@@ -47,7 +46,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         }
         binding.textViewUserInfoDescription.apply {
             text = getString(R.string.user_info_description)
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
 
         binding.textInputLayoutFirstname.editText?.setText(viewModel.getFirstName())

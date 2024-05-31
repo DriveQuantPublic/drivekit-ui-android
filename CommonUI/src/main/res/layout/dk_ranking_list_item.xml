@@ -49,12 +49,14 @@
                 <TextView
                     android:id="@+id/text_view_driver_pseudo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/mainFontColor" />
 
                 <TextView
                     android:id="@+id/text_view_driver_distance"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/complementaryFontColor" />
             </LinearLayout>
 
             <TextView
@@ -84,5 +86,6 @@
         style="@style/Separator.Horizontal"
         android:layout_marginStart="@dimen/dk_margin_half"
         android:layout_marginTop="@dimen/dk_margin_quarter"
-        android:layout_marginEnd="@dimen/dk_margin_half" />
+        android:layout_marginEnd="@dimen/dk_margin_half"
+        android:background="@color/neutralColor" />
 </LinearLayout>

@@ -8,12 +8,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.tint
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -58,11 +58,12 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
         context?.let { context ->
             viewModel.hasPreviousDate.let { hasPreviousDate ->
                 ContextCompat.getDrawable(context, R.drawable.dk_common_arrow_back_thick)?.let { drawable ->
-                    if (!hasPreviousDate) {
-                        drawable.tintDrawable(DriveKitUI.colors.neutralColor())
+                    val color = if (!hasPreviousDate) {
+                        R.color.neutralColor
                     } else {
-                        drawable.tintDrawable(DriveKitUI.colors.secondaryColor())
+                        R.color.secondaryColor
                     }
+                    drawable.tint(context, color)
                     previousButton.isEnabled = hasPreviousDate
                     previousButton.setImageDrawable(drawable)
                 }
@@ -70,11 +71,12 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
 
             viewModel.hasNextDate.let { hasNextDate ->
                 ContextCompat.getDrawable(context, R.drawable.dk_common_arrow_forward_thick)?.let { drawable ->
-                    if (!hasNextDate) {
-                        drawable.tintDrawable(DriveKitUI.colors.neutralColor())
+                    val color = if (!hasNextDate) {
+                        R.color.neutralColor
                     } else {
-                        drawable.tintDrawable(DriveKitUI.colors.secondaryColor())
+                        R.color.secondaryColor
                     }
+                    drawable.tint(context, color)
                     nextButton.isEnabled = hasNextDate
                     nextButton.setImageDrawable(drawable)
                 }
@@ -106,7 +108,7 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
         return DKSpannable().append(
             context,
             text,
-            DriveKitUI.colors.primaryColor(),
+            DKColors.primaryColor,
             DKStyle.NORMAL_TEXT
         ).toSpannable()
     }
@@ -114,14 +116,14 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
     private fun getMonthDateText(): SpannableString = DKSpannable().append(
         context,
         viewModel.fromDate?.formatDate(DKDatePattern.MONTH_LETTER_YEAR)?.capitalizeFirstLetter() ?: "",
-        DriveKitUI.colors.primaryColor(),
+        DKColors.primaryColor,
         DKStyle.NORMAL_TEXT
     ).toSpannable()
 
     private fun getYearDateText(): SpannableString = DKSpannable().append(
         context,
         viewModel.fromDate?.formatDate(DKDatePattern.YEAR) ?: "",
-        DriveKitUI.colors.primaryColor(),
+        DKColors.primaryColor,
         DKStyle.NORMAL_TEXT
     ).toSpannable()
 

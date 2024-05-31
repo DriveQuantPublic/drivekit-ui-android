@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.Spannable
 import androidx.annotation.DrawableRes
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.IntArg
@@ -40,7 +40,7 @@ class ChallengeData(
     }
 
     fun getParticipationText(context: Context): Spannable {
-        val textColor = DriveKitUI.colors.secondaryColor()
+        val textColor = DKColors.secondaryColor
 
         return if (this.isFinished) {
             if (this.isRegistered) {

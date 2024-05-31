@@ -6,8 +6,8 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.ui.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -81,17 +81,17 @@ internal open class DriverProfileContainer<ViewModel>(context: Context, attrs: A
 
     private fun updateTabLayout(position: Int) {
         for (i in 0 until this.tabLayout.tabCount) {
-            this.tabLayout.getTabAt(i)?.let {
+            this.tabLayout.getTabAt(i)?.let { tab ->
                 if (i == position) {
                     val drawable = ContextCompat.getDrawable(context,
-                        com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_selected)?.mutate()
-                    drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
-                    tabLayout.getTabAt(i)?.icon = drawable
+                        com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_selected)
+                    drawable?.tintDrawable(DKColors.secondaryColor)
+                    tab.icon = drawable
                 } else {
                     val drawable = ContextCompat.getDrawable(context,
-                        com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_default)?.mutate()
-                    drawable?.tintDrawable(DriveKitUI.colors.complementaryFontColor())
-                    tabLayout.getTabAt(i)?.icon = drawable
+                        com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_default)
+                    drawable?.tintDrawable(DKColors.complementaryFontColor)
+                    tab.icon = drawable
                 }
             }
         }
