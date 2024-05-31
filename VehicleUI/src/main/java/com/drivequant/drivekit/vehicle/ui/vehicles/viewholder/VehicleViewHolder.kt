@@ -43,7 +43,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     val spinnerDetectionMode: Spinner = itemView.findViewById(R.id.spinner_vehicle_detection_mode)
     private val textViewDetectionModeTitle: TextView = itemView.findViewById(R.id.text_view_detection_mode_title)
     private val textViewDetectionModeDescription: TextView = itemView.findViewById(R.id.text_view_detection_mode_description)
-    private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
+    private val buttonSetup: TextView = itemView.findViewById(R.id.text_view_setup_button)
     private val viewSeparator = itemView.findViewById<View>(R.id.view_separator)
 
     fun bind(vehicle: Vehicle) {
@@ -75,10 +75,13 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
 
         popup.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_dots)
         popup.setColorFilter(DriveKitUI.colors.secondaryColor())
-        buttonSetup.button(
-            textColor = DriveKitUI.colors.secondaryColor(),
-            backgroundColor = Color.parseColor("#00ffffff")
-        )
+        buttonSetup.apply {
+            normalText(textColor = DriveKitUI.colors.secondaryColor())
+            isAllCaps = true
+            isClickable = true
+            isFocusable = true
+            typeface = DriveKitUI.primaryFont(context)
+        }
     }
 
     private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){

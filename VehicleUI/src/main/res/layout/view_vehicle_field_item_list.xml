@@ -6,14 +6,12 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:layout_marginHorizontal="@dimen/dk_screen_border"
     tools:viewBindingIgnore="true">
 
     <LinearLayout
         android:id="@+id/group_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin_half"
-        android:orientation="vertical"
-        android:padding="0dp" />
+        style="@style/DKCardPadding"
+        android:orientation="vertical" />
 </androidx.cardview.widget.CardView>
