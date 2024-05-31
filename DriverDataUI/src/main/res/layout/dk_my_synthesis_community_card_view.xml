@@ -12,20 +12,18 @@
         style="@style/DKCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:paddingVertical="@dimen/dk_margin">
+        android:foreground="?android:attr/selectableItemBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingVertical="@dimen/dk_margin_half">
+            style="@style/DKCardPadding">
 
             <TextView
                 android:id="@+id/community_card_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin_quarter"
-                android:paddingHorizontal="@dimen/dk_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
