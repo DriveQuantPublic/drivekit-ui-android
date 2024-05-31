@@ -20,9 +20,7 @@ internal class DKLastTripsFragment : Fragment() {
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
-        fun newInstance(
-            viewModel: DKLastTripsViewModel?
-        ): DKLastTripsFragment {
+        fun newInstance(viewModel: DKLastTripsViewModel?): DKLastTripsFragment {
             val fragment = DKLastTripsFragment()
             fragment.viewModel = viewModel
             return fragment
