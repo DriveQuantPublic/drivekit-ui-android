@@ -17,7 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.buttonText
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -36,6 +36,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
+    private val cardContainer: LinearLayout = itemView.findViewById(R.id.card_container)
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)
     private val textViewSubtitle: TextView = itemView.findViewById(R.id.text_view_subtitle)
     private val popup: ImageView = itemView.findViewById(R.id.image_view_popup)
@@ -43,7 +44,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     val spinnerDetectionMode: Spinner = itemView.findViewById(R.id.spinner_vehicle_detection_mode)
     private val textViewDetectionModeTitle: TextView = itemView.findViewById(R.id.text_view_detection_mode_title)
     private val textViewDetectionModeDescription: TextView = itemView.findViewById(R.id.text_view_detection_mode_description)
-    private val buttonSetup: TextView = itemView.findViewById(R.id.text_view_setup_button)
+    private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
     private val viewSeparator = itemView.findViewById<View>(R.id.view_separator)
 
     fun bind(vehicle: Vehicle) {
@@ -76,11 +77,10 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         popup.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_dots)
         popup.setColorFilter(DriveKitUI.colors.secondaryColor())
         buttonSetup.apply {
-            normalText(textColor = DriveKitUI.colors.secondaryColor())
-            isAllCaps = true
-            isClickable = true
-            isFocusable = true
-            typeface = DriveKitUI.primaryFont(context)
+            buttonText(
+                textColor = DriveKitUI.colors.secondaryColor(),
+                backgroundColor = Color.parseColor("#00ffffff")
+            )
         }
     }
 
@@ -142,16 +142,22 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         }
     }
 
-    private fun setupConfigureButton(context: Context, vehicle: Vehicle){
+    private fun setupConfigureButton(context: Context, vehicle: Vehicle) {
         val configureText = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getConfigureButtonText(context)
+        var removeBottomCardPadding = false
         if (configureText.isEmpty()){
             buttonSetup.visibility = View.GONE
         } else {
+            removeBottomCardPadding = true
             buttonSetup.text = configureText
             buttonSetup.visibility = View.VISIBLE
             buttonSetup.setOnClickListener {
                 DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).onConfigureButtonClicked(context, viewModel, vehicle)
             }
         }
+
+        val dkCardPadding = itemView.context.resources.getDimensionPixelSize(com.drivequant.drivekit.common.ui.R.dimen.dk_margin)
+        val dkCardBottomPadding = if (removeBottomCardPadding) 0 else dkCardPadding
+        this.cardContainer.setPadding(dkCardPadding, dkCardPadding, dkCardPadding, dkCardBottomPadding)
     }
 }
