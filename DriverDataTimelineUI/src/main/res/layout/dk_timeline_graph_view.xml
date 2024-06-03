@@ -17,7 +17,6 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingVertical="@dimen/dk_margin"
-            android:paddingBottom="@dimen/dk_margin_half"
             android:paddingStart="0dp"
             android:paddingEnd="@dimen/dk_margin_half">
 
