@@ -11,8 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/dk_margin"
-        android:paddingTop="@dimen/dk_margin_medium">
+        style="@style/DKCardPadding">
 
         <TextView
             android:id="@+id/title"
