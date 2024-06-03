@@ -3,8 +3,7 @@
     <item>
         <shape
             android:innerRadius="0dp"
-            android:shape="ring"
-            android:thickness="10dp"
+            android:shape="oval"
             android:useLevel="false">
         </shape>
     </item>
