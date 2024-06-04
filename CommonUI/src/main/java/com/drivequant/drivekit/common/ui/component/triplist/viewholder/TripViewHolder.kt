@@ -42,9 +42,13 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     private val circleBottom = itemView.findViewById<ImageView>(R.id.image_circle_bottom)
     private val circleSeparator = itemView.findViewById<View>(R.id.view_circle_separator)
 
-    fun bind(trip: DKTripListItem, tripData: TripData, isLastChild: Boolean) {
-        textViewDepartureTime.text =
-            trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+    fun bind(trip: DKTripListItem, tripData: TripData, isLastChild: Boolean, addHorizontalPadding: Boolean = false) {
+        if (addHorizontalPadding) {
+            itemView.context.resources.getDimensionPixelSize(R.dimen.dk_screen_border).let {
+                itemView.setPadding(it, 0, it, 0)
+            }
+        }
+        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewDepartureCity.text = trip.computeDepartureInfo()
         textViewArrivalTime.text = trip.getEndDate().formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewArrivalCity.text = trip.computeArrivalInfo()

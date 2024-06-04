@@ -20,9 +20,7 @@ internal class DKLastTripsFragment : Fragment() {
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
-        fun newInstance(
-            viewModel: DKLastTripsViewModel?
-        ): DKLastTripsFragment {
+        fun newInstance(viewModel: DKLastTripsViewModel?): DKLastTripsFragment {
             val fragment = DKLastTripsFragment()
             fragment.viewModel = viewModel
             return fragment
@@ -49,7 +47,7 @@ internal class DKLastTripsFragment : Fragment() {
                 tripList.setBackgroundColor(DriveKitUI.colors.transparentColor())
                 val holder = TripViewHolder(tripList)
                 viewModel.trip.let { tripListItem ->
-                    holder.bind(tripListItem, viewModel.tripData, true)
+                    holder.bind(tripListItem, viewModel.tripData, isLastChild = true, addHorizontalPadding = false)
                 }
                 binding.tripItemContainer.addView(tripList)
                 binding.root.setOnClickListener {

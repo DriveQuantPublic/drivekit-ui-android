@@ -8,10 +8,11 @@
     tools:viewBindingIgnore="true">
 
     <LinearLayout
+        android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/dk_margin_medium">
+        style="@style/DKCardPadding">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/dk_margin_half"
-                android:layout_marginBottom="@dimen/dk_margin_half"
                 android:drawablePadding="@dimen/dk_margin_quarter"
                 android:ellipsize="end"
                 android:gravity="center_vertical"

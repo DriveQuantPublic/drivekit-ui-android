@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/dk_margin_half">
+        style="@style/DKCardPadding">
 
         <ImageView
             android:id="@+id/image_view_streak_icon"
@@ -29,7 +29,6 @@
             android:id="@+id/text_view_streak_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/dk_margin_quarter"
             android:text="@string/dk_achievements_streaks_acceleration_title"
             android:textSize="@dimen/dk_text_medium"
             app:layout_constraintEnd_toStartOf="@+id/image_view_info"
@@ -41,8 +40,6 @@
             android:id="@+id/image_view_info"
             android:layout_width="@dimen/dk_ic_small"
             android:layout_height="@dimen/dk_ic_small"
-            android:layout_marginTop="@dimen/dk_margin_quarter"
-            android:layout_marginEnd="@dimen/dk_margin_quarter"
             android:src="@drawable/dk_common_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_streak_title"

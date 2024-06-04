@@ -8,14 +8,14 @@
 
     <ImageView
         android:id="@+id/image_view_context_card_indicator"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4dp" />
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dk_margin_half">
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/text_view_context_card_title"
@@ -30,5 +30,4 @@
             android:layout_marginTop="28dp"
             android:layout_marginBottom="6dp" />
     </FrameLayout>
-
 </LinearLayout>
