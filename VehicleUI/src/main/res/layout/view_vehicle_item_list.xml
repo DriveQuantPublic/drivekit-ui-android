@@ -91,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/dk_margin_half"
-                android:layout_marginBottom="@dimen/dk_margin_half"
                 android:drawablePadding="@dimen/dk_margin_quarter"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
