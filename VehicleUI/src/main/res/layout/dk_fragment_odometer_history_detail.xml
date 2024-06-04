@@ -12,8 +12,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:paddingHorizontal="@dimen/dk_screen_border">
+            android:layout_height="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -24,7 +23,8 @@
                     style="@style/DKCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/dk_margin">
+                    android:layout_marginVertical="@dimen/dk_margin"
+                    android:layout_marginHorizontal="@dimen/dk_screen_border">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -69,12 +69,12 @@
                         <LinearLayout
                             android:id="@+id/vehicle_item"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/dk_spinner_background">
 
                             <include
                                 android:id="@+id/spinnerItem"
                                 layout="@layout/dk_custom_filter_spinner_item_no_padding" />
-
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -83,19 +83,21 @@
                     android:id="@+id/button_validate_reference"
                     style="@style/DKButton"
                     android:layout_marginTop="@dimen/dk_margin_half"
-                    android:layout_marginHorizontal="2dp"
+                    android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                     android:text="@string/dk_common_validate"/>
 
                 <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
                     android:id="@+id/button_cancel_action"
                     style="@style/DKButton.Secondary"
                     android:layout_marginTop="@dimen/dk_margin_half"
+                    android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                     android:text="@string/dk_common_cancel" />
 
                 <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
                     android:id="@+id/button_delete_reference"
                     style="@style/DKButton.Secondary"
                     android:layout_marginVertical="@dimen/dk_margin_half"
+                    android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                     android:text="@string/dk_common_delete"
                     android:visibility="gone" />
             </LinearLayout>

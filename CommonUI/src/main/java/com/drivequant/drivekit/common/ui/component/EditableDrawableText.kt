@@ -40,7 +40,6 @@ class EditableDrawableText : LinearLayout {
         imageView = view.findViewById(R.id.image_view)
         textView = view.findViewById(R.id.edit_text)
         textView?.smallText(ContextCompat.getColor(context, R.color.dkGrayColor))
-        view.setBackgroundColor(DriveKitUI.colors.neutralColor())
         if (attrs != null) {
             val themeTypedArray = context.theme.obtainStyledAttributes(
                 attrs,

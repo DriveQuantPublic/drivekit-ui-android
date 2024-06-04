@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="@dimen/dk_margin_half"
+    android:background="@drawable/dk_editable_drawable_text_background"
     tools:viewBindingIgnore="true">
 
     <ImageView
