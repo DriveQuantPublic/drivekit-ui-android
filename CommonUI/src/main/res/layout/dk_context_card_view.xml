@@ -15,6 +15,7 @@
         android:minHeight="140dp">
 
         <FrameLayout
+            style="@style/DKCardPadding"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -27,31 +28,25 @@
                 android:id="@+id/context_card_view_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/dk_margin_half">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/context_card_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dk_margin_quarter"
                     android:layout_marginBottom="@dimen/dk_margin_half"
-                    android:paddingHorizontal="@dimen/dk_margin_eigth"
                     android:textColor="@color/mainFontColor" />
 
                 <com.drivequant.drivekit.common.ui.component.contextcard.view.ContextCardBar
                     android:id="@+id/context_card_bar"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginHorizontal="@dimen/dk_margin_eigth"
-                    android:layout_marginTop="@dimen/dk_margin_half"
-                    android:layout_marginBottom="@dimen/dk_margin_half" />
+                    android:layout_marginVertical="@dimen/dk_margin_half" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dk_margin_quarter" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </FrameLayout>
     </androidx.cardview.widget.CardView>

@@ -11,8 +11,7 @@
         style="@style/DKCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginVertical="2dp"
-        android:paddingVertical="@dimen/dk_margin">
+        android:layout_marginVertical="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"

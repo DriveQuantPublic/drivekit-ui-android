@@ -51,7 +51,7 @@
         android:name="com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginHorizontal="@dimen/dk_screen_border"
+        android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
         android:layout_marginVertical="@dimen/dk_margin_half" />
 
     <include

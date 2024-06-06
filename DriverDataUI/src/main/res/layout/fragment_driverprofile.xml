@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="@dimen/dk_screen_border" >
+                android:layout_marginHorizontal="@dimen/dk_screen_border" >
 
                 <include
                     android:id="@+id/driverProfileFeatureContainer"
@@ -57,7 +57,7 @@
             android:id="@+id/button_detail"
             style="@style/DKButton.Secondary"
             android:layout_marginVertical="@dimen/dk_margin_half"
-            android:layout_marginHorizontal="@dimen/dk_screen_border"
+            android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
             android:text="@string/dk_driverdata_drivingconditions_show"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

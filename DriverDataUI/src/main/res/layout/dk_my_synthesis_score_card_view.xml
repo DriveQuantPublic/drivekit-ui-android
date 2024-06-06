@@ -12,14 +12,12 @@
         style="@style/DKCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:paddingVertical="@dimen/dk_margin">
+        android:foreground="?android:attr/selectableItemBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/DKCardPadding"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="@dimen/dk_margin"
-            android:paddingVertical="@dimen/dk_margin_half">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/score_card_icon"
@@ -33,7 +31,7 @@
                 android:id="@+id/score_card_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dk_margin_quarter"
+                android:layout_marginBottom="@dimen/dk_margin_quarter"
                 android:textColor="@color/mainFontColor"
                 app:layout_constraintEnd_toStartOf="@id/score_card_icon"
                 app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +50,7 @@
                 android:id="@+id/score_card_evolution_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dk_margin_quarter"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/score_card_icon"
                 app:layout_constraintStart_toStartOf="parent"

@@ -35,7 +35,7 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
             ViewGroup.LayoutParams.WRAP_CONTENT
         ))
         graphTitle = view.findViewById(R.id.graph_title)
-        val graphContainer = view.findViewById(R.id.graph_view_container) as FrameLayout
+        val graphContainer: FrameLayout = view.findViewById(R.id.graph_view_container)
 
         val graphView: GraphViewBase = when (this.viewModel.type) {
             GraphType.LINE -> LineGraphView(context, this.viewModel)

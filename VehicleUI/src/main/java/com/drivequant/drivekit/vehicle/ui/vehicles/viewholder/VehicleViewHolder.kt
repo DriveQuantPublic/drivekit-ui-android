@@ -37,6 +37,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
+    private val cardContainer: LinearLayout = itemView.findViewById(R.id.card_container)
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)
     private val textViewSubtitle: TextView = itemView.findViewById(R.id.text_view_subtitle)
     private val popup: ImageView = itemView.findViewById(R.id.image_view_popup)
@@ -138,14 +139,20 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
 
     private fun setupConfigureButton(context: Context, vehicle: Vehicle) {
         val configureText = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getConfigureButtonText(context)
+        var removeBottomCardPadding = false
         if (configureText.isEmpty()) {
             buttonSetup.visibility = View.GONE
         } else {
+            removeBottomCardPadding = true
             buttonSetup.text = configureText
             buttonSetup.visibility = View.VISIBLE
             buttonSetup.setOnClickListener {
                 DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).onConfigureButtonClicked(context, viewModel, vehicle)
             }
         }
+
+        val dkCardPadding = itemView.context.resources.getDimensionPixelSize(com.drivequant.drivekit.common.ui.R.dimen.dk_margin)
+        val dkCardBottomPadding = if (removeBottomCardPadding) 0 else dkCardPadding
+        this.cardContainer.setPadding(dkCardPadding, dkCardPadding, dkCardPadding, dkCardBottomPadding)
     }
 }

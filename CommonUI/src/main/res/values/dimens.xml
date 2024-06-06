@@ -31,4 +31,5 @@
     <dimen name="dk_button_corner">48dp</dimen>
 
     <dimen name="dk_screen_border">8dp</dimen>
+    <dimen name="dk_screen_border_dkbutton">12dp</dimen>
 </resources>

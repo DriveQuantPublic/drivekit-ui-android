@@ -12,8 +12,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:paddingHorizontal="@dimen/dk_screen_border">
+            android:layout_height="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -24,13 +23,14 @@
                     style="@style/DKCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dk_screen_border"
                     android:layout_marginVertical="@dimen/dk_margin">
 
                     <LinearLayout
+                        style="@style/DKCardPadding"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/dk_margin_half">
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                             <TextView
                                 android:id="@+id/text_view_history_detail_title"
                                 android:layout_width="0dp"
-                                android:layout_height="@dimen/dk_margin_double"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:textAllCaps="true"
@@ -71,12 +71,11 @@
                             android:id="@+id/vehicle_item"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/neutralColor">
+                            android:background="@drawable/dk_spinner_background">
 
                             <include
                                 android:id="@+id/spinnerItem"
                                 layout="@layout/dk_custom_filter_spinner_item_no_padding" />
-
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -84,19 +83,21 @@
                 <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
                     android:id="@+id/button_validate_reference"
                     style="@style/DKButton"
-                    android:layout_marginHorizontal="2dp"
+                    android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                     android:layout_marginTop="@dimen/dk_margin_half"
                     android:text="@string/dk_common_validate" />
 
                 <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
                     android:id="@+id/button_cancel_action"
                     style="@style/DKButton.Secondary"
+                    android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                     android:layout_marginTop="@dimen/dk_margin_half"
                     android:text="@string/dk_common_cancel" />
 
                 <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
                     android:id="@+id/button_delete_reference"
                     style="@style/DKButton.Secondary"
+                    android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                     android:layout_marginVertical="@dimen/dk_margin_half"
                     android:text="@string/dk_common_delete"
                     android:textColor="@color/secondaryColor"

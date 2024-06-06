@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/transparentColor"
-    android:paddingHorizontal="@dimen/dk_screen_border"
     tools:viewBindingIgnore="true">
 
     <FrameLayout

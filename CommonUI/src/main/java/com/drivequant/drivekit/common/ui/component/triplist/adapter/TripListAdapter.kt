@@ -89,7 +89,7 @@ internal class TripListAdapter(
         }
 
         trip?.let {
-            holder.bind(trip, tripsListViewModel.getTripData(), isLastChild)
+            holder.bind(trip, tripsListViewModel.getTripData(), isLastChild, addHorizontalPadding = true)
         }
         return view
     }
