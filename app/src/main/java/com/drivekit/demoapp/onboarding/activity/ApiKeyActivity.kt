@@ -10,6 +10,7 @@ import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivitySetApiKeyBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 
 internal class ApiKeyActivity : AppCompatActivity() {
 
@@ -26,7 +27,7 @@ internal class ApiKeyActivity : AppCompatActivity() {
         binding = ActivitySetApiKeyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.vehicle.ui.R.id.dk_toolbar))
-        title = getString(R.string.welcome_header)
+        setActivityTitle(getString(R.string.welcome_header))
 
         val viewModel = ApiKeyViewModel()
         binding.textViewDescription.text = viewModel.getDescription(this@ApiKeyActivity)

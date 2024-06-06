@@ -10,6 +10,7 @@ import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.graphical.DKColors
@@ -47,6 +48,7 @@ internal class MySynthesisScoreLegendDialog {
             DKScoreTypeLevel.values().forEach {
                 configureLegendScoreItem(context, scoreItemContainer, scoreType, it)
             }
+            scoreItemContainer.setDKStyle()
         }
     }
 

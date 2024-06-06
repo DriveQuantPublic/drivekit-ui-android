@@ -128,18 +128,18 @@ class VehicleDetailFragment : Fragment() {
         val collapsingToolbar = activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
         val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
         collapsingToolbar?.let { collapsingToolbarLayout ->
+            collapsingToolbarLayout.setCollapsedTitleTypeface(
+                DriveKitUI.secondaryFont(requireContext())
+            )
+            collapsingToolbarLayout.setExpandedTitleTypeface(
+                DriveKitUI.primaryFont(requireContext())
+            )
             appBarLayout?.let {
                 viewModel.vehicleName?.let { vehicleName ->
                     it.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
                         if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
-                            collapsingToolbarLayout.setCollapsedTitleTypeface(
-                                DriveKitUI.secondaryFont(requireContext())
-                            )
                             collapsingToolbarLayout.title = vehicleName
                         } else {
-                            collapsingToolbarLayout.setCollapsedTitleTypeface(
-                                DriveKitUI.primaryFont(requireContext())
-                            )
                             context?.let { context ->
                                 collapsingToolbarLayout.title =
                                     DKSpannable().append(vehicleName, context.resSpans {

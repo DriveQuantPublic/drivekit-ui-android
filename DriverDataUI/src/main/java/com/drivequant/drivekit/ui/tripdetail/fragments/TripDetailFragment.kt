@@ -145,7 +145,7 @@ class TripDetailFragment : Fragment() {
             )[TripDetailViewModel::class.java]
         }
         binding.progressCircular.visibility = View.VISIBLE
-        activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)
+        activity?.title = context?.getString(R.string.dk_driverdata_trip_detail_title)
         binding.centerButton.setColorFilter(DKColors.primaryColor)
 
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
