@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 import com.drivequant.drivekit.common.ui.component.ranking.adapter.RankingListAdapter
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
+import com.drivequant.drivekit.common.ui.extension.normalText
 
 class DKRankingView(context: Context) : LinearLayout(context) {
 
@@ -41,6 +42,13 @@ class DKRankingView(context: Context) : LinearLayout(context) {
         if (!this::viewModel.isInitialized) {
             viewModel = DKRankingViewModel()
         }
+        setStyle()
+    }
+
+    private fun setStyle() {
+        this.positionHeader.normalText()
+        this.pseudoHeader.normalText()
+        this.scoreHeader.normalText()
     }
 
     fun configure(rankingComponent: DKDriverRanking) {
