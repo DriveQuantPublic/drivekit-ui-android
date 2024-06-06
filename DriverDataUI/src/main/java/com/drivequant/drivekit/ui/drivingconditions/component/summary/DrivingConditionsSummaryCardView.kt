@@ -62,7 +62,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
 
         this.tripsValue.apply {
             text = this@DrivingConditionsSummaryCardView.viewModel?.formatTripsCount()
-            highlightMedium(DriveKitUI.colors.primaryColor())
+            highlightMedium()
             setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
         this.tripsLabel.apply {
@@ -70,18 +70,17 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
                 com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
                 this@DrivingConditionsSummaryCardView.viewModel?.tripCount ?: 0
             )
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
         this.distanceValue.apply {
             text = this@DrivingConditionsSummaryCardView.viewModel?.formatDistanceKm()
-            highlightMedium(DriveKitUI.colors.primaryColor())
+            highlightMedium()
             setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
         this.distanceLabel.apply {
             text = context.resources.getQuantityString(R.plurals.dk_driverdata_drivingconditions_distance, viewModel?.tripCount ?: 0)
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
-        this.separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
     private fun displayNoData() {
@@ -90,11 +89,11 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
 
         this.emptyViewTitle.apply {
             setText(R.string.dk_driverdata_drivingconditions_title_empty_data)
-            headLine2(DriveKitUI.colors.primaryColor())
+            headLine2()
         }
         this.emptyViewDescription.apply {
             setText(R.string.dk_driverdata_drivingconditions_empty_data)
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
     }
 }

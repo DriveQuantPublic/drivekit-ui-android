@@ -11,11 +11,13 @@
         android:id="@+id/badgeType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textColor="@color/mainFontColor" />
 
     <TextView
         android:id="@+id/badgeCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textColor="@color/mainFontColor" />
 </com.drivequant.drivekit.driverachievement.ui.badges.BadgeCounterView>

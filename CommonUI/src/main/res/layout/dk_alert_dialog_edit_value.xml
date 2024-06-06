@@ -11,12 +11,13 @@
         android:id="@+id/text_view_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/primaryColor"
         android:gravity="center"
         android:padding="@dimen/dk_margin_half"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        tools:text="@string/dk_common_distance"
-        tools:textColor="#FFF" />
+        android:textColor="@color/fontColorOnPrimaryColor"
+        tools:text="@string/dk_common_distance" />
 
     <LinearLayout
         android:layout_width="match_parent"

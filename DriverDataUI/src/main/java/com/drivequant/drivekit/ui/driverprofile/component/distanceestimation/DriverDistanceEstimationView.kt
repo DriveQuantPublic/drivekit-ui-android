@@ -7,11 +7,10 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
 import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
@@ -33,15 +32,9 @@ internal class DriverDistanceEstimationView(context: Context, attrs: AttributeSe
     private lateinit var distanceEstimationView: TextView
     private lateinit var currentDistanceView: TextView
     @ColorInt
-    private val estimationDistanceColor: Int = ContextCompat.getColor(
-        context,
-        com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1
-    ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
+    private val estimationDistanceColor: Int = com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1.tintFromHueOfColor(context, com.drivequant.drivekit.common.ui.R.color.primaryColor)
     @ColorInt
-    private val currentDistanceColor: Int = ContextCompat.getColor(
-        context,
-        com.drivequant.drivekit.common.ui.R.color.dkContextCardColor5
-    ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
+    private val currentDistanceColor: Int = com.drivequant.drivekit.common.ui.R.color.dkContextCardColor5.tintFromHueOfColor(context, com.drivequant.drivekit.common.ui.R.color.primaryColor)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -64,7 +57,6 @@ internal class DriverDistanceEstimationView(context: Context, attrs: AttributeSe
         configureGauges()
         configureDistanceTextViews()
         configureCaption()
-        configureSeparators()
     }
 
     override fun configure(viewModel: DriverDistanceEstimationViewModel) {
@@ -84,7 +76,7 @@ internal class DriverDistanceEstimationView(context: Context, attrs: AttributeSe
             this.estimationIconContainer.background = DKDrawableUtils.circleDrawable(16.convertDpToPx(), estimationDistanceColor)
             this.currentDistanceIconContainer.background = DKDrawableUtils.circleDrawable(16.convertDpToPx(), currentDistanceColor)
         } else {
-            val color = DriveKitUI.colors.neutralColor()
+            val color = DKColors.neutralColor
             this.estimationGaugeColorView.setBackgroundColor(color)
             this.currentDistanceGaugeColorView.setBackgroundColor(color)
 
@@ -113,19 +105,13 @@ internal class DriverDistanceEstimationView(context: Context, attrs: AttributeSe
     }
 
     private fun configureDistanceTextViews() {
-        this.distanceEstimationView.smallText(DriveKitUI.colors.complementaryFontColor())
-        this.currentDistanceView.smallText(DriveKitUI.colors.complementaryFontColor())
+        this.distanceEstimationView.smallText()
+        this.currentDistanceView.smallText()
     }
 
     private fun configureCaption() {
-        this.estimationCaptionView.smallText(DriveKitUI.colors.complementaryFontColor())
-        this.currentDistanceCaptionView.smallText(DriveKitUI.colors.complementaryFontColor())
-
         this.estimationCaptionView.setText(R.string.dk_driverdata_distance_card_estimation)
-    }
-
-    private fun configureSeparators() {
-        this.separatorView.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        this.gaugeStartIndicatorView.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
+        this.estimationCaptionView.smallText()
+        this.currentDistanceCaptionView.smallText()
     }
 }

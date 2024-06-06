@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.headLine1WithColor
+import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.getPackageInfoCompat
@@ -135,8 +135,8 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
         titleTextView?.text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_permissions)
         descriptionTextView?.text = getString(descriptionId)
 
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
+        titleTextView?.headLine1WithColor()
+        descriptionTextView?.normalTextWithColor()
     }
 
     protected fun handlePermissionTotallyDeclined(context: Context, descriptionId: Int) {
@@ -159,7 +159,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
         titleTextView?.text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_permissions)
         descriptionTextView?.text = getString(descriptionId)
 
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
+        titleTextView?.headLine1WithColor()
+        descriptionTextView?.normalTextWithColor()
     }
 }

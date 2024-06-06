@@ -2,8 +2,8 @@ package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.extension.intColor
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 
 class DKButtonSecondary : DKButtonBase {
@@ -17,6 +17,6 @@ class DKButtonSecondary : DKButtonBase {
     )
 
     init {
-        super.shape.setStroke(2.convertDpToPx(), ContextCompat.getColor(context, R.color.secondaryColor))
+        super.shape.setStroke(2.convertDpToPx(), R.color.secondaryColor.intColor(context))
     }
 }

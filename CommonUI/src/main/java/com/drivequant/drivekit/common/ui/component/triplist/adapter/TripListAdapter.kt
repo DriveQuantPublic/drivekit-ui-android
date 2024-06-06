@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripListViewModel
@@ -17,11 +15,14 @@ import com.drivequant.drivekit.common.ui.component.triplist.viewholder.HeaderDay
 import com.drivequant.drivekit.common.ui.component.triplist.viewholder.TripViewHolder
 import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 
 internal class TripListAdapter(
-    var context: Context?, private val tripsListViewModel: DKTripListViewModel) : BaseExpandableListAdapter() {
+    var context: Context?,
+    private val tripsListViewModel: DKTripListViewModel
+) : BaseExpandableListAdapter() {
 
     override fun getGroup(position: Int): DKTripsByDate = tripsListViewModel.sortedTrips[position]
 
@@ -51,10 +52,11 @@ internal class TripListAdapter(
               tripsListViewModel.getHeaderDay().text(holder.itemView.context, trips?.trips)
           }
 
-        holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
-        holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())
-        holder.background.background = ContextCompat.getDrawable(context!!, R.drawable.dk_background_header_trip_list)
-        DrawableCompat.setTint(holder.background.background, DriveKitUI.colors.neutralColor())
+        context?.let { context ->
+            holder.background.background = ContextCompat.getDrawable(context, R.drawable.dk_background_header_trip_list)?.also {
+                it.tint(context, R.color.neutralColor)
+            }
+        }
 
         val expandableListView = parent as ExpandableListView
         expandableListView.expandGroup(position)
@@ -79,7 +81,6 @@ internal class TripListAdapter(
 
         if (convertView == null){
             view = View.inflate(context, R.layout.item_trip_list, null)
-            view.setBackgroundColor(DriveKitUI.colors.transparentColor())
             holder = TripViewHolder(view)
             view.tag = holder
         } else {

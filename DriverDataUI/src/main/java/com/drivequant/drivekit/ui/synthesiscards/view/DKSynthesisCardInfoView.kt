@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.ui.R
 
@@ -20,7 +19,7 @@ internal class DKSynthesisCardInfoView(context: Context, attrs: AttributeSet) :
 
         val textView = view.findViewById<TextView>(R.id.textview)
         textView.text = text
-        textView.bigText(DriveKitUI.colors.complementaryFontColor())
+        textView.bigText()
         textView.compoundDrawablePadding = 36
         textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
 

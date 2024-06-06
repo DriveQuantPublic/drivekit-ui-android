@@ -44,9 +44,9 @@
                     android:id="@+id/text_view_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/mainFontColor"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:textColor="@color/dkBad" />
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

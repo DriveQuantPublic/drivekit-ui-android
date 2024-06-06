@@ -17,6 +17,7 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,6 +29,7 @@
             android:layout_marginTop="@dimen/dk_margin_half"
             android:gravity="center"
             android:paddingHorizontal="@dimen/dk_margin_eigth"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/duration"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +53,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:paddingHorizontal="@dimen/dk_margin_eigth"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/duration"
@@ -60,6 +63,7 @@
             android:id="@+id/leftSeparator"
             android:layout_width="1dp"
             android:layout_height="0dp"
+            android:background="@color/neutralColor"
             app:layout_constraintBottom_toBottomOf="@id/distance"
             app:layout_constraintStart_toStartOf="@id/duration"
             app:layout_constraintTop_toTopOf="@id/distance" />
@@ -68,6 +72,7 @@
             android:id="@+id/rightSeparator"
             android:layout_width="1dp"
             android:layout_height="0dp"
+            android:background="@color/neutralColor"
             app:layout_constraintBottom_toBottomOf="@id/distance"
             app:layout_constraintEnd_toEndOf="@id/duration"
             app:layout_constraintTop_toTopOf="@id/distance" />

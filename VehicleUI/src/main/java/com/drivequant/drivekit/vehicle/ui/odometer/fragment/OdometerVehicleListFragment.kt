@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -17,6 +16,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
@@ -59,7 +59,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = DkFragmentOdometerVehicleListBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
@@ -184,7 +184,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 i,
                 i,
                 DKSpannable().append(itemsList[i].getTitle(view.context), view.context.resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
+                    color(DKColors.mainFontColor)
                     DriveKitUI.primaryFont(view.context)?.let { typeface ->
                         typeface(CustomTypefaceSpan(typeface))
                     }

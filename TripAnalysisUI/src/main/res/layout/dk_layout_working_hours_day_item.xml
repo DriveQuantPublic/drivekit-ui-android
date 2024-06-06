@@ -68,6 +68,7 @@
                     android:layout_below="@id/range_slider"
                     android:layout_marginTop="@dimen/dk_margin_half"
                     android:layout_marginEnd="@dimen/dk_margin_medium"
+                    android:textColor="@color/primaryColor"
                     android:textSize="@dimen/dk_text_small"
                     tools:text="0" />
 
@@ -79,6 +80,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/dk_margin_half"
                     android:layout_marginEnd="@dimen/dk_margin_medium"
+                    android:textColor="@color/primaryColor"
                     android:textSize="@dimen/dk_text_small"
                     tools:text="1" />
             </RelativeLayout>

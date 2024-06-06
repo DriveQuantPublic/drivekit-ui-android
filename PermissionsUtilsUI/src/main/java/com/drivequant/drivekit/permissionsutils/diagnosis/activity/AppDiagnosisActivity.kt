@@ -20,6 +20,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -278,16 +279,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             this.batteryDescription.text = DKResource.buildString(
                 this,
                 R.string.dk_perm_utils_energy_saver_android_unknown_brand_main,
-                DriveKitUI.colors.complementaryFontColor(),
-                TextArg(getString(R.string.dk_perm_utils_energy_saver_android_unknown_brand_link_text), DriveKitUI.colors.secondaryColor())
+                DKColors.complementaryFontColor,
+                TextArg(getString(R.string.dk_perm_utils_energy_saver_android_unknown_brand_link_text), DKColors.secondaryColor)
             )
         } else {
             this.batteryDescription.text = DKResource.buildString(
                 this,
                 R.string.dk_perm_utils_energy_saver_android_known_brand_main,
-                DriveKitUI.colors.complementaryFontColor(),
+                DKColors.complementaryFontColor,
                 TextArg(brand.name),
-                TextArg(getString(R.string.dk_perm_utils_energy_saver_android_known_brand_link_text), DriveKitUI.colors.secondaryColor())
+                TextArg(getString(R.string.dk_perm_utils_energy_saver_android_known_brand_link_text), DKColors.secondaryColor)
             )
         }
         this.batteryDescription.apply {
@@ -583,17 +584,13 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun setStyle() {
         this.summaryTitle.headLine1()
-        this.summaryTitle.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.summaryDescription.normalText()
 
         this.batteryTitle.headLine1()
-        this.batteryDescription.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.batteryDescription.normalText()
 
         this.helpTitle.headLine1()
-        this.helpDescription.normalText(DriveKitUI.colors.complementaryFontColor())
-        this.diagViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        this.summaryViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        this.batteryViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        this.diagnosisRoot.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        this.helpDescription.normalText()
     }
 
     override fun onResume() {

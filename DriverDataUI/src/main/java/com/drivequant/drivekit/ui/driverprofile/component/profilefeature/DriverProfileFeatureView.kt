@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.ui.R
@@ -22,7 +21,7 @@ internal class DriverProfileFeatureView(context: Context, attrs: AttributeSet) :
         this.iconView = findViewById(R.id.icon)
 
         this.titleView.headLine2()
-        this.descriptionView.smallText(DriveKitUI.colors.complementaryFontColor())
+        this.descriptionView.smallText()
     }
 
     override fun configure(viewModel: DriverProfileFeatureViewModel) {

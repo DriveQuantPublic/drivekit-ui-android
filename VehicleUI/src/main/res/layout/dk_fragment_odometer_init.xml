@@ -37,6 +37,7 @@
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:layout_weight="0.4"
                 android:gravity="center"
+                android:textColor="@color/mainFontColor"
                 tools:text="@string/dk_vehicle_odometer_car_desc"
                 tools:textSize="@dimen/dk_text_normal" />
 
@@ -50,6 +51,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:textColor="@color/mainFontColor"
+                    android:textColorHint="@color/complementaryFontColor"
                     tools:hint="@string/dk_vehicle_odometer_enter_mileage"
                     tools:textSize="@dimen/dk_text_normal" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -57,8 +60,8 @@
             <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
                 android:id="@+id/button_validate_reference"
                 style="@style/DKButton"
-                android:text="@string/dk_common_validate"
-                android:layout_marginVertical="10dp" />
+                android:layout_marginVertical="10dp"
+                android:text="@string/dk_common_validate" />
         </LinearLayout>
 
         <ProgressBar

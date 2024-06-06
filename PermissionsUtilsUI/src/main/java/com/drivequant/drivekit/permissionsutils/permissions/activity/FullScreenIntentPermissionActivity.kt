@@ -5,9 +5,9 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.R
@@ -50,7 +50,7 @@ class FullScreenIntentPermissionActivity : BasePermissionActivity() {
     private fun setStyle() {
         binding.textViewFullScreenIntentPermissionTitle.highlightMedium()
         binding.textViewFullScreenIntentPermissionText.normalText()
-        binding.buttonSkip.normalText(DriveKitUI.colors.secondaryColor())
-        window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        binding.buttonSkip.normalText()
+        window.decorView.setBackgroundColor(DKColors.backgroundViewColor)
     }
 }

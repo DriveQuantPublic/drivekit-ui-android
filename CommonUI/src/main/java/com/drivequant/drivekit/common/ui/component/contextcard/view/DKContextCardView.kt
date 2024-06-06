@@ -7,7 +7,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
 import com.drivequant.drivekit.common.ui.component.contextcard.adapter.ContextCardItemListAdapter
@@ -87,7 +86,7 @@ class DKContextCardView(context: Context) : LinearLayout(context) {
     private fun displayContextCardUI() {
         with(this.titleView) {
             text = contextCard?.getTitle(context)
-            headLine2(DriveKitUI.colors.mainFontColor())
+            headLine2()
             visibility = View.VISIBLE
         }
         this.emptyView.visibility = GONE
@@ -97,11 +96,11 @@ class DKContextCardView(context: Context) : LinearLayout(context) {
     private fun displayEmptyContextCardUI() {
         this.emptyView.visibility = View.VISIBLE
         with(this.noDataTitleView) {
-            headLine2(DriveKitUI.colors.primaryColor())
+            headLine2()
             text = contextCard?.getTitle(context)
         }
         with(this.noDataDescriptionView) {
-            smallText(DriveKitUI.colors.complementaryFontColor())
+            smallText()
             text = contextCard?.getEmptyDataDescription(context)
         }
         this.contextCardContainer.visibility = View.GONE

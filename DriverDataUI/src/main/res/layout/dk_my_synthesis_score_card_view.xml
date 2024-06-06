@@ -15,9 +15,9 @@
         android:foreground="?android:attr/selectableItemBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/DKCardPadding"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/DKCardPadding">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/score_card_icon"
@@ -32,6 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dk_margin_quarter"
+                android:textColor="@color/mainFontColor"
                 app:layout_constraintEnd_toStartOf="@id/score_card_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

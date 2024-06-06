@@ -1,16 +1,22 @@
 package com.drivequant.drivekit.common.ui.utils
 
 import android.content.Context
+import android.text.SpannableString
+import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+import android.text.TextUtils.concat
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.ImageSpan
+import android.text.style.StyleSpan
+import android.text.style.TextAppearanceSpan
+import android.text.style.TypefaceSpan
+import android.view.View
+import androidx.annotation.ColorInt
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.content.res.AppCompatResources
-import android.text.SpannableString
-import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-import android.text.TextUtils.concat
-import android.text.style.*
-import android.view.View
-import androidx.annotation.ColorInt
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 
@@ -69,7 +75,7 @@ class ResSpans(private val context: Context) : Iterable<Any> {
         typeface(style.typefaceStyle())
     }
 
-    fun color(color: Int) = spans.add(ForegroundColorSpan(color))
+    fun color(@ColorInt color: Int) = spans.add(ForegroundColorSpan(color))
 
     fun icon(@DrawableRes id: Int, size: Int) =
         spans.add(ImageSpan(AppCompatResources.getDrawable(context, id)!!.apply {

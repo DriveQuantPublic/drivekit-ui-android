@@ -25,7 +25,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +36,8 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
@@ -150,17 +151,16 @@ class VehicleDetailFragment : Fragment() {
                     }
                 }
             }
-            collapsingToolbarLayout.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+            collapsingToolbarLayout.setExpandedTitleColor(DKColors.fontColorOnPrimaryColor)
         }
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
         fab?.let {
             ContextCompat.getDrawable(requireContext(), R.drawable.dk_gallery_image)?.let { drawable ->
-                val wrapped = DrawableCompat.wrap(drawable)
-                DrawableCompat.setTint(wrapped, DriveKitUI.colors.fontColorOnSecondaryColor())
-                it.setImageDrawable(wrapped)
+                drawable.tintDrawable(DKColors.fontColorOnSecondaryColor)
+                it.setImageDrawable(drawable)
             }
-            it.backgroundTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+            it.backgroundTintList = ColorStateList.valueOf(DKColors.secondaryColor)
             it.setOnClickListener {
                 context?.let { context ->
                     manageFabAlertDialog(context)
@@ -219,10 +219,10 @@ class VehicleDetailFragment : Fragment() {
                 viewModel.vehicle?.let { vehicle ->
                     if (text != null) {
                         if (editableField.field.isValid(text, vehicle)) {
-                            editableField.editableText.getTextInputLayout()?.isErrorEnabled = false
+                            editableField.editableText.getTextInputLayout().isErrorEnabled = false
                         } else {
-                            editableField.editableText.getTextInputLayout()?.isErrorEnabled = true
-                            editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext(), text, vehicle)
+                            editableField.editableText.getTextInputLayout().isErrorEnabled = true
+                            editableField.editableText.getTextInputLayout().error = editableField.field.getErrorDescription(requireContext(), text, vehicle)
                         }
                     }
                 }
@@ -323,22 +323,13 @@ class VehicleDetailFragment : Fragment() {
         val title = alert.findViewById<TextView>(R.id.alert_dialog_header)
         val cameraTextView = alert.findViewById<TextView>(R.id.text_view_camera)
         val galleryTextView = alert.findViewById<TextView>(R.id.text_view_gallery)
-        val delete= alert.findViewById<TextView>(R.id.text_view_delete)
-        val separatorCamera = alert.findViewById<View>(R.id.view_separator_camera)
-        val separatorGallery = alert.findViewById<View>(R.id.view_separator_gallery)
 
-        val primaryColor = DriveKitUI.colors.primaryColor()
-        val neutralColor = DriveKitUI.colors.neutralColor()
         title?.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_update_photo_title)
-        title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
-        title?.setBackgroundColor(primaryColor)
+        title?.normalText()
 
-        cameraTextView?.headLine2(primaryColor)
-        galleryTextView?.headLine2(primaryColor)
-        delete?.headLine2(primaryColor)
+        cameraTextView?.headLine2()
+        galleryTextView?.headLine2()
 
-        separatorCamera?.setBackgroundColor(neutralColor)
-        separatorGallery?.setBackgroundColor(neutralColor)
         cameraTextView?.let {
             it.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_take_picture)
             it.setOnClickListener {

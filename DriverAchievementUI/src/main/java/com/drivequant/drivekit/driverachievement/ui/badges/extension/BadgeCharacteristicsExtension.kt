@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.extension
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import androidx.annotation.ColorRes
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.BadgeCharacteristics
 import com.drivequant.drivekit.databaseutils.entity.Level
@@ -24,15 +24,15 @@ fun BadgeCharacteristics.getIcon(context: Context) =
         DKResource.convertToDrawable(context, it)
     }
 
-
-fun BadgeCharacteristics.getColor() = if (isBadgeAcquired()) {
+@ColorRes
+fun BadgeCharacteristics.getColor(): Int = if (isBadgeAcquired()) {
     when (level) {
         Level.BRONZE -> R.color.dkBadgeLevel1Color
         Level.SILVER -> R.color.dkBadgeLevel2Color
         Level.GOLD -> R.color.dkBadgeLevel3Color
     }
 } else {
-    DriveKitUI.colors.neutralColor()
+    com.drivequant.drivekit.common.ui.R.color.neutralColor
 }
 
 fun BadgeCharacteristics.getProgressCongrats(context: Context) = if (isBadgeAcquired()) {

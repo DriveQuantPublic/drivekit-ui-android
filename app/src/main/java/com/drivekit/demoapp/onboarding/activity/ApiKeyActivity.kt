@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivitySetApiKeyBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 
 internal class ApiKeyActivity : AppCompatActivity() {

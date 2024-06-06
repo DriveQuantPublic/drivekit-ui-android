@@ -3,7 +3,6 @@ package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,7 +57,7 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = DkFragmentOdometerHistoriesListBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 

@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 
 internal class TripSimulatorActivity : AppCompatActivity() {
@@ -39,8 +39,8 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         title = getString(R.string.trip_simulator_header)
 
         binding.textViewSelectTrip.highlightSmall()
-        binding.textViewDescription.normalText(DriveKitUI.colors.complementaryFontColor())
-        binding.textViewTripDescription.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.textViewDescription.normalText()
+        binding.textViewTripDescription.normalText()
         initFilter()
         checkSimulationError()
 
@@ -71,7 +71,6 @@ internal class TripSimulatorActivity : AppCompatActivity() {
 
     private fun checkSimulationError() {
         binding.textViewErrorMessage.apply {
-            setTextColor(DriveKitUI.colors.warningColor())
             if (viewModel.shouldShowMockLocationErrorMessage()) {
                 visibility = View.VISIBLE
                 text = getString(R.string.trip_simulator_error_mock_location)
@@ -108,10 +107,9 @@ internal class TripSimulatorActivity : AppCompatActivity() {
                     adapterView: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    l: Long) {
-                    adapterView?.getChildAt(0)?.let {
-                        (it as TextView).setTextColor(DriveKitUI.colors.mainFontColor())
-                    }
+                    l: Long
+                ) {
+                    (adapterView?.getChildAt(0) as? TextView)?.setTextColor(DKColors.mainFontColor)
                     viewModel.selectedPresetTripType.postValue(viewModel.presetTripItems[position])
                 }
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {}

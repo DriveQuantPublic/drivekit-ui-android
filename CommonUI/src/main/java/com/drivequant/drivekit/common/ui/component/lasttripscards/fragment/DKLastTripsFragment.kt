@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.lasttripscards.viewmodel.DKLastTripsViewModel
 import com.drivequant.drivekit.common.ui.component.triplist.viewholder.TripViewHolder
@@ -44,7 +43,6 @@ internal class DKLastTripsFragment : Fragment() {
                     text = viewModel.getTripCardTitle(context)
                 }
                 val tripList = View.inflate(context, R.layout.item_trip_list, null)
-                tripList.setBackgroundColor(DriveKitUI.colors.transparentColor())
                 val holder = TripViewHolder(tripList)
                 viewModel.trip.let { tripListItem ->
                     holder.bind(tripListItem, viewModel.tripData, isLastChild = true, addHorizontalPadding = false)

@@ -29,8 +29,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="viewEnd"
+            android:textColor="@color/mainFontColor"
             tools:text="330 000 km"
-            tools:textColor="#000"
             tools:textStyle="bold" />
 
         <TextView
@@ -41,8 +41,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="viewEnd"
+            android:textColor="@color/complementaryFontColor"
             tools:text="Dimanche 14 Décembre 2019"
-            tools:textColor="#000"
             tools:textSize="12sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

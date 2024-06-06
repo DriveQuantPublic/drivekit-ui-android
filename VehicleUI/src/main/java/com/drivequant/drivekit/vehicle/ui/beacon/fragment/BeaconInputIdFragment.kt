@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -76,7 +77,7 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
             }
         }
 
-        binding.textViewBeaconCodeText.bigText(DriveKitUI.colors.mainFontColor())
+        binding.textViewBeaconCodeText.bigText()
         binding.codeWrapper.apply {
             typeface = DriveKitUI.primaryFont(context)
         }
@@ -103,14 +104,14 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
 
         title?.text = DKResource.buildString(
             requireContext(),
-            textColor = DriveKitUI.colors.mainFontColor(),
+            textColor = DKColors.mainFontColor,
             identifier = R.string.app_name
         )
         title?.headLine1()
 
         description?.text = DKResource.buildString(requireContext(),
-            DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),
+            DKColors.mainFontColor,
+            DKColors.mainFontColor,
             R.string.dk_vehicle_beacon_setup_code_invalid_id,
             message
         )

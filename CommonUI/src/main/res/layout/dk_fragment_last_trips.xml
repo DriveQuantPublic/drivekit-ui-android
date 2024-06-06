@@ -19,7 +19,8 @@
         <TextView
             android:id="@+id/text_view_last_trip_header"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainFontColor" />
 
         <FrameLayout
             android:id="@+id/trip_item_container"

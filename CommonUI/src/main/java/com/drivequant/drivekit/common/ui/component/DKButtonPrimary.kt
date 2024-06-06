@@ -2,7 +2,7 @@ package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.util.AttributeSet
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 class DKButtonPrimary : DKButtonBase {
 
@@ -15,6 +15,6 @@ class DKButtonPrimary : DKButtonBase {
     )
 
     init {
-        super.shape.setColor(DriveKitUI.colors.secondaryColor())
+        super.shape.setColor(DKColors.secondaryColor)
     }
 }

@@ -10,9 +10,9 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -30,8 +30,11 @@ import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.extension.*
-import java.util.*
+import com.drivequant.drivekit.ui.extension.computeTotalDistance
+import com.drivequant.drivekit.ui.extension.image
+import com.drivequant.drivekit.ui.extension.text
+import java.util.Calendar
+import java.util.Date
 
 internal class TripsListViewModel(
     var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
@@ -196,20 +199,20 @@ internal class TripsListViewModel(
         val trip =
             context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, tripsNumber)
         return DKSpannable().append("$tripsNumber", context.resSpans {
-            color(DriveKitUI.colors.primaryColor())
+            color(DKColors.primaryColor)
             size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
             typeface(Typeface.BOLD)
         }).append(" $trip - ", context.resSpans {
-            color(DriveKitUI.colors.complementaryFontColor())
+            color(DKColors.complementaryFontColor)
         }).append(
             DKDataFormatter.formatMeterDistanceInKm(context, tripsDistance, false).convertToString(),
             context.resSpans {
-                color(DriveKitUI.colors.primaryColor())
+                color(DKColors.primaryColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 typeface(Typeface.BOLD)
             }
         ).append(" ${DistanceUnit.configuredUnit(context)}", context.resSpans {
-            color(DriveKitUI.colors.complementaryFontColor())
+            color(DKColors.complementaryFontColor)
         }).toSpannable()
     }
 

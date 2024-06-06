@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.ui.trips.fragment
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,7 +12,6 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +25,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.extension.updateSubMenuItemFont
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -53,7 +52,7 @@ class TripsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTripsListBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
@@ -144,7 +143,7 @@ class TripsListFragment : Fragment() {
         inflater.inflate(R.menu.dk_trip_list_menu_bar, menu)
         context?.let { context ->
             menu.forEach {
-                it.icon?.mutate()?.tintDrawable(DriveKitUI.colors.fontColorOnPrimaryColor())
+                it.icon?.tintDrawable(DKColors.fontColorOnPrimaryColor)
                 it.subMenu?.updateSubMenuItemFont(context)
             }
         }
@@ -212,7 +211,7 @@ class TripsListFragment : Fragment() {
             view?.resources?.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)?.let { cornerRadius ->
                 roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
             }
-            DrawableCompat.setTint(this.background, DriveKitUI.colors.neutralColor())
+            this.background.tintDrawable(DKColors.neutralColor)
         }
         binding.dkTripsListView.updateSwipeRefreshTripsVisibility(false)
     }

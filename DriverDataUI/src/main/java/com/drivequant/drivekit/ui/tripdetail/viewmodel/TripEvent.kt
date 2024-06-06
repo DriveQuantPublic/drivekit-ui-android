@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -22,16 +22,18 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.SAFETY_BRAK
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.START
 import java.util.Date
 
-class TripEvent(val type: TripEventType,
-                val time: Date,
-                val latitude: Double,
-                val longitude: Double,
-                val isHigh: Boolean = false,
-                val value: Double = 0.0,
-                val isForbidden: Boolean = false) {
+class TripEvent(
+    val type: TripEventType,
+    val time: Date,
+    val latitude: Double,
+    val longitude: Double,
+    val isHigh: Boolean = false,
+    val value: Double = 0.0,
+    val isForbidden: Boolean = false
+) {
 
-    fun getEventImageResource() : Int {
-        return when(type){
+    fun getEventImageResource(): Int {
+        return when(type) {
             SAFETY_BRAKE -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_decel
             START -> R.drawable.dk_departure
             FINISH -> R.drawable.dk_arrival
@@ -44,8 +46,8 @@ class TripEvent(val type: TripEventType,
         }
     }
 
-    fun getMapImageResource() : Int {
-        return when(type){
+    fun getMapImageResource(): Int {
+        return when(type) {
             SAFETY_BRAKE -> if (isHigh) R.drawable.dk_map_decel_high else R.drawable.dk_map_decel
             START -> R.drawable.dk_map_departure
             FINISH -> R.drawable.dk_map_arrival
@@ -58,8 +60,8 @@ class TripEvent(val type: TripEventType,
         }
     }
 
-    fun getTitle(context: Context) : String {
-        return context.getString(when(type){
+    fun getTitle(context: Context): String {
+        return context.getString(when(type) {
             SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else com.drivequant.drivekit.common.ui.R.string.dk_common_ecodriving_decel_strong
             START -> R.string.dk_driverdata_start_event
             FINISH -> R.string.dk_driverdata_end_event
@@ -72,22 +74,24 @@ class TripEvent(val type: TripEventType,
         })
     }
 
-    fun getExplanation(context: Context) : String{
-        return context.getString(when(type){
-            SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_explain_brake_critical else R.string.dk_driverdata_safety_explain_brake
-            START -> com.drivequant.drivekit.common.ui.R.string.dk_common_ok
-            FINISH -> com.drivequant.drivekit.common.ui.R.string.dk_common_ok
-            SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_explain_adherence_critical else R.string.dk_driverdata_safety_explain_adherence
-            SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_explain_acceleration_critical else R.string.dk_driverdata_safety_explain_acceleration
-            PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
-            PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_screen_unlock_text
-            PHONE_DISTRACTION_PICK_UP -> if (isForbidden) R.string.dk_driverdata_beginning_unauthorized_call_info_content else R.string.dk_driverdata_beginning_authorized_call_info_content
-            PHONE_DISTRACTION_HANG_UP -> if (isForbidden) R.string.dk_driverdata_end_unauthorized_call_info_content else R.string.dk_driverdata_end_authorized_call_info_content
-        })
+    fun getExplanation(context: Context): String {
+        return context.getString(
+            when (type) {
+                SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_explain_brake_critical else R.string.dk_driverdata_safety_explain_brake
+                START -> com.drivequant.drivekit.common.ui.R.string.dk_common_ok
+                FINISH -> com.drivequant.drivekit.common.ui.R.string.dk_common_ok
+                SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_explain_adherence_critical else R.string.dk_driverdata_safety_explain_adherence
+                SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_explain_acceleration_critical else R.string.dk_driverdata_safety_explain_acceleration
+                PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
+                PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_screen_unlock_text
+                PHONE_DISTRACTION_PICK_UP -> if (isForbidden) R.string.dk_driverdata_beginning_unauthorized_call_info_content else R.string.dk_driverdata_beginning_authorized_call_info_content
+                PHONE_DISTRACTION_HANG_UP -> if (isForbidden) R.string.dk_driverdata_end_unauthorized_call_info_content else R.string.dk_driverdata_end_authorized_call_info_content
+            }
+        )
     }
 
-    fun getYAnchor() : Float {
-        return when(type){
+    fun getYAnchor(): Float {
+        return when (type) {
             SAFETY_BRAKE -> 1F
             START -> 0.5F
             FINISH -> 0.5F
@@ -100,8 +104,8 @@ class TripEvent(val type: TripEventType,
         }
     }
 
-    fun getXAnchor() : Float {
-        return when(type){
+    fun getXAnchor(): Float {
+        return when (type) {
             SAFETY_BRAKE -> 0.5F
             START -> 0.5F
             FINISH -> 0.5F
@@ -122,10 +126,10 @@ class TripEvent(val type: TripEventType,
                     text += " " + context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_unit_accel_meter_per_second_square)
                 }
                 DKSpannable().append(context.getString(R.string.dk_driverdata_value),context.resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
+                    color(DKColors.mainFontColor)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                 }).append(text, context.resSpans {
-                    color(DriveKitUI.colors.warningColor())
+                    color(DKColors.warningColor)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     typeface(Typeface.BOLD)
                 }).toSpannable()
@@ -152,10 +156,10 @@ class TripEvent(val type: TripEventType,
                 DKSpannable().append(
                     context.getString(R.string.dk_driverdata_calling_time),
                     context.resSpans {
-                        color(DriveKitUI.colors.mainFontColor())
+                        color(DKColors.mainFontColor)
                         size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     }).append(" $duration", context.resSpans {
-                    color(DriveKitUI.colors.warningColor())
+                    color(DKColors.warningColor)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     typeface(Typeface.BOLD)
                 }).toSpannable()
@@ -163,8 +167,8 @@ class TripEvent(val type: TripEventType,
         }
     }
 
-    fun showInfoIcon() : Boolean {
-        return when(type){
+    fun showInfoIcon(): Boolean {
+        return when (type) {
             SAFETY_BRAKE -> true
             START -> false
             FINISH -> false

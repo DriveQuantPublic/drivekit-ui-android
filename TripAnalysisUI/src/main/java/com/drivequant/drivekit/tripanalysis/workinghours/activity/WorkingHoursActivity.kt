@@ -17,6 +17,7 @@ import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityWorkingHoursBind
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.common.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
@@ -75,10 +76,6 @@ class WorkingHoursActivity : AppCompatActivity() {
             viewModel = ViewModelProvider(this)[WorkingHoursViewModel::class.java]
         }
 
-        binding.separatorEnable.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        binding.separatorInside.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        binding.separatorOutside.setBackgroundColor(DriveKitUI.colors.neutralColor())
-
         binding.switchEnable.apply {
             isEnabled = false
             this.setTitle(getString(R.string.dk_working_hours_enable_title))
@@ -86,7 +83,7 @@ class WorkingHoursActivity : AppCompatActivity() {
         }
 
         insideHours.apply {
-            setIndicatorColor(DriveKitUI.colors.secondaryColor())
+            setIndicatorColor(DKColors.secondaryColor)
             this.setTitle(getString(R.string.dk_working_hours_slot_inside_title))
             setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
                 override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
@@ -96,7 +93,7 @@ class WorkingHoursActivity : AppCompatActivity() {
         }
 
         outsideHours.apply {
-            setIndicatorColor(DriveKitUI.colors.neutralColor())
+            setIndicatorColor(DKColors.neutralColor)
             this.setTitle(getString(R.string.dk_working_hours_slot_outside_title))
             setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
                 override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {

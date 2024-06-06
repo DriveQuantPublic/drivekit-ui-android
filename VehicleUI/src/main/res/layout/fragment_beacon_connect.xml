@@ -24,6 +24,7 @@
                 android:text="@string/dk_vehicle_beacon_setup_guide_title"
                 android:textAlignment="center"
                 android:textAllCaps="true"
+                android:textColor="@color/mainFontColor"
                 android:textSize="@dimen/dk_text_big"
                 android:textStyle="bold" />
 
@@ -46,7 +47,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:gravity="center"
-                android:text="@string/dk_vehicle_beacon_setup_guide_desc1" />
+                android:text="@string/dk_vehicle_beacon_setup_guide_desc1"
+                android:textColor="@color/mainFontColor" />
 
             <TextView
                 android:layout_width="56dp"
@@ -67,7 +69,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:gravity="center"
-                android:text="@string/dk_vehicle_beacon_setup_guide_desc2" />
+                android:text="@string/dk_vehicle_beacon_setup_guide_desc2"
+                android:textColor="@color/mainFontColor" />
 
             <TextView
                 android:layout_width="56dp"
@@ -88,7 +91,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:gravity="center"
-                android:text="@string/dk_vehicle_beacon_setup_guide_desc3" />
+                android:text="@string/dk_vehicle_beacon_setup_guide_desc3"
+                android:textColor="@color/mainFontColor" />
         </LinearLayout>
 
         <com.drivequant.drivekit.common.ui.component.DKButtonPrimary

@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.smallTextWithColor
+import com.drivequant.drivekit.common.ui.extension.tint
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.ui.R
 
 internal class DistractionSelectorItem : LinearLayout {
@@ -41,14 +40,11 @@ internal class DistractionSelectorItem : LinearLayout {
     }
 
     fun setSelection(selected: Boolean) {
-        val drawable = (distractionSelectorTextView.background as GradientDrawable).mutate()
-        DrawableCompat.setTint(
-            drawable,
-            if (selected) DriveKitUI.colors.secondaryColor()
-            else ContextCompat.getColor(context, R.color.dkDistractionSelectorColor)
-        )
-        distractionSelectorTextView.smallText(
-            textColor = if (selected) DriveKitUI.colors.fontColorOnSecondaryColor() else DriveKitUI.colors.primaryColor(),
+        val drawable = (distractionSelectorTextView.background as GradientDrawable)
+        val color = if (selected) com.drivequant.drivekit.common.ui.R.color.secondaryColor else R.color.dkDistractionSelectorColor
+        drawable.tint(context, color)
+        distractionSelectorTextView.smallTextWithColor(
+            textColor = if (selected) DKColors.fontColorOnSecondaryColor else DKColors.primaryColor,
             isTypeFaceBold = true
         )
     }

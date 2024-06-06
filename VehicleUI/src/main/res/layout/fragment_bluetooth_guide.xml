@@ -15,8 +15,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/dk_screen_border">
+            android:layout_marginHorizontal="@dimen/dk_screen_border"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_view_guide_title"
@@ -27,6 +27,7 @@
                 android:text="@string/dk_vehicle_bluetooth_guide_header"
                 android:textAlignment="center"
                 android:textAllCaps="true"
+                android:textColor="@color/mainFontColor"
                 android:textStyle="bold" />
 
             <TextView
@@ -36,7 +37,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:gravity="center"
-                android:text="@string/dk_vehicle_bluetooth_guide_desc1_android" />
+                android:text="@string/dk_vehicle_bluetooth_guide_desc1_android"
+                android:textColor="@color/mainFontColor" />
 
             <TextView
                 android:id="@+id/text_view_guide_desc2"
@@ -45,7 +47,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:gravity="center"
-                android:text="@string/dk_vehicle_bluetooth_guide_desc2_android" />
+                android:text="@string/dk_vehicle_bluetooth_guide_desc2_android"
+                android:textColor="@color/mainFontColor" />
 
             <TextView
                 android:id="@+id/text_view_guide_desc3"
@@ -54,7 +57,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:gravity="center"
-                android:text="@string/dk_vehicle_bluetooth_guide_desc3_android" />
+                android:text="@string/dk_vehicle_bluetooth_guide_desc3_android"
+                android:textColor="@color/mainFontColor" />
         </LinearLayout>
     </ScrollView>
 

@@ -11,10 +11,12 @@
         android:id="@+id/alert_dialog_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/primaryColor"
         android:gravity="center"
         android:padding="@dimen/dk_margin_half"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:textColor="@color/fontColorOnPrimaryColor"
         tools:text="Choose title" />
 
     <LinearLayout
@@ -26,7 +28,8 @@
 
         <View
             android:id="@+id/view_separator_camera"
-            style="@style/Separator.Horizontal" />
+            style="@style/Separator.Horizontal"
+            android:background="@color/neutralColor" />
 
         <TextView
             android:id="@+id/text_view_camera"
@@ -37,11 +40,13 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
+            android:textColor="@color/primaryColor"
             android:textStyle="bold" />
 
         <View
             android:id="@+id/view_separator_gallery"
-            style="@style/Separator.Horizontal" />
+            style="@style/Separator.Horizontal"
+            android:background="@color/neutralColor" />
 
         <TextView
             android:id="@+id/text_view_gallery"
@@ -52,6 +57,7 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
+            android:textColor="@color/primaryColor"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

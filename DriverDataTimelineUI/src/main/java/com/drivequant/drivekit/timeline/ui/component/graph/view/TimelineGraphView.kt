@@ -10,8 +10,8 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.GestureDetectorCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.OnInterceptMotionEventListener
@@ -21,7 +21,7 @@ import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import kotlin.math.abs
 
-internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphViewModel): LinearLayout(context), GraphViewListener, OnInterceptMotionEventListener {
+internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphViewModel) : LinearLayout(context), GraphViewListener, OnInterceptMotionEventListener {
     var listener: GraphViewListener? = null
     private val graphTitle: TextView
     private val graphView: GraphViewBase
@@ -60,8 +60,8 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
         with(graphTitle) {
             text = DKResource.buildString(
                 context,
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.primaryColor(),
+                DKColors.mainFontColor,
+                DKColors.primaryColor,
                 viewModel.titleKey,
                 viewModel.description,
                 textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_small,

@@ -16,6 +16,7 @@
         android:layout_marginEnd="@dimen/dk_margin_half"
         android:gravity="center_vertical"
         android:padding="@dimen/dk_margin_quarter"
+        android:textColor="@color/complementaryFontColor"
         android:textSize="@dimen/dk_text_small"
         tools:text="9h42" />
 
@@ -34,6 +35,7 @@
             android:layout_gravity="start"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textColor="@color/primaryColor"
             tools:text="Title" />
 
         <TextView
@@ -43,6 +45,7 @@
             android:ellipsize="end"
             android:maxWidth="170dp"
             android:maxLines="3"
+            android:textColor="@color/mainFontColor"
             tools:text="Description" />
 
     </LinearLayout>

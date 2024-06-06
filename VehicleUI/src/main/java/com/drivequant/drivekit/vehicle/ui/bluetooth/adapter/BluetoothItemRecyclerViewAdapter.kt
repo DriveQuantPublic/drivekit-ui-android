@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -38,18 +38,16 @@ class BluetoothItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentDevice = viewModel.bluetoothDevices[position]
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
 
-        holder.textViewName.normalText(mainFontColor)
+        holder.textViewName.normalText()
         holder.textViewName.text = currentDevice.name
 
-        DrawableCompat.setTint(holder.arrow.drawable, DriveKitUI.colors.secondaryColor())
+        holder.arrow.drawable.tintDrawable(DKColors.secondaryColor)
 
-        if (position == viewModel.bluetoothDevices.indices.last && itemCount > 1){
+        if (position == viewModel.bluetoothDevices.indices.last && itemCount > 1) {
             holder.separator.visibility = View.GONE
         } else {
             holder.separator.visibility = View.VISIBLE
-            holder.separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         }
         holder.container.setOnClickListener {
             it.context?.let { context ->
@@ -87,8 +85,8 @@ class BluetoothItemRecyclerViewAdapter(
 
         title?.setText(R.string.app_name)
         val text = DKResource.buildString(
-            context, DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),
+            context, DKColors.mainFontColor,
+            DKColors.mainFontColor,
             R.string.dk_vehicle_bluetooth_already_paired,
             btDeviceName,
             viewModel.vehicleName

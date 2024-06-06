@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.databinding.TripTimelineFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripTimelineAdapter
@@ -40,7 +39,7 @@ class TripTimelineFragment : Fragment() {
     ): View {
         _binding = TripTimelineFragmentBinding.inflate(inflater, container, false)
         FontUtils.overrideFonts(context, binding.root)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
@@ -75,7 +74,7 @@ class TripTimelineFragment : Fragment() {
             override fun onItemClicked(position: Int) {
                 tripDetailViewModel.getSelectedEvent().postValue(position)
             }
-        }, DriveKitUI.colors.secondaryColor())
+        }, DKColors.secondaryColor)
         tripDetailViewModel.getSelectedEvent().observe(viewLifecycleOwner) {
             it?.let { position ->
                 (binding.timelineList.adapter as TripTimelineAdapter).selectedPosition = position

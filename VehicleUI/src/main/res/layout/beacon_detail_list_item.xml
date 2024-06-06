@@ -17,6 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textColor="@color/mainFontColor"
             tools:text="Title" />
 
         <TextView
@@ -31,5 +32,6 @@
         style="@style/Separator.Horizontal"
         android:layout_marginTop="@dimen/dk_margin_quarter"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:background="@color/neutralColor"
         android:visibility="visible" />
 </LinearLayout>

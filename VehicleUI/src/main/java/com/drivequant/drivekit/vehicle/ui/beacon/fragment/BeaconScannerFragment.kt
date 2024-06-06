@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -87,7 +86,7 @@ class BeaconScannerFragment : Fragment(), ScanState {
     private fun updateStep(beaconStep: BeaconStep){
         this.beaconStep = beaconStep
         binding.textViewTitle.text = beaconStep.getTitle(requireContext(), viewModel)
-        binding.textViewTitle.normalText(DriveKitUI.colors.mainFontColor())
+        binding.textViewTitle.normalText()
         binding.imageView.setImageDrawable(beaconStep.getImage(requireContext()))
         binding.imageView.setOnClickListener {
             if (!viewModel.isBluetoothSensorEnabled()) {

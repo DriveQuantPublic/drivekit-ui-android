@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dkRankingBackgroundColor"
     android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
@@ -19,8 +20,8 @@
         android:layout_marginBottom="@dimen/dk_margin_quarter"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:padding="@dimen/dk_margin_quarter" />
+        android:padding="@dimen/dk_margin_quarter"
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"

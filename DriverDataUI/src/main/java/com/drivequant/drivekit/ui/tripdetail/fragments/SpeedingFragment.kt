@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -42,7 +41,7 @@ internal class SpeedingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = SpeedingFragmentBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
@@ -111,8 +110,8 @@ internal class SpeedingFragment : Fragment() {
         } else {
             DKResource.buildString(
                 requireContext(),
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.mainFontColor(),
+                DKColors.mainFontColor,
+                DKColors.mainFontColor,
                 R.string.dk_driverdata_speeding_events_trip_description,
                 durationValue
             ).toString()
@@ -123,8 +122,8 @@ internal class SpeedingFragment : Fragment() {
         } else {
             DKResource.buildString(
                 requireContext(),
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.mainFontColor(),
+                DKColors.mainFontColor,
+                DKColors.mainFontColor,
                 R.string.dk_driverdata_speeding_events_trip_description,
                 distanceValue
             ).toString()

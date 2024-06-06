@@ -40,6 +40,7 @@
                 android:gravity="center"
                 android:paddingVertical="@dimen/dk_margin"
                 android:text="@string/dk_perm_utils_fsi_activity_title"
+                android:textColor="@color/mainFontColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_permission_full_screen_intent" />
@@ -51,6 +52,7 @@
                 android:layout_marginTop="@dimen/dk_margin"
                 android:paddingVertical="@dimen/dk_margin"
                 android:text="@string/dk_perm_utils_permissions_fsi_text"
+                android:textColor="@color/mainFontColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_full_screen_intent_permission_title" />
@@ -76,5 +78,6 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/dk_screen_border_permissionutils_onboarding"
         android:paddingVertical="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_text_button_skip" />
+        android:text="@string/dk_perm_utils_permissions_text_button_skip"
+        android:textColor="@color/secondaryColor" />
 </LinearLayout>

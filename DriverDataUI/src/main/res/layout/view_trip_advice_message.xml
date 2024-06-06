@@ -12,9 +12,10 @@
         android:id="@+id/text_view_advice_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/primaryColor"
         android:gravity="center"
         android:padding="@dimen/dk_margin_half"
-        android:textColor="@android:color/white"
+        android:textColor="@color/fontColorOnPrimaryColor"
         tools:text="Title header" />
 
     <ScrollView

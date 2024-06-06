@@ -10,7 +10,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.highlightBigWithColor
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tint
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.ui.R
 
 internal class MySynthesisScoreCardView : LinearLayout {
@@ -72,16 +76,16 @@ internal class MySynthesisScoreCardView : LinearLayout {
 
     private fun configureTitle() {
         title.apply {
-            headLine2(DriveKitUI.colors.mainFontColor())
+            headLine2()
             text = context.getString(viewModel.getCardTitleResId())
         }
     }
 
     private fun configureCurrentScoreText(scoreValue: Double?) {
-        val subtitleTextColor = if (scoreValue != null) DriveKitUI.colors.primaryColor() else DriveKitUI.colors.complementaryFontColor()
+        val subtitleTextColor = if (scoreValue != null) DKColors.primaryColor else DKColors.complementaryFontColor
         subTitle.apply {
             text = viewModel.computeScoreOutOfTen(context, scoreValue)
-            highlightBig(subtitleTextColor)
+            highlightBigWithColor(subtitleTextColor)
             setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
     }
@@ -92,11 +96,11 @@ internal class MySynthesisScoreCardView : LinearLayout {
 
     private fun configureTrendIcon(score: Double?, previousScore: Double?) {
         val iconColor =
-            if (score != null && previousScore != null) DriveKitUI.colors.primaryColor()
-            else DriveKitUI.colors.complementaryFontColor()
+            if (score != null && previousScore != null) com.drivequant.drivekit.common.ui.R.color.primaryColor
+            else com.drivequant.drivekit.common.ui.R.color.complementaryFontColor
 
         ContextCompat.getDrawable(context, viewModel.getTrendIconResId())?.let { icon ->
-            icon.tintDrawable(iconColor)
+            icon.tint(context, iconColor)
             trendIcon.setImageDrawable(icon)
         }
     }

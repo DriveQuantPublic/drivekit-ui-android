@@ -10,10 +10,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.buttonText
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 internal class FeatureCard : FrameLayout {
 
@@ -63,7 +63,7 @@ internal class FeatureCard : FrameLayout {
         }
     }
 
-    fun configureInfoButton(listener : FeatureCardInfoClickListener) {
+    fun configureInfoButton(listener: FeatureCardInfoClickListener) {
         infoImage.apply {
             visibility = VISIBLE
             setOnClickListener {
@@ -75,7 +75,7 @@ internal class FeatureCard : FrameLayout {
     fun configureDescription(textResId: Int) {
         description.apply {
             text = ctx.getText(textResId)
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
     }
 
@@ -83,7 +83,7 @@ internal class FeatureCard : FrameLayout {
         buttonTitle.apply {
             text = ctx.getString(textResId)
             buttonText(
-                textColor = DriveKitUI.colors.secondaryColor(),
+                textColor = DKColors.secondaryColor,
                 backgroundColor = Color.parseColor("#00ffffff")
             )
             setOnClickListener {

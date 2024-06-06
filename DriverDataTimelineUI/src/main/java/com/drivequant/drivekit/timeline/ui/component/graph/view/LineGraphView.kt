@@ -2,8 +2,8 @@ package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.intColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
@@ -26,7 +26,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
     private lateinit var chartView: LineChart
     private var selectedEntry: Entry? = null
     private val defaultIcon = GraphConstants.circleIcon(context)
-    private val selectedIcon = GraphConstants.circleIcon(context, DriveKitUI.colors.secondaryColor())
+    private val selectedIcon = GraphConstants.circleIcon(context, DKColors.secondaryColor)
     private val invisibleIcon = GraphConstants.invisibleIcon()
 
     override fun initChartView() {
@@ -58,7 +58,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             }
         }
         val line = LineDataSet(entries, null)
-        line.colors = listOf(ContextCompat.getColor(this.context, R.color.dkChartStrokeColor))
+        line.colors = listOf(R.color.dkChartStrokeColor.intColor(context))
         line.setDrawVerticalHighlightIndicator(false)
         line.setDrawHorizontalHighlightIndicator(false)
         line.isHighlightEnabled = true
@@ -92,7 +92,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.yOffset = 12f
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
-            this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
+            this.textColor = R.color.dkAxisLabelColor.intColor(context)
             this.textSize = GraphConstants.GRAPH_LABEL_TEXT_SIZE
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)

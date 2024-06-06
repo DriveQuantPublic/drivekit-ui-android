@@ -3,9 +3,9 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel
 import android.content.Context
 import android.graphics.Typeface
 import android.text.SpannableString
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -98,13 +98,13 @@ internal class StreaksData(
 
         return DKSpannable()
             .append("$currentTripsCount ", context.resSpans {
-                color(DriveKitUI.colors.secondaryColor())
+                color(DKColors.secondaryColor)
                 typeface(Typeface.BOLD)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
             }).append(trip, context.resSpans {
-                color(DriveKitUI.colors.secondaryColor())
+                color(DKColors.secondaryColor)
             }).append(" - $currentDistance - $currentDuration", context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DKColors.mainFontColor)
             }).toSpannable()
     }
 
@@ -120,9 +120,9 @@ internal class StreaksData(
                     .append("$bestTripsCount ", context.resSpans {
                         typeface(Typeface.BOLD)
                         size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
-                        color(DriveKitUI.colors.mainFontColor())
+                        color(DKColors.mainFontColor)
                     }).append("$trip - $bestDistance - $bestDuration", context.resSpans {
-                        color(DriveKitUI.colors.mainFontColor())
+                        color(DKColors.mainFontColor)
                     }).toSpannable()
 
             StreakStatus.BEST -> SpannableString.valueOf(context.getString(R.string.dk_achievements_streaks_congrats))

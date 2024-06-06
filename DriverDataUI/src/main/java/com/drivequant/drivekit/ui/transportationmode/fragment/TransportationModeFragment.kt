@@ -18,6 +18,7 @@ import com.drivequant.drivekit.common.ui.component.CircularButtonItemView
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
 import com.drivequant.drivekit.ui.R
@@ -65,8 +66,8 @@ internal class TransportationModeFragment : Fragment() {
             )[TransportationModeViewModel::class.java]
         }
 
-        (binding.descriptionTitle.background as GradientDrawable).setColor(DriveKitUI.colors.warningColor())
-        binding.descriptionTitle.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+        (binding.descriptionTitle.background as GradientDrawable).setColor(DKColors.warningColor)
+        binding.descriptionTitle.normalText()
         binding.descriptionTitle.setText(R.string.dk_driverdata_transportation_mode_declaration_text)
 
         binding.transportationProfileTitle.normalText()
@@ -76,7 +77,7 @@ internal class TransportationModeFragment : Fragment() {
         binding.commentTitle.setText(R.string.dk_driverdata_transportation_mode_declaration_comment)
 
         val editTextBackground = binding.editTextComment.background as GradientDrawable
-        editTextBackground.setStroke(4, DriveKitUI.colors.neutralColor())
+        editTextBackground.setStroke(4, DKColors.neutralColor)
         binding.editTextComment.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -90,7 +91,7 @@ internal class TransportationModeFragment : Fragment() {
                 }
             }
         })
-        binding.textCommentError.smallText(DriveKitUI.colors.criticalColor())
+        binding.textCommentError.smallText()
         binding.textCommentError.setText(R.string.dk_driverdata_transportation_mode_declaration_comment_error)
 
         binding.buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
@@ -100,8 +101,8 @@ internal class TransportationModeFragment : Fragment() {
         bindTransportationProfileItems()
         viewModel.updateObserver.observe(viewLifecycleOwner) { status ->
             hideProgressCircular()
-            if (status != null){
-                when (status){
+            if (status != null) {
+                when (status) {
                     TransportationModeUpdateStatus.NO_ERROR -> {
                         requireActivity().apply {
                             setResult(Activity.RESULT_OK)

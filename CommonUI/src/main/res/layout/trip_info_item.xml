@@ -8,6 +8,7 @@
     android:layout_marginStart="@dimen/dk_margin_half"
     android:layout_marginEnd="@dimen/dk_margin_half"
     android:background="@drawable/rounded_rectangle_shape"
+    android:backgroundTint="@color/secondaryColor"
     android:minWidth="56dp"
     android:minHeight="36dp"
     tools:viewBindingIgnore="true">

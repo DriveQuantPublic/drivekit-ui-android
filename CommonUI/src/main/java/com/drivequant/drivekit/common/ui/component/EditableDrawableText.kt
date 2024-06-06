@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.intColor
+import com.drivequant.drivekit.common.ui.extension.smallTextWithColor
+import com.drivequant.drivekit.common.ui.extension.tint
 
 class EditableDrawableText : LinearLayout {
 
@@ -39,7 +39,7 @@ class EditableDrawableText : LinearLayout {
         val view = inflate(context, R.layout.dk_layout_edit_drawable_text, null)
         imageView = view.findViewById(R.id.image_view)
         textView = view.findViewById(R.id.edit_text)
-        textView?.smallText(ContextCompat.getColor(context, R.color.dkGrayColor))
+        textView?.smallTextWithColor(R.color.dkGrayColor.intColor(context))
         if (attrs != null) {
             val themeTypedArray = context.theme.obtainStyledAttributes(
                 attrs,
@@ -79,27 +79,31 @@ class EditableDrawableText : LinearLayout {
 
     fun setEditTextTitle(
         title: String?,
-        color: Int = ContextCompat.getColor(context, R.color.dkGrayColor)) {
+        color: Int = R.color.dkGrayColor.intColor(context)
+    ) {
         if (!title.isNullOrBlank()) {
             textView?.text = title
         }
-        textView?.smallText(color)
+        textView?.smallTextWithColor(color)
     }
 
     private fun setEditTextHint(
         hint: String?,
-        color: Int = ContextCompat.getColor(context, R.color.dkGrayColor)) {
+        color: Int = R.color.dkGrayColor.intColor(context)
+    ) {
         if (!hint.isNullOrBlank()) {
             textView?.hint = hint
         }
         textView?.setTextColor(color)
     }
 
-    private fun setEditTextDrawable(drawableResId: Int) {
-        if (drawableResId > 0) {
-            ContextCompat.getDrawable(context, drawableResId)?.let {
-                DrawableCompat.wrap(it).mutate().tintDrawable(DriveKitUI.colors.mainFontColor())
-                imageView?.setImageDrawable(it)
+    private fun setEditTextDrawable(@DrawableRes drawableResId: Int) {
+        if (drawableResId != -1) {
+            imageView?.let { imageView ->
+                ContextCompat.getDrawable(context, drawableResId)?.let { drawable ->
+                    drawable.tint(context, R.color.mainFontColor)
+                    imageView.setImageDrawable(drawable)
+                }
             }
         }
     }

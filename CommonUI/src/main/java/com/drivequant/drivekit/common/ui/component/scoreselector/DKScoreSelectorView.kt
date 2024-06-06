@@ -2,9 +2,9 @@ package com.drivequant.drivekit.common.ui.component.scoreselector
 
 import android.content.Context
 import android.util.AttributeSet
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.getIconResId
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.google.android.material.tabs.TabLayout
 
@@ -36,8 +36,8 @@ class DKScoreSelectorView : TabLayout {
             getTabAt(i)?.setCustomView(R.layout.dk_icon_view_tab)
         }
 
-        setSelectedTabIndicatorColor(DriveKitUI.colors.secondaryColor())
-        setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        setSelectedTabIndicatorColor(DKColors.secondaryColor)
+        setBackgroundColor(DKColors.backgroundViewColor)
 
         addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: Tab?) {

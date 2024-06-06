@@ -3,13 +3,13 @@ package com.drivequant.drivekit.common.ui.component
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-
 import android.util.AttributeSet
 import android.widget.ImageView
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import androidx.annotation.ColorRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.extension.intColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 class GaugeImage(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
@@ -47,20 +47,20 @@ class GaugeImage(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         gaugeView.setBackGaugeColor(
             attributes.getColor(
                 R.styleable.GaugeImage_gaugeBackColor,
-                DriveKitUI.colors.transparentColor()
+                DKColors.transparentColor
             )
         )
         attributes.recycle()
     }
 
-    fun configure(progress: Double, gaugeDrawable: Drawable, gaugeColor: Int) {
+    fun configure(progress: Double, gaugeDrawable: Drawable, @ColorRes gaugeColor: Int) {
         gaugeView.setOpenAngle(0F)
         gaugeView.setStartAngle(270F)
         gaugeView.configureScore(progress)
         imageView.setImageDrawable(gaugeDrawable)
         try {
-            gaugeView.setGaugeColor(ContextCompat.getColor(context, gaugeColor))
-        } catch  (e: Resources.NotFoundException) {
+            gaugeView.setGaugeColor(gaugeColor.intColor(context))
+        } catch (e: Resources.NotFoundException) {
             gaugeView.setGaugeColor(gaugeColor)
         }
     }

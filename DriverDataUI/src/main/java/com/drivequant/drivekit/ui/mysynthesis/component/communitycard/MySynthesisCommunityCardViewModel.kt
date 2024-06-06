@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.SpannableString
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -18,7 +18,6 @@ import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.driverdata.timeline.allContextItemAt
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.driverdata.timeline.getValue
-import com.drivequant.drivekit.driverdata.timeline.hasValueForScoreType
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getMedianScore
 import java.util.Date
@@ -96,9 +95,9 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     @ColorInt
     fun getTitleColor(): Int = if (hasNoTrip(this.allContextItem)) {
-        DriveKitUI.colors.complementaryFontColor()
+        DKColors.complementaryFontColor
     } else {
-        DriveKitUI.colors.mainFontColor()
+        DKColors.mainFontColor
     }
 
     fun getCommunityTripsCountText(context: Context) = getTripsCountText(context, this.statistics.tripNumber)
@@ -123,14 +122,14 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         append(
             context,
             DKDataFormatter.formatNumber(statistics.activeDriverNumber),
-            DriveKitUI.colors.complementaryFontColor(),
+            DKColors.complementaryFontColor,
             DKStyle.NORMAL_TEXT
         )
         space()
         append(
             context,
             context.getString(R.string.dk_driverdata_mysynthesis_drivers),
-            DriveKitUI.colors.complementaryFontColor(),
+            DKColors.complementaryFontColor,
             DKStyle.SMALL_TEXT
         )
     }.toSpannable()
@@ -142,18 +141,18 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             spannable.append(
                 context,
                 context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no_trip),
-                DriveKitUI.colors.complementaryFontColor(),
+                DKColors.complementaryFontColor,
                 DKStyle.SMALL_TEXT
             )
         } else {
             spannable.append(
                 context,
                 DKDataFormatter.formatNumber(tripsCount),
-                DriveKitUI.colors.complementaryFontColor(),
+                DKColors.complementaryFontColor,
                 DKStyle.NORMAL_TEXT
             ).space().append(
                 context, tripsString,
-                DriveKitUI.colors.complementaryFontColor(),
+                DKColors.complementaryFontColor,
                 DKStyle.SMALL_TEXT
             )
         }
@@ -169,8 +168,8 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             minDistanceToRemoveFractions = 0.0,
         ).forEach {
             when (it) {
-                is FormatType.VALUE -> spannable.append(context, it.value, DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)
-                is FormatType.UNIT -> spannable.append(context, it.value, DriveKitUI.colors.complementaryFontColor(), DKStyle.SMALL_TEXT)
+                is FormatType.VALUE -> spannable.append(context, it.value, DKColors.complementaryFontColor, DKStyle.NORMAL_TEXT)
+                is FormatType.UNIT -> spannable.append(context, it.value, DKColors.complementaryFontColor, DKStyle.SMALL_TEXT)
                 is FormatType.SEPARATOR -> spannable.space()
             }
         }

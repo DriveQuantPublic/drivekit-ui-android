@@ -5,10 +5,11 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.intColor
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
@@ -39,14 +40,15 @@ internal class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
     private var itemView: View,
     var viewModel: TripDetailViewModel,
-    private var googleMap: GoogleMap)
-    : GoogleMap.OnInfoWindowClickListener,
-    GoogleMap.OnMarkerClickListener{
+    private var googleMap: GoogleMap
+) : GoogleMap.OnInfoWindowClickListener,
+    GoogleMap.OnMarkerClickListener {
 
-    private val googleMarkerList : MutableList<Marker> = mutableListOf()
+    private val googleMarkerList: MutableList<Marker> = mutableListOf()
     private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel)
     private var computedPolyline: Polyline? = null
     private var builder = LatLngBounds.Builder()
+
     companion object {
         private const val SPEEDING_POLYLINE_TAG = "polyline-speeding-tag"
         private const val DEFAULT_POLYLINE_TAG = "default-polyline-tag"
@@ -114,10 +116,9 @@ internal class TripGoogleMapViewHolder(
         }
     }
 
-    private fun configureAdviceButton(mapItem: DKMapItem){
+    private fun configureAdviceButton(mapItem: DKMapItem) {
         val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
-        adviceFabButton.backgroundTintList =
-            ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+        adviceFabButton.backgroundTintList = ColorStateList.valueOf(DKColors.secondaryColor)
         var shouldDisplayAdvice = false
         viewModel.trip?.let { trip ->
             val tripAdvice: TripAdvice? = mapItem.getAdvice(trip)
@@ -128,7 +129,7 @@ internal class TripGoogleMapViewHolder(
             if (shouldDisplayAdvice) {
                 mapItem.getAdviceImageResource()?.let {
                     adviceFabButton.setImageResource(it)
-                    adviceFabButton.imageTintList = ColorStateList.valueOf(DriveKitUI.colors.fontColorOnSecondaryColor())
+                    adviceFabButton.imageTintList = ColorStateList.valueOf(DKColors.fontColorOnSecondaryColor)
                 }
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {
@@ -146,9 +147,9 @@ internal class TripGoogleMapViewHolder(
     fun traceRoute(mapItem: DKMapItem?, mapTraceType: MapTraceType = MapTraceType.UNLOCK_SCREEN) {
         clearMap()
         viewModel.route?.let { route ->
-            val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
-            val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
-            val authorizedCallColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedCallColor)
+            val unlockColor = DriverDataUI.mapTraceWarningColor.intColor(itemView.context)
+            val lockColor = DriverDataUI.mapTraceMainColor.intColor(itemView.context)
+            val authorizedCallColor = DriverDataUI.mapTraceAuthorizedCallColor.intColor(itemView.context)
             if (mapItem != null && ((mapItem.shouldShowDistractionArea() && viewModel.configurableMapItems.contains(MapItem.DISTRACTION)) || mapItem.shouldShowPhoneDistractionArea() || mapItem.shouldShowSpeedingArea())) {
                 when (mapTraceType) {
                     MapTraceType.UNLOCK_SCREEN -> {

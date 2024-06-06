@@ -9,9 +9,11 @@
         android:id="@+id/text_view_badge_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/primaryColor"
         android:gravity="center"
         android:paddingStart="@dimen/dk_margin"
-        android:paddingEnd="@dimen/dk_margin" />
+        android:paddingEnd="@dimen/dk_margin"
+        android:textColor="@color/fontColorOnPrimaryColor" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -54,18 +56,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/badge_detail_goal_title"
+                    android:textColor="@color/primaryColor"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/goal_view_separator"
                     style="@style/Separator.Horizontal"
-                    android:layout_marginTop="@dimen/dk_margin_eigth" />
+                    android:layout_marginTop="@dimen/dk_margin_eigth"
+                    android:background="@color/neutralColor" />
 
                 <TextView
                     android:id="@+id/text_view_badge_goal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dk_margin_half" />
+                    android:layout_marginTop="@dimen/dk_margin_half"
+                    android:textColor="@color/complementaryFontColor" />
 
                 <TextView
                     android:id="@+id/text_view_progress"
@@ -73,18 +78,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dk_margin"
                     android:text="@string/badge_your_progress_title"
+                    android:textColor="@color/primaryColor"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/progress_view_separator"
                     style="@style/Separator.Horizontal"
-                    android:layout_marginTop="@dimen/dk_margin_eigth" />
+                    android:layout_marginTop="@dimen/dk_margin_eigth"
+                    android:background="@color/neutralColor" />
 
                 <TextView
                     android:id="@+id/text_view_badge_progress_congrats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dk_margin_half" />
+                    android:layout_marginTop="@dimen/dk_margin_half"
+                    android:textColor="@color/complementaryFontColor" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

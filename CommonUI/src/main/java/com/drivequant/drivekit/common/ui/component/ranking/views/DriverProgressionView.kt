@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
@@ -16,7 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 
 
@@ -69,7 +68,7 @@ class DriverProgressionView : LinearLayout {
 
     private fun setConditionInfoButton(rankingViewModel: DKRankingViewModel) {
         ContextCompat.getDrawable(context, R.drawable.dk_common_info)?.let {
-            it.tintDrawable(DriveKitUI.colors.secondaryColor())
+            it.tint(context, R.color.secondaryColor)
             this.infoPopupConditionImageView.apply {
                 visibility = if (rankingViewModel.getConditionVisibility()) {
                     View.VISIBLE

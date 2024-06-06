@@ -11,7 +11,9 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeRule
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 class ChallengeHeaderView(context: Context) : LinearLayout(context) {
 
@@ -44,7 +46,7 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
             if (!challenge.rules.isNullOrBlank()) {
                 challengeRuleConsultTextView.apply {
                     setText(R.string.dk_challenge_consult_rule_button)
-                    setTextColor(DriveKitUI.colors.secondaryColor())
+                    setTextColor(DKColors.secondaryColor)
                     visibility = View.VISIBLE
                     setOnClickListener {
                         ChallengeRulesActivity.launchActivity(
@@ -80,14 +82,10 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
     }
 
     private fun setStyle() {
-        titleTextView.apply {
-            setTextColor(DriveKitUI.colors.mainFontColor())
-            typeface = DriveKitUI.primaryFont(context)
-        }
-        dateTextView.smallText(DriveKitUI.colors.complementaryFontColor())
-        separatorView.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        titleTextView.typeface = DriveKitUI.primaryFont(context)
+        dateTextView.smallText()
         conditionsTextView.normalText()
         rulesTextView.normalText()
-        challengeRuleConsultTextView.normalText(DriveKitUI.colors.complementaryFontColor())
+        challengeRuleConsultTextView.normalTextWithColor(DKColors.complementaryFontColor)
     }
 }

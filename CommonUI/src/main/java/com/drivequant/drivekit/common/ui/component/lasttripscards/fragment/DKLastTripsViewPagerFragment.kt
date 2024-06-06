@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.lasttripscards.adapter.DKLastTripsFragmentPagerAdapter
 import com.drivequant.drivekit.common.ui.databinding.DkFragmentLastTripsCardViewpagerBinding
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.tint
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
@@ -70,22 +69,24 @@ internal class DKLastTripsViewPagerFragment : Fragment() {
     }
 
     private fun updateTabLayout(position: Int) {
-        for (i in 0 until tabLayout.tabCount) {
-            tabLayout.getTabAt(i)?.let {
-                if (i == position) {
-                    val drawable = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.dk_tab_indicator_selected
-                    )?.mutate()
-                    drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
-                    tabLayout.getTabAt(i)?.icon = drawable
-                } else {
-                    val drawable = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.dk_tab_indicator_default
-                    )?.mutate()
-                    drawable?.tintDrawable(DriveKitUI.colors.complementaryFontColor())
-                    tabLayout.getTabAt(i)?.icon = drawable
+        context?.let { context ->
+            for (i in 0 until tabLayout.tabCount) {
+                tabLayout.getTabAt(i)?.let { tab ->
+                    if (i == position) {
+                        val drawable = ContextCompat.getDrawable(
+                            context,
+                            R.drawable.dk_tab_indicator_selected
+                        )
+                        drawable?.tint(context, R.color.secondaryColor)
+                        tab.icon = drawable
+                    } else {
+                        val drawable = ContextCompat.getDrawable(
+                            context,
+                            R.drawable.dk_tab_indicator_default
+                        )
+                        drawable?.tint(context, R.color.complementaryFontColor)
+                        tab.icon = drawable
+                    }
                 }
             }
         }

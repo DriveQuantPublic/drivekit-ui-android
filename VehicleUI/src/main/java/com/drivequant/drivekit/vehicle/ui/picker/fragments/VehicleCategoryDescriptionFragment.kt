@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -81,14 +81,14 @@ class VehicleCategoryDescriptionFragment : Fragment() {
 
     private fun customizeButton(button: View, @StringRes titleId: Int, @StringRes descriptionId: Int) {
         button.background = ContextCompat.getDrawable(button.context, R.drawable.dk_vehicle_category_button_action_border)
-        button.background.tintDrawable(DriveKitUI.colors.secondaryColor())
+        button.background.tintDrawable(DKColors.secondaryColor)
         button.findViewById<TextView>(R.id.buttonTitle).run {
             isAllCaps = true
-            headLine2(DriveKitUI.colors.secondaryColor())
+            headLine2()
             setText(titleId)
         }
         button.findViewById<TextView>(R.id.buttonDescription).run {
-            smallText(DriveKitUI.colors.complementaryFontColor())
+            smallText()
             setText(descriptionId)
         }
     }

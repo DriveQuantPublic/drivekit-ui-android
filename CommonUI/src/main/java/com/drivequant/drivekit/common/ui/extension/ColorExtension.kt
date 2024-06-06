@@ -1,8 +1,12 @@
 package com.drivequant.drivekit.common.ui.extension
 
+import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.FloatRange
+import androidx.annotation.IntRange
 import androidx.core.graphics.ColorUtils
 
 /**
@@ -24,6 +28,11 @@ fun @receiver:ColorInt Int.tintFromHueOfColor(@ColorInt color: Int): Int {
         hslValues.setSaturation(0f)
     }
     return ColorUtils.HSLToColor(hslValues)
+}
+
+@ColorInt
+fun @receiver:ColorRes Int.tintFromHueOfColor(context: Context, @ColorRes color: Int): Int {
+    return this.intColor(context).tintFromHueOfColor(color.intColor(context))
 }
 
 fun @receiver:ColorInt Int.shouldInvertTextColor(@ColorInt otherColor: Int) =
@@ -61,4 +70,24 @@ private fun @receiver:ColorInt Int.getHslValues(): FloatArray {
     val hslValues = FloatArray(3)
     ColorUtils.colorToHSL(this, hslValues)
     return hslValues
+}
+
+@ColorInt
+fun @receiver:ColorInt Int.withAlpha(@IntRange(from = 0x0, to = 0xFF) alpha: Int): Int {
+    return ColorUtils.setAlphaComponent(this, alpha)
+}
+
+@ColorInt
+fun @receiver:ColorRes Int.withAlpha(context: Context, @IntRange(from = 0x0, to = 0xFF) alpha: Int): Int {
+    return context.getColor(this).withAlpha(alpha)
+}
+
+@ColorInt
+fun @receiver:ColorRes Int.intColor(context: Context): Int {
+    return context.getColor(this)
+}
+
+fun Drawable.tint(context: Context, @ColorRes color: Int) {
+    val intColor = color.intColor(context)
+    this.tintDrawable(intColor)
 }
