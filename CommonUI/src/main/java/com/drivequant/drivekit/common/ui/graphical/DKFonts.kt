@@ -3,9 +3,9 @@ package com.drivequant.drivekit.common.ui.graphical
 import androidx.annotation.FontRes
 import com.drivequant.drivekit.common.ui.R
 
-open class DKFonts {
+class DKFonts {
     @FontRes
-    open fun primaryFont(): Int = R.font.roboto
+    fun primaryFont(): Int = R.font.dkprimary
     @FontRes
-    open fun secondaryFont(): Int = R.font.roboto
+    fun secondaryFont(): Int = R.font.dksecondary
 }

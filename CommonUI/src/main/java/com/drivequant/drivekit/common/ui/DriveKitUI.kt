@@ -29,8 +29,7 @@ object DriveKitUI {
         }
 
     @JvmStatic
-    var fonts = DKFonts()
-        private set
+    val fonts = DKFonts()
 
     init {
         DriveKit.checkInitialization()
@@ -40,11 +39,6 @@ object DriveKitUI {
     @JvmStatic
     fun initialize() {
         // Nothing to do currently.
-    }
-
-    @JvmStatic
-    fun configureFonts(fonts: DKFonts) {
-        this.fonts = fonts
     }
 
     @JvmStatic
