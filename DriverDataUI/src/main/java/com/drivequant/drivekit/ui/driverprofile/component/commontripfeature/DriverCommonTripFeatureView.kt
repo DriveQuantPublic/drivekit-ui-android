@@ -4,8 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.extension.format
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
@@ -29,8 +27,6 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         this.distanceView = findViewById(R.id.distance)
         this.durationView = findViewById(R.id.duration)
         this.roadContextView = findViewById(R.id.roadContext)
-
-        configureUi()
     }
 
     override fun configure(viewModel: DriverCommonTripFeatureViewModel) {
@@ -75,11 +71,5 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         this.roadContextView.setText(viewModel.roadContextId)
         val roadContextColor = if (viewModel.isRealData) DKColors.mainFontColor else noDataColor
         this.roadContextView.setTextColor(roadContextColor)
-    }
-
-    private fun configureUi() {
-        this.titleView.headLine2()
-        this.roadContextView.normalText()
-        this.distanceView.normalText()
     }
 }
