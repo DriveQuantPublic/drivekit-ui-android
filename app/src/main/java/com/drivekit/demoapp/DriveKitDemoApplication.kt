@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.drivekit.demoapp.config.DriveKitConfig
-import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.drivekitdemoapp.R
 import java.util.Random
 
