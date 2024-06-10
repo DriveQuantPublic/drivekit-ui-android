@@ -381,8 +381,6 @@ class VehicleDetailFragment : Fragment() {
 
             titleTextView?.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_permissions)
             descriptionTextView?.setText(descriptionIdentifier)
-            titleTextView?.headLine1()
-            descriptionTextView?.normalText()
         }
     }
 

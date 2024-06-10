@@ -172,9 +172,6 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
             alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
         titleTextView?.text = alertDialogData.first
         descriptionTextView?.text = alertDialogData.second
-
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
 

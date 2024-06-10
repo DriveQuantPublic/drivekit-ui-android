@@ -139,7 +139,5 @@ internal class TripSimulatorActivity : AppCompatActivity() {
             alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
         titleTextView?.text = getString(R.string.app_name)
         descriptionTextView?.text = getString(errorMessageResId)
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 }

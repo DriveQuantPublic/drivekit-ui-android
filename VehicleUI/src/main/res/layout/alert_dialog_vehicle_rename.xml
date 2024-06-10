@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/text_view_alert_title"
+        style="@style/Headline1.Primary"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/primaryColor"
@@ -27,6 +28,7 @@
 
         <TextView
             android:id="@+id/text_view_alert_description"
+            style="@style/NormalText.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dk_margin_half"

@@ -98,10 +98,7 @@ enum class VehicleAction(
         vehicleFieldInputEditText = alert.findViewById(R.id.edit_text_field)
 
         titleTextView?.setText(R.string.dk_vehicle_rename_title)
-        titleTextView?.normalText()
-
         descriptionTextView?.setText(R.string.dk_vehicle_rename_description)
-        descriptionTextView?.normalText()
 
         vehicleFieldInputEditText?.apply {
             setText(vehicleName)
@@ -137,8 +134,6 @@ enum class VehicleAction(
 
         titleTextView?.setText(R.string.app_name)
         descriptionTextView?.text = message
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
     private fun displayError(context: Context) {

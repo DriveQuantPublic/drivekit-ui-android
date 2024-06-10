@@ -2,6 +2,7 @@ package com.drivekit.demoapp.settings.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -27,6 +28,7 @@ import com.drivekit.drivekitdemoapp.databinding.ActivitySettingsBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.headLine2WithColor
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
@@ -242,6 +244,8 @@ internal class SettingsActivity : AppCompatActivity() {
             }
             setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
             show()
+            getButton(AlertDialog.BUTTON_POSITIVE)?.headLine2WithColor(DKColors.secondaryColor)
+            getButton(AlertDialog.BUTTON_NEGATIVE)?.headLine2WithColor(DKColors.secondaryColor)
         }
     }
 
@@ -260,9 +264,6 @@ internal class SettingsActivity : AppCompatActivity() {
 
         titleTextView?.text = getString(R.string.app_name)
         descriptionTextView?.text = getString(R.string.logout_confirmation)
-
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
     override fun onSupportNavigateUp(): Boolean {
