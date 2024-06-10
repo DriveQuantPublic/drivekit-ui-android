@@ -32,6 +32,7 @@
 
             <TextView
                 android:id="@+id/text_view_warning_text"
+                style="@style/NormalText.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin_double"
@@ -44,6 +45,7 @@
 
             <TextView
                 android:id="@+id/text_view_explaining_text"
+                style="@style/NormalText.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin_double"
