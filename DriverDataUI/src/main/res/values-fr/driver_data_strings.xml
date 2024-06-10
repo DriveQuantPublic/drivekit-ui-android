@@ -74,7 +74,7 @@
    <string name="dk_driverdata_drivingconditions_weekdays">Semaine</string>
    <string name="dk_driverdata_drivingconditions_weekend">Week-end</string>
    <string name="dk_driverdata_ecodriving_score">Score d\'éco-conduite</string>
-   <string name="dk_driverdata_ecodriving_score_info">Le score d\'éco-conduite mesure l\'écart entre l\'énergie consommée et l\'énergie minimale atteignable sur un trajet. Une note de 8 sur 10 indique qu\'une économie d\'énergie de 20%% est atteignable.</string>
+   <string name="dk_driverdata_ecodriving_score_info">Le score d\'éco-conduite mesure l\'écart entre l\'énergie consommée et l\'énergie minimale atteignable sur un trajet. Une note de 8 sur 10 indique qu\'une économie d\'énergie de 20% est atteignable.</string>
    <string name="dk_driverdata_end_authorized_call">Fin d\'appel autorisé</string>
    <string name="dk_driverdata_end_authorized_call_info_content">L\'application a détecté la fin d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
    <string name="dk_driverdata_end_event">Fin du trajet</string>
