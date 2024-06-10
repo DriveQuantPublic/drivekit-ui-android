@@ -19,6 +19,7 @@ import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 
@@ -54,7 +55,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        title = getString(R.string.trip_simulator_header)
+        setActivityTitle(getString(R.string.trip_simulator_header))
 
         presetTripType = intent.getSerializableExtraCompat(PRESET_TYPE_EXTRA, PresetTripType::class.java)!!
 
@@ -126,8 +127,6 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
             alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
         titleTextView?.text = getString(R.string.trip_simulator_stop_simulation_alert_title)
         descriptionTextView?.text = getString(R.string.trip_simulator_stop_simulation_alert_content)
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
     private fun updateContent() {

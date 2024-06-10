@@ -2,6 +2,7 @@ package com.drivekit.demoapp.settings.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -27,8 +28,10 @@ import com.drivekit.drivekitdemoapp.databinding.ActivitySettingsBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.headLine2WithColor
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
@@ -56,7 +59,7 @@ internal class SettingsActivity : AppCompatActivity() {
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = getString(R.string.parameters_header)
+        setActivityTitle(getString(R.string.parameters_header))
 
         initConfiguration()
     }
@@ -241,6 +244,8 @@ internal class SettingsActivity : AppCompatActivity() {
             }
             setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
             show()
+            getButton(AlertDialog.BUTTON_POSITIVE)?.headLine2WithColor(DKColors.secondaryColor)
+            getButton(AlertDialog.BUTTON_NEGATIVE)?.headLine2WithColor(DKColors.secondaryColor)
         }
     }
 
@@ -259,9 +264,6 @@ internal class SettingsActivity : AppCompatActivity() {
 
         titleTextView?.text = getString(R.string.app_name)
         descriptionTextView?.text = getString(R.string.logout_confirmation)
-
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
     override fun onSupportNavigateUp(): Boolean {

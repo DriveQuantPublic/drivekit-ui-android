@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#1346AC</color>
+    <color name="secondaryColor">#E2D477</color>
+    <color name="mainFontColor">#A34EF8</color>
+    <color name="complementaryFontColor">#56E535</color>
+    <color name="fontColorOnPrimaryColor">#0FFFFF</color>
+    <color name="fontColorOnSecondaryColor">#FF901B</color>
+    <color name="backgroundViewColor">#F6A7F2</color>
+    <color name="neutralColor">#FFFBB3</color>
+    <color name="warningColor">#F7A334</color>
+    <color name="criticalColor">#E52027</color>
+</resources>

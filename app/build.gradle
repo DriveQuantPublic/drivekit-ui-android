@@ -28,6 +28,23 @@ android {
         }
     }
 
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("demo") {
+            dimension = "version"
+            isDefault = true
+        }
+        create("fontsTest") {
+            dimension = "version"
+            applicationIdSuffix = ".test"
+        }
+        create("colorsTest") {
+            dimension = "version"
+            applicationIdSuffix = ".test"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17

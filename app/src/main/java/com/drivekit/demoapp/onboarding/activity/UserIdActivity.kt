@@ -17,6 +17,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivitySetUserIdBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.core.networking.RequestError
 
 class UserIdActivity : AppCompatActivity() {
@@ -35,7 +36,7 @@ class UserIdActivity : AppCompatActivity() {
         binding = ActivitySetUserIdBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
-        title = getString( R.string.authentication_header)
+        setActivityTitle(getString(R.string.authentication_header))
 
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(this)[UserIdViewModel::class.java]

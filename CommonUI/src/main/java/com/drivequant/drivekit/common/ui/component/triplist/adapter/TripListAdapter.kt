@@ -79,7 +79,7 @@ internal class TripListAdapter(
         val holder: TripViewHolder
         val view: View
 
-        if (convertView == null){
+        if (convertView == null) {
             view = View.inflate(context, R.layout.item_trip_list, null)
             holder = TripViewHolder(view)
             view.tag = holder
@@ -100,14 +100,14 @@ internal class TripListAdapter(
     override fun getChildrenCount(position: Int): Int {
         val date = getGroup(position).date
         val trips = tripsListViewModel.getTripsByDate(date)?.trips
-        return if (trips.isNullOrEmpty()){
+        return if (trips.isNullOrEmpty()) {
             0
         } else {
             trips.size
         }
     }
 
-    override fun isChildSelectable(p0: Int, p1: Int): Boolean = true
+    override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean = true
 
     override fun hasStableIds(): Boolean = false
 }

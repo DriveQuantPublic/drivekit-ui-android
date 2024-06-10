@@ -23,8 +23,8 @@ import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.settings.activity.SettingsActivity
 import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -66,7 +66,7 @@ internal class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
         val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-        title = getString(R.string.dashboard_header)
+        setActivityTitle(getString(R.string.dashboard_header))
         this.infoBanners = findViewById(R.id.info_banners)
         this.tripSimulatorButtonContainer = findViewById(R.id.button_trip_simulator)
         initFeatureCard()

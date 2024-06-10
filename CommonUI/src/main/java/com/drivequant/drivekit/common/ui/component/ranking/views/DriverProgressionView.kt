@@ -91,8 +91,6 @@ class DriverProgressionView : LinearLayout {
                         alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
                     titleTextView?.text = rankingViewModel.getConditionTitle(context)
                     descriptionTextView?.text = rankingViewModel.getConditionDescription(context)
-                    titleTextView?.headLine1()
-                    descriptionTextView?.normalText()
                 }
             }
         }

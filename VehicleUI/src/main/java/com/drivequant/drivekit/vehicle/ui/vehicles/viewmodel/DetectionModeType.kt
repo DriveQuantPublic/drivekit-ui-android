@@ -186,8 +186,6 @@ enum class DetectionModeType(
 
         titleTextView?.text = title
         descriptionTextView?.text = message
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
     private fun displayConfigAlertDialog(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
