@@ -67,6 +67,11 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             }
         }
 
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
+        }
+
         binding.phoneCallSelector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))

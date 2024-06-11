@@ -58,6 +58,11 @@ class UnscoredTripFragment : Fragment() {
             viewModel = it
         }
 
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
+        }
+
         binding.tripDuration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!).convertToString()
         binding.tripStartEnd.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
             .plus(" - ")

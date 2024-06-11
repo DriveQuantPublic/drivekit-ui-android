@@ -53,6 +53,11 @@ class EcoDrivingFragment : Fragment() {
             viewModel = it
         }
 
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
+        }
+
         binding.scoreGauge.configure(viewModel.getScore(), GaugeConfiguration.ECO_DRIVING(viewModel.getScore()), Typeface.BOLD)
         binding.scoreInfo.init(GaugeConfiguration.ECO_DRIVING(viewModel.getScore()))
 
