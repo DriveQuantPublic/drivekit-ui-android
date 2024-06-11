@@ -46,12 +46,8 @@ class TripTimelineFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::tripDetailViewModel.isInitialized) {
             outState.putSerializable("itinId", tripDetailViewModel.getItinId())
-            outState.putSerializable(
-                "tripListConfigurationType",
-                tripDetailViewModel.getTripListConfigurationType()
-            )
+            outState.putSerializable("tripListConfigurationType", tripDetailViewModel.getTripListConfigurationType())
         }
-
         super.onSaveInstanceState(outState)
     }
 

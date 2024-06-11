@@ -41,7 +41,9 @@ class EcoDrivingFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("viewModel", viewModel)
+        }
         super.onSaveInstanceState(outState)
     }
 

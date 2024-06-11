@@ -106,10 +106,16 @@ internal class TimelineDetailFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        if (this::selectedScore.isInitialized) {
+            outState.putString(SELECTED_SCORE_ID_EXTRA, selectedScore.name)
+        }
+        if (this::selectedPeriod.isInitialized) {
+            outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
+        }
+        if (this::selectedDate.isInitialized) {
+            outState.putLong(SELECTED_DATE_ID_EXTRA, selectedDate.time)
+        }
         super.onSaveInstanceState(outState)
-        outState.putString(SELECTED_SCORE_ID_EXTRA, selectedScore.name)
-        outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
-        outState.putLong(SELECTED_DATE_ID_EXTRA, selectedDate.time)
     }
 
     private fun configureGraphContainer() {

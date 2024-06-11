@@ -40,7 +40,6 @@ class OdometerInitFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         vehicleId?.let {
             outState.putString("vehicleIdTag", it)
         }

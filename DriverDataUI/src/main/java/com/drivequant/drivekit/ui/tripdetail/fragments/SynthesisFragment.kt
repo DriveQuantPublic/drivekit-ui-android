@@ -39,7 +39,9 @@ class SynthesisFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("trip", trip)
+        if (this::trip.isInitialized) {
+            outState.putSerializable("trip", trip)
+        }
         super.onSaveInstanceState(outState)
     }
 

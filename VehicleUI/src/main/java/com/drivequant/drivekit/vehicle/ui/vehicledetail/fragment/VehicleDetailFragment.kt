@@ -93,7 +93,9 @@ class VehicleDetailFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_vehicle_detail, container, false).setDKStyle()
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("vehicleDetailTag", vehicleId)
+        if (this::vehicleId.isInitialized) {
+            outState.putString("vehicleDetailTag", vehicleId)
+        }
         super.onSaveInstanceState(outState)
     }
 

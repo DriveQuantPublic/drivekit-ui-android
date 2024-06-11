@@ -50,7 +50,9 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("vehicleIdTag", vehicleId)
+        vehicleId?.let {
+            outState.putString("vehicleIdTag", vehicleId)
+        }
         super.onSaveInstanceState(outState)
     }
 

@@ -337,7 +337,9 @@ internal class TransportationModeFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("itinId", itinId)
+        if (this::itinId.isInitialized) {
+            outState.putString("itinId", itinId)
+        }
         super.onSaveInstanceState(outState)
     }
 }

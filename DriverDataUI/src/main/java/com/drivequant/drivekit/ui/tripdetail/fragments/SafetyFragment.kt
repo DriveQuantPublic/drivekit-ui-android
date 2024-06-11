@@ -44,7 +44,9 @@ class SafetyFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("safety", safety)
+        if (this::safety.isInitialized) {
+            outState.putSerializable("safety", safety)
+        }
         super.onSaveInstanceState(outState)
     }
 
