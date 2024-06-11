@@ -72,14 +72,16 @@ internal class DashboardActivity : AppCompatActivity() {
         initFeatureCard()
         configureStartStopTripButton()
 
-        if (DKNotificationManager.isTripDetailNotificationIntent(intent)) {
-            manageTripDetailRedirection()
-        } else if (DKNotificationManager.isAppDiagnosisNotificationIntent(intent)) {
-            DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startAppDiagnosisActivity(this)
-        } else if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
-            lifecycleScope.launch {
-                delay(300)
-                startStopTripButton?.showConfirmationDialog()
+        if (savedInstanceState == null) {
+            if (DKNotificationManager.isTripDetailNotificationIntent(intent)) {
+                manageTripDetailRedirection()
+            } else if (DKNotificationManager.isAppDiagnosisNotificationIntent(intent)) {
+                DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startAppDiagnosisActivity(this)
+            } else if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
+                lifecycleScope.launch {
+                    delay(300)
+                    startStopTripButton?.showConfirmationDialog()
+                }
             }
         }
     }
