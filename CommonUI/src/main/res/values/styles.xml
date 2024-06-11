@@ -107,6 +107,11 @@
         <item name="android:textSize">@dimen/dk_text_small</item>
     </style>
 
+    <style name="dkCircleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <!-- Used for RangeSlider-->
     <style name="SliderStyle" parent="@style/Widget.MaterialComponents.Slider">
         <item name="labelStyle">@style/TooltipStyle</item>

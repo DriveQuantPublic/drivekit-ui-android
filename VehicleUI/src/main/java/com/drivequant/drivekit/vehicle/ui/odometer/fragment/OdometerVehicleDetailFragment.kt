@@ -11,8 +11,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -113,12 +111,8 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     }
 
     private fun initVehicle(context: Context) {
-        viewModel.getVehicleDrawable(context)?.let { drawable ->
-            Glide.with(context)
-                .load(drawable)
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(drawable)
-                .into(binding.spinnerItem.imageItem)
+        viewModel.getVehicleDrawableRes().let { drawable ->
+            binding.spinnerItem.imageItem.setImageResource(drawable)
         }
         binding.spinnerItem.textViewItemDisplayName.text = viewModel.getVehicleDisplayName(context)
     }

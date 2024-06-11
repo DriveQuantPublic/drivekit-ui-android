@@ -16,8 +16,8 @@ import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 fun Vehicle.buildFormattedName(context: Context) : String {
-    val sortedVehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
-    return if (!TextUtils.isEmpty(name) && !VehicleUtils().isNameEqualsDefaultName(this)) {
+    val sortedVehicles = VehicleUtils.fetchVehiclesOrderedByDisplayName(context)
+    return if (!TextUtils.isEmpty(name) && !VehicleUtils.isNameEqualsDefaultName(this)) {
         name ?: " "
     } else {
         val vehiclePositionInList = sortedVehicles.indexOf(this) + 1
@@ -87,11 +87,17 @@ fun Vehicle.getGearBoxName(context: Context): String {
 }
 
 @DrawableRes
-fun Vehicle.getDefaultImage() = VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
-    when (vehicleType) {
-        VehicleType.CAR -> R.drawable.dk_default_car
-        VehicleType.TRUCK -> R.drawable.dk_default_truck
+fun Vehicle?.getImageByTypeIndex(): Int {
+    return if (this != null) {
+        VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
+            when (vehicleType) {
+                VehicleType.CAR -> R.drawable.dk_default_car
+                VehicleType.TRUCK -> R.drawable.dk_default_truck
+            }
+        } ?: run {
+            R.drawable.dk_default_car
+        }
+    } else {
+        R.drawable.dk_default_car
     }
-} ?: run {
-    R.drawable.dk_default_car
 }

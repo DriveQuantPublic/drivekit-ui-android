@@ -24,7 +24,7 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.extension.getDefaultImage
+import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
@@ -138,7 +138,7 @@ class VehicleDetailFragment : Fragment() {
         imageView = activity?.findViewById(R.id.image_view_vehicle)
 
         viewModel.vehicle?.let {
-            vehicleDrawableId = it.getDefaultImage()
+            vehicleDrawableId = it.getImageByTypeIndex()
         }
 
         vehicleDrawableId?.let {
