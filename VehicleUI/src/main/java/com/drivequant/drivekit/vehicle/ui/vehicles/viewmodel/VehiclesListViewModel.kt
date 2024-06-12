@@ -40,7 +40,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
             DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
                 override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                     progressBarObserver.postValue(false)
-                    vehiclesList = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
+                    vehiclesList = VehicleUtils.fetchVehiclesOrderedByDisplayName(context)
                     vehiclesData.postValue(vehiclesList)
                 }
             }, synchronizationType)

@@ -76,7 +76,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
     fun getVehicleFormattedName(context: Context) =
         DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()
             ?.let {
-                VehicleUtils().buildFormattedName(context, it)
+                VehicleUtils.buildFormattedName(context, it)
             } ?: ""
 
     fun addOdometerHistory() {

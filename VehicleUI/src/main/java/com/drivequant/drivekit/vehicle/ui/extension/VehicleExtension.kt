@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.extension
 
 import android.content.Context
 import android.text.TextUtils
+import androidx.annotation.DrawableRes
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.BEACON
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.BLUETOOTH
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.DISABLED
@@ -15,8 +16,8 @@ import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 fun Vehicle.buildFormattedName(context: Context) : String {
-    val sortedVehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
-    return if (!TextUtils.isEmpty(name) && !VehicleUtils().isNameEqualsDefaultName(this)) {
+    val sortedVehicles = VehicleUtils.fetchVehiclesOrderedByDisplayName(context)
+    return if (!TextUtils.isEmpty(name) && !VehicleUtils.isNameEqualsDefaultName(this)) {
         name ?: " "
     } else {
         val vehiclePositionInList = sortedVehicles.indexOf(this) + 1
@@ -85,17 +86,18 @@ fun Vehicle.getGearBoxName(context: Context): String {
     return context.getString(identifier)
 }
 
-fun Vehicle.getDefaultImage(): Int {
-    var drawableId: Int? = null
-    VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
-        drawableId = when (vehicleType) {
-            VehicleType.CAR -> R.drawable.dk_default_car
-            VehicleType.TRUCK -> R.drawable.dk_default_truck
+@DrawableRes
+fun Vehicle?.getImageByTypeIndex(): Int {
+    return if (this != null) {
+        VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
+            when (vehicleType) {
+                VehicleType.CAR -> R.drawable.dk_default_car
+                VehicleType.TRUCK -> R.drawable.dk_default_truck
+            }
+        } ?: run {
+            R.drawable.dk_default_car
         }
-    }
-    drawableId?.let {
-        return it
-    }?:run {
-        return R.drawable.dk_default_car
+    } else {
+        R.drawable.dk_default_car
     }
 }

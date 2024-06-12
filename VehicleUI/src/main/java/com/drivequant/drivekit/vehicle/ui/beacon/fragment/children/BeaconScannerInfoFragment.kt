@@ -123,7 +123,7 @@ class BeaconScannerInfoFragment : Fragment() {
             }
         } else {
             binding.viewBorder.setBackgroundColor(DKColors.complementaryFontColor)
-            binding.textViewConnectedVehicleName.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
+            binding.textViewConnectedVehicleName.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils.fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
                  vehicle.buildFormattedName(requireContext())
             }?: run {
                 getString(R.string.dk_beacon_vehicle_unknown)
