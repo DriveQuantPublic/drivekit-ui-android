@@ -82,8 +82,6 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
                         alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                     titleTextView?.text = context.getString(R.string.app_name)
                     descriptionTextView?.text = context.getString(R.string.feature_permission_onboarding_ok)
-                    titleTextView?.headLine1()
-                    descriptionTextView?.normalText()
                 }
             }
             FeatureType.PERMISSIONSUTILS_DIAGNOSIS -> {

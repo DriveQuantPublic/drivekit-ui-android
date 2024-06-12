@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.drivekit.demoapp.features.adapter.FeatureListAdapter
 import com.drivekit.demoapp.features.viewmodel.FeatureListViewModel
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 
 @SuppressLint("SourceLockedOrientationActivity")
 internal class FeatureListActivity : AppCompatActivity() {
@@ -25,7 +26,7 @@ internal class FeatureListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = getString(R.string.feature_list)
+        setActivityTitle(getString(R.string.feature_list))
 
         if (!this::viewModel.isInitialized) {
             viewModel = FeatureListViewModel()

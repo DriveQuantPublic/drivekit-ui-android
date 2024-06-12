@@ -236,8 +236,6 @@ class ChallengeListFragment : Fragment(), DriveKitChallengeListener, ChallengeLi
                     alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 titleTextView?.setText(R.string.app_name)
                 descriptionTextView?.setText(R.string.dk_challenge_not_a_participant)
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
             }
             challengeData.shouldDisplayChallengeDetail() ->
                 ChallengeDetailActivity.launchActivity(

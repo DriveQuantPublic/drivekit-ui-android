@@ -89,9 +89,6 @@ class DKSynthesisCardFragment : Fragment() {
 
                 titleTextView?.setText(R.string.app_name)
                 descriptionTextView?.text = explanation
-
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
             }
         } ?: run {
             binding.explanationContent.visibility = View.GONE

@@ -17,8 +17,6 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.ContactType
@@ -111,7 +109,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayBatteryOptimizationItem()
         displayBatteryOptimizationSection()
         displayReportSection()
-        setStyle()
     }
 
     private fun setToolbar() {
@@ -177,8 +174,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 descriptionTextView?.text = this.itemBluetooth.getDiagnosticTextKO()
                 descriptionTextView?.text =
                     this.itemBluetooth.getDiagnosticTextKO()
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
             }
         }
 
@@ -204,8 +199,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 titleTextView?.text = this.itemLocationSensor.getDiagnosisTitle()
                 descriptionTextView?.text =
                     this.itemLocationSensor.getDiagnosticTextKO()
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
             }
         }
     }
@@ -248,8 +241,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 titleTextView?.text = this.itemConnectivity.getDiagnosisTitle()
                 descriptionTextView?.text = this.itemConnectivity.getDiagnosticTextKO()
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
             }
         }
     }
@@ -291,13 +282,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 TextArg(getString(R.string.dk_perm_utils_energy_saver_android_known_brand_link_text), DKColors.secondaryColor)
             )
         }
-        this.batteryDescription.apply {
-            typeface = DriveKitUI.primaryFont(context)
-            setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(getString(brand.linkKey()))
-                startActivity(intent)
-            }
+        this.batteryDescription.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(getString(brand.linkKey()))
+            startActivity(intent)
         }
     }
 
@@ -576,21 +564,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 titleTextView?.text = getDiagnosisTitle()
                 descriptionTextView?.text = getDiagnosticTextKO()
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
             }
         }
-    }
-
-    private fun setStyle() {
-        this.summaryTitle.headLine1()
-        this.summaryDescription.normalText()
-
-        this.batteryTitle.headLine1()
-        this.batteryDescription.normalText()
-
-        this.helpTitle.headLine1()
-        this.helpDescription.normalText()
     }
 
     override fun onResume() {

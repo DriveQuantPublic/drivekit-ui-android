@@ -13,6 +13,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityPermissionsBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 
@@ -33,7 +34,7 @@ internal class PermissionsActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
 
-        title = getString(R.string.permissions_intro_header)
+        setActivityTitle(getString(R.string.permissions_intro_header))
 
         binding.textViewTitle.apply {
             text = getString(R.string.permissions_intro_title)

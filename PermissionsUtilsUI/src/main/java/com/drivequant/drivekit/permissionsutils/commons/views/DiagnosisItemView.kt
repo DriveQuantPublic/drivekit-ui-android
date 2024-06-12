@@ -136,8 +136,6 @@ class DiagnosisItemView : LinearLayout {
 
             titleTextView?.text = this.getDiagnosisTitle()
             descriptionTextView?.text = this.getDiagnosticTextOK()
-            titleTextView?.headLine1()
-            descriptionTextView?.normalText()
         }
     }
 }

@@ -15,6 +15,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityUserInfoBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 
 internal class UserInfoActivity : AppCompatActivity() {
 
@@ -38,7 +39,7 @@ internal class UserInfoActivity : AppCompatActivity() {
             viewModel = ViewModelProvider(this)[UserInfoViewModel::class.java]
         }
 
-        title = getString(R.string.user_info_header)
+        setActivityTitle(getString(R.string.user_info_header))
         binding.textViewUserInfoTitle.apply {
             text = getString(R.string.user_info_title)
             headLine1()

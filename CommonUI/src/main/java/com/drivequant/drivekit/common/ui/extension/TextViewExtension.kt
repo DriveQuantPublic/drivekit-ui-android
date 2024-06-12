@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
@@ -59,13 +60,18 @@ fun TextView.smallTextWithColor(@ColorInt textColor: Int = DKColors.mainFontColo
 
 @JvmOverloads
 fun TextView.buttonText(@ColorInt textColor: Int = DKColors.fontColorOnSecondaryColor, @ColorInt backgroundColor: Int = DKColors.secondaryColor) {
-    this.normalTextWithColor(textColor)
-    this.typeface = Typeface.DEFAULT_BOLD
-    this.isAllCaps = true
+    this.setTextColor(textColor)
     this.setBackgroundColor(backgroundColor)
+    this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
+    this.isAllCaps = true
+    this.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.resources.getDimension(DKStyle.NORMAL_TEXT.dimensionId()))
     this.isClickable = true
     this.isFocusable = true
     this.gravity = Gravity.CENTER
+    with(TypedValue()) {
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, this, true)
+        foreground = ContextCompat.getDrawable(context, resourceId)
+    }
 }
 
 fun TextView.highlightSmall() {

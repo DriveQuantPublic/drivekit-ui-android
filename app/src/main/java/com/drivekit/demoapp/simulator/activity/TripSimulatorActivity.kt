@@ -15,6 +15,7 @@ import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 
@@ -36,7 +37,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        title = getString(R.string.trip_simulator_header)
+        setActivityTitle(getString(R.string.trip_simulator_header))
 
         binding.textViewSelectTrip.highlightSmall()
         binding.textViewDescription.normalText()
@@ -138,7 +139,5 @@ internal class TripSimulatorActivity : AppCompatActivity() {
             alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
         titleTextView?.text = getString(R.string.app_name)
         descriptionTextView?.text = getString(errorMessageResId)
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 }
