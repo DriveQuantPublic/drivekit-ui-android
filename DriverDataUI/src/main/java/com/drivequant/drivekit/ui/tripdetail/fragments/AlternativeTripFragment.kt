@@ -17,7 +17,7 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.AlternativeTripViewModel
 
 internal class AlternativeTripFragment : Fragment() {
 
-    private lateinit var trip: Trip
+    private var trip: Trip? = null
     private lateinit var viewModel: AlternativeTripViewModel
     private var _binding: DkAlternativeTripFragmentBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
@@ -49,13 +49,19 @@ internal class AlternativeTripFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!this::trip.isInitialized) {
-            (savedInstanceState?.getString("itinId"))?.let { itinId ->
-                DbTripAccess.findTrip(itinId).executeOneTrip()?.toTrip()?.let {
-                    trip = it
-                }
+
+        (savedInstanceState?.getString("itinId"))?.let { itinId ->
+            DbTripAccess.findTrip(itinId).executeOneTrip()?.toTrip()?.let {
+                this.trip = it
             }
         }
+
+        val trip = this.trip
+        if (trip == null) {
+            activity?.finish()
+            return
+        }
+
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(
                 this,
@@ -96,6 +102,8 @@ internal class AlternativeTripFragment : Fragment() {
     }
 
     private fun launchTransportationMode() {
-        TransportationModeActivity.launchActivity(context as Activity, trip.itinId)
+        trip?.let {
+            TransportationModeActivity.launchActivity(context as Activity, it.itinId)
+        }
     }
 }

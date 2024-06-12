@@ -46,12 +46,8 @@ class TripTimelineFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::tripDetailViewModel.isInitialized) {
             outState.putSerializable("itinId", tripDetailViewModel.getItinId())
-            outState.putSerializable(
-                "tripListConfigurationType",
-                tripDetailViewModel.getTripListConfigurationType()
-            )
+            outState.putSerializable("tripListConfigurationType", tripDetailViewModel.getTripListConfigurationType())
         }
-
         super.onSaveInstanceState(outState)
     }
 
@@ -68,8 +64,12 @@ class TripTimelineFragment : Fragment() {
             )[TripDetailViewModel::class.java]
         }
 
-        binding.timelineList.layoutManager =
-            LinearLayoutManager(requireContext())
+        if (!this::tripDetailViewModel.isInitialized) {
+            activity?.finish()
+            return
+        }
+
+        binding.timelineList.layoutManager = LinearLayoutManager(requireContext())
         binding.timelineList.adapter = TripTimelineAdapter(tripDetailViewModel.getTripEvents(), object : OnItemClickListener {
             override fun onItemClicked(position: Int) {
                 tripDetailViewModel.getSelectedEvent().postValue(position)

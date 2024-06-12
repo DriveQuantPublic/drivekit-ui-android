@@ -1,5 +1,10 @@
 package com.drivequant.drivekit.common.ui.utils
 
+import java.text.SimpleDateFormat
+import java.util.Locale
+
+
+private val dateFormatByPattern = mutableMapOf<DKDatePattern, SimpleDateFormat>()
 
 enum class DKDatePattern {
     WEEK_LETTER,
@@ -40,5 +45,9 @@ enum class DKDatePattern {
         YEAR -> "yyyy"
         DAY -> "EEEE"
         MONTH -> "M"
+    }
+
+    fun getSimpleDateFormat(): SimpleDateFormat = dateFormatByPattern.getOrPut(this) {
+        SimpleDateFormat(this.getPattern(), Locale.getDefault())
     }
 }

@@ -3,52 +3,46 @@ package com.drivequant.drivekit.common.ui.component.triplist.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 
-internal class TripInfoView : LinearLayout {
+internal class TripInfoView(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
-    constructor(context: Context, trip: DKTripListItem) : super(context) {
-        init(trip)
+    companion object {
+        fun new(context: Context): TripInfoView {
+            val view = View.inflate(context, R.layout.trip_info_item, null) as TripInfoView
+            return view
+        }
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    private lateinit var tripInfoImageView: ImageView
+    private lateinit var tripInfoTextView: TextView
 
-    private fun init(trip: DKTripListItem) {
-        val view = View.inflate(context, R.layout.trip_info_item, null)
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        tripInfoImageView = findViewById(R.id.image_view_trip_info)
+        tripInfoTextView = findViewById(R.id.text_view_trip_info)
+    }
 
-        val tripInfoImageView: ImageView = view.findViewById(R.id.image_view_trip_info)
-        val tripInfoTextView: TextView = view.findViewById(R.id.text_view_trip_info)
-
+    fun update(trip: DKTripListItem) {
         trip.infoImageResource()?.let {
             tripInfoImageView.setImageResource(it)
+        } ?: run {
+            tripInfoImageView.setImageDrawable(null)
         }
 
-        trip.infoText(context)?.let {
-            tripInfoTextView.apply {
-                visibility = View.VISIBLE
-                text = it
-            }
-        } ?: run {
-            tripInfoTextView.visibility = View.GONE
-        }
-        view.setOnClickListener {
+        tripInfoTextView.text = trip.infoText(context)
+
+        setOnClickListener {
             if (trip.hasInfoActionConfigured()) {
                 trip.infoClickAction(context)
             } else {
                 DriveKitNavigationController.driverDataUIEntryPoint?.startTripDetailActivity(context, trip.getItinId())
             }
         }
-        addView(
-            view, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        )
     }
 }

@@ -94,9 +94,9 @@ internal class DrivingConditionsFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
         this.selectedDate?.let { outState.putLong(SELECTED_DATE_ID_EXTRA, it.time) }
+        super.onSaveInstanceState(outState)
     }
 
     override fun onResume() {

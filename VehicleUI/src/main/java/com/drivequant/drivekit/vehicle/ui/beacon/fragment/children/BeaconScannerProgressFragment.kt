@@ -52,12 +52,12 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         if (this::viewModel.isInitialized) {
             outState.putSerializable("scanType", viewModel.scanType)
             outState.putString("vehicleId", viewModel.vehicleId)
             outState.putSerializable("beacon", viewModel.beacon)
         }
+        super.onSaveInstanceState(outState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

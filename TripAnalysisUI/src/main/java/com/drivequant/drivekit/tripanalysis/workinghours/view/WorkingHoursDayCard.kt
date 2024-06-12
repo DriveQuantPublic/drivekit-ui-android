@@ -71,7 +71,7 @@ internal class WorkingHoursDayCard : FrameLayout {
         labelDay.apply {
             val cal = Calendar.getInstance(Locale.getDefault())
             cal[Calendar.DAY_OF_WEEK] = dayConfig.day.toDay()
-            text = SimpleDateFormat("E", Locale.getDefault()).format(cal.time)
+            text = DKDatePattern.YEAR_ONLY.getSimpleDateFormat().format(cal.time)
             typeface = DriveKitUI.primaryFont(context)
         }
 

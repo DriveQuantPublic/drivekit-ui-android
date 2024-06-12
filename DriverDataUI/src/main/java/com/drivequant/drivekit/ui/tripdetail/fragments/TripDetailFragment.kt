@@ -60,7 +60,7 @@ class TripDetailFragment : Fragment() {
 
     private lateinit var viewModel: TripDetailViewModel
 
-    private lateinit var itinId: String
+    private var itinId: String? = null
     private var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
     private var openAdvice: Boolean = false
 
@@ -137,8 +137,15 @@ class TripDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trips_detail), javaClass.simpleName)
         savedInstanceState?.getString("itinId")?.let{
-            itinId = it
+            this.itinId = it
         }
+
+        val itinId = this.itinId
+        if (itinId == null) {
+            activity?.finish()
+            return
+        }
+
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(this,
                 TripDetailViewModelFactory(itinId, tripListConfiguration)
@@ -156,7 +163,9 @@ class TripDetailFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("itinId", itinId)
+        this.itinId?.let {
+            outState.putString("itinId", it)
+        }
         super.onSaveInstanceState(outState)
     }
 

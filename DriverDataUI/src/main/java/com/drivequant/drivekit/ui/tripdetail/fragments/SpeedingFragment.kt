@@ -48,10 +48,7 @@ internal class SpeedingFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
             outState.putSerializable("itinId", viewModel.getItinId())
-            outState.putSerializable(
-                "tripListConfigurationType",
-                viewModel.getTripListConfigurationType()
-            )
+            outState.putSerializable("tripListConfigurationType", viewModel.getTripListConfigurationType())
         }
         super.onSaveInstanceState(outState)
     }
@@ -66,11 +63,13 @@ internal class SpeedingFragment : Fragment() {
         if (itinId != null && tripListConfigurationType != null) {
             viewModel = ViewModelProvider(
                 this,
-                TripDetailViewModelFactory(
-                    itinId,
-                    tripListConfigurationType.getTripListConfiguration()
-                )
+                TripDetailViewModelFactory(itinId, tripListConfigurationType.getTripListConfiguration())
             )[TripDetailViewModel::class.java]
+        }
+
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
         }
 
         binding.gaugeTypeTitle.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_speed)

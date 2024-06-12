@@ -26,7 +26,7 @@ class SynthesisFragment : Fragment() {
         }
     }
 
-    private lateinit var trip: Trip
+    private var trip: Trip? = null
     private lateinit var viewModel: SynthesisViewModel
 
     override fun onCreateView(
@@ -39,14 +39,22 @@ class SynthesisFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("trip", trip)
+        this.trip?.let {
+            outState.putSerializable("trip", it)
+        }
         super.onSaveInstanceState(outState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.getSerializableCompat("trip", Trip::class.java)?.let {
-            trip = it
+            this.trip = it
+        }
+
+        val trip = this.trip
+        if (trip == null) {
+            activity?.finish()
+            return
         }
 
         if (!this::viewModel.isInitialized){

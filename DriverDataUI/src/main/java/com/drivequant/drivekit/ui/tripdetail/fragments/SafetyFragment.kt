@@ -29,7 +29,7 @@ class SafetyFragment : Fragment() {
         }
     }
 
-    private lateinit var safety: Safety
+    private var safety: Safety? = null
     private lateinit var viewModel: SafetyViewModel
     private var _binding: SafetyFragmentBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
@@ -44,7 +44,9 @@ class SafetyFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("safety", safety)
+        this.safety?.let {
+            outState.putSerializable("safety", it)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -53,9 +55,13 @@ class SafetyFragment : Fragment() {
         savedInstanceState?.getSerializableCompat("safety", Safety::class.java)?.let{
             safety = it
         }
-        viewModel = ViewModelProvider(this,
-            SafetyViewModelFactory(safety)
-        )[SafetyViewModel::class.java]
+
+        val safety = this.safety
+        if (safety == null) {
+            activity?.finish()
+            return
+        }
+        viewModel = ViewModelProvider(this, SafetyViewModelFactory(safety))[SafetyViewModel::class.java]
 
         binding.gaugeTypeTitle.text = context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_safety)
         binding.accelDescription.text = context?.getString(R.string.dk_driverdata_safety_accel)

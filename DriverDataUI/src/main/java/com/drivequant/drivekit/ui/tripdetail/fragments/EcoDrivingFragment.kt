@@ -41,7 +41,9 @@ class EcoDrivingFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("viewModel", viewModel)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -49,6 +51,11 @@ class EcoDrivingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.getSerializableCompat("viewModel", EcoDrivingViewModel::class.java)?.let {
             viewModel = it
+        }
+
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
         }
 
         binding.scoreGauge.configure(viewModel.getScore(), GaugeConfiguration.ECO_DRIVING(viewModel.getScore()), Typeface.BOLD)

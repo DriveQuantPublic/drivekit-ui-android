@@ -45,7 +45,9 @@ class UnscoredTripFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("viewModel", viewModel)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -54,6 +56,11 @@ class UnscoredTripFragment : Fragment() {
 
         savedInstanceState?.getSerializableCompat("viewModel", UnscoredTripViewModel::class.java)?.let {
             viewModel = it
+        }
+
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
         }
 
         binding.tripDuration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!).convertToString()
