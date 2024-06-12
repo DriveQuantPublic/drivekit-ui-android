@@ -100,7 +100,6 @@
                     android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                     android:layout_marginVertical="@dimen/dk_margin_half"
                     android:text="@string/dk_common_delete"
-                    android:textColor="@color/secondaryColor"
                     android:visibility="gone" />
             </LinearLayout>
 

@@ -58,8 +58,7 @@
                 android:id="@+id/button_cancel_account_deletion"
                 style="@style/DKButton"
                 android:layout_marginTop="@dimen/dk_margin"
-                android:text="@string/dk_common_cancel"
-                android:textColor="@android:color/white" />
+                android:text="@string/dk_common_cancel" />
 
             <TextView
                 android:id="@+id/button_delete_account"
