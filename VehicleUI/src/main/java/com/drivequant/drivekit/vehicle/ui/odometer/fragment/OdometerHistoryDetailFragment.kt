@@ -15,8 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -120,13 +118,9 @@ class OdometerHistoryDetailFragment : Fragment() {
             smallText()
             text = viewModel.getVehicleFormattedName(context)
         }
-        VehicleUtils().getVehicleDrawable(context, vehicleId)?.let { drawable ->
-            Glide.with(context)
-                .load(drawable)
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(drawable)
-                .into(binding.spinnerItem.imageItem)
-        }
+
+        val drawable = VehicleUtils.getFilterVehicleDrawable(vehicleId)
+        binding.spinnerItem.imageItem.setImageResource(drawable)
     }
 
     private fun initMileageRecord(context: Context) {

@@ -19,7 +19,6 @@ buildscript {
         play_services_maps = '18.2.0'
         swipe_refresh_layout = '1.1.0'
 
-        glide = '4.14.2'
         mp_chart = 'v3.1.0'
     }
 }
