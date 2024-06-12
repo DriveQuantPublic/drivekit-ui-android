@@ -11,6 +11,8 @@ import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 
 object DriveKitUI {
     internal const val TAG = "DriveKit UI"
+    private var primaryFont: Typeface? = null
+    private var secondaryFont: Typeface? = null
 
     var analyticsListener: DriveKitAnalyticsListener? = null
         private set
@@ -43,8 +45,22 @@ object DriveKitUI {
     }
 
     @JvmStatic
-    fun primaryFont(context: Context): Typeface? = ResourcesCompat.getFont(context, R.font.dkprimary)
+    fun primaryFont(context: Context): Typeface? {
+        var primaryFont = this.primaryFont
+        if (primaryFont == null) {
+            primaryFont = ResourcesCompat.getFont(context, R.font.dkprimary)
+            this.primaryFont = primaryFont
+        }
+        return primaryFont
+    }
 
     @JvmStatic
-    fun secondaryFont(context: Context): Typeface? = ResourcesCompat.getFont(context, R.font.dksecondary)
+    fun secondaryFont(context: Context): Typeface? {
+        var secondaryFont = this.secondaryFont
+        if (secondaryFont == null) {
+            secondaryFont = ResourcesCompat.getFont(context, R.font.dksecondary)
+            this.secondaryFont = secondaryFont
+        }
+        return secondaryFont
+    }
 }

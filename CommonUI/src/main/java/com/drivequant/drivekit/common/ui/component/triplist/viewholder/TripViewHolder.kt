@@ -39,6 +39,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     private val imageView = itemView.findViewById<ImageView>(R.id.no_score_view)
     private val circleTop = itemView.findViewById<ImageView>(R.id.image_circle_top)
     private val circleBottom = itemView.findViewById<ImageView>(R.id.image_circle_bottom)
+    private var tripInfoView: TripInfoView? = null
 
     fun bind(trip: DKTripListItem, tripData: TripData, isLastChild: Boolean, addHorizontalPadding: Boolean = false) {
         if (addHorizontalPadding) {
@@ -131,15 +132,15 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
 
     private fun computeTripInfo(trip: DKTripListItem) {
         if (trip.isInfoDisplayable()) {
-            tripInfoContainer.addView(
-                TripInfoView(
-                    itemView.context,
-                    trip
-                )
-            )
+            var tripInfoView = this.tripInfoView
+            if (tripInfoView == null) {
+                tripInfoView = TripInfoView.new(itemView.context)
+                this.tripInfoView = tripInfoView
+                tripInfoContainer.addView(tripInfoView)
+            }
+            tripInfoView.update(trip)
             tripInfoContainer.visibility = View.VISIBLE
         } else {
-            tripInfoContainer.removeAllViews()
             tripInfoContainer.visibility = View.INVISIBLE
         }
     }

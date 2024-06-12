@@ -17,9 +17,10 @@ import kotlin.text.Typography.nbsp
 
 object DKDataFormatter {
 
+    private val numberFormat = NumberFormat.getNumberInstance()
+
     @JvmOverloads
     fun formatNumber(value: Number, maximumFractionDigits: Int? = null): String {
-        val numberFormat = NumberFormat.getNumberInstance()
         if (maximumFractionDigits != null) {
             numberFormat.maximumFractionDigits = maximumFractionDigits
         }

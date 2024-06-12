@@ -17,9 +17,7 @@ import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 fun List<Trip>.computeAverageScore(scoreType: DKScoreType): Double =
     if (this.isEmpty()) {
@@ -39,8 +37,8 @@ fun List<Trip>.computeAverageScore(scoreType: DKScoreType): Double =
     }
 
 fun List<Trip>.computeActiveDays(): Int {
-    val sdf = SimpleDateFormat(DKDatePattern.STANDARD_DATE.getPattern(), Locale.getDefault())
-    return this.distinctBy { it.endDate.formatDateWithPattern(sdf) }.size
+    val simpleDateFormat = DKDatePattern.STANDARD_DATE.getSimpleDateFormat()
+    return this.distinctBy { it.endDate.formatDateWithPattern(simpleDateFormat) }.size
 }
 
 fun List<Trip>.computeTotalDistance(): Double {

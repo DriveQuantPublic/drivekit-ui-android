@@ -20,16 +20,19 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var strokeSize = 0F
     private var gaugeColor = Color.argb(0, 0, 0, 0)
     private var backGaugeColor = Color.argb(0, 0, 0, 0)
+    private val transparentPaint = createPaint(Color.argb(0, 0, 0, 0))
+    private lateinit var paint: Paint
+    private lateinit var backPaint: Paint
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         calculateDrawableArea()
 
         if (openAngle != 0F) {
-            canvas.drawArc(drawingArea, 270F, openAngle, false, createPaint(Color.argb(0, 0, 0, 0)))
+            canvas.drawArc(drawingArea, 270F, openAngle, false, transparentPaint)
         }
-        canvas.drawArc(drawingArea, startAngle, 360F - openAngle, false, createPaint(backGaugeColor))
-        canvas.drawArc(drawingArea, startAngle, computePercent(), false, createPaint(gaugeColor))
+        canvas.drawArc(drawingArea, startAngle, 360F - openAngle, false, getBackPaint())
+        canvas.drawArc(drawingArea, startAngle, computePercent(), false, getPaint())
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -59,11 +62,13 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun setGaugeColor(color: Int) {
         this.gaugeColor = color
+        updatePaint()
         invalidate()
     }
 
     fun setBackGaugeColor(color: Int) {
         this.backGaugeColor = color
+        updateBackPaint()
         invalidate()
     }
 
@@ -83,6 +88,26 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun computePercent() = ((360 - openAngle) * score / maxScore).toFloat()
+
+    private fun getPaint(): Paint {
+        if (!this::paint.isInitialized) {
+            updatePaint()
+        }
+        return this.paint
+    }
+    private fun updatePaint() {
+        this.paint = createPaint(this.gaugeColor)
+    }
+
+    private fun getBackPaint(): Paint {
+        if (!this::backPaint.isInitialized) {
+            updateBackPaint()
+        }
+        return this.backPaint
+    }
+    private fun updateBackPaint() {
+        this.backPaint = createPaint(this.backGaugeColor)
+    }
 
     private fun createPaint(color: Int): Paint {
         val paint = Paint()
