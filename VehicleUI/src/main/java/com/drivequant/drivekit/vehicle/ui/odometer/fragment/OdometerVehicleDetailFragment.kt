@@ -111,7 +111,6 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
     private fun initVehicle(context: Context) {
         binding.spinnerItem.imageItem.setImageResource(viewModel.getVehicleDrawableRes())
-        }
         binding.spinnerItem.textViewItemDisplayName.text = viewModel.getVehicleDisplayName(context)
     }
 
