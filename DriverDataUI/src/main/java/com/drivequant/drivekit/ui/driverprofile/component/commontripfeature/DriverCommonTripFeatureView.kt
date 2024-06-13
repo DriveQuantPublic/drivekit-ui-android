@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
@@ -33,6 +34,8 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         val noDataColor = DKColors.complementaryFontColor
         // Title.
         this.titleView.setText(viewModel.titleId)
+        this.titleView.headLine2()
+
         // Distance.
         this.distanceView.text = DKResource.buildString(
             context,
