@@ -138,55 +138,87 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dk_text_medium</item>
     </style>
-    <style name="Headline1.Primary" parent="DKPrimaryFont" />
-    <style name="Headline1.Secondary" parent="DKSecondaryFont" />
+    <style name="Headline1.Primary" parent="Headline1">
+        <item name="android:fontFamily">@font/dkprimary</item>
+    </style>
+    <style name="Headline1.Secondary" parent="Headline1">
+        <item name="android:fontFamily">@font/dksecondary</item>
+    </style>
 
     <style name="Headline2">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dk_text_normal</item>
     </style>
-    <style name="Headline2.Primary" parent="DKPrimaryFont" />
-    <style name="Headline2.Secondary" parent="DKSecondaryFont" />
+    <style name="Headline2.Primary" parent="Headline2">
+        <item name="android:fontFamily">@font/dkprimary</item>
+    </style>
+    <style name="Headline2.Secondary" parent="Headline2">
+        <item name="android:fontFamily">@font/dksecondary</item>
+    </style>
 
     <style name="BigText">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dk_text_medium</item>
     </style>
-    <style name="BigText.Primary" parent="DKPrimaryFont" />
-    <style name="BigText.Secondary" parent="DKSecondaryFont" />
+    <style name="BigText.Primary" parent="BigText">
+        <item name="android:fontFamily">@font/dkprimary</item>
+    </style>
+    <style name="BigText.Secondary" parent="BigText">
+        <item name="android:fontFamily">@font/dksecondary</item>
+    </style>
 
     <style name="NormalText">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dk_text_normal</item>
     </style>
-    <style name="NormalText.Primary" parent="DKPrimaryFont" />
-    <style name="NormalText.Secondary" parent="DKSecondaryFont" />
+    <style name="NormalText.Primary" parent="NormalText">
+        <item name="android:fontFamily">@font/dkprimary</item>
+    </style>
+    <style name="NormalText.Secondary" parent="NormalText">
+        <item name="android:fontFamily">@font/dksecondary</item>
+    </style>
 
     <style name="SmallText">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dk_text_small</item>
     </style>
-    <style name="SmallText.Primary" parent="DKPrimaryFont" />
-    <style name="SmallText.Secondary" parent="DKSecondaryFont" />
+    <style name="SmallText.Primary" parent="SmallText">
+        <item name="android:fontFamily">@font/dkprimary</item>
+    </style>
+    <style name="SmallText.Secondary" parent="SmallText">
+        <item name="android:fontFamily">@font/dksecondary</item>
+    </style>
 
     <style name="HighlightBig">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dk_text_xxbig</item>
     </style>
-    <style name="HighlightBig.Primary" parent="DKPrimaryFont" />
-    <style name="HighlightBig.Secondary" parent="DKSecondaryFont" />
+    <style name="HighlightBig.Primary" parent="HighlightBig">
+        <item name="android:fontFamily">@font/dkprimary</item>
+    </style>
+    <style name="HighlightBig.Secondary" parent="HighlightBig">
+        <item name="android:fontFamily">@font/dksecondary</item>
+    </style>
 
     <style name="HighlightNormal">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dk_text_xbig</item>
     </style>
-    <style name="HighlightNormal.Primary" parent="DKPrimaryFont" />
-    <style name="HighlightNormal.Secondary" parent="DKSecondaryFont" />
+    <style name="HighlightNormal.Primary" parent="HighlightNormal">
+        <item name="android:fontFamily">@font/dkprimary</item>
+    </style>
+    <style name="HighlightNormal.Secondary" parent="HighlightNormal">
+        <item name="android:fontFamily">@font/dksecondary</item>
+    </style>
 
     <style name="HighlightSmall">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dk_text_big</item>
     </style>
-    <style name="HighlightSmall.Primary" parent="DKPrimaryFont" />
-    <style name="HighlightSmall.Secondary" parent="DKSecondaryFont" />
+    <style name="HighlightSmall.Primary" parent="HighlightSmall">
+        <item name="android:fontFamily">@font/dkprimary</item>
+    </style>
+    <style name="HighlightSmall.Secondary" parent="HighlightSmall">
+        <item name="android:fontFamily">@font/dksecondary</item>
+    </style>
 </resources>
