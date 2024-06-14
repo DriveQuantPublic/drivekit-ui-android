@@ -1,14 +1,23 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.text.TextUtils
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
+import java.io.FileNotFoundException
 
 
 object VehicleUtils {
@@ -72,4 +81,23 @@ object VehicleUtils {
     @DrawableRes
     fun getFilterVehicleDrawable(vehicle: Vehicle?) =
         vehicle?.getImageByTypeIndex() ?: com.drivequant.drivekit.common.ui.R.drawable.dk_my_trips
+
+    fun getVehicleDrawable(context: Context, vehicleId: String): Drawable? {
+        val defaultVehicleDrawable = ResourcesCompat.getDrawable(context.resources, getFilterVehicleDrawable(vehicleId), null)
+
+        val imageUri = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))
+        return if (!TextUtils.isEmpty(imageUri)) {
+            try {
+                val uri = Uri.parse(imageUri)
+                val stream = context.contentResolver.openInputStream(uri)
+                val b = BitmapFactory.decodeStream(stream)
+                b.density = Bitmap.DENSITY_NONE
+                BitmapDrawable(context.resources, b)
+            } catch (e: FileNotFoundException){
+                defaultVehicleDrawable
+            }
+        } else {
+            defaultVehicleDrawable
+        }
+    }
 }

@@ -214,10 +214,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
                     return vehicle.vehicleId
                 }
 
-                override fun getImage(context: Context): Drawable? = ContextCompat.getDrawable(
-                    context,
-                    VehicleUtils.getFilterVehicleDrawable(vehicle)
-                )
+                override fun getImage(context: Context): Drawable? = VehicleUtils.getVehicleDrawable(context, vehicle.vehicleId)
 
                 override fun getTitle(context: Context): String {
                     return vehicle.buildFormattedName(context)
