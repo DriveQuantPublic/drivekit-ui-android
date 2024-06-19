@@ -119,8 +119,8 @@ class OdometerHistoryDetailFragment : Fragment() {
             text = viewModel.getVehicleFormattedName(context)
         }
 
-        val drawable = VehicleUtils.getFilterVehicleDrawable(vehicleId)
-        binding.spinnerItem.imageItem.setImageResource(drawable)
+        val drawable = VehicleUtils.getVehicleDrawable(context, vehicleId)
+        binding.spinnerItem.imageItem.setImageDrawable(drawable)
     }
 
     private fun initMileageRecord(context: Context) {

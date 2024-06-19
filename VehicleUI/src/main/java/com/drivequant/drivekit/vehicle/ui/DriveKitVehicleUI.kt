@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.util.Log
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
@@ -214,10 +213,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
                     return vehicle.vehicleId
                 }
 
-                override fun getImage(context: Context): Drawable? = ContextCompat.getDrawable(
-                    context,
-                    VehicleUtils.getFilterVehicleDrawable(vehicle)
-                )
+                override fun getImage(context: Context): Drawable? = VehicleUtils.getVehicleDrawable(context, vehicle.vehicleId)
 
                 override fun getTitle(context: Context): String {
                     return vehicle.buildFormattedName(context)

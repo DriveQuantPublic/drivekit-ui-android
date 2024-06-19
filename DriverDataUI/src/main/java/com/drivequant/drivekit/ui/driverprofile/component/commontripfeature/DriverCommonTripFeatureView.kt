@@ -33,6 +33,7 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         val noDataColor = DKColors.complementaryFontColor
         // Title.
         this.titleView.setText(viewModel.titleId)
+
         // Distance.
         this.distanceView.text = DKResource.buildString(
             context,
