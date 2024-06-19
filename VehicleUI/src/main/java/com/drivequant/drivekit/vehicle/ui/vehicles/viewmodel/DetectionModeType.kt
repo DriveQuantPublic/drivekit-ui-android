@@ -8,11 +8,12 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -93,18 +94,18 @@ enum class DetectionModeType(
             }
         }
         val parameteredString = stringIdentifier?.let {
-            DKResource.buildString(context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.mainFontColor(), it, parameter)
+            DKResource.buildString(context, DKColors.mainFontColor, DKColors.mainFontColor, it, parameter)
         } ?: ""
 
-        return if (configured){
+        return if (configured) {
             DKSpannable().append(parameteredString, context.resSpans {
-                color(DriveKitUI.colors.complementaryFontColor())
+                color(DKColors.complementaryFontColor)
                 typeface(Typeface.NORMAL)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
             }).toSpannable()
         } else {
             DKSpannable().append(parameteredString, context.resSpans {
-                color(DriveKitUI.colors.criticalColor())
+                color(DKColors.criticalColor)
                 typeface(BOLD)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
             }).toSpannable()
@@ -118,12 +119,12 @@ enum class DetectionModeType(
         }
     }
 
-    fun onConfigureButtonClicked(context: Context, viewModel : VehiclesListViewModel, vehicle: Vehicle){
+    fun onConfigureButtonClicked(context: Context, viewModel : VehiclesListViewModel, vehicle: Vehicle) {
         if (vehicle.isConfigured()){
             displayConfigAlertDialog(context, viewModel, vehicle)
         } else {
             val vehicleName = vehicle.buildFormattedName(context)
-            when (this){
+            when (this) {
                 BEACON -> BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId)
                 BLUETOOTH -> BluetoothActivity.launchActivity(context, vehicle.vehicleId, vehicleName)
                 else -> { }
@@ -159,8 +160,8 @@ enum class DetectionModeType(
         val gpsVehicle = viewModel.vehiclesList.first { it.detectionMode == DetectionMode.GPS }
         val title = context.getString(R.string.app_name)
         val message = DKResource.buildString(context,
-            DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),
+            DKColors.mainFontColor,
+            DKColors.mainFontColor,
             R.string.dk_vehicle_gps_already_exists_confirm,
             getEnumByDetectionMode(detectionMode).getTitle(context),
             vehicle.buildFormattedName(context),
@@ -185,8 +186,6 @@ enum class DetectionModeType(
 
         titleTextView?.text = title
         descriptionTextView?.text = message
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
     private fun displayConfigAlertDialog(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
@@ -200,22 +199,17 @@ enum class DetectionModeType(
         val description = alert.findViewById<TextView>(R.id.alert_dialog_description)
         val verify = alert.findViewById<TextView>(R.id.text_view_verify)
         val replace = alert.findViewById<TextView>(R.id.text_view_replace)
-        val delete= alert.findViewById<TextView>(R.id.text_view_delete)
-        val separatorDescription = alert.findViewById<View>(R.id.view_separator_description)
+        val delete = alert.findViewById<TextView>(R.id.text_view_delete)
         val separatorVerify = alert.findViewById<View>(R.id.view_separator_verify)
-        val separatorReplace = alert.findViewById<View>(R.id.view_separator_replace)
 
-        val primaryColor = DriveKitUI.colors.primaryColor()
-        val neutralColor = DriveKitUI.colors.neutralColor()
         title?.run {
             if (configureButtonText != null) {
                 setText(configureButtonText)
             } else {
                 text = ""
             }
+            normalText()
         }
-        title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
-        title?.setBackgroundColor(primaryColor)
 
         description?.run {
             if (configureDescText != null) {
@@ -223,16 +217,12 @@ enum class DetectionModeType(
             } else {
                 text = ""
             }
+            normalTextWithColor()
         }
-        description?.normalText()
 
-        verify?.headLine2(primaryColor)
-        replace?.headLine2(primaryColor)
-        delete?.headLine2(primaryColor)
-
-        separatorDescription?.setBackgroundColor(neutralColor)
-        separatorVerify?.setBackgroundColor(neutralColor)
-        separatorReplace?.setBackgroundColor(neutralColor)
+        verify?.headLine2()
+        replace?.headLine2()
+        delete?.headLine2()
 
         val vehicleName = viewModel.getTitle(context, vehicle)
 
@@ -240,8 +230,8 @@ enum class DetectionModeType(
             BEACON -> {
                 description?.text = if (configureDescText != null) {
                     DKResource.buildString(
-                        context, DriveKitUI.colors.mainFontColor(),
-                        DriveKitUI.colors.mainFontColor(), configureDescText, vehicleName
+                        context, DKColors.mainFontColor,
+                        DKColors.mainFontColor, configureDescText, vehicleName
                     )
                 } else {
                     ""
@@ -284,8 +274,8 @@ enum class DetectionModeType(
                 separatorVerify?.visibility = View.GONE
                 description?.text = if (configureDescText != null) {
                     DKResource.buildString(
-                        context, DriveKitUI.colors.mainFontColor(),
-                        DriveKitUI.colors.mainFontColor(), configureDescText, vehicleName
+                        context, DKColors.mainFontColor,
+                        DKColors.mainFontColor, configureDescText, vehicleName
                     )
                 } else {
                     ""

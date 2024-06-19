@@ -13,12 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:padding="@dimen/dk_margin_half">
+        style="@style/DKCardPadding">
 
         <ImageView
             android:layout_width="@dimen/dk_ic_big"
             android:layout_height="@dimen/dk_ic_big"
-            android:layout_marginStart="@dimen/dk_margin"
             android:layout_marginEnd="@dimen/dk_margin"
             android:src="@drawable/dk_common_eco_accel" />
 
@@ -30,21 +29,20 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="viewEnd"
+            android:textColor="@color/mainFontColor"
             tools:text="330 000 km"
-            tools:textColor="#000"
             tools:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_view_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dk_margin"
             android:layout_weight="1.6"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="viewEnd"
+            android:textColor="@color/complementaryFontColor"
             tools:text="Dimanche 14 Décembre 2019"
-            tools:textColor="#000"
             tools:textSize="12sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

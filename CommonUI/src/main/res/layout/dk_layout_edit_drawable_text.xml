@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dk_editable_drawable_text_background"
     android:orientation="horizontal"
     android:padding="@dimen/dk_margin_half"
     tools:viewBindingIgnore="true">

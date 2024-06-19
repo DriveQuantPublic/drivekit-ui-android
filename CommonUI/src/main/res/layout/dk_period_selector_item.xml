@@ -12,5 +12,6 @@
         android:background="@drawable/dk_period_selector_rounded_edges"
         android:gravity="center"
         android:paddingStart="@dimen/dk_margin_double"
-        android:paddingEnd="@dimen/dk_margin_double" />
+        android:paddingEnd="@dimen/dk_margin_double"
+        android:textColor="@color/mainFontColor" />
 </LinearLayout>

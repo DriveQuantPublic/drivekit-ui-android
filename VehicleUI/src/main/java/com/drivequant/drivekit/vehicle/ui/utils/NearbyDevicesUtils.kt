@@ -13,9 +13,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
@@ -75,7 +75,7 @@ internal object NearbyDevicesUtils {
 
         title?.text = DKResource.buildString(
             activity,
-            DriveKitUI.colors.mainFontColor(),
+            DKColors.mainFontColor,
             com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby
         )
         title?.headLine1()

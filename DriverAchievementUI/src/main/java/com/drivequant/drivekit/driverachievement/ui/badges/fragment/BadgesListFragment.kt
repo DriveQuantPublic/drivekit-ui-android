@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.IntArg
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
@@ -94,11 +95,11 @@ class BadgesListFragment : Fragment() {
                 this.badgeCounterTitle.text = DKResource.buildString(
                     context = context,
                     string = resources.getQuantityString(R.plurals.dk_badge_earned_badges_number_title, statistics.acquired),
-                    textColor = DriveKitUI.colors.primaryColor(),
+                    textColor = DKColors.primaryColor,
                     textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium,
                     IntArg(
                         statistics.acquired,
-                        color = DriveKitUI.colors.primaryColor(),
+                        color = DKColors.primaryColor,
                         size = com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium
                     )
                 )

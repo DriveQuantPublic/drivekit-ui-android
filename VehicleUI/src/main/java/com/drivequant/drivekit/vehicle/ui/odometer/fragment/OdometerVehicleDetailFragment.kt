@@ -11,12 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.vehicle.ui.R
@@ -52,7 +47,6 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         vehicleId?.let {
             outState.putString("vehicleIdTag", it)
         }
@@ -114,13 +108,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     }
 
     private fun initVehicle(context: Context) {
-        viewModel.getVehicleDrawable(context)?.let { drawable ->
-            Glide.with(context)
-                .load(drawable)
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(drawable)
-                .into(binding.spinnerItem.imageItem)
-        }
+        binding.spinnerItem.imageItem.setImageResource(viewModel.getVehicleDrawableRes())
         binding.spinnerItem.textViewItemDisplayName.text = viewModel.getVehicleDisplayName(context)
     }
 
@@ -173,9 +161,6 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
             alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
         titleTextView?.text = alertDialogData.first
         descriptionTextView?.text = alertDialogData.second
-
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
 
@@ -184,8 +169,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppCompatActivity.RESULT_OK && (
             requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_HISTORY_LIST_REQUEST_CODE ||
-            requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE ||
-            requestCode == OdometerHistoriesListActivity.UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE)) {
+            requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE)) {
             initVehicleOdometerDetail()
             val intentData = Intent()
             activity?.setResult(Activity.RESULT_OK, intentData)

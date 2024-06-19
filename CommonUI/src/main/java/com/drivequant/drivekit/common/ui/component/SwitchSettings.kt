@@ -39,15 +39,14 @@ class SwitchSettings : LinearLayout {
         }
 
         textViewTitle.apply {
-            bigText(DriveKitUI.colors.primaryColor())
+            bigText()
             setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
         }
 
         textViewDescription.apply {
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
             setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
         }
-
 
         addView(
             view, ViewGroup.LayoutParams(

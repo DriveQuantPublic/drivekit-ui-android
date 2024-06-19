@@ -129,8 +129,6 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 viewModel.challenge?.optinText?.let {
                     descriptionTextView?.text = it
                 }
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
             }
         }
     }

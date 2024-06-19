@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.DriverDistractionFragmentBinding
@@ -42,7 +41,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = DriverDistractionFragmentBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
@@ -66,6 +65,11 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
                     TripDetailViewModelFactory(itinId, tripListConfigurationType.getTripListConfiguration())
                 )[TripDetailViewModel::class.java]
             }
+        }
+
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
         }
 
         binding.phoneCallSelector.apply {
@@ -100,8 +104,8 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             if (viewModel.hasScreenUnlocking()) {
                 DKResource.buildString(
                     requireContext(),
-                    DriveKitUI.colors.secondaryColor(),
-                    DriveKitUI.colors.secondaryColor(),
+                    DKColors.secondaryColor,
+                    DKColors.secondaryColor,
                     R.string.dk_driverdata_unlock_screen_content,
                     viewModel.getUnlockDuration(requireContext()),
                     viewModel.getUnlockDistance(requireContext())

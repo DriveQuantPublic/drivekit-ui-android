@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
@@ -89,7 +90,7 @@ internal class TimelineDetailFragment : Fragment() {
 
         initViewModel()
 
-        activity?.setTitle(viewModel.titleId)
+        (activity as? androidx.appcompat.app.AppCompatActivity)?.setActivityTitle(getString(viewModel.titleId))
 
         viewModel.updateData.observe(viewLifecycleOwner) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
@@ -105,10 +106,16 @@ internal class TimelineDetailFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        if (this::selectedScore.isInitialized) {
+            outState.putString(SELECTED_SCORE_ID_EXTRA, selectedScore.name)
+        }
+        if (this::selectedPeriod.isInitialized) {
+            outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
+        }
+        if (this::selectedDate.isInitialized) {
+            outState.putLong(SELECTED_DATE_ID_EXTRA, selectedDate.time)
+        }
         super.onSaveInstanceState(outState)
-        outState.putString(SELECTED_SCORE_ID_EXTRA, selectedScore.name)
-        outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
-        outState.putLong(SELECTED_DATE_ID_EXTRA, selectedDate.time)
     }
 
     private fun configureGraphContainer() {

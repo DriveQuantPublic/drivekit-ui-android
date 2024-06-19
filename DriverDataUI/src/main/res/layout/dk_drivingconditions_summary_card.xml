@@ -10,21 +10,20 @@
     <androidx.cardview.widget.CardView
         style="@style/DKCard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/dk_margin">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/dk_margin"
-            android:paddingVertical="@dimen/dk_margin"
+            style="@style/DKCardPadding"
             android:visibility="gone">
 
             <TextView
                 android:id="@+id/empty_view_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/primaryColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -35,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin_half"
+                android:textColor="@color/complementaryFontColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/empty_view_title"
@@ -58,6 +58,7 @@
                 android:id="@+id/line_separator"
                 style="@style/Separator.Vertical"
                 android:layout_height="0dp"
+                android:background="@color/neutralColor"
                 app:layout_constraintBottom_toBottomOf="@id/container"
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintTop_toTopOf="@id/container" />
@@ -75,12 +76,14 @@
                     android:id="@+id/textView_tripscountvalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primaryColor"
                     tools:text="123" />
 
                 <TextView
                     android:id="@+id/textView_tripscountlabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/complementaryFontColor"
                     tools:text="Trips" />
             </LinearLayout>
 
@@ -97,12 +100,14 @@
                     android:id="@+id/textView_distancevalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primaryColor"
                     tools:text="456" />
 
                 <TextView
                     android:id="@+id/textView_distancelabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/complementaryFontColor"
                     tools:text="km traveled" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

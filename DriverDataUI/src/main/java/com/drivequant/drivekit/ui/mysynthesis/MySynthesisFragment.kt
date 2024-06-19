@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
@@ -154,7 +155,7 @@ internal class MySynthesisFragment : Fragment() {
     }
 
     private fun configureButton() {
-        this.buttonDetail.button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
+        this.buttonDetail.button(DKColors.secondaryColor, DKColors.transparentColor)
         this.buttonDetail.visibility = View.GONE
     }
 

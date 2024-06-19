@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
@@ -63,7 +64,7 @@ class BeaconDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
-            setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
+            setBackgroundDrawable(ColorDrawable(DKColors.primaryColor))
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }

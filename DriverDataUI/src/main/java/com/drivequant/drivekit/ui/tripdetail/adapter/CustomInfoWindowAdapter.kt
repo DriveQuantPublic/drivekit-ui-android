@@ -4,12 +4,12 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -33,11 +33,10 @@ internal class CustomInfoWindowAdapter(
         val event = tripDetailViewModel.displayEvents[marker.tag as Int]
         val eventHour = view.findViewById<TextView>(R.id.text_view_time)
         eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
-        eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
 
         val bubbleTitle = view.findViewById<TextView>(R.id.bubble_title)
         bubbleTitle.text = event.getTitle(context)
-        bubbleTitle.headLine2(DriveKitUI.colors.primaryColor())
+        bubbleTitle.headLine2()
 
         val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
         descriptionTextView.smallText()
@@ -49,7 +48,7 @@ internal class CustomInfoWindowAdapter(
         }
 
         val bubbleInfo = view.findViewById<ImageView>(R.id.bubble_more_info)
-        bubbleInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
+        bubbleInfo.setColorFilter(DKColors.secondaryColor)
         if (event.showInfoIcon()) {
             bubbleInfo.visibility = View.VISIBLE
         } else {

@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/secondaryColor">
 
         <View
             android:id="@+id/iconBackground"
@@ -56,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="@dimen/dk_margin"
+            android:textColor="@color/fontColorOnSecondaryColor"
             app:layout_constraintBottom_toTopOf="@id/distanceSubtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iconBackground"
@@ -67,6 +69,7 @@
             android:id="@+id/distanceSubtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/fontColorOnSecondaryColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/durationSubtitle"
             app:layout_constraintStart_toStartOf="@id/title"
@@ -77,6 +80,7 @@
             android:id="@+id/durationSubtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/fontColorOnSecondaryColor"
             app:layout_constraintBottom_toBottomOf="@id/distanceSubtitle"
             app:layout_constraintEnd_toEndOf="@id/title"
             app:layout_constraintStart_toEndOf="@id/distanceSubtitle"

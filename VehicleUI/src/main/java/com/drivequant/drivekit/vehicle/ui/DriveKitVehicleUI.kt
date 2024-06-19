@@ -206,16 +206,14 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
 
     override fun getVehiclesFilterItems(context: Context): List<FilterItem> {
         val vehiclesFilterItems = mutableListOf<FilterItem>()
-        val vehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
+        val vehicles = VehicleUtils.fetchVehiclesOrderedByDisplayName(context)
         for (vehicle in vehicles) {
             val vehicleItem = object : FilterItem{
                 override fun getItemId(): Any {
                     return vehicle.vehicleId
                 }
 
-                override fun getImage(context: Context): Drawable? {
-                    return VehicleUtils().getVehicleDrawable(context, vehicle.vehicleId)
-                }
+                override fun getImage(context: Context): Drawable? = VehicleUtils.getVehicleDrawable(context, vehicle.vehicleId)
 
                 override fun getTitle(context: Context): String {
                     return vehicle.buildFormattedName(context)

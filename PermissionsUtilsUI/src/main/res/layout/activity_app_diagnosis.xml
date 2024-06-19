@@ -5,6 +5,7 @@
     android:id="@+id/dk_diagnosis_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/backgroundViewColor"
     android:orientation="vertical"
     tools:context=".diagnosis.activity.AppDiagnosisActivity"
     tools:viewBindingIgnore="true">
@@ -36,28 +37,33 @@
 
             <TextView
                 android:id="@+id/text_view_summary_title"
+                style="@style/Headline1.Primary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_diag_app_ok"
+                android:textColor="@color/mainFontColor"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/image_view_summary_icon"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_view_summary_description"
+                style="@style/NormalText.Primary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_diag_app_ok_text"
+                android:textColor="@color/complementaryFontColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_view_summary_icon"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_summary_title" />
 
-            <TextView
+            <View
                 android:id="@+id/summary_view_separator"
                 style="@style/Separator.Horizontal"
                 android:layout_marginTop="@dimen/dk_margin_half"
+                android:background="@color/neutralColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_summary_description" />
 
@@ -192,56 +198,65 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_nearby_devices" />
 
-            <TextView
+            <View
                 android:id="@+id/diag_view_separator"
                 style="@style/Separator.Horizontal"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
+                android:background="@color/neutralColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_battery_optimization" />
 
             <TextView
                 android:id="@+id/text_view_battery_title"
+                style="@style/Headline1.Primary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_energy_saver_title"
-                android:textStyle="bold"
+                android:textColor="@color/mainFontColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_view_separator" />
 
             <TextView
                 android:id="@+id/text_view_battery_description"
+                style="@style/NormalText.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:foreground="?android:attr/selectableItemBackground"
+                android:textColor="@color/complementaryFontColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_battery_title" />
 
-            <TextView
+            <View
                 android:id="@+id/battery_view_separator"
                 style="@style/Separator.Horizontal"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
+                android:background="@color/neutralColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description" />
 
             <TextView
                 android:id="@+id/text_view_help_title"
+                style="@style/Headline1.Primary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_app_diag_help_request_title"
+                android:textColor="@color/mainFontColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/battery_view_separator" />
 
             <TextView
                 android:id="@+id/text_view_help_description"
+                style="@style/NormalText.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_app_diag_help_request_text"
+                android:textColor="@color/complementaryFontColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_help_title" />
 

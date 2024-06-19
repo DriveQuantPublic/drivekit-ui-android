@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dk_margin_double"
-                android:textColor="@android:color/black"
+                android:textColor="@color/mainFontColor"
                 android:textStyle="bold"
                 tools:text="@string/authentication_title" />
 
@@ -34,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dk_margin"
+                android:textColor="@color/complementaryFontColor"
                 tools:text="@string/authentication_description" />
 
             <com.google.android.material.textfield.TextInputLayout

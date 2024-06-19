@@ -3,10 +3,10 @@ package com.drivequant.drivekit.challenge.ui.common
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -46,7 +46,7 @@ internal fun Trip.toDKTripItem() = object: DKTripListItem {
     override fun isAlternative(): Boolean = false
     override fun infoText(context: Context) = if (trip.tripAdvices.size > 1) {
         DKSpannable().append("${trip.tripAdvices.size}", context.resSpans {
-            color(DriveKitUI.colors.fontColorOnSecondaryColor())
+            color(DKColors.fontColorOnSecondaryColor)
             typeface(Typeface.BOLD)
             size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_very_small)
         }).toSpannable()
@@ -76,7 +76,7 @@ internal fun Trip.toDKTripItem() = object: DKTripListItem {
         )
     }
     override fun hasInfoActionConfigured(): Boolean = true
-    override fun isInfoDisplayable(): Boolean = !trip.tripAdvices.isNullOrEmpty()
+    override fun isInfoDisplayable(): Boolean = trip.tripAdvices.isNotEmpty()
 }
 
 internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem() }

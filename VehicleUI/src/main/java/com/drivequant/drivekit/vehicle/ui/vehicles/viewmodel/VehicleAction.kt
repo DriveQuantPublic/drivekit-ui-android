@@ -8,6 +8,7 @@ import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -97,12 +98,7 @@ enum class VehicleAction(
         vehicleFieldInputEditText = alert.findViewById(R.id.edit_text_field)
 
         titleTextView?.setText(R.string.dk_vehicle_rename_title)
-        titleTextView?.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        titleTextView?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
-
         descriptionTextView?.setText(R.string.dk_vehicle_rename_description)
-        descriptionTextView?.setTextColor(DriveKitUI.colors.mainFontColor())
-        descriptionTextView?.normalText()
 
         vehicleFieldInputEditText?.apply {
             setText(vehicleName)
@@ -113,8 +109,8 @@ enum class VehicleAction(
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
         val vehicleName = vehicle.buildFormattedName(context)
         val message = DKResource.buildString(
-            context, DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(), R.string.dk_vehicle_delete_confirm, vehicleName
+            context, DKColors.mainFontColor,
+            DKColors.mainFontColor, R.string.dk_vehicle_delete_confirm, vehicleName
         )
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
@@ -138,8 +134,6 @@ enum class VehicleAction(
 
         titleTextView?.setText(R.string.app_name)
         descriptionTextView?.text = message
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
     private fun displayError(context: Context) {

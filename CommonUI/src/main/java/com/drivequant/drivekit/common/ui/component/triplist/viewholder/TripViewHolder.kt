@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
@@ -21,6 +19,7 @@ import com.drivequant.drivekit.common.ui.component.triplist.views.TripInfoView
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -40,25 +39,28 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     private val imageView = itemView.findViewById<ImageView>(R.id.no_score_view)
     private val circleTop = itemView.findViewById<ImageView>(R.id.image_circle_top)
     private val circleBottom = itemView.findViewById<ImageView>(R.id.image_circle_bottom)
-    private val circleSeparator = itemView.findViewById<View>(R.id.view_circle_separator)
+    private var tripInfoView: TripInfoView? = null
 
-    fun bind(trip: DKTripListItem, tripData: TripData, isLastChild: Boolean) {
-        textViewDepartureTime.text =
-            trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+    fun bind(trip: DKTripListItem, tripData: TripData, isLastChild: Boolean, addHorizontalPadding: Boolean = false) {
+        if (addHorizontalPadding) {
+            itemView.context.resources.getDimensionPixelSize(R.dimen.dk_screen_border).let {
+                itemView.setPadding(it, 0, it, 0)
+            }
+        }
+        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewDepartureCity.text = trip.computeDepartureInfo()
         textViewArrivalTime.text = trip.getEndDate().formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewArrivalCity.text = trip.computeArrivalInfo()
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
-        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
-        DrawableCompat.setTint(circleBottom.background, DriveKitUI.colors.secondaryColor())
-        DrawableCompat.setTint(circleTop.background, DriveKitUI.colors.secondaryColor())
-        circleSeparator.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+        val context = itemView.context
+        circleBottom.background.tint(context, R.color.secondaryColor)
+        circleTop.background.tint(context, R.color.secondaryColor)
 
-        textViewDepartureCity.normalText(DriveKitUI.colors.mainFontColor())
-        textViewArrivalCity.normalText(DriveKitUI.colors.mainFontColor())
-        textViewDepartureTime.normalText(DriveKitUI.colors.complementaryFontColor())
-        textViewArrivalTime.normalText(DriveKitUI.colors.complementaryFontColor())
+        textViewDepartureCity.normalText()
+        textViewArrivalCity.normalText()
+        textViewDepartureTime.normalText()
+        textViewArrivalTime.normalText()
 
         computeTripData(trip, tripData)
         computeTripInfo(trip)
@@ -88,7 +90,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             }
             DisplayType.TEXT -> {
                 showTextIndicator()
-                textIndicator.smallText(DriveKitUI.colors.primaryColor(), true)
+                textIndicator.smallText(true)
                 textIndicator.text =
                     if (tripData == TripData.DURATION) {
                         DKDataFormatter.formatDuration(itemView.context, trip.computeCeilDuration())
@@ -130,15 +132,15 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
 
     private fun computeTripInfo(trip: DKTripListItem) {
         if (trip.isInfoDisplayable()) {
-            tripInfoContainer.addView(
-                TripInfoView(
-                    itemView.context,
-                    trip
-                )
-            )
+            var tripInfoView = this.tripInfoView
+            if (tripInfoView == null) {
+                tripInfoView = TripInfoView.new(itemView.context)
+                this.tripInfoView = tripInfoView
+                tripInfoContainer.addView(tripInfoView)
+            }
+            tripInfoView.update(trip)
             tripInfoContainer.visibility = View.VISIBLE
         } else {
-            tripInfoContainer.removeAllViews()
             tripInfoContainer.visibility = View.INVISIBLE
         }
     }

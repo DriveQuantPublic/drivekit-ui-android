@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="@dimen/dk_margin_half"
     tools:ignore="UseCompoundDrawables">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_item"
+        app:shapeAppearanceOverlay="@style/dkCircleImageView"
+        android:scaleType="centerCrop"
         android:layout_width="@dimen/dk_ic_big"
         android:layout_height="@dimen/dk_ic_big" />
 
@@ -19,5 +22,6 @@
         android:layout_marginStart="@dimen/dk_margin_half"
         android:layout_marginEnd="@dimen/dk_margin"
         android:gravity="center_vertical"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:textColor="@color/dkGrayColor" />
 </LinearLayout>

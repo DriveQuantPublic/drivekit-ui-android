@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.SafetyFragmentBinding
@@ -30,7 +29,7 @@ class SafetyFragment : Fragment() {
         }
     }
 
-    private lateinit var safety: Safety
+    private var safety: Safety? = null
     private lateinit var viewModel: SafetyViewModel
     private var _binding: SafetyFragmentBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
@@ -40,12 +39,14 @@ class SafetyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = SafetyFragmentBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("safety", safety)
+        this.safety?.let {
+            outState.putSerializable("safety", it)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -54,30 +55,33 @@ class SafetyFragment : Fragment() {
         savedInstanceState?.getSerializableCompat("safety", Safety::class.java)?.let{
             safety = it
         }
-        viewModel = ViewModelProvider(this,
-            SafetyViewModelFactory(safety)
-        )[SafetyViewModel::class.java]
+
+        val safety = this.safety
+        if (safety == null) {
+            activity?.finish()
+            return
+        }
+        viewModel = ViewModelProvider(this, SafetyViewModelFactory(safety))[SafetyViewModel::class.java]
 
         binding.gaugeTypeTitle.text = context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_safety)
         binding.accelDescription.text = context?.getString(R.string.dk_driverdata_safety_accel)
         binding.brakeDescription.text = context?.getString(R.string.dk_driverdata_safety_decel)
         binding.adherenceDescription.text = context?.getString(R.string.dk_driverdata_safety_adherence)
 
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val primaryColor = DriveKitUI.colors.primaryColor()
+        val mainFontColor = DKColors.mainFontColor
 
-        binding.gaugeTypeTitle.normalText(mainFontColor)
-        binding.accelDescription.normalText(mainFontColor)
-        binding.brakeDescription.normalText(mainFontColor)
-        binding.adherenceDescription.normalText(mainFontColor)
+        binding.gaugeTypeTitle.normalText()
+        binding.accelDescription.normalText()
+        binding.brakeDescription.normalText()
+        binding.adherenceDescription.normalText()
 
         binding.accelImage.setColorFilter(mainFontColor)
         binding.decelImage.setColorFilter(mainFontColor)
         binding.adherenceImage.setColorFilter(mainFontColor)
 
-        binding.accelNumberEvent.highlightSmall(primaryColor)
-        binding.brakeNumberEvent.highlightSmall(primaryColor)
-        binding.adherenceNumberEvent.highlightSmall(primaryColor)
+        binding.accelNumberEvent.highlightSmall()
+        binding.brakeNumberEvent.highlightSmall()
+        binding.adherenceNumberEvent.highlightSmall()
 
         binding.scoreGauge.configure(viewModel.getScore(), GaugeConfiguration.SAFETY(viewModel.getScore()), Typeface.BOLD)
         binding.scoreInfo.init(GaugeConfiguration.SAFETY(viewModel.getScore()))

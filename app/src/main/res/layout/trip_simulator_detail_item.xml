@@ -10,12 +10,14 @@
         android:id="@+id/text_view_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/complementaryFontColor"
         tools:text="Duration" />
 
     <TextView
         android:id="@+id/text_view_item_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/mainFontColor"
         tools:text="08:52"
         tools:textSize="@dimen/dk_text_xbig"
         tools:textStyle="bold" />

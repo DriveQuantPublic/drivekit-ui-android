@@ -9,9 +9,10 @@
     android:paddingBottom="@dimen/dk_margin_half"
     tools:viewBindingIgnore="true">
 
-    <TextView
+    <View
         android:id="@+id/line_separator"
         style="@style/Separator.Vertical"
+        android:background="@color/neutralColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dk_margin_half"
+        android:textColor="@color/complementaryFontColor"
         app:layout_constraintStart_toEndOf="@+id/line_separator"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dk_margin_half"
         android:ellipsize="end"
+        android:textColor="@color/primaryColor"
         app:layout_constraintStart_toEndOf="@+id/line_separator"
         app:layout_constraintTop_toBottomOf="@+id/text_view_trip_synthesis_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

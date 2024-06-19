@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.smallText
 
@@ -35,8 +34,8 @@ internal class TripSimulatorDetailView @JvmOverloads constructor(
     }
 
     private fun setStyle() {
-        itemTitleTextView.smallText(DriveKitUI.colors.complementaryFontColor())
-        itemValueTextView.headLine1(DriveKitUI.colors.mainFontColor())
+        itemTitleTextView.smallText()
+        itemValueTextView.headLine1()
     }
 
     fun setItemTitle(title: String) {

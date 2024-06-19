@@ -11,12 +11,12 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
-import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
-import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
+import com.drivequant.drivekit.common.ui.extension.intColor
+import com.drivequant.drivekit.common.ui.extension.smallTextWithColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
+import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.ui.R
@@ -183,69 +183,69 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         this.scoreDescription.apply {
             this@MySynthesisGaugeView.viewModel?.scoreLevel?.getScoreLevelDescription()?.let {
                 text = context.getString(it)
-                smallText(DriveKitUI.colors.primaryColor())
+                smallTextWithColor(DKColors.primaryColor)
             } ?: run {
                 text = context.getString(R.string.dk_driverdata_mysynthesis_can_not_be_evaluated)
-                smallText(DriveKitUI.colors.complementaryFontColor())
+                smallTextWithColor(DKColors.complementaryFontColor)
             }
         }
         this.level0TextView.apply {
             text = getFormattedLevelValue(0)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.level1TextView.apply {
             text = getFormattedLevelValue(1)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.level2TextView.apply {
             text = getFormattedLevelValue(2)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.level3TextView.apply {
             text = getFormattedLevelValue(3)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.level4TextView.apply {
             text = getFormattedLevelValue(4)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.level5TextView.apply {
             text = getFormattedLevelValue(5)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.level6TextView.apply {
             text = getFormattedLevelValue(6)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.level7TextView.apply {
             text = getFormattedLevelValue(7)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
 
         this.communityMinValueTextView.apply {
             text = getFormattedValue(this@MySynthesisGaugeView.viewModel?.communityMinScore)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.communityMedianValueTextView.apply {
             text = getFormattedValue(this@MySynthesisGaugeView.viewModel?.communityMedianScore)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.communityMaxValueTextView.apply {
             text = getFormattedValue(this@MySynthesisGaugeView.viewModel?.communityMaxScore)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
 
         this.communityMinTextView.apply {
             text = context.getString(R.string.dk_driverdata_mysynthesis_minimum)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.communityMedianTextView.apply {
             text = context.getString(R.string.dk_driverdata_mysynthesis_median)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
         this.communityMaxTextView.apply {
             text = context.getString(R.string.dk_driverdata_mysynthesis_maximum)
-            setTextColor(DriveKitUI.colors.mainFontColor())
+            setTextColor(DKColors.mainFontColor)
         }
 
         updateLayout()
@@ -257,11 +257,11 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
 
     private fun configure() {
         val synthesisColor = getColor(R.color.dkMySynthesisColor)
-        this.scoreDescriptionIcon.imageTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+        this.scoreDescriptionIcon.imageTintList = ColorStateList.valueOf(DKColors.secondaryColor)
         this.scoreIndicator.background = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, synthesisColor)
         this.scoreDescriptionContainer.setOnClickListener { showScoreLegend() }
         // Texts color.
-        val textColor = DriveKitUI.colors.primaryColor()
+        val textColor = DKColors.primaryColor
         this.scoreDescription.setTextColor(textColor)
         for (levelTextView in this.levelTextViews) {
             levelTextView.setTextColor(textColor)
@@ -293,7 +293,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    private fun getColor(@ColorRes colorId: Int) = ContextCompat.getColor(context, colorId)
+    private fun getColor(@ColorRes colorId: Int) = colorId.intColor(context)
 
     private fun getCommunityIndicator(@ColorInt color: Int): Drawable = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, borderColor = color,
         borderWidth = MySynthesisConstant.INDICATOR_BORDER_WIDTH.convertDpToPx().toFloat())

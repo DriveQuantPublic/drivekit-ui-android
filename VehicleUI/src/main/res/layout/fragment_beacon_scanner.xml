@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:paddingHorizontal="@dimen/dk_screen_border">
+    android:paddingHorizontal="@dimen/dk_screen_border"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dk_margin"
             android:gravity="center"
-            android:paddingVertical="@dimen/dk_margin_half" />
+            android:paddingVertical="@dimen/dk_margin_half"
+            android:textColor="@color/mainFontColor" />
 
         <ImageView
             android:id="@id/image_view"

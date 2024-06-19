@@ -4,9 +4,9 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityRecognitionPermissionBinding
@@ -59,6 +59,6 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     private fun setStyle() {
         binding.textViewActivityPermissionTitle.highlightMedium()
         binding.textViewActivityPermissionText.normalText()
-        window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        window.decorView.setBackgroundColor(DKColors.backgroundViewColor)
     }
 }

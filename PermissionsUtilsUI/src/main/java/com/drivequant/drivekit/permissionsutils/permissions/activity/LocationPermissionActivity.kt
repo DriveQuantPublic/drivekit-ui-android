@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
@@ -102,8 +102,8 @@ class LocationPermissionActivity : BasePermissionActivity() {
                         val alwaysLabel = packageManager.backgroundPermissionOptionLabel
                         binding.textViewLocationPermissionText2.text = DKResource.buildString(
                             this,
-                            DriveKitUI.colors.mainFontColor(),
-                            DriveKitUI.colors.mainFontColor(),
+                            DKColors.mainFontColor,
+                            DKColors.mainFontColor,
                             R.string.dk_perm_utils_permissions_location_text4_android11,
                             "$alwaysLabel"
                         )
@@ -146,6 +146,6 @@ class LocationPermissionActivity : BasePermissionActivity() {
         binding.textViewPermissionLocationTitle.highlightMedium()
         binding.textViewLocationPermissionText1.normalText()
         binding.textViewLocationPermissionText2.normalText()
-        window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        window.decorView.setBackgroundColor(DKColors.backgroundViewColor)
     }
 }

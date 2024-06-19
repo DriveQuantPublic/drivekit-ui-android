@@ -1,17 +1,15 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -42,12 +40,14 @@ class UnscoredTripFragment : Fragment() {
     ): View {
         _binding = UnscoredTripFragmentBinding.inflate(inflater, container, false)
         FontUtils.overrideFonts(context, binding.root)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("viewModel", viewModel)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -58,13 +58,18 @@ class UnscoredTripFragment : Fragment() {
             viewModel = it
         }
 
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
+        }
+
         binding.tripDuration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!).convertToString()
         binding.tripStartEnd.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
             .plus(" - ")
             .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER))
 
-        binding.tripDuration.highlightMedium(DriveKitUI.colors.primaryColor())
-        binding.imageViewUnscoredTripInfo.background.tintDrawable(DriveKitUI.colors.warningColor())
+        binding.tripDuration.highlightMedium()
+        binding.imageViewUnscoredTripInfo.background.tint(view.context, com.drivequant.drivekit.common.ui.R.color.warningColor)
     }
 
     override fun onDestroyView() {

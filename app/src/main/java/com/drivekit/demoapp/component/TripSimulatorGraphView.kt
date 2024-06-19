@@ -3,18 +3,18 @@ package com.drivekit.demoapp.component
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-
-import android.widget.LinearLayout
-import com.github.mikephil.charting.charts.LineChart
 import android.view.ViewGroup
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.YAxis
-import androidx.core.content.ContextCompat
+import android.widget.LinearLayout
+import androidx.annotation.ColorRes
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.intColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
 internal class TripSimulatorGraphView @JvmOverloads constructor(
@@ -65,11 +65,11 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
             description.isEnabled = true
             description.text = context.getString(R.string.trip_simulator_graph_time)
             isAutoScaleMinMaxEnabled = true
-            setBackgroundColor(DriveKitUI.colors.transparentColor())
+            setBackgroundColor(DKColors.transparentColor)
         }
     }
 
-    private fun addEntry(value: Float, title: String, color: Int) {
+    private fun addEntry(value: Float, title: String, @ColorRes color: Int) {
         val data = lineChart.data
         data?.let {
             var lineDataSet = data.getDataSetByIndex(0)
@@ -91,14 +91,14 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
         }
     }
 
-    private fun createDataSet(title: String, color: Int): LineDataSet {
+    private fun createDataSet(title: String, @ColorRes color: Int): LineDataSet {
         val lineDataSet = LineDataSet(null, title)
         lineDataSet.apply {
             setDrawCircles(false)
             lineWidth = 2f
             fillColor = Color.BLACK
             fillAlpha = 1
-            setColor(ContextCompat.getColor(context, color))
+            setColor(color.intColor(context))
             isHighlightEnabled = false
             setDrawValues(false)
         }
@@ -118,5 +118,5 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
 internal data class ChartEntry(
     val value: Float,
     val title: String,
-    val colorResId: Int
+    @ColorRes val colorResId: Int
 )

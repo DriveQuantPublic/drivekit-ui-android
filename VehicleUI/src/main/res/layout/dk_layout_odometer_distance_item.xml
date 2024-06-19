@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="@dimen/dk_margin">
+            style="@style/DKCardPadding">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dk_margin_quarter"
                     android:layout_weight="1"
-                    tools:textColor="#000"
+                    android:textColor="@color/mainFontColor"
                     tools:textSize="@dimen/dk_text_normal" />
 
                 <ImageView
@@ -43,7 +43,8 @@
                 android:id="@+id/dk_view_separator"
                 style="@style/Separator.Horizontal"
                 android:layout_marginTop="@dimen/dk_margin_half"
-                android:layout_marginBottom="@dimen/dk_margin_half" />
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                android:background="@color/neutralColor" />
 
             <TextView
                 android:id="@+id/text_view_odometer_distance_value"
@@ -52,17 +53,17 @@
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 android:textAlignment="viewEnd"
+                android:textColor="@color/mainFontColor"
                 android:textSize="34sp"
                 android:textStyle="bold"
-                tools:text="123 456 km"
-                tools:textColor="#000" />
+                tools:text="123 456 km" />
 
             <TextView
                 android:id="@+id/text_view_odometer_distance_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewEnd"
-                android:textColor="#000"
+                android:textColor="@color/dkGrayColor"
                 android:textSize="@dimen/dk_text_small"
                 tools:text="Dernière mise à jour du compteur le 25/12/2018" />
         </LinearLayout>

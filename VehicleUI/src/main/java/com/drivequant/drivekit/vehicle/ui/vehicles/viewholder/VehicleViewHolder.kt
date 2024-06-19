@@ -14,7 +14,6 @@ import android.widget.PopupMenu
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
@@ -23,6 +22,8 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.tint
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
@@ -36,6 +37,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
+    private val cardContainer: LinearLayout = itemView.findViewById(R.id.card_container)
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)
     private val textViewSubtitle: TextView = itemView.findViewById(R.id.text_view_subtitle)
     private val popup: ImageView = itemView.findViewById(R.id.image_view_popup)
@@ -44,7 +46,6 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private val textViewDetectionModeTitle: TextView = itemView.findViewById(R.id.text_view_detection_mode_title)
     private val textViewDetectionModeDescription: TextView = itemView.findViewById(R.id.text_view_detection_mode_description)
     private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
-    private val viewSeparator = itemView.findViewById<View>(R.id.view_separator)
 
     fun bind(vehicle: Vehicle) {
         val context = itemView.context
@@ -65,30 +66,27 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     }
 
     private fun setupUI() {
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val complementaryFontColor = DriveKitUI.colors.complementaryFontColor()
-        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        textViewTitle.headLine1(mainFontColor)
-        textViewSubtitle.smallText(complementaryFontColor)
+        textViewTitle.headLine1()
+        textViewSubtitle.smallText()
         textViewDetectionModeTitle.headLine2()
         textViewDetectionModeDescription.normalText()
 
         popup.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_dots)
-        popup.setColorFilter(DriveKitUI.colors.secondaryColor())
+        popup.setColorFilter(DKColors.secondaryColor)
         buttonSetup.button(
-            textColor = DriveKitUI.colors.secondaryColor(),
+            textColor = DKColors.secondaryColor,
             backgroundColor = Color.parseColor("#00ffffff")
         )
     }
 
-    private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
+    private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
         popup.setOnClickListener {
             val popupMenu = PopupMenu(context, it)
             val itemsList : List<VehicleActionItem> = DriveKitVehicleUI.vehicleActions
             for (i in itemsList.indices) {
                 if (itemsList[i].isDisplayable(vehicle)) {
                     popupMenu.menu.add(Menu.NONE, i, i, DKSpannable().append(itemsList[i].getTitle(context),context.resSpans {
-                        color(DriveKitUI.colors.mainFontColor())
+                        color(DKColors.mainFontColor)
                         DriveKitUI.primaryFont(context)?.let { typeface ->
                             typeface(CustomTypefaceSpan(typeface))
                         }
@@ -119,7 +117,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
                 val bitmap = (infoDrawable as BitmapDrawable).bitmap
                 val size = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_ic_medium).toInt()
                 val resizedDrawable: Drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, size, size, true))
-                DrawableCompat.setTint(resizedDrawable, DriveKitUI.colors.criticalColor())
+                resizedDrawable.tint(context, com.drivequant.drivekit.common.ui.R.color.criticalColor)
                 textViewDetectionModeDescription.setCompoundDrawablesRelativeWithIntrinsicBounds(resizedDrawable, null, null, null)
             }
         }
@@ -129,26 +127,32 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         spinnerDetectionMode.adapter = adapter
     }
 
-    fun selectDetectionMode(context: Context, vehicle: Vehicle){
+    fun selectDetectionMode(context: Context, vehicle: Vehicle) {
         val detectionModes = viewModel.buildDetectionModeSpinnerItems(context)
-        for (i in detectionModes.indices){
+        for (i in detectionModes.indices) {
             val detectionMode = DetectionMode.valueOf(detectionModes[i].detectionModeType.name)
-            if (detectionMode == vehicle.detectionMode){
+            if (detectionMode == vehicle.detectionMode) {
                 spinnerDetectionMode.setSelection(i, false)
             }
         }
     }
 
-    private fun setupConfigureButton(context: Context, vehicle: Vehicle){
+    private fun setupConfigureButton(context: Context, vehicle: Vehicle) {
         val configureText = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getConfigureButtonText(context)
-        if (configureText.isEmpty()){
+        var removeBottomCardPadding = false
+        if (configureText.isEmpty()) {
             buttonSetup.visibility = View.GONE
         } else {
+            removeBottomCardPadding = true
             buttonSetup.text = configureText
             buttonSetup.visibility = View.VISIBLE
             buttonSetup.setOnClickListener {
                 DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).onConfigureButtonClicked(context, viewModel, vehicle)
             }
         }
+
+        val dkCardPadding = itemView.context.resources.getDimensionPixelSize(com.drivequant.drivekit.common.ui.R.dimen.dk_margin)
+        val dkCardBottomPadding = if (removeBottomCardPadding) 0 else dkCardPadding
+        this.cardContainer.setPadding(dkCardPadding, dkCardPadding, dkCardPadding, dkCardBottomPadding)
     }
 }

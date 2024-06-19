@@ -2,6 +2,7 @@ package com.drivekit.demoapp.settings.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -27,7 +28,11 @@ import com.drivekit.drivekitdemoapp.databinding.ActivitySettingsBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.headLine2WithColor
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
@@ -54,7 +59,7 @@ internal class SettingsActivity : AppCompatActivity() {
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = getString(R.string.parameters_header)
+        setActivityTitle(getString(R.string.parameters_header))
 
         initConfiguration()
     }
@@ -77,17 +82,6 @@ internal class SettingsActivity : AppCompatActivity() {
         initNotificationSection()
         initLogoutSection()
         initDeleteAccountSection()
-        listOf(
-            binding.viewSeparator1,
-            binding.viewSeparator2,
-            binding.viewSeparator3,
-            binding.viewSeparator4,
-            binding.viewSeparator5,
-            binding.viewSeparator6,
-            binding.viewSeparator7
-        ).forEach {
-            it.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        }
         viewModel.updateUserInfoLiveData.observe(this) { success ->
             if (success) {
                 initUserInfoSection()
@@ -102,7 +96,7 @@ internal class SettingsActivity : AppCompatActivity() {
 
     private fun initUserInfoSection() {
         initTitle(binding.titleAccount, R.string.parameters_account_title, R.drawable.ic_account)
-        binding.descriptionAccount.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.descriptionAccount.normalText()
 
         binding.labelUserId.headLine2()
         binding.labelFirstname.headLine2()
@@ -110,7 +104,7 @@ internal class SettingsActivity : AppCompatActivity() {
         binding.labelPseudo.headLine2()
 
         binding.textUserId.text = viewModel.getUserId()
-        binding.textUserId.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.textUserId.normalText()
 
         viewModel.getUserInfo(object : GetUserInfoQueryListener {
             override fun onResponse(status: UserInfoGetStatus, userInfo: UserInfo?) {
@@ -137,18 +131,18 @@ internal class SettingsActivity : AppCompatActivity() {
         binding.descriptionAutostart.apply {
             if (isEnabled) {
                 text = getString(R.string.parameters_auto_start_enabled)
-                normalText(DriveKitUI.colors.complementaryFontColor())
+                normalTextWithColor(DKColors.complementaryFontColor)
             } else {
                 text = getString(R.string.parameters_auto_start_disabled)
-                normalText(DriveKitUI.colors.warningColor())
+                normalTextWithColor(DKColors.warningColor)
             }
         }
     }
 
     private fun initNotificationSection() {
         initTitle(binding.titleNotifications, R.string.parameters_notification_title, R.drawable.ic_notifications)
-        binding.descriptionNotifications.normalText(DriveKitUI.colors.complementaryFontColor())
-        binding.buttonNotifications.headLine2(DriveKitUI.colors.secondaryColor())
+        binding.descriptionNotifications.normalText()
+        binding.buttonNotifications.headLine2()
         binding.buttonNotifications.setOnClickListener {
             NotificationSettingsActivity.launchActivity(this)
         }
@@ -156,7 +150,7 @@ internal class SettingsActivity : AppCompatActivity() {
 
     private fun initLogoutSection() {
         binding.buttonLogoutAccount.apply {
-            normalText(DriveKitUI.colors.criticalColor())
+            normalText()
             setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
             setOnClickListener {
                 manageLogoutClick()
@@ -167,13 +161,13 @@ internal class SettingsActivity : AppCompatActivity() {
     private fun initDeleteAccountSection() {
         initTitle(binding.titleAccountDeletion, R.string.parameters_delete_account_title, R.drawable.dk_trash)
         binding.buttonDeleteAccount.apply {
-            normalText(DriveKitUI.colors.criticalColor())
+            normalText()
             setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
             setOnClickListener {
                 manageDeleteAccount()
             }
         }
-        binding.apiInfoAccountDeletion.normalText(DriveKitUI.colors.warningColor())
+        binding.apiInfoAccountDeletion.normalText()
     }
 
     private fun manageDeleteAccount() {
@@ -196,7 +190,7 @@ internal class SettingsActivity : AppCompatActivity() {
     private fun initUserInfoData(type: UserInfoType, view: TextView, data: String?) {
         view.apply {
             text = if (data.isNullOrBlank()) {
-                normalText(DriveKitUI.colors.warningColor())
+                normalTextWithColor(DKColors.warningColor)
                 when (type) {
                     UserInfoType.FIRST_NAME -> R.string.parameters_enter_firstname
                     UserInfoType.LAST_NAME -> R.string.parameters_enter_lastname
@@ -205,7 +199,7 @@ internal class SettingsActivity : AppCompatActivity() {
                     getString(it)
                 }
             } else {
-                normalText(DriveKitUI.colors.secondaryColor())
+                normalTextWithColor(DKColors.secondaryColor)
                 data
             }
             setOnClickListener {
@@ -230,8 +224,7 @@ internal class SettingsActivity : AppCompatActivity() {
             }.let {
                 getString(it)
             }
-            normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-            setBackgroundColor(DriveKitUI.colors.primaryColor())
+            normalText()
         }
         editText.apply {
             inputType = InputType.TYPE_CLASS_TEXT
@@ -251,6 +244,8 @@ internal class SettingsActivity : AppCompatActivity() {
             }
             setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
             show()
+            getButton(AlertDialog.BUTTON_POSITIVE)?.headLine2WithColor(DKColors.secondaryColor)
+            getButton(AlertDialog.BUTTON_NEGATIVE)?.headLine2WithColor(DKColors.secondaryColor)
         }
     }
 
@@ -269,9 +264,6 @@ internal class SettingsActivity : AppCompatActivity() {
 
         titleTextView?.text = getString(R.string.app_name)
         descriptionTextView?.text = getString(R.string.logout_confirmation)
-
-        titleTextView?.headLine1()
-        descriptionTextView?.normalText()
     }
 
     override fun onSupportNavigateUp(): Boolean {

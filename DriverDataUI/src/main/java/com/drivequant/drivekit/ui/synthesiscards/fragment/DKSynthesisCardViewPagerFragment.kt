@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.WrapContentViewPager
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.synthesiscards.adapter.DKSynthesisCardFragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
@@ -62,17 +62,17 @@ class DKSynthesisCardViewPagerFragment : Fragment() {
 
     private fun updateTabLayout(position: Int) {
         for (i in 0 until tabLayout.tabCount) {
-            tabLayout.getTabAt(i)?.let {
+            tabLayout.getTabAt(i)?.let { tab ->
                 if (i == position) {
                     val drawable = ContextCompat.getDrawable(requireContext(),
-                        com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_selected)?.mutate()
-                    drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
-                    tabLayout.getTabAt(i)?.icon = drawable
+                        com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_selected)
+                    drawable?.tintDrawable(DKColors.secondaryColor)
+                    tab.icon = drawable
                 } else {
                     val drawable = ContextCompat.getDrawable(requireContext(),
                         com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_default)?.mutate()
-                    drawable?.tintDrawable(DriveKitUI.colors.complementaryFontColor())
-                    tabLayout.getTabAt(i)?.icon = drawable
+                    drawable?.tintDrawable(DKColors.complementaryFontColor)
+                    tab.icon = drawable
                 }
             }
         }

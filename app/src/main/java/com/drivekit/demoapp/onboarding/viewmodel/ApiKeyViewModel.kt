@@ -3,7 +3,7 @@ package com.drivekit.demoapp.onboarding.viewmodel
 import android.content.Context
 import androidx.annotation.StringRes
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 
@@ -22,8 +22,8 @@ internal class ApiKeyViewModel {
         DriveKit.config.apiKey.let {
             DKResource.buildString(
                 context,
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.primaryColor(),
+                DKColors.complementaryFontColor,
+                DKColors.primaryColor,
                 R.string.welcome_ok_description,
                 it!!
             )

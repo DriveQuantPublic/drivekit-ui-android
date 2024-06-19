@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.ui.R
 
@@ -17,7 +18,6 @@ class TripSynthesisItem: LinearLayout {
 
     private lateinit var textViewTitle: TextView
     private lateinit var textViewValue: TextView
-    private lateinit var separator: TextView
 
     constructor(context: Context): super(context) {
         init(null)
@@ -31,12 +31,10 @@ class TripSynthesisItem: LinearLayout {
         val view = View.inflate(context, R.layout.trip_synthesis_item, null)
         textViewTitle = view.findViewById(R.id.text_view_trip_synthesis_title)
         textViewValue = view.findViewById(R.id.text_view_trip_synthesis_value)
-        separator = view.findViewById(R.id.line_separator)
 
-        textViewValue.smallText(DriveKitUI.colors.primaryColor())
+        textViewValue.smallText()
         textViewValue.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
-        textViewTitle.smallText(DriveKitUI.colors.complementaryFontColor())
-        separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        textViewTitle.smallText()
 
         if (attrs != null) {
             val a: TypedArray = context.theme.obtainStyledAttributes(
@@ -68,7 +66,7 @@ class TripSynthesisItem: LinearLayout {
     }
 
     fun setValueColor() {
-        textViewValue.setTextColor(DriveKitUI.colors.secondaryColor())
+        textViewValue.setTextColor(DKColors.secondaryColor)
     }
 
     fun setValueTypeFace() {

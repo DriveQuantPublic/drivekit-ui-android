@@ -7,16 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.drivequant.beaconutils.BeaconData
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
@@ -112,20 +112,18 @@ class BeaconScannerInfoFragment : Fragment() {
             }
         }
 
-        binding.viewBorder.setBackgroundColor(DriveKitUI.colors.mainFontColor())
-
         binding.textViewConnectedVehicleName.headLine2()
 
         if (isValid) {
-            binding.viewBorder.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            binding.viewBorder.setBackgroundColor(DKColors.secondaryColor)
             viewModel.vehicleName?.let {
                 binding.textViewConnectedVehicleName.text = it
             } ?: run {
                 binding.textViewConnectedVehicleName.setText(R.string.dk_beacon_vehicle_unknown)
             }
         } else {
-            binding.viewBorder.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
-            binding.textViewConnectedVehicleName.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
+            binding.viewBorder.setBackgroundColor(DKColors.complementaryFontColor)
+            binding.textViewConnectedVehicleName.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils.fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
                  vehicle.buildFormattedName(requireContext())
             }?: run {
                 getString(R.string.dk_beacon_vehicle_unknown)
@@ -134,10 +132,8 @@ class BeaconScannerInfoFragment : Fragment() {
 
         configureInfoButton()
 
-        binding.viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-
         binding.textViewMajorTitle.apply {
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
             setText(R.string.dk_beacon_major)
         }
         binding.textViewMajorValue.apply {
@@ -145,7 +141,7 @@ class BeaconScannerInfoFragment : Fragment() {
             text = viewModel.seenBeacon?.major.toString()
         }
         binding.textViewMinorTitle.apply {
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
             setText(R.string.dk_beacon_minor)
         }
         binding.textViewMinorValue.apply {
@@ -161,7 +157,7 @@ class BeaconScannerInfoFragment : Fragment() {
 
     private fun configureInfoButton() {
         binding.buttonBeaconInfo.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_info)
-        DrawableCompat.setTint(binding.buttonBeaconInfo.drawable, DriveKitUI.colors.secondaryColor())
+        binding.buttonBeaconInfo.drawable.tintDrawable(DKColors.secondaryColor)
         binding.buttonBeaconInfo.setOnClickListener {
             viewModel.launchDetailFragment()
         }
@@ -182,8 +178,8 @@ class BeaconScannerInfoFragment : Fragment() {
     }
 
     private fun buildBeaconCharacteristics(value: String, unit: String): Spannable {
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val primaryColor = DriveKitUI.colors.primaryColor()
+        val mainFontColor = DKColors.mainFontColor
+        val primaryColor = DKColors.primaryColor
 
         return DKSpannable()
             .append(value, requireContext().resSpans {

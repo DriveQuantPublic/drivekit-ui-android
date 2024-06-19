@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 object DKAlertDialog {
 
@@ -89,7 +90,7 @@ object DKAlertDialog {
                 ).forEach { buttonType ->
                     getButton(buttonType)?.apply {
                         typeface = DriveKitUI.primaryFont(context)
-                        setTextColor(DriveKitUI.colors.secondaryColor())
+                        setTextColor(DKColors.secondaryColor)
                     }
                 }
             }

@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -41,13 +40,8 @@ class SelectBluetoothFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.text_view_select_description).apply {
-            normalText(DriveKitUI.colors.mainFontColor())
-        }
-
-        view.findViewById<TextView>(R.id.text_view_select_list_title).apply {
-            headLine1(DriveKitUI.colors.primaryColor())
-        }
+        view.findViewById<TextView>(R.id.text_view_select_description).normalText()
+        view.findViewById<TextView>(R.id.text_view_select_list_title).headLine1()
 
         setupRecyclerView()
 

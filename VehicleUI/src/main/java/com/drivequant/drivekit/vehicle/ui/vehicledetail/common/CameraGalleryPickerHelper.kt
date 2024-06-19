@@ -46,8 +46,7 @@ object CameraGalleryPickerHelper {
     @Throws(IOException::class)
     private fun createImageFile(activity: Activity, filename: String): File {
         // taken from https://developer.android.com/training/camera/photobasics
-        val storageDir =
-            activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(filename, ".jpg", storageDir)
     }
 }

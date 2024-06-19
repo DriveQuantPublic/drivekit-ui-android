@@ -28,15 +28,19 @@
 
             <TextView
                 android:id="@+id/text_view_alert_title"
+                style="@style/Headline1.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/mainFontColor" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/text_view_alert_description"
+            style="@style/NormalText.Primary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainFontColor" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_pseudo"

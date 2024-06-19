@@ -28,7 +28,8 @@
                 android:id="@+id/separator_enable"
                 style="@style/Separator.Horizontal"
                 android:layout_marginStart="@dimen/dk_margin"
-                android:layout_marginEnd="@dimen/dk_margin" />
+                android:layout_marginEnd="@dimen/dk_margin"
+                android:background="@color/neutralColor" />
 
             <ScrollView
                 android:id="@+id/scrollview"
@@ -46,11 +47,12 @@
                         android:id="@+id/inside_hours_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="2dp"/>
+                        android:paddingHorizontal="2dp" />
 
                     <View
                         android:id="@+id/separator_inside"
-                        style="@style/Separator.Horizontal"/>
+                        style="@style/Separator.Horizontal"
+                        android:background="@color/neutralColor" />
 
                     <com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
                         android:id="@+id/outside_hours_container"
@@ -60,7 +62,8 @@
 
                     <View
                         android:id="@+id/separator_outside"
-                        style="@style/Separator.Horizontal" />
+                        style="@style/Separator.Horizontal"
+                        android:background="@color/neutralColor" />
 
                     <LinearLayout
                         android:id="@+id/days_container"

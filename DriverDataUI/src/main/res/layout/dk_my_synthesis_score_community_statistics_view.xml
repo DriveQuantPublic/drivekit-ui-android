@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dk_margin_half"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:textColor="@color/mainFontColor"
         app:layout_constraintBottom_toBottomOf="@id/icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/icon"

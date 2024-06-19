@@ -12,12 +12,12 @@ import com.drivequant.drivekit.challenge.ChallengeDetailQueryListener
 import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
@@ -126,12 +126,12 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
     fun getMainScore(context: Context): Spannable? {
         return challengeDetailData?.let {
             DKSpannable().append(it.driverStats.score.format(2), context.resSpans {
-                color(DriveKitUI.colors.primaryColor())
+                color(DKColors.primaryColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
                 typeface(BOLD)
 
             }).append(" /10", context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DKColors.mainFontColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
                 typeface(BOLD)
             }).toSpannable()
@@ -155,21 +155,21 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
                 }
             } ?: "-"
             DKSpannable().append(pseudo, context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DKColors.mainFontColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                 typeface(BOLD)
             }).append("  ")
                 .append(it, context.resSpans {
-                    color(DriveKitUI.colors.secondaryColor())
+                    color(DKColors.secondaryColor)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxbig)
                     typeface(BOLD)
                 }).append(" / ", context.resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
+                    color(DKColors.mainFontColor)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                     typeface(BOLD)
                 }).append(
                     "${challengeDetailData?.nbDriverRegistered}", context.resSpans {
-                        color(DriveKitUI.colors.mainFontColor())
+                        color(DKColors.mainFontColor)
                         size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                         typeface(BOLD)
                     }).toSpannable()
@@ -316,16 +316,16 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
             "${challengeDetailData?.driverStats?.rank}"
         }.let {
             DKSpannable().append(it, context.resSpans {
-                color(DriveKitUI.colors.secondaryColor())
+                color(DKColors.secondaryColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                 typeface(BOLD)
             }).append(" / ", context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DKColors.mainFontColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                 typeface(BOLD)
             }).append(
                 "${challengeDetailData?.nbDriverRegistered}", context.resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
+                    color(DKColors.mainFontColor)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                     typeface(BOLD)
                 }).toSpannable()

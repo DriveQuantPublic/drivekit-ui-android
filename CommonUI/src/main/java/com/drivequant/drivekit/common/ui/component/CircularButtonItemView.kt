@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.drawable.DrawableCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.withAlpha
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 class CircularButtonItemView : FrameLayout {
     private var itemSelected = false
@@ -73,19 +73,15 @@ class CircularButtonItemView : FrameLayout {
 
     fun setItemSelectedState(selected: Boolean) {
         setItemSelected(selected)
-        val wrapped: Drawable = DrawableCompat.wrap(imageView.drawable)
-        wrapped.mutate()
-        val tintColor =
-            if (itemSelected) DriveKitUI.colors.mainFontColor() else DriveKitUI.colors.complementaryFontColor()
+        val tintColor = if (itemSelected) DKColors.mainFontColor else DKColors.complementaryFontColor
         val circle = ContextCompat.getDrawable(context, R.drawable.dk_circle_accent)
         val bgColor = if (selected) {
-            ColorUtils.setAlphaComponent(DriveKitUI.colors.secondaryColor(), 102)
+            R.color.secondaryColor.withAlpha(context, 102)
         } else {
-            DriveKitUI.colors.transparentColor()
+            DKColors.transparentColor
         }
-        (circle as GradientDrawable).setColor(bgColor)
-        DrawableCompat.setTint(wrapped, tintColor)
-        imageView.setImageDrawable(wrapped)
+        (circle as? GradientDrawable)?.setColor(bgColor)
+        imageView.drawable.tintDrawable(tintColor)
         circleView.background = circle
     }
 
@@ -93,12 +89,7 @@ class CircularButtonItemView : FrameLayout {
         if (resDrawableId != 0) {
             val drawable: Drawable? = ContextCompat.getDrawable(context, resDrawableId)
             if (drawable != null) {
-                val wrapped: Drawable = DrawableCompat.wrap(drawable)
-                wrapped.mutate()
-                DrawableCompat.setTint(
-                    drawable,
-                    if (itemSelected) DriveKitUI.colors.secondaryColor() else DriveKitUI.colors.complementaryFontColor()
-                )
+                drawable.tintDrawable(if (itemSelected) DKColors.secondaryColor else DKColors.complementaryFontColor)
                 imageView.setImageDrawable(drawable)
             }
         }

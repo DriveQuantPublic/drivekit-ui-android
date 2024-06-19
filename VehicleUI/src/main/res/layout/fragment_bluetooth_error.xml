@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
     android:paddingHorizontal="@dimen/dk_screen_border"
+    android:weightSum="1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".bluetooth.activity.BluetoothActivity">
 
@@ -17,7 +17,8 @@
         android:layout_marginVertical="@dimen/dk_margin"
         android:layout_weight="0.65"
         android:gravity="center"
-        android:text="@string/dk_vehicle_bluetooth_not_found" />
+        android:text="@string/dk_vehicle_bluetooth_not_found"
+        android:textColor="@color/mainFontColor" />
 
     <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_cancel"

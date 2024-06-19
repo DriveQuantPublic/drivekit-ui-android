@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -23,7 +22,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,6 +35,8 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -60,7 +60,7 @@ class TripDetailFragment : Fragment() {
 
     private lateinit var viewModel: TripDetailViewModel
 
-    private lateinit var itinId: String
+    private var itinId: String? = null
     private var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
     private var openAdvice: Boolean = false
 
@@ -98,7 +98,7 @@ class TripDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTripDetailBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
@@ -108,7 +108,7 @@ class TripDetailFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             R.id.trip_delete -> {
                 context?.let {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
@@ -137,17 +137,23 @@ class TripDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trips_detail), javaClass.simpleName)
         savedInstanceState?.getString("itinId")?.let{
-            itinId = it
+            this.itinId = it
         }
+
+        val itinId = this.itinId
+        if (itinId == null) {
+            activity?.finish()
+            return
+        }
+
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(this,
                 TripDetailViewModelFactory(itinId, tripListConfiguration)
             )[TripDetailViewModel::class.java]
         }
         binding.progressCircular.visibility = View.VISIBLE
-        activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)
-        binding.containerHeaderTrip.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        binding.centerButton.setColorFilter(DriveKitUI.colors.primaryColor())
+        activity?.title = context?.getString(R.string.dk_driverdata_trip_detail_title)
+        binding.centerButton.setColorFilter(DKColors.primaryColor)
 
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
         if (DriverDataUI.enableDeleteTrip) {
@@ -157,7 +163,9 @@ class TripDetailFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("itinId", itinId)
+        this.itinId?.let {
+            outState.putString("itinId", it)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -302,8 +310,6 @@ class TripDetailFragment : Fragment() {
             headerText.apply {
                 text = viewModel.getAdviceTitle(mapItem)
                 typeface = DriveKitUI.primaryFont(context)
-                setBackgroundColor(DriveKitUI.colors.primaryColor())
-
             }
             viewModel.getAdviceMessage(mapItem)?.let {
                 adviceView.findViewById<TextView>(R.id.text_view_advice_content).apply {
@@ -321,12 +327,12 @@ class TripDetailFragment : Fragment() {
                 val agreeText = adviceView.findViewById<TextView>(R.id.advice_agree_textview)
                 val agreeImage = adviceView.findViewById<ImageView>(R.id.advice_agree_image)
 
-                disagreeText.headLine2(DriveKitUI.colors.primaryColor())
-                agreeText.headLine2(DriveKitUI.colors.primaryColor())
-                DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
+                disagreeText.headLine2()
+                agreeText.headLine2()
+                agreeImage.drawable.tintDrawable(DKColors.primaryColor)
 
                 disagreeText.text = context?.getString(R.string.dk_driverdata_advice_disagree)
-                DrawableCompat.setTint(disagreeImage.drawable, DriveKitUI.colors.primaryColor())
+                disagreeImage.drawable.tintDrawable(DKColors.primaryColor)
                 disagreeButton.setOnClickListener {
                     displayAdviceFeedback(mapItem)
                 }
@@ -344,7 +350,7 @@ class TripDetailFragment : Fragment() {
             }
             adviceAlertDialog = builder.show()
             adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
-                setTextColor(DriveKitUI.colors.secondaryColor())
+                setTextColor(DKColors.secondaryColor)
                 typeface = DriveKitUI.primaryFont(context)
             }
         }
@@ -356,7 +362,6 @@ class TripDetailFragment : Fragment() {
         val header = feedbackView.findViewById<TextView>(R.id.alert_dialog_trip_feedback_header)
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
 
-        header.setBackgroundColor(DriveKitUI.colors.primaryColor())
         header.text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)?.uppercase(Locale.getDefault())
         feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).hint = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
@@ -391,7 +396,7 @@ class TripDetailFragment : Fragment() {
                 typeface = DriveKitUI.primaryFont(context)
             }
             getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
-                setTextColor(DriveKitUI.colors.secondaryColor())
+                setTextColor(DKColors.secondaryColor)
                 typeface = DriveKitUI.primaryFont(context)
             }
         }
@@ -411,7 +416,7 @@ class TripDetailFragment : Fragment() {
             }
             feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)
                 ?.apply {
-                    setTextColor(DriveKitUI.colors.secondaryColor())
+                    setTextColor(DKColors.secondaryColor)
                     typeface = DriveKitUI.primaryFont(context)
                 }
         } else {
@@ -495,7 +500,7 @@ class TripDetailFragment : Fragment() {
             binding.tabLayout.getTabAt(index)?.let {
                 val icon = ImageView(requireContext())
                 ContextCompat.getDrawable(requireContext(), mapItem.getImageResource())?.let { drawable ->
-                    DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
+                    drawable.tintDrawable(DKColors.primaryColor)
                     icon.setImageDrawable(drawable)
                 }
                 it.parent?.let { _ ->
@@ -503,7 +508,7 @@ class TripDetailFragment : Fragment() {
                 }
             }
         }
-        DrawableCompat.setTint(binding.centerButton.drawable, DriveKitUI.colors.primaryColor())
+        binding.centerButton.drawable.tintDrawable(DKColors.primaryColor)
         binding.viewPager.addOnPageChangeListener(
             DetailOnPageChangeListener(
                 viewModel
@@ -513,7 +518,6 @@ class TripDetailFragment : Fragment() {
 
     private fun setHeaderSummary() {
         binding.tripDate.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalizeFirstLetter()
-        binding.tripDate.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         val headerValue =
             DriverDataUI.customHeader?.let {
@@ -524,7 +528,6 @@ class TripDetailFragment : Fragment() {
         binding.tripHeader.text = headerValue ?: run {
             DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!.toDKTripItem())
         }
-        binding.tripHeader.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
     private fun showProgressCircular() {

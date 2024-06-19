@@ -14,9 +14,9 @@ import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.settings.viewmodel.NotificationSettingsViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivitySettingsNotificationsBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 
 internal class NotificationSettingsActivity : AppCompatActivity() {
 
@@ -38,7 +38,7 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = getString(R.string.notifications_header)
+        setActivityTitle(getString(R.string.notifications_header))
     }
 
     override fun onResume() {
@@ -52,7 +52,7 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
             viewModel = ViewModelProvider(this)[NotificationSettingsViewModel::class.java]
         }
 
-        binding.textViewNotificationsDescription.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.textViewNotificationsDescription.normalText()
 
         binding.notificationStartTrip.apply {
             if (viewModel.isChannelEnabled(context, DKNotificationChannel.TRIP_STARTED)) {
@@ -67,9 +67,6 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
         }
         configureSwitchSettings(binding.notificationTripCancelled, DKNotificationChannel.TRIP_CANCELLED)
         configureSwitchSettings(binding.notificationTripFinished, DKNotificationChannel.TRIP_ENDED)
-
-        binding.separatorFirst.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        binding.separatorSecond.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
     private fun configureSwitchSettings(

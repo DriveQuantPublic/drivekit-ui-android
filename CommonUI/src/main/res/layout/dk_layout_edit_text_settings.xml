@@ -10,12 +10,14 @@
         android:id="@+id/text_view_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/complementaryFontColor"
         tools:text="Label" />
 
     <TextView
         android:id="@+id/text_view_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/complementaryFontColor"
         android:visibility="gone"
         tools:text="Optional Description" />
 
@@ -35,6 +37,7 @@
             android:paddingStart="0dp"
             android:paddingTop="0dp"
             android:paddingEnd="0dp"
+            android:textColor="@color/mainFontColor"
             tools:hint="This is hint"
             tools:text="This is a text" />
     </com.google.android.material.textfield.TextInputLayout>

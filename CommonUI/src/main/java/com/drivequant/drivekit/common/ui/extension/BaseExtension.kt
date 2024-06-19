@@ -11,29 +11,33 @@ import android.view.SubMenu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.utils.*
+import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.common.ui.utils.ResSpans
 import com.google.android.material.tabs.TabLayout
 
 
 inline fun Context.resSpans(options: ResSpans.() -> Unit) = ResSpans(this).apply(options)
 
-fun Drawable.tintDrawable(color: Int) {
-    when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-            this.mutate().colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
-        }
-        else -> {
-            DrawableCompat.setTint(this, color)
-        }
+fun Drawable.tintDrawable(@ColorInt color: Int) {
+    this.mutate()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        this.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+    } else {
+        DrawableCompat.setTint(this, color)
     }
 }
 
-fun View.setDKStyle(color: Int = DriveKitUI.colors.backgroundViewColor()): View {
+fun View.setDKStyle(@ColorRes color: Int = R.color.backgroundViewColor): View {
     FontUtils.overrideFonts(this.context, this)
-    this.setBackgroundColor(color)
+    this.setBackgroundColor(color.intColor(this.context))
     return this
 }
 

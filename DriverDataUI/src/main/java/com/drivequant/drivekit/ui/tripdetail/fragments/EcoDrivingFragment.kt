@@ -1,17 +1,16 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.databinding.EcoDrivingFragmentBinding
@@ -37,12 +36,14 @@ class EcoDrivingFragment : Fragment() {
     ): View {
         _binding = EcoDrivingFragmentBinding.inflate(inflater, container, false)
         FontUtils.overrideFonts(context, binding.root)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("viewModel", viewModel)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -50,6 +51,11 @@ class EcoDrivingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.getSerializableCompat("viewModel", EcoDrivingViewModel::class.java)?.let {
             viewModel = it
+        }
+
+        if (!this::viewModel.isInitialized) {
+            activity?.finish()
+            return
         }
 
         binding.scoreGauge.configure(viewModel.getScore(), GaugeConfiguration.ECO_DRIVING(viewModel.getScore()), Typeface.BOLD)
@@ -60,16 +66,16 @@ class EcoDrivingFragment : Fragment() {
         binding.decelAdvice.text = context?.getString(viewModel.getDecelMessage())
         binding.gaugeTypeTitle.text = context?.getString(viewModel.getGaugeTitle())
 
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
+        val mainFontColor = DKColors.mainFontColor
 
         binding.imageAccelAdvice.setColorFilter(mainFontColor)
         binding.imageDecelAdvice.setColorFilter(mainFontColor)
         binding.imageMainAdvice.setColorFilter(mainFontColor)
 
-        binding.accelAdvice.normalText(mainFontColor)
-        binding.mainAdvice.normalText(mainFontColor)
-        binding.decelAdvice.normalText(mainFontColor)
-        binding.gaugeTypeTitle.normalText(mainFontColor)
+        binding.accelAdvice.normalText()
+        binding.mainAdvice.normalText()
+        binding.decelAdvice.normalText()
+        binding.gaugeTypeTitle.normalText()
     }
 
     override fun onDestroyView() {

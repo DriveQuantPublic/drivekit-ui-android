@@ -1,13 +1,17 @@
 package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Paint.Align
+import android.graphics.Rect
+import android.graphics.RectF
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.shouldInvertTextColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
@@ -66,11 +70,11 @@ internal class DKXAxisRenderer(
 ) : XAxisRenderer(viewPortHandler, xAxis, transformer) {
 
     companion object {
-        private val backgroundColor = DriveKitUI.colors.secondaryColor()
-        private val selectedTextColor = if (backgroundColor.shouldInvertTextColor(DriveKitUI.colors.mainFontColor())) {
+        private val backgroundColor = DKColors.secondaryColor
+        private val selectedTextColor = if (backgroundColor.shouldInvertTextColor(DKColors.mainFontColor)) {
             Color.WHITE
         } else {
-            DriveKitUI.colors.mainFontColor()
+            DKColors.mainFontColor
         }
         private val fontMetrics = Paint.FontMetrics()
         private val paintRenderer = Paint().also {
@@ -122,7 +126,7 @@ internal class DKXAxisRenderer(
             paint.color = selectedTextColor
         } else {
             // Restore the Paint color for all points after the selectedIndex
-            mAxisLabelPaint.color = DriveKitUI.colors.mainFontColor()
+            mAxisLabelPaint.color = DKColors.mainFontColor
         }
         super.drawLabel(canvas, text, x, y, anchor, angleDegrees)
     }

@@ -20,28 +20,28 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.EditableText
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.extension.getDefaultImage
+import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
@@ -50,6 +50,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPick
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -69,7 +70,7 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private lateinit var vehicleId: String
+    private var vehicleId: String? = null
     private lateinit var viewModel: VehicleDetailViewModel
     private var fieldsAdapter: VehicleFieldsListAdapter? = null
 
@@ -77,7 +78,7 @@ class VehicleDetailFragment : Fragment() {
     private var hasChangesToUpdate = false
 
     private var imageView: ImageView? = null
-    private var defaultVehicleImage: Int = 0
+    @DrawableRes private var vehicleDrawableId: Int? = null
 
     private var imageUri: Uri? = null
 
@@ -92,7 +93,9 @@ class VehicleDetailFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_vehicle_detail, container, false).setDKStyle()
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("vehicleDetailTag", vehicleId)
+        this.vehicleId?.let {
+            outState.putString("vehicleDetailTag", it)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -112,12 +115,9 @@ class VehicleDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        savedInstanceState?.let { bundle ->
-            val vehicleId = bundle.getString("vehicleDetailTag")
-            vehicleId?.let {
-                this.vehicleId = it
-                viewModel = VehicleDetailViewModel(it)
-            }
+        savedInstanceState?.getString("vehicleDetailTag")?.let {
+            this.vehicleId = it
+            viewModel = VehicleDetailViewModel(it)
         }
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -127,18 +127,18 @@ class VehicleDetailFragment : Fragment() {
         val collapsingToolbar = activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
         val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
         collapsingToolbar?.let { collapsingToolbarLayout ->
+            collapsingToolbarLayout.setCollapsedTitleTypeface(
+                DriveKitUI.secondaryFont(requireContext())
+            )
+            collapsingToolbarLayout.setExpandedTitleTypeface(
+                DriveKitUI.primaryFont(requireContext())
+            )
             appBarLayout?.let {
                 viewModel.vehicleName?.let { vehicleName ->
                     it.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
                         if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
-                            collapsingToolbarLayout.setCollapsedTitleTypeface(
-                                DriveKitUI.secondaryFont(requireContext())
-                            )
                             collapsingToolbarLayout.title = vehicleName
                         } else {
-                            collapsingToolbarLayout.setCollapsedTitleTypeface(
-                                DriveKitUI.primaryFont(requireContext())
-                            )
                             context?.let { context ->
                                 collapsingToolbarLayout.title =
                                     DKSpannable().append(vehicleName, context.resSpans {
@@ -150,17 +150,16 @@ class VehicleDetailFragment : Fragment() {
                     }
                 }
             }
-            collapsingToolbarLayout.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+            collapsingToolbarLayout.setExpandedTitleColor(DKColors.fontColorOnPrimaryColor)
         }
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
         fab?.let {
             ContextCompat.getDrawable(requireContext(), R.drawable.dk_gallery_image)?.let { drawable ->
-                val wrapped = DrawableCompat.wrap(drawable)
-                DrawableCompat.setTint(wrapped, DriveKitUI.colors.fontColorOnSecondaryColor())
-                it.setImageDrawable(wrapped)
+                drawable.tintDrawable(DKColors.fontColorOnSecondaryColor)
+                it.setImageDrawable(drawable)
             }
-            it.backgroundTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+            it.backgroundTintList = ColorStateList.valueOf(DKColors.secondaryColor)
             it.setOnClickListener {
                 context?.let { context ->
                     manageFabAlertDialog(context)
@@ -186,17 +185,19 @@ class VehicleDetailFragment : Fragment() {
         if (vehicleUriSharedPrefs != null) {
             imageUri = Uri.parse(vehicleUriSharedPrefs)
         }
+
         imageView = activity?.findViewById(R.id.image_view_vehicle)
 
         viewModel.vehicle?.let {
-            defaultVehicleImage = it.getDefaultImage()
+            vehicleDrawableId = it.getImageByTypeIndex()
         }
 
-        imageView?.let {
-            Glide.with(this)
-                .load(imageUri ?: defaultVehicleImage)
-                .placeholder(defaultVehicleImage)
-                .into(it)
+        if (imageUri != null) {
+            updateWithCustomPicture()
+        } else {
+            vehicleDrawableId?.let {
+                imageView?.setImageResource(it)
+            }
         }
 
         vehicleFields?.layoutManager = LinearLayoutManager(view.context)
@@ -219,10 +220,10 @@ class VehicleDetailFragment : Fragment() {
                 viewModel.vehicle?.let { vehicle ->
                     if (text != null) {
                         if (editableField.field.isValid(text, vehicle)) {
-                            editableField.editableText.getTextInputLayout()?.isErrorEnabled = false
+                            editableField.editableText.getTextInputLayout().isErrorEnabled = false
                         } else {
-                            editableField.editableText.getTextInputLayout()?.isErrorEnabled = true
-                            editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext(), text, vehicle)
+                            editableField.editableText.getTextInputLayout().isErrorEnabled = true
+                            editableField.editableText.getTextInputLayout().error = editableField.field.getErrorDescription(requireContext(), text, vehicle)
                         }
                     }
                 }
@@ -269,21 +270,13 @@ class VehicleDetailFragment : Fragment() {
                     viewModel.progressBarObserver.postValue(true)
                     viewModel.vehicle?.let { vehicle ->
                         for (item in editableFields) {
-                            item.field.onFieldUpdated(
-                                context,
-                                item.editableText.text,
-                                vehicle,
-                                object : FieldUpdatedListener {
+                            item.field.onFieldUpdated(context, item.editableText.text, vehicle, object : FieldUpdatedListener {
                                     override fun onFieldUpdated(success: Boolean, message: String) {
                                         viewModel.progressBarObserver.postValue(false)
                                         if (success) {
                                             updateSubmitButtonVisibility(false)
                                         }
-                                        Toast.makeText(
-                                            context,
-                                            message,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                                         if (fromBackButton) {
                                             activity?.finish()
                                         }
@@ -292,11 +285,7 @@ class VehicleDetailFragment : Fragment() {
                         }
                     }
                 } else {
-                    Toast.makeText(
-                        context,
-                        R.string.dk_fields_not_valid,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(context, R.string.dk_fields_not_valid, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -313,6 +302,7 @@ class VehicleDetailFragment : Fragment() {
         return true
     }
 
+
     private fun manageFabAlertDialog(context: Context) {
         alert = DKAlertDialog.LayoutBuilder()
             .init(context)
@@ -323,22 +313,13 @@ class VehicleDetailFragment : Fragment() {
         val title = alert.findViewById<TextView>(R.id.alert_dialog_header)
         val cameraTextView = alert.findViewById<TextView>(R.id.text_view_camera)
         val galleryTextView = alert.findViewById<TextView>(R.id.text_view_gallery)
-        val delete= alert.findViewById<TextView>(R.id.text_view_delete)
-        val separatorCamera = alert.findViewById<View>(R.id.view_separator_camera)
-        val separatorGallery = alert.findViewById<View>(R.id.view_separator_gallery)
 
-        val primaryColor = DriveKitUI.colors.primaryColor()
-        val neutralColor = DriveKitUI.colors.neutralColor()
         title?.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_update_photo_title)
-        title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
-        title?.setBackgroundColor(primaryColor)
+        title?.normalText()
 
-        cameraTextView?.headLine2(primaryColor)
-        galleryTextView?.headLine2(primaryColor)
-        delete?.headLine2(primaryColor)
+        cameraTextView?.headLine2()
+        galleryTextView?.headLine2()
 
-        separatorCamera?.setBackgroundColor(neutralColor)
-        separatorGallery?.setBackgroundColor(neutralColor)
         cameraTextView?.let {
             it.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_take_picture)
             it.setOnClickListener {
@@ -390,8 +371,6 @@ class VehicleDetailFragment : Fragment() {
 
             titleTextView?.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_permissions)
             descriptionTextView?.setText(descriptionIdentifier)
-            titleTextView?.headLine1()
-            descriptionTextView?.normalText()
         }
     }
 
@@ -417,12 +396,11 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun updatePicture(uri: Uri?) {
+    private fun updateWithCustomPicture() {
         imageView?.let { imageView ->
             viewModel.vehicle?.let { vehicle ->
-                defaultVehicleImage = vehicle.getDefaultImage()
+                imageView.setImageDrawable(VehicleUtils.getVehicleDrawable(imageView.context, vehicle.vehicleId))
             }
-            Glide.with(this).load(uri).placeholder(defaultVehicleImage).into(imageView)
         }
     }
 
@@ -469,14 +447,14 @@ class VehicleDetailFragment : Fragment() {
                 REQUEST_GALLERY -> {
                     CameraGalleryPickerHelper.buildUriFromIntentData(data)?.let {
                         requireContext().contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        updatePicture(it)
                         saveVehiclePictureUri(it)
+                        updateWithCustomPicture()
                     }
                 }
                 REQUEST_CAMERA -> {
                     val uri = imageUri
-                    updatePicture(uri)
                     saveVehiclePictureUri(uri)
+                    updateWithCustomPicture()
                 }
             }
         } else {

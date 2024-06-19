@@ -8,10 +8,9 @@
     tools:viewBindingIgnore="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/DKCardPadding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/dk_margin"
-        android:paddingTop="@dimen/dk_margin">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/info_button"
@@ -24,6 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_view_title"
             app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/secondaryColor"
             tools:visibility="visible" />
 
         <TextView
@@ -31,6 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/mainFontColor"
             android:visibility="visible"
             app:layout_constraintEnd_toStartOf="@id/info_button"
             app:layout_constraintStart_toEndOf="@id/icon_title"
@@ -55,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
+            android:textColor="@color/complementaryFontColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_title"
             tools:text="@string/feature_list_description" />
@@ -63,11 +65,10 @@
             android:id="@+id/text_view_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dk_margin_half"
-            android:layout_marginBottom="@dimen/dk_margin_half"
+            android:layout_marginTop="@dimen/dk_margin_half"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_description"
-            app:layout_constraintBottom_toBottomOf="parent"
             tools:text="@string/button_see_feature" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

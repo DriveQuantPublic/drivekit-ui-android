@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="@color/primaryColor"
         android:textSize="@dimen/dk_text_xxbig"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

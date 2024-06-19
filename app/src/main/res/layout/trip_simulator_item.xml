@@ -4,6 +4,7 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:fontFamily="@font/dkprimary"
     android:gravity="start|center"
     android:paddingStart="@dimen/dk_margin"
     android:paddingEnd="@dimen/dk_margin"

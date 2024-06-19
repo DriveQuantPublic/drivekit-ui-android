@@ -7,8 +7,7 @@ import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 
@@ -82,10 +81,7 @@ internal class ContextCardBar @JvmOverloads constructor(
 
     private fun createPaint(progressItem: DKContextCardItem): Paint {
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint.color = ContextCompat.getColor(
-            context,
-            progressItem.getColorResId()
-        ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
+        paint.color = progressItem.getColorResId().tintFromHueOfColor(context, R.color.primaryColor)
         return paint
     }
 }

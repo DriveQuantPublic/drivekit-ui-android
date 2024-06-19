@@ -7,7 +7,7 @@ import android.text.SpannableString
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -31,8 +31,8 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
         return if (trip.declaredTransportationMode?.transportationMode == null) {
             DKResource.buildString(
                 context,
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.primaryColor(),
+                DKColors.mainFontColor,
+                DKColors.primaryColor,
                 R.string.dk_driverdata_detected_transportation_mode,
                 " ${trip.transportationMode.text(context)}"
             )
@@ -50,8 +50,8 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
         return if (trip.declaredTransportationMode?.transportationMode != null) {
             DKResource.buildString(
                 context,
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.primaryColor(),
+                DKColors.mainFontColor,
+                DKColors.primaryColor,
                 R.string.dk_driverdata_declared_transportation_mode,
                 " ${trip.declaredTransportationMode?.transportationMode.text(context)}"
             )

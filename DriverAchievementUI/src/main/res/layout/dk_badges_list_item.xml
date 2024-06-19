@@ -17,6 +17,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:paddingVertical="@dimen/dk_margin_quarter"
+        android:textColor="@color/mainFontColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/badge_trip_number_theme" />

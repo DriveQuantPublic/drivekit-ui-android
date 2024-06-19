@@ -6,7 +6,7 @@
     <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
         android:id="@+id/button_action"
         style="@style/DKButton.Secondary"
-        android:layout_marginHorizontal="@dimen/dk_screen_border"
+        android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
         android:layout_marginVertical="@dimen/dk_margin_half">
     </com.drivequant.drivekit.common.ui.component.DKButtonSecondary>
 </FrameLayout>

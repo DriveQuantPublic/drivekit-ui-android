@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingHorizontal="@dimen/dk_screen_border"
     android:weightSum="1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:paddingHorizontal="@dimen/dk_screen_border"
     tools:context=".bluetooth.activity.BluetoothActivity">
 
     <TextView
@@ -17,7 +17,8 @@
         android:layout_marginVertical="@dimen/dk_margin"
         android:gravity="center"
         android:paddingTop="@dimen/dk_margin"
-        android:text="@string/dk_vehicle_bluetooth_congrats_title" />
+        android:text="@string/dk_vehicle_bluetooth_congrats_title"
+        android:textColor="@color/mainFontColor" />
 
     <TextView
         android:id="@+id/text_view_congrats_description"
@@ -26,6 +27,7 @@
         android:layout_marginVertical="@dimen/dk_margin"
         android:gravity="center"
         android:paddingTop="@dimen/dk_margin_quarter"
+        android:textColor="@color/mainFontColor"
         tools:text="This is a description text lorem" />
 
     <ImageView
@@ -42,7 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/dk_margin"
         android:gravity="center"
-        android:paddingTop="@dimen/dk_margin" />
+        android:paddingTop="@dimen/dk_margin"
+        android:textColor="@color/mainFontColor" />
 
     <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
         android:id="@+id/button_finish"

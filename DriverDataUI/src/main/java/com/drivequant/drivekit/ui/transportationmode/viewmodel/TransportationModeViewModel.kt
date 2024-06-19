@@ -5,7 +5,7 @@ import android.text.Spanned
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -76,7 +76,7 @@ internal class TransportationModeViewModel(private val itinId: String) : ViewMod
 
     fun buildSelectedTransportationModeTitle(context: Context): Spanned {
         return DKResource.buildString(
-            context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.primaryColor(),
+            context, DKColors.mainFontColor, DKColors.primaryColor,
             R.string.dk_driverdata_transportation_mode,
             " ${selectedTransportationMode.text(context)}"
         )

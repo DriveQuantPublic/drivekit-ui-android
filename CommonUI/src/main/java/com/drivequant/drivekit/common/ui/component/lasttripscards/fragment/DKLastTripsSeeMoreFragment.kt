@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.databinding.DkFragmentLastTripsSeeMoreBinding
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -40,7 +39,7 @@ internal class DKLastTripsSeeMoreFragment : Fragment() {
         context?.let { context ->
             binding.textViewSeeMore.apply {
                 visibility = View.VISIBLE
-                normalText(DriveKitUI.colors.complementaryFontColor())
+                normalText()
                 text = if (this@DKLastTripsSeeMoreFragment.hasMoreTrips) {
                     getString(R.string.dk_common_see_more_trips)
                 } else {

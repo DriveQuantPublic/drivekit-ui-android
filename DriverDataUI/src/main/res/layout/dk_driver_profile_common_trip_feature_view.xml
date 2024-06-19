@@ -9,27 +9,29 @@
     tools:viewBindingIgnore="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/DKCardPadding"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/dk_margin_quarter"
-        android:paddingHorizontal="@dimen/dk_margin"
-        android:paddingVertical="@dimen/dk_margin_medium">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/title"
+            style="@style/Headline2.Primary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/distance"
+            style="@style/NormalText.Primary"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/dk_margin_half"
             android:gravity="center"
             android:paddingHorizontal="@dimen/dk_margin_eigth"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/duration"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +39,7 @@
 
         <TextView
             android:id="@+id/duration"
+            style="@style/NormalText.Primary"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
@@ -49,10 +52,12 @@
 
         <TextView
             android:id="@+id/roadContext"
+            style="@style/NormalText.Primary"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
             android:paddingHorizontal="@dimen/dk_margin_eigth"
+            android:textColor="@color/mainFontColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/duration"
@@ -62,6 +67,7 @@
             android:id="@+id/leftSeparator"
             android:layout_width="1dp"
             android:layout_height="0dp"
+            android:background="@color/neutralColor"
             app:layout_constraintBottom_toBottomOf="@id/distance"
             app:layout_constraintStart_toStartOf="@id/duration"
             app:layout_constraintTop_toTopOf="@id/distance" />
@@ -70,6 +76,7 @@
             android:id="@+id/rightSeparator"
             android:layout_width="1dp"
             android:layout_height="0dp"
+            android:background="@color/neutralColor"
             app:layout_constraintBottom_toBottomOf="@id/distance"
             app:layout_constraintEnd_toEndOf="@id/duration"
             app:layout_constraintTop_toTopOf="@id/distance" />

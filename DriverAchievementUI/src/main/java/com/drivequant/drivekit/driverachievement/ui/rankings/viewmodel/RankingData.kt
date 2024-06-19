@@ -6,12 +6,12 @@ import android.graphics.drawable.Drawable
 import android.text.Spannable
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.component.ranking.RankingHeaderDisplayType
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
@@ -67,18 +67,17 @@ class RankingData(
             "${viewModel.fetchedRanking.userPosition}"
         }.let {
             DKSpannable().append(it, context.resSpans {
-                color(DriveKitUI.colors.secondaryColor())
+                color(DKColors.secondaryColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
             }).append(" / ", context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DKColors.mainFontColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
             }).append(
                 "${viewModel.fetchedRanking.nbDriverRanked}", context.resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
+                    color(DKColors.mainFontColor)
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                 }
-            )
-                .toSpannable()
+            ).toSpannable()
         }
 
     override fun getScoreTitle(context: Context): String = context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ranking_score)

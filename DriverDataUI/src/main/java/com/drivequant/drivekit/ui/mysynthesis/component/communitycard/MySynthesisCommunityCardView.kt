@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.headLine2WithColor
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.ui.R
@@ -69,7 +70,7 @@ internal class MySynthesisCommunityCardView : LinearLayout {
         this.communityInfoTitle = this.communityInfo.findViewById(R.id.title)
         this.communityInfoTitle.apply {
             text = context.getString(R.string.dk_driverdata_mysynthesis_my_community)
-            smallText(DriveKitUI.colors.mainFontColor())
+            smallText()
         }
         this.communityInfoTrips = this.communityInfo.findViewById(R.id.trips_count_title)
         this.communityInfoDistance = this.communityInfo.findViewById(R.id.distance_count_title)
@@ -82,7 +83,7 @@ internal class MySynthesisCommunityCardView : LinearLayout {
         this.driverInfoTitle = this.driverInfo.findViewById(R.id.title)
         this.driverInfoTitle.apply {
             text = context.getString(R.string.dk_driverdata_mysynthesis_me)
-            smallText(DriveKitUI.colors.mainFontColor())
+            smallText()
         }
         this.driverInfoTrips = this.driverInfo.findViewById(R.id.trips_count_title)
         this.driverInfoDistance = this.driverInfo.findViewById(R.id.distance_count_title)
@@ -112,7 +113,7 @@ internal class MySynthesisCommunityCardView : LinearLayout {
     private fun configureTitle() {
         title.apply {
             text = viewModel.getTitleText(context)
-            headLine2(viewModel.getTitleColor())
+            headLine2WithColor(viewModel.getTitleColor())
         }
     }
 

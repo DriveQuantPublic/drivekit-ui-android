@@ -15,9 +15,9 @@ import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivitySetUserIdBinding
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.core.networking.RequestError
 
 class UserIdActivity : AppCompatActivity() {
@@ -36,7 +36,7 @@ class UserIdActivity : AppCompatActivity() {
         binding = ActivitySetUserIdBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
-        title = getString( R.string.authentication_header)
+        setActivityTitle(getString(R.string.authentication_header))
 
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(this)[UserIdViewModel::class.java]
@@ -44,7 +44,7 @@ class UserIdActivity : AppCompatActivity() {
 
         binding.textViewUserIdDescription.apply {
             text = getString(R.string.authentication_description)
-            normalText(DriveKitUI.colors.complementaryFontColor())
+            normalText()
         }
         binding.textViewUserIdTitle.apply {
             text = getString(R.string.authentication_title)

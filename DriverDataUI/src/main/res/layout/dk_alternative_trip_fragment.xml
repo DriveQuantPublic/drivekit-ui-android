@@ -65,6 +65,7 @@
         android:layout_weight="0.8"
         android:gravity="center_vertical"
         android:paddingHorizontal="@dimen/dk_screen_border"
+        android:textColor="@color/mainFontColor"
         android:textSize="@dimen/dk_text_small" />
 
     <LinearLayout

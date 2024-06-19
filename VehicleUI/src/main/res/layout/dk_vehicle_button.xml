@@ -17,6 +17,7 @@
             android:id="@+id/buttonTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/secondaryColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,6 +26,7 @@
             android:id="@+id/buttonDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/complementaryFontColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

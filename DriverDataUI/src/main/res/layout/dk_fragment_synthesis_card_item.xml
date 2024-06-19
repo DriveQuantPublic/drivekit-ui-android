@@ -3,24 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/DKCard"
     android:layout_width="match_parent"
-    android:layout_height="280dp"
-    android:paddingHorizontal="@dimen/dk_margin"
-    android:paddingTop="@dimen/dk_margin_half">
+    android:layout_height="280dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
+        style="@style/DKCardPadding"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/dk_margin_half"
-        android:paddingTop="@dimen/dk_margin_half"
-        android:paddingBottom="@dimen/dk_margin">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dk_margin_half"
             android:layout_marginBottom="@dimen/dk_margin_half"
+            android:textColor="@color/mainFontColor"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/container"
             app:layout_constraintTop_toTopOf="@id/container" />
@@ -41,10 +37,8 @@
             style="@style/GaugeSynthesisCard"
             android:layout_width="140dp"
             android:layout_height="160dp"
-            android:layout_marginHorizontal="@dimen/dk_margin"
             android:layout_marginVertical="@dimen/dk_margin_half"
-            android:paddingTop="@dimen/dk_margin_medium"
-            android:paddingBottom="@dimen/dk_margin_medium"
+            android:paddingVertical="@dimen/dk_margin_medium"
             app:layout_constraintStart_toStartOf="@id/container"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
@@ -52,34 +46,28 @@
             android:id="@+id/card_info_container"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@id/score_gauge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/score_gauge"
             app:layout_constraintWidth_percent="0.4">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                android:id="@+id/top_card_info"
+                style="@style/SynthesisCardInfo"
+                android:visibility="gone" />
 
-                <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-                    android:id="@+id/top_card_info"
-                    style="@style/SynthesisCardInfo"
-                    android:visibility="gone" />
+            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                android:id="@+id/middle_card_info"
+                style="@style/SynthesisCardInfo"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:visibility="gone" />
 
-                <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-                    android:id="@+id/middle_card_info"
-                    style="@style/SynthesisCardInfo"
-                    android:layout_marginTop="@dimen/dk_margin"
-                    android:visibility="gone" />
-
-                <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-                    android:id="@+id/bottom_card_info"
-                    style="@style/SynthesisCardInfo"
-                    android:layout_marginTop="@dimen/dk_margin"
-                    android:visibility="gone" />
-            </LinearLayout>
+            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                android:id="@+id/bottom_card_info"
+                style="@style/SynthesisCardInfo"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -87,7 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="@dimen/dk_margin_half"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

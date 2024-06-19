@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +26,7 @@ class SynthesisFragment : Fragment() {
         }
     }
 
-    private lateinit var trip: Trip
+    private var trip: Trip? = null
     private lateinit var viewModel: SynthesisViewModel
 
     override fun onCreateView(
@@ -35,19 +34,27 @@ class SynthesisFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = TripSynthesisFragmentBinding.inflate(inflater, container, false)
-        binding.root.setDKStyle(Color.WHITE)
+        binding.root.setDKStyle(android.R.color.white)
         return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("trip", trip)
+        this.trip?.let {
+            outState.putSerializable("trip", it)
+        }
         super.onSaveInstanceState(outState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.getSerializableCompat("trip", Trip::class.java)?.let {
-            trip = it
+            this.trip = it
+        }
+
+        val trip = this.trip
+        if (trip == null) {
+            activity?.finish()
+            return
         }
 
         if (!this::viewModel.isInitialized){

@@ -29,5 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin"
         android:ellipsize="end"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="@color/complementaryFontColor" />
 </LinearLayout>

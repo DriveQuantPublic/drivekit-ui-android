@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    tools:ignore="KeyboardInaccessibleWidget"
     tools:viewBindingIgnore="true">
 
     <LinearLayout
         android:id="@+id/trip_list_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dk_margin_half"
         android:layout_marginHorizontal="@dimen/dk_screen_border"
+        android:layout_marginVertical="@dimen/dk_margin_half"
         android:paddingHorizontal="@dimen/dk_margin">
 
         <TextView
@@ -21,8 +23,8 @@
             android:maxLines="1"
             android:paddingTop="@dimen/dk_margin_quarter"
             android:paddingBottom="@dimen/dk_margin_quarter"
-            android:textColor="@android:color/black"
-            tools:text="Date"/>
+            android:textColor="@color/mainFontColor"
+            tools:text="Date" />
 
         <TextView
             android:id="@+id/text_view_informations"
@@ -31,7 +33,7 @@
             android:gravity="end"
             android:paddingTop="@dimen/dk_margin_quarter"
             android:paddingBottom="@dimen/dk_margin_quarter"
-            android:textColor="@android:color/black"
+            android:textColor="@color/mainFontColor"
             tools:text="14km" />
     </LinearLayout>
 </FrameLayout>

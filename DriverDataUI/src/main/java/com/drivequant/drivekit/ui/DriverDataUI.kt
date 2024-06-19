@@ -3,6 +3,7 @@ package com.drivequant.drivekit.ui
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.component.lasttripscards.DKLastTripsUI
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
@@ -65,8 +66,11 @@ object DriverDataUI : DriverDataUIEntryPoint {
     @JvmStatic
     var alternativeTripsDepthInDays: Int? = null
 
+    @ColorRes
     internal var mapTraceMainColor: Int = R.color.dkMapTraceMainColor
+    @ColorRes
     internal var mapTraceWarningColor: Int = R.color.dkMapTraceWarningColor
+    @ColorRes
     internal var mapTraceAuthorizedCallColor: Int = R.color.dkMapTraceAuthorizedCallColor
 
     init {

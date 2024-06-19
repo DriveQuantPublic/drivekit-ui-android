@@ -5,19 +5,24 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.CheckBox
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.CompoundButtonCompat
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursDayConfiguration
 import com.drivequant.drivekit.tripanalysis.workinghours.toDay
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.RangeSlider
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 internal class WorkingHoursDayCard : FrameLayout {
 
@@ -66,15 +71,15 @@ internal class WorkingHoursDayCard : FrameLayout {
         labelDay.apply {
             val cal = Calendar.getInstance(Locale.getDefault())
             cal[Calendar.DAY_OF_WEEK] = dayConfig.day.toDay()
-            text = SimpleDateFormat("E", Locale.getDefault()).format(cal.time)
+            text = DKDatePattern.YEAR_ONLY.getSimpleDateFormat().format(cal.time)
             typeface = DriveKitUI.primaryFont(context)
         }
 
         rangeSlider.apply {
             setValues(dayConfig.startTime?.toFloat(), dayConfig.endTime?.toFloat())
             labelBehavior = LabelFormatter.LABEL_GONE
-            trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
-            thumbTintList = ColorStateList.valueOf(DriveKitUI.colors.primaryColor())
+            trackInactiveTintList = ColorStateList.valueOf(DKColors.neutralColor)
+            thumbTintList = ColorStateList.valueOf(DKColors.primaryColor)
             addOnChangeListener(RangeSlider.OnChangeListener(fun(
                 _: RangeSlider,
                 _: Float,
@@ -101,9 +106,6 @@ internal class WorkingHoursDayCard : FrameLayout {
 
         manageSlider(checkbox.isChecked)
 
-        labelMin.setTextColor(DriveKitUI.colors.primaryColor())
-        labelMax.setTextColor(DriveKitUI.colors.primaryColor())
-
         updateHoursLabels()
 
         addView(
@@ -129,9 +131,8 @@ internal class WorkingHoursDayCard : FrameLayout {
 
     private fun manageCheckboxStyle(isChecked: Boolean) {
         CompoundButtonCompat.getButtonDrawable(checkbox)?.let { wrapped ->
-            wrapped.mutate()
-            val tintColor = if (isChecked) DriveKitUI.colors.secondaryColor() else DriveKitUI.colors.complementaryFontColor()
-            DrawableCompat.setTint(wrapped, tintColor)
+            val tintColor = if (isChecked) DKColors.secondaryColor else DKColors.complementaryFontColor
+            wrapped.tintDrawable(tintColor)
             checkbox.buttonDrawable = wrapped
         }
     }
@@ -142,11 +143,11 @@ internal class WorkingHoursDayCard : FrameLayout {
             isEnabled = display
             if (!display) {
                 thumbRadius = 0
-                trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+                trackActiveTintList = ColorStateList.valueOf(DKColors.neutralColor)
                 setValues(0f, 24f)
             } else {
                 thumbRadius = 25
-                trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+                trackActiveTintList = ColorStateList.valueOf(DKColors.secondaryColor)
                 if (previousMax != -1f && previousMin != -1f) {
                     setValues(previousMin, previousMax)
                 }
