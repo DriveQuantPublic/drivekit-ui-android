@@ -3,18 +3,11 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Build
 import android.text.TextUtils
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
-import androidx.exifinterface.media.ExifInterface
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -22,8 +15,9 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
-import java.io.File
 import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
 
 object VehicleUtils {
 
@@ -90,23 +84,21 @@ object VehicleUtils {
     fun getVehicleDrawable(context: Context, vehicleId: String): Drawable? {
         val defaultVehicleDrawable = ResourcesCompat.getDrawable(context.resources, getFilterVehicleDrawable(vehicleId), null)
 
-        val hasCustomPicture = DriveKitSharedPreferencesUtils.getBoolean(String.format("drivekit-vehicle-picture_%s", vehicleId), false)
-        if (hasCustomPicture) {
-            try {
-                val fileUri = CameraGalleryPickerHelper.getImage(vehicleId)
-                if (fileUri != null) {
-                    val stream = context.contentResolver.openInputStream(fileUri)
-                    val b = BitmapFactory.decodeStream(stream)
-                    b.density = Bitmap.DENSITY_NONE
-                    return BitmapDrawable(context.resources, b)
-                } else {
-                    return defaultVehicleDrawable
-                }
-            } catch (e: FileNotFoundException){
+        var stream: InputStream? = null
+        try {
+            val fileUri = CameraGalleryPickerHelper.getImageUri(vehicleId)
+            if (fileUri != null) {
+                stream = context.contentResolver.openInputStream(fileUri)
+                val b = BitmapFactory.decodeStream(stream)
+                b.density = Bitmap.DENSITY_NONE
+                return BitmapDrawable(context.resources, b)
+            } else {
                 return defaultVehicleDrawable
             }
-        } else {
+        } catch (e: FileNotFoundException){
             return defaultVehicleDrawable
+        } finally {
+            stream?.close()
         }
     }
 }

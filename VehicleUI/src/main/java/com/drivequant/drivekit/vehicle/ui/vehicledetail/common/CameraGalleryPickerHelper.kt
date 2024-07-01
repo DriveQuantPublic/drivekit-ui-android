@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,6 +25,7 @@ import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 
 
 /**
@@ -39,7 +39,7 @@ object CameraGalleryPickerHelper {
         pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    fun getImage(vehicleId: String): Uri? {
+    fun getImageUri(vehicleId: String): Uri? {
         val file = File(buildVehicleDirectory(), "$vehicleId.png")
         return if (file.exists() && file.canRead()) {
             return file.toUri()
@@ -49,7 +49,7 @@ object CameraGalleryPickerHelper {
     }
 
     //TODO add Coroutine ?
-    fun saveImage(context: Context, filename: String, uri: Uri, width: Int, height: Int, callback: (success: Boolean, newUri: Uri?) -> Unit) {
+    fun saveImage(context: Context, filename: String, uri: Uri, callback: (success: Boolean, newUri: Uri?) -> Unit) { // TODO newUri useless?
         val isExternalStorageWritable = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
         if (isExternalStorageWritable) {
             val directory = buildVehicleDirectory()
@@ -66,6 +66,7 @@ object CameraGalleryPickerHelper {
             originalBitmap.density = Bitmap.DENSITY_NONE
             val matrix = buildMatrixOrientation(context, uri)
 
+            // TODO here compute
             val bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.width, originalBitmap.height, matrix, true)
 
             try {
@@ -77,6 +78,8 @@ object CameraGalleryPickerHelper {
             } catch (e: IOException) {
                 DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create create vehicle file: $e")
                 callback(false, null)
+            } finally {
+                stream?.close()
             }
         } else {
             DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't save image $uri: external storage is not writable")
@@ -84,11 +87,11 @@ object CameraGalleryPickerHelper {
         }
     }
 
-    fun buildVehicleDirectory(): File {
+    private fun buildVehicleDirectory(): File {
         val directory = "DriveKitVehicleUI"
         val externalStorageVolumes = ContextCompat.getExternalFilesDirs(DriveKit.applicationContext, null)
         val filesDir: File = externalStorageVolumes.firstOrNull()?.let {
-            if (Environment.getExternalStorageState(it) == Environment.MEDIA_MOUNTED) { // à voir s'il faut le faire
+            if (Environment.getExternalStorageState(it) == Environment.MEDIA_MOUNTED) {
                 it
             } else {
                 null
@@ -104,15 +107,11 @@ object CameraGalleryPickerHelper {
             val uri: Uri = FileProvider.getUriForFile(activity, activity.packageName + ".provider", file)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
             val filePath = "file://" + file.absolutePath
-            cameraCallback.pictureTaken(filePath)
+            cameraCallback.onFilePathReady(filePath)
             startActivityForResult(activity, intent, REQUEST_CAMERA, null)
         } catch (e: Exception) {
-            Log.e("DriveKit Vehicle UI", "Could not open camera : $e")
+            DriveKitLog.e(DriveKitVehicleUI.TAG, "Could not open camera : $e")
         }
-    }
-
-    fun buildUriFromIntentData(data: Intent?): Uri? {
-        return data?.data
     }
 
     @Throws(IOException::class)
@@ -127,25 +126,31 @@ object CameraGalleryPickerHelper {
             val matrix = Matrix()
             matrix.setRotate(it.toFloat())
             return matrix
-        } ?: run { null }
-
-    private fun getImageOrientation(context: Context, uri: Uri): Int? {
-        val stream = context.contentResolver.openInputStream(uri)
-
-        val exifInterface = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && stream != null) {
-            ExifInterface(stream)
-        } else {
-            null // DriveKit will no longer support Android 6.0 and 7.0 in Q4 2024.
+        } ?: run {
+            null
         }
 
-        exifInterface?.let {
-            val orientation = it.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-            return when (orientation) {
-                ExifInterface.ORIENTATION_ROTATE_270 -> 270
-                ExifInterface.ORIENTATION_ROTATE_180 -> 180
-                ExifInterface.ORIENTATION_ROTATE_90 -> 90
-                else -> null
+    private fun getImageOrientation(context: Context, uri: Uri): Int? {
+        var stream: InputStream? = null
+        try {
+            stream = context.contentResolver.openInputStream(uri)
+            val exifInterface = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && stream != null) {
+                ExifInterface(stream)
+            } else {
+                null // DriveKit will no longer support Android 6.0 and 7.0 in Q4 2024.
             }
+
+            exifInterface?.let {
+                val orientation = it.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+                return when (orientation) {
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180
+                    ExifInterface.ORIENTATION_ROTATE_90 -> 90
+                    else -> null
+                }
+            }
+        } finally {
+            stream?.close()
         }
         return null
     }

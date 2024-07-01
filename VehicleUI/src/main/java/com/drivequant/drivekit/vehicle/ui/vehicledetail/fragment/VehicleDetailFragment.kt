@@ -23,7 +23,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -42,7 +41,6 @@ import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
@@ -53,7 +51,6 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPick
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -81,9 +78,9 @@ class VehicleDetailFragment : Fragment() {
     private var hasChangesToUpdate = false
 
     private var imageView: ImageView? = null
-    @DrawableRes private var vehicleDrawableId: Int? = null
+    private var imageUri: Uri? = null //TODO
 
-    private var imageUri: Uri? = null
+    private var cameraImageFilePath: String? = null
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
     private lateinit var menu: Menu
@@ -106,13 +103,10 @@ class VehicleDetailFragment : Fragment() {
                 CameraGalleryPickerHelper.saveImage(
                     this@VehicleDetailFragment.requireContext(),
                     "$vehicleId.png",
-                    uri,
-                    1024,
-                    768
+                    uri
                 ) { success: Boolean, newUri: Uri? ->
-                    if (success) {
-                        saveVehiclePictureUri()
-                        updateWithCustomPicture()
+                    if (success) { //TODO
+                        updateVehicleImage()
                     }
                 }
             } else {
@@ -213,29 +207,25 @@ class VehicleDetailFragment : Fragment() {
 
         onCameraCallback = object : OnCameraPictureTakenCallback {
             override fun pictureTaken(filePath: String) {
-                imageUri = Uri.parse(filePath)
+                this@VehicleDetailFragment.context?.let { context ->
+                    cameraImageFilePath?.let {
+                        CameraGalleryPickerHelper.saveImage(context, "$vehicleId.png", Uri.parse(it)) { success: Boolean, newUri: Uri? ->
+                            if (success && newUri != null) {
+                                updateVehicleImage()
+                            }
+                        }
+                    }
+                }
             }
-        }
 
-        vehicleId?.let {
-            CameraGalleryPickerHelper.getImage(it)?.let {
-                imageUri = it
+            override fun onFilePathReady(filePath: String) {
+                cameraImageFilePath = filePath
             }
         }
 
         imageView = activity?.findViewById(R.id.image_view_vehicle)
 
-        viewModel.vehicle?.let {
-            vehicleDrawableId = it.getImageByTypeIndex()
-        }
-
-        if (imageUri != null) {
-            updateWithCustomPicture()
-        } else {
-            vehicleDrawableId?.let {
-                imageView?.setImageResource(it)
-            }
-        }
+        updateVehicleImage()
 
         vehicleFields?.layoutManager = LinearLayoutManager(view.context)
         viewModel.newEditableFieldObserver.observe(viewLifecycleOwner) {
@@ -247,6 +237,19 @@ class VehicleDetailFragment : Fragment() {
             }
         }
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_detail), javaClass.simpleName)
+    }
+
+    private fun updateVehicleImage() {
+        val vehicleDrawableId: Int? = viewModel.vehicle?.getImageByTypeIndex()
+        val customImage = viewModel.vehicle?.vehicleId?.let { CameraGalleryPickerHelper.getImageUri(it) } ?: run { null }
+
+        if (customImage != null) {
+            imageView?.setImageURI(customImage)
+        } else {
+            vehicleDrawableId?.let {
+                imageView?.setImageResource(it)
+            }
+        }
     }
 
     private fun setupTextListener(editableField: EditableField) {
@@ -421,20 +424,6 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun updateWithCustomPicture() {
-        imageView?.let { imageView ->
-            viewModel.vehicle?.let { vehicle ->
-                val test = CameraGalleryPickerHelper.getImage(vehicleId!!) //TODO
-                imageView.setImageURI(test)
-                //imageView.setImageDrawable(VehicleUtils.getVehicleDrawable(imageView.context, vehicle.vehicleId))
-            }
-        }
-    }
-
-    private fun saveVehiclePictureUri() { // TODO
-        DriveKitSharedPreferencesUtils.setBoolean(String.format("drivekit-vehicle-picture_%s", vehicleId), true)
-    }
-
     @Suppress("OverrideDeprecatedMigration")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -469,22 +458,15 @@ class VehicleDetailFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             when (requestCode) {
-                REQUEST_GALLERY -> { // TODO
-                    CameraGalleryPickerHelper.buildUriFromIntentData(data)?.let {
-                        //requireContext().contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        saveVehiclePictureUri()
-                        updateWithCustomPicture()
-                    }
+                REQUEST_GALLERY -> {
+                    updateVehicleImage()
                 }
                 REQUEST_CAMERA -> {
-                    val uri = imageUri
-                    // save vehiclePicture
-                    saveVehiclePictureUri()
-                    updateWithCustomPicture()
+                    cameraImageFilePath?.let {
+                        onCameraCallback.pictureTaken(it)
+                    }
                 }
             }
-        } else {
-            imageUri = null
         }
     }
 }
