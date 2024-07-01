@@ -237,6 +237,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         OdometerVehicleListActivity.launchActivity(context, vehicleId)
     }
 
+    @JvmStatic
     fun reset() {
         VehicleCustomImageHelper.reset()
     }
