@@ -44,9 +44,9 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_CAMERA
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_GALLERY
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper.REQUEST_CAMERA
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper.REQUEST_GALLERY
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
@@ -97,7 +97,7 @@ class VehicleDetailFragment : Fragment() {
             // Callback is invoked after the user selects a media item or closes the
             // photo picker.
             if (uri != null) {
-                CameraGalleryPickerHelper.saveImage(
+                VehicleCustomImageHelper.saveImage(
                     this@VehicleDetailFragment.requireContext(),
                     "$vehicleId.png",
                     uri
@@ -203,7 +203,7 @@ class VehicleDetailFragment : Fragment() {
         onCameraCallback = object : OnCameraPictureTakenCallback {
             override fun pictureTaken(filePath: String) {
                 this@VehicleDetailFragment.context?.let { context ->
-                    CameraGalleryPickerHelper.saveImage(context, "$vehicleId.png", Uri.parse(filePath)) { success: Boolean ->
+                    VehicleCustomImageHelper.saveImage(context, "$vehicleId.png", Uri.parse(filePath)) { success: Boolean ->
                         if (success) {
                             updateVehicleImage()
                         }
@@ -233,7 +233,7 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun updateVehicleImage() {
-        val customImage = viewModel.vehicle?.vehicleId?.let { CameraGalleryPickerHelper.getImageUri(it) } ?: run { null }
+        val customImage = viewModel.vehicle?.vehicleId?.let { VehicleCustomImageHelper.getImageUri(it) } ?: run { null }
 
         if (customImage != null) {
             imageView?.apply {
@@ -404,7 +404,7 @@ class VehicleDetailFragment : Fragment() {
 
     private fun launchCameraIntent() {
         viewModel.vehicle?.let {
-            CameraGalleryPickerHelper.openCamera(requireActivity(), it.vehicleId, onCameraCallback)
+            VehicleCustomImageHelper.openCamera(requireActivity(), it.vehicleId, onCameraCallback)
         }
     }
 
@@ -413,7 +413,7 @@ class VehicleDetailFragment : Fragment() {
             alert.dismiss()
         }
         viewModel.vehicle?.let {
-            CameraGalleryPickerHelper.openPhotoPicker(this@VehicleDetailFragment.pickMedia)
+            VehicleCustomImageHelper.openPhotoPicker(this@VehicleDetailFragment.pickMedia)
         }
     }
 

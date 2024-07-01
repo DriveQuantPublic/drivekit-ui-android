@@ -13,6 +13,10 @@ import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdLis
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
+import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
+import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
+import com.drivequant.drivekit.core.networking.DriveKitListener
+import com.drivequant.drivekit.core.networking.RequestError
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
@@ -23,6 +27,7 @@ import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleListActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
@@ -71,6 +76,23 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         DriveKit.checkInitialization()
         DriveKitLog.i(TAG, "Initialization")
         DriveKitNavigationController.vehicleUIEntryPoint = this
+        DriveKit.addDriveKitListener(object : DriveKitListener {
+            override fun onAccountDeleted(status: DeleteAccountStatus) {
+                reset()
+            }
+
+            override fun onAuthenticationError(errorType: RequestError) {
+                reset()
+            }
+
+            override fun onConnected() {}
+
+            override fun onDisconnected() {
+                reset()
+            }
+
+            override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
+        })
     }
 
     @JvmStatic
@@ -234,5 +256,10 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     @JvmStatic
     fun startOdometerUIActivity(context: Context, vehicleId: String? = null) {
         OdometerVehicleListActivity.launchActivity(context, vehicleId)
+    }
+
+    //TODO
+    private fun reset() {
+        VehicleCustomImageHelper.reset()
     }
 }

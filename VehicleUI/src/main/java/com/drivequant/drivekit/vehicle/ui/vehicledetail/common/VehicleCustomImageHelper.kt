@@ -9,6 +9,7 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.FileUtils
 import android.provider.MediaStore
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
@@ -32,7 +33,7 @@ import java.io.InputStream
 /**
  * Created by steven on 26/07/2019.
  */
-object CameraGalleryPickerHelper {
+object VehicleCustomImageHelper {
     const val REQUEST_GALLERY = 10
     const val REQUEST_CAMERA = 11
 
@@ -157,6 +158,18 @@ object CameraGalleryPickerHelper {
             return Pair(deviceScreenWidth, newHeight)
         } else {
             return Pair(originalWidth, originalHeight)
+        }
+    }
+
+    internal fun reset() {
+        try {
+            val files = buildVehicleDirectory().listFiles()
+            files?.forEach {
+                it.delete()
+            }
+            DriveKitLog.i(DriveKitVehicleUI.TAG, "Vehicle files has been deleted")
+        } catch (e: Exception) {
+            DriveKitLog.e(DriveKitVehicleUI.TAG, "An error occured during vehicle image deletion: $e")
         }
     }
 }

@@ -14,9 +14,8 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper
 import java.io.FileNotFoundException
-import java.io.IOException
 import java.io.InputStream
 
 object VehicleUtils {
@@ -86,7 +85,7 @@ object VehicleUtils {
 
         var stream: InputStream? = null
         try {
-            val fileUri = CameraGalleryPickerHelper.getImageUri(vehicleId)
+            val fileUri = VehicleCustomImageHelper.getImageUri(vehicleId)
             if (fileUri != null) {
                 stream = context.contentResolver.openInputStream(fileUri)
                 val b = BitmapFactory.decodeStream(stream)
