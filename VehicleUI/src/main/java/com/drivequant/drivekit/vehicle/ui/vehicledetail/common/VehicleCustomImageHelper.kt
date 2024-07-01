@@ -34,7 +34,6 @@ import java.io.InputStream
  * Created by steven on 26/07/2019.
  */
 object VehicleCustomImageHelper {
-    const val REQUEST_GALLERY = 10
     const val REQUEST_CAMERA = 11
 
     fun openPhotoPicker(pickMedia: ActivityResultLauncher<PickVisualMediaRequest>) {

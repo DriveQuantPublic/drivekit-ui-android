@@ -46,7 +46,6 @@ import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper.REQUEST_CAMERA
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper.REQUEST_GALLERY
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
@@ -421,16 +420,6 @@ class VehicleDetailFragment : Fragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            REQUEST_GALLERY -> {
-                if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    launchGalleryIntent()
-                } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) { // TODO?
-                    displayRationaleAlert(com.drivequant.drivekit.common.ui.R.string.dk_common_permission_storage_rationale)
-                } else {
-                    Toast.makeText(requireContext(), com.drivequant.drivekit.common.ui.R.string.dk_common_permission_storage_rationale, Toast.LENGTH_SHORT).show()
-                }
-            }
-
             REQUEST_CAMERA -> {
                 if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     launchCameraIntent()
