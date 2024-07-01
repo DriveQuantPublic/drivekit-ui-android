@@ -14,7 +14,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
@@ -48,55 +47,41 @@ object CameraGalleryPickerHelper {
         }
     }
 
-    //TODO add Coroutine ?
-    fun saveImage(context: Context, filename: String, uri: Uri, callback: (success: Boolean, newUri: Uri?) -> Unit) { // TODO newUri useless?
-        val isExternalStorageWritable = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
-        if (isExternalStorageWritable) {
-            val directory = buildVehicleDirectory()
-            if (!directory.exists()) {
-                val success = directory.mkdirs()
-                if (!success) {
-                    DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create directory")
-                    callback(false, null)
-                }
+    fun saveImage(context: Context, filename: String, uri: Uri, callback: (success: Boolean) -> Unit) {
+        val directory = buildVehicleDirectory()
+        if (!directory.exists()) {
+            val success = directory.mkdirs()
+            if (!success) {
+                DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create directory")
+                callback(false)
             }
+        }
 
-            val stream = context.contentResolver.openInputStream(uri)
-            val originalBitmap = BitmapFactory.decodeStream(stream)
-            originalBitmap.density = Bitmap.DENSITY_NONE
-            val matrix = buildMatrixOrientation(context, uri)
+        val stream = context.contentResolver.openInputStream(uri)
+        val originalBitmap = BitmapFactory.decodeStream(stream)
+        originalBitmap.density = Bitmap.DENSITY_NONE
+        val matrix = buildMatrixOrientation(context, uri)
 
-            // TODO here compute
-            val bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.width, originalBitmap.height, matrix, true)
+        // TODO here compute
+        val bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.width, originalBitmap.height, matrix, true)
 
-            try {
-                val file = File(directory, filename)
-                FileOutputStream(file).use { out ->
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-                    callback(true, file.toUri())
-                }
-            } catch (e: IOException) {
-                DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create create vehicle file: $e")
-                callback(false, null)
-            } finally {
-                stream?.close()
+        try {
+            val file = File(directory, filename)
+            FileOutputStream(file).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                callback(true)
             }
-        } else {
-            DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't save image $uri: external storage is not writable")
-            callback(false, null)
+        } catch (e: IOException) {
+            DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create create vehicle file: $e")
+            callback(false)
+        } finally {
+            stream?.close()
         }
     }
 
     private fun buildVehicleDirectory(): File {
+        val filesDir: File = DriveKit.applicationContext.filesDir
         val directory = "DriveKitVehicleUI"
-        val externalStorageVolumes = ContextCompat.getExternalFilesDirs(DriveKit.applicationContext, null)
-        val filesDir: File = externalStorageVolumes.firstOrNull()?.let {
-            if (Environment.getExternalStorageState(it) == Environment.MEDIA_MOUNTED) {
-                it
-            } else {
-                null
-            }
-        } ?: DriveKit.applicationContext.filesDir
         return File(filesDir, directory)
     }
 

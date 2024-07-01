@@ -10,7 +10,6 @@ import android.graphics.Typeface.BOLD
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -78,7 +77,6 @@ class VehicleDetailFragment : Fragment() {
     private var hasChangesToUpdate = false
 
     private var imageView: ImageView? = null
-    private var imageUri: Uri? = null //TODO
 
     private var cameraImageFilePath: String? = null
 
@@ -99,18 +97,15 @@ class VehicleDetailFragment : Fragment() {
             // Callback is invoked after the user selects a media item or closes the
             // photo picker.
             if (uri != null) {
-                Log.d("PhotoPicker", "Selected URI: $uri") //TODO
                 CameraGalleryPickerHelper.saveImage(
                     this@VehicleDetailFragment.requireContext(),
                     "$vehicleId.png",
                     uri
-                ) { success: Boolean, newUri: Uri? ->
-                    if (success) { //TODO
+                ) { success: Boolean ->
+                    if (success) {
                         updateVehicleImage()
                     }
                 }
-            } else {
-                Log.d("PhotoPicker", "No media selected") //TODO
             }
         }
     }
@@ -208,11 +203,9 @@ class VehicleDetailFragment : Fragment() {
         onCameraCallback = object : OnCameraPictureTakenCallback {
             override fun pictureTaken(filePath: String) {
                 this@VehicleDetailFragment.context?.let { context ->
-                    cameraImageFilePath?.let {
-                        CameraGalleryPickerHelper.saveImage(context, "$vehicleId.png", Uri.parse(it)) { success: Boolean, newUri: Uri? ->
-                            if (success && newUri != null) {
-                                updateVehicleImage()
-                            }
+                    CameraGalleryPickerHelper.saveImage(context, "$vehicleId.png", Uri.parse(filePath)) { success: Boolean ->
+                        if (success) {
+                            updateVehicleImage()
                         }
                     }
                 }
@@ -240,15 +233,15 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun updateVehicleImage() {
-        val vehicleDrawableId: Int? = viewModel.vehicle?.getImageByTypeIndex()
         val customImage = viewModel.vehicle?.vehicleId?.let { CameraGalleryPickerHelper.getImageUri(it) } ?: run { null }
 
         if (customImage != null) {
-            imageView?.setImageURI(customImage)
-        } else {
-            vehicleDrawableId?.let {
-                imageView?.setImageResource(it)
+            imageView?.apply {
+                setImageURI(null)
+                setImageURI(customImage)
             }
+        } else {
+            imageView?.setImageResource(viewModel.vehicle.getImageByTypeIndex())
         }
     }
 
@@ -431,7 +424,7 @@ class VehicleDetailFragment : Fragment() {
             REQUEST_GALLERY -> {
                 if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     launchGalleryIntent()
-                } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) { // TODO?
                     displayRationaleAlert(com.drivequant.drivekit.common.ui.R.string.dk_common_permission_storage_rationale)
                 } else {
                     Toast.makeText(requireContext(), com.drivequant.drivekit.common.ui.R.string.dk_common_permission_storage_rationale, Toast.LENGTH_SHORT).show()
@@ -456,16 +449,9 @@ class VehicleDetailFragment : Fragment() {
     @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                REQUEST_GALLERY -> {
-                    updateVehicleImage()
-                }
-                REQUEST_CAMERA -> {
-                    cameraImageFilePath?.let {
-                        onCameraCallback.pictureTaken(it)
-                    }
-                }
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CAMERA) {
+            cameraImageFilePath?.let {
+                onCameraCallback.pictureTaken(it)
             }
         }
     }
