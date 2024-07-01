@@ -164,10 +164,16 @@ object VehicleCustomImageHelper {
     internal fun reset() {
         try {
             val files = buildVehicleDirectory().listFiles()
-            files?.forEach {
-                it.delete()
+            var count = 0
+            if (files != null) {
+                files.forEach {
+                    if (it.exists()) {
+                        count++
+                        it.delete()
+                    }
+                }
+                DriveKitLog.i(DriveKitVehicleUI.TAG, "$count vehicle file(s) deleted")
             }
-            DriveKitLog.i(DriveKitVehicleUI.TAG, "Vehicle files has been deleted")
         } catch (e: Exception) {
             DriveKitLog.e(DriveKitVehicleUI.TAG, "An error occured during vehicle image deletion: $e")
         }
