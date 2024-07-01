@@ -249,8 +249,8 @@ internal object DriveKitConfig {
         // Reset DriveKit
         DriveKit.reset()
 
-        // Reset Vehicle UI
-        DriveKitVehicleUI.reset()
+        // Reset DriveKit UI modules
+        DriveKitUI.reset()
 
         // Reset the Demo App NotificationManager
         DKNotificationManager.reset(context)
