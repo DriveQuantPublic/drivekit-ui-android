@@ -17,9 +17,11 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
+import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
 import java.io.File
 import java.io.FileOutputStream
@@ -62,8 +64,8 @@ object CameraGalleryPickerHelper {
         originalBitmap.density = Bitmap.DENSITY_NONE
         val matrix = buildMatrixOrientation(context, uri)
 
-        // TODO here compute
-        val bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.width, originalBitmap.height, matrix, true)
+        val computedImageSize = Pair(originalBitmap.width, originalBitmap.height).computeNewImageSize(context)
+        val bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, computedImageSize.first, computedImageSize.second, matrix, true)
 
         try {
             val file = File(directory, filename)
@@ -134,9 +136,27 @@ object CameraGalleryPickerHelper {
                     else -> null
                 }
             }
+        } catch (e: Exception) {
+            DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't get image orientation: $e")
         } finally {
             stream?.close()
         }
         return null
+    }
+
+    private fun Pair<Int, Int>.computeNewImageSize(context: Context): Pair<Int, Int> {
+        val originalWidth = this.first
+        val originalHeight = this.second
+
+        val deviceScreenWidth = (context.resources.displayMetrics.widthPixels * context.resources.displayMetrics.density).toInt()
+        val imageViewHeight = context.resources.getDimension(R.dimen.dk_vehicle_image_height).convertDpToPx()
+
+        if (originalWidth > deviceScreenWidth && originalHeight > imageViewHeight) {
+            val ratio = originalWidth.toFloat() / deviceScreenWidth.toFloat()
+            val newHeight = (originalHeight / ratio).toInt()
+            return Pair(deviceScreenWidth, newHeight)
+        } else {
+            return Pair(originalWidth, originalHeight)
+        }
     }
 }
