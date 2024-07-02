@@ -95,10 +95,11 @@ class VehicleDetailFragment : Fragment() {
         this.pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             // Callback is invoked after the user selects a media item or closes the
             // photo picker.
-            if (uri != null) {
+            val vehicleId = vehicleId
+            if (uri != null && vehicleId != null) {
                 VehicleCustomImageHelper.saveImage(
                     this@VehicleDetailFragment.requireContext(),
-                    "$vehicleId.png",
+                    VehicleCustomImageHelper.getVehicleFileName(vehicleId),
                     uri
                 ) { success: Boolean ->
                     if (success) {
@@ -202,9 +203,16 @@ class VehicleDetailFragment : Fragment() {
         onCameraCallback = object : OnCameraPictureTakenCallback {
             override fun pictureTaken(filePath: String) {
                 this@VehicleDetailFragment.context?.let { context ->
-                    VehicleCustomImageHelper.saveImage(context, "$vehicleId.png", Uri.parse(filePath)) { success: Boolean ->
-                        if (success) {
-                            updateVehicleImage()
+                    val vehicleId = vehicleId
+                    if (vehicleId != null) {
+                        VehicleCustomImageHelper.saveImage(
+                            context,
+                            VehicleCustomImageHelper.getVehicleFileName(vehicleId),
+                            Uri.parse(filePath)
+                        ) { success: Boolean ->
+                            if (success) {
+                                updateVehicleImage()
+                            }
                         }
                     }
                 }
@@ -357,7 +365,7 @@ class VehicleDetailFragment : Fragment() {
             setOnClickListener {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(requireActivity(),
-                        arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CAMERA) //VERIFY
+                        arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA)
                 } else {
                     if (alert.isShowing) {
                         alert.dismiss()

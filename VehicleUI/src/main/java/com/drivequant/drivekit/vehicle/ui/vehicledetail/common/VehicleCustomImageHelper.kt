@@ -9,7 +9,6 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import android.os.FileUtils
 import android.provider.MediaStore
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
@@ -33,15 +32,17 @@ import java.io.InputStream
 /**
  * Created by steven on 26/07/2019.
  */
-object VehicleCustomImageHelper {
+internal object VehicleCustomImageHelper {
     const val REQUEST_CAMERA = 11
+
+    fun getVehicleFileName(vehicleId: String) = "$vehicleId.png"
 
     fun openPhotoPicker(pickMedia: ActivityResultLauncher<PickVisualMediaRequest>) {
         pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     fun getImageUri(vehicleId: String): Uri? {
-        val file = File(buildVehicleDirectory(), "$vehicleId.png")
+        val file = File(buildVehicleDirectory(), getVehicleFileName(vehicleId))
         return if (file.exists() && file.canRead()) {
             return file.toUri()
         } else {
@@ -56,6 +57,7 @@ object VehicleCustomImageHelper {
             if (!success) {
                 DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create directory")
                 callback(false)
+                return
             }
         }
 
@@ -72,9 +74,10 @@ object VehicleCustomImageHelper {
             FileOutputStream(file).use { out ->
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
                 callback(true)
+                return
             }
         } catch (e: IOException) {
-            DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create create vehicle file: $e")
+            DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create vehicle file: $e")
             callback(false)
         } finally {
             stream?.close()
@@ -97,7 +100,7 @@ object VehicleCustomImageHelper {
             cameraCallback.onFilePathReady(filePath)
             startActivityForResult(activity, intent, REQUEST_CAMERA, null)
         } catch (e: Exception) {
-            DriveKitLog.e(DriveKitVehicleUI.TAG, "Could not open camera : $e")
+            DriveKitLog.e(DriveKitVehicleUI.TAG, "Could not open camera: $e")
         }
     }
 
