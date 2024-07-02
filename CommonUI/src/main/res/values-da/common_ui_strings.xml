@@ -57,7 +57,6 @@
    <string name="dk_common_period_selector_week">Uge</string>
    <string name="dk_common_period_selector_year">År</string>
    <string name="dk_common_permission_camera_rationale">Appen har brug for tilladelse til din smartphones kamera at bruge denne funktion.</string>
-   <string name="dk_common_permission_storage_rationale">Appen har brug for tilladelse til din smartphones lagring for at bruge denne funktion.</string>
    <string name="dk_common_permissions">Tilladelser</string>
    <string name="dk_common_pseudo">Brugernavn</string>
    <string name="dk_common_ranking_driver">Chauffør</string>

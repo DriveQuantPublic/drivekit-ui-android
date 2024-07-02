@@ -33,7 +33,7 @@
                 <ImageView
                     android:id="@+id/image_view_vehicle"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/dk_vehicle_image_height"
                     android:minHeight="150dp"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax" />

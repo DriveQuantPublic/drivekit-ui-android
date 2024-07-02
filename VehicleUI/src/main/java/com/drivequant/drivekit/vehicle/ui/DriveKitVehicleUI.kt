@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
@@ -23,6 +22,7 @@ import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleListActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
@@ -200,7 +200,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
             val vehicleName = it.buildFormattedName(context)
             listener.onVehicleInfoRetrieved(vehicleName, it.liteConfig)
         }?: run {
-            Log.e("DriveKitVehicleUI", "Could not find vehicle with following vehicleId : $vehicleId")
+            DriveKitLog.e("DriveKitVehicleUI", "Could not find vehicle with following vehicleId : $vehicleId")
         }
     }
 
@@ -234,5 +234,10 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     @JvmStatic
     fun startOdometerUIActivity(context: Context, vehicleId: String? = null) {
         OdometerVehicleListActivity.launchActivity(context, vehicleId)
+    }
+
+    @JvmStatic
+    fun reset() {
+        VehicleCustomImageHelper.reset()
     }
 }
