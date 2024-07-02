@@ -74,7 +74,6 @@ internal object VehicleCustomImageHelper {
             FileOutputStream(file).use { out ->
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
                 callback(true)
-                return
             }
         } catch (e: IOException) {
             DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create vehicle file: $e")
