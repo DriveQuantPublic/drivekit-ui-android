@@ -161,7 +161,7 @@ internal object VehicleCustomImageHelper {
             val newHeight = (originalHeight / ratio).toInt()
             return Pair(deviceScreenWidth, newHeight)
         } else {
-            return Pair(originalWidth, originalHeight)
+            return this
         }
     }
 
