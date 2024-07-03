@@ -40,7 +40,6 @@ import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
@@ -384,7 +383,7 @@ class VehicleDetailFragment : Fragment() {
         galleryTextView?.apply {
             setText(com.drivequant.drivekit.common.ui.R.string.dk_common_select_image_gallery)
             setOnClickListener {
-                launchGalleryIntent()
+                launchPhotoPicker()
             }
         }
     }
@@ -422,13 +421,11 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun launchGalleryIntent() {
+    private fun launchPhotoPicker() {
         if (this::alert.isInitialized && alert.isShowing) {
             alert.dismiss()
         }
-        viewModel.vehicle?.let {
-            VehicleCustomImageHelper.openPhotoPicker(this@VehicleDetailFragment.pickMedia)
-        }
+        VehicleCustomImageHelper.openPhotoPicker(this@VehicleDetailFragment.pickMedia)
     }
 
     @Suppress("OverrideDeprecatedMigration")
