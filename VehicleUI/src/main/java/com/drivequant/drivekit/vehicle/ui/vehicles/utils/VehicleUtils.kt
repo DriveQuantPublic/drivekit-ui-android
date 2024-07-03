@@ -81,7 +81,7 @@ object VehicleUtils {
         vehicle?.getImageByTypeIndex() ?: com.drivequant.drivekit.common.ui.R.drawable.dk_my_trips
 
     fun getVehicleDrawable(context: Context, vehicleId: String): Drawable? {
-        val defaultVehicleDrawable = ResourcesCompat.getDrawable(context.resources, getFilterVehicleDrawable(vehicleId), null)
+        val defaultVehicleDrawable by lazy { ResourcesCompat.getDrawable(context.resources, getFilterVehicleDrawable(vehicleId), null) }
 
         var stream: InputStream? = null
         try {
