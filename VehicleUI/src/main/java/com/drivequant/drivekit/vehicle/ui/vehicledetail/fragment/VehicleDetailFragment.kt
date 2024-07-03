@@ -246,7 +246,7 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun updateVehicleImage() {
-        val customImage = viewModel.vehicle?.vehicleId?.let { VehicleCustomImageHelper.getImageUri(it) } ?: run { null }
+        val customImage = viewModel.vehicle?.vehicleId?.let { VehicleCustomImageHelper.getImageUri(it) }
 
         if (customImage != null) {
             imageView?.apply {
