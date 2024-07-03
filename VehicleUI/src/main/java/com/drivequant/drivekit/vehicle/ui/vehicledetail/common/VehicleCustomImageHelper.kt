@@ -23,6 +23,8 @@ import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -50,38 +52,39 @@ internal object VehicleCustomImageHelper {
         }
     }
 
-    fun saveImage(context: Context, filename: String, uri: Uri, callback: (success: Boolean) -> Unit) {
-        val directory = buildVehicleDirectory()
-        if (!directory.exists()) {
-            val success = directory.mkdirs()
-            if (!success) {
-                DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create directory")
-                callback(false)
-                return
+    suspend fun saveImage(context: Context, filename: String, uri: Uri): Boolean =
+        withContext(Dispatchers.IO) {
+            val directory = buildVehicleDirectory()
+            if (!directory.exists()) {
+                val success = directory.mkdirs()
+                if (!success) {
+                    DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create directory")
+                    return@withContext false
+                }
+            }
+
+            val stream = context.contentResolver.openInputStream(uri)
+            val originalBitmap = BitmapFactory.decodeStream(stream)
+            originalBitmap.density = Bitmap.DENSITY_NONE
+            val matrix = buildMatrixOrientation(context, uri)
+
+            val computedImageSize =
+                Pair(originalBitmap.width, originalBitmap.height).computeNewImageSize(context)
+            val bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, computedImageSize.first, computedImageSize.second, matrix, true)
+
+            try {
+                val file = File(directory, filename)
+                FileOutputStream(file).use { out ->
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                    return@withContext true
+                }
+            } catch (e: IOException) {
+                DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create vehicle file: $e")
+                return@withContext false
+            } finally {
+                stream?.close()
             }
         }
-
-        val stream = context.contentResolver.openInputStream(uri)
-        val originalBitmap = BitmapFactory.decodeStream(stream)
-        originalBitmap.density = Bitmap.DENSITY_NONE
-        val matrix = buildMatrixOrientation(context, uri)
-
-        val computedImageSize = Pair(originalBitmap.width, originalBitmap.height).computeNewImageSize(context)
-        val bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, computedImageSize.first, computedImageSize.second, matrix, true)
-
-        try {
-            val file = File(directory, filename)
-            FileOutputStream(file).use { out ->
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-                callback(true)
-            }
-        } catch (e: IOException) {
-            DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't create vehicle file: $e")
-            callback(false)
-        } finally {
-            stream?.close()
-        }
-    }
 
     private fun buildVehicleDirectory(): File {
         val filesDir: File = DriveKit.applicationContext.filesDir

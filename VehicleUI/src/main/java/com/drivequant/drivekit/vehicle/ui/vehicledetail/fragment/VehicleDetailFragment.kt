@@ -40,6 +40,8 @@ import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
@@ -52,6 +54,9 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailV
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 class VehicleDetailFragment : Fragment() {
@@ -97,11 +102,12 @@ class VehicleDetailFragment : Fragment() {
             // photo picker.
             val vehicleId = vehicleId
             if (uri != null && vehicleId != null) {
-                VehicleCustomImageHelper.saveImage(
-                    this@VehicleDetailFragment.requireContext(),
-                    VehicleCustomImageHelper.getVehicleFileName(vehicleId),
-                    uri
-                ) { success: Boolean ->
+                DriveKitVehicleUI.coroutineScope.launch {
+                    val success = VehicleCustomImageHelper.saveImage(
+                        this@VehicleDetailFragment.requireContext(),
+                        VehicleCustomImageHelper.getVehicleFileName(vehicleId),
+                        uri
+                    )
                     if (success) {
                         updateVehicleImage()
                     }
@@ -205,11 +211,12 @@ class VehicleDetailFragment : Fragment() {
                 this@VehicleDetailFragment.context?.let { context ->
                     val vehicleId = vehicleId
                     if (vehicleId != null) {
-                        VehicleCustomImageHelper.saveImage(
-                            context,
-                            VehicleCustomImageHelper.getVehicleFileName(vehicleId),
-                            Uri.parse(filePath)
-                        ) { success: Boolean ->
+                        DriveKitVehicleUI.coroutineScope.launch() {
+                            val success = VehicleCustomImageHelper.saveImage(
+                                context,
+                                VehicleCustomImageHelper.getVehicleFileName(vehicleId),
+                                Uri.parse(filePath)
+                            )
                             if (success) {
                                 updateVehicleImage()
                             }
