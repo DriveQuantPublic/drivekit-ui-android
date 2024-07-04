@@ -157,9 +157,16 @@ internal object VehicleCustomImageHelper {
         val imageViewHeight = context.resources.getDimension(R.dimen.dk_vehicle_image_height).convertDpToPx()
 
         if (originalWidth > deviceScreenWidth && originalHeight > imageViewHeight) {
-            val ratio = originalWidth.toFloat() / deviceScreenWidth.toFloat()
-            val newHeight = (originalHeight / ratio).toInt()
-            return Pair(deviceScreenWidth, newHeight)
+            val ratioWidth = originalWidth.toFloat() / deviceScreenWidth.toFloat()
+            val newHeight = (originalHeight / ratioWidth).toInt()
+
+            if (newHeight < imageViewHeight) {
+                val ratioHeight = originalHeight.toFloat() / imageViewHeight.toFloat()
+                val newWidth = (originalWidth / ratioHeight).toInt()
+                return Pair(newWidth, imageViewHeight)
+            } else {
+                return Pair(deviceScreenWidth, newHeight)
+            }
         } else {
             return this
         }
