@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -40,7 +41,6 @@ import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
@@ -53,9 +53,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailV
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 class VehicleDetailFragment : Fragment() {
@@ -97,18 +95,19 @@ class VehicleDetailFragment : Fragment() {
     private fun registerGalleryLauncher() {
         // Registers a photo picker activity launcher in single-select mode.
         this.pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            // Callback is invoked after the user selects a media item or closes the
-            // photo picker.
+            // Callback is invoked after the user selects a media item or closes the photo picker.
             val vehicleId = vehicleId
             if (uri != null && vehicleId != null) {
-                DriveKitVehicleUI.coroutineScope.launch {
-                    val success = VehicleCustomImageHelper.saveImage(
-                        this@VehicleDetailFragment.requireContext(),
-                        VehicleCustomImageHelper.getVehicleFileName(vehicleId),
-                        uri
-                    )
-                    if (success) {
-                        updateVehicleImage()
+                lifecycleScope.launch {
+                    context?.let {
+                        val success = VehicleCustomImageHelper.saveImage(
+                            it,
+                            VehicleCustomImageHelper.getVehicleFileName(vehicleId),
+                            uri
+                        )
+                        if (success) {
+                            updateVehicleImage()
+                        }
                     }
                 }
             }
@@ -210,7 +209,7 @@ class VehicleDetailFragment : Fragment() {
                 this@VehicleDetailFragment.context?.let { context ->
                     val vehicleId = vehicleId
                     if (vehicleId != null) {
-                        DriveKitVehicleUI.coroutineScope.launch() {
+                        lifecycleScope.launch {
                             val success = VehicleCustomImageHelper.saveImage(
                                 context,
                                 VehicleCustomImageHelper.getVehicleFileName(vehicleId),
@@ -246,7 +245,7 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun updateVehicleImage() {
-        val customImage = viewModel.vehicle?.vehicleId?.let { VehicleCustomImageHelper.getImageUri(it) } ?: run { null }
+        val customImage = viewModel.vehicle?.vehicleId?.let { VehicleCustomImageHelper.getImageUri(it) }
 
         if (customImage != null) {
             imageView?.apply {
