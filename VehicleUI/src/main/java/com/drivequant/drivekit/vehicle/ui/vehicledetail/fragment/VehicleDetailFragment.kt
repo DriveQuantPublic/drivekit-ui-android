@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
@@ -17,6 +19,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -78,6 +81,7 @@ class VehicleDetailFragment : Fragment() {
     private var hasChangesToUpdate = false
 
     private var imageView: ImageView? = null
+    private var imageLoader: ProgressBar? = null
 
     private var cameraImageFilePath: String? = null
 
@@ -100,6 +104,7 @@ class VehicleDetailFragment : Fragment() {
             if (uri != null && vehicleId != null) {
                 lifecycleScope.launch {
                     context?.let {
+                        showProgressCircular()
                         val success = VehicleCustomImageHelper.saveImage(
                             it,
                             VehicleCustomImageHelper.getVehicleFileName(vehicleId),
@@ -108,6 +113,7 @@ class VehicleDetailFragment : Fragment() {
                         if (success) {
                             updateVehicleImage()
                         }
+                        hideProgressCircular()
                     }
                 }
             }
@@ -210,6 +216,7 @@ class VehicleDetailFragment : Fragment() {
                     val vehicleId = vehicleId
                     if (vehicleId != null) {
                         lifecycleScope.launch {
+                            showProgressCircular()
                             val success = VehicleCustomImageHelper.saveImage(
                                 context,
                                 VehicleCustomImageHelper.getVehicleFileName(vehicleId),
@@ -218,6 +225,7 @@ class VehicleDetailFragment : Fragment() {
                             if (success) {
                                 updateVehicleImage()
                             }
+                            hideProgressCircular()
                         }
                     }
                 }
@@ -229,6 +237,7 @@ class VehicleDetailFragment : Fragment() {
         }
 
         imageView = activity?.findViewById(R.id.image_view_vehicle)
+        imageLoader = activity?.findViewById(R.id.progress_circular)
 
         updateVehicleImage()
 
@@ -347,7 +356,6 @@ class VehicleDetailFragment : Fragment() {
         return true
     }
 
-
     private fun manageFabAlertDialog(context: Context) {
         alert = DKAlertDialog.LayoutBuilder()
             .init(context)
@@ -453,6 +461,26 @@ class VehicleDetailFragment : Fragment() {
             cameraImageFilePath?.let {
                 onCameraCallback.pictureTaken(it)
             }
+        }
+    }
+
+    fun showProgressCircular() {
+        this.imageLoader?.apply {
+            animate().alpha(1f).setDuration(200L).setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.VISIBLE
+                    }
+                })
+        }
+    }
+
+    fun hideProgressCircular() {
+        this.imageLoader?.apply {
+            animate().alpha(0f).setDuration(200L).setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    visibility = View.GONE
+                }
+            })
         }
     }
 }
