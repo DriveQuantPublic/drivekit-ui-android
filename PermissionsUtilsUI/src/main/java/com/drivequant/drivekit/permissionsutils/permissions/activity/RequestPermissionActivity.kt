@@ -97,13 +97,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
                 context.packageName,
                 PackageManager.GET_PERMISSIONS
             )
-            if (packageInfo.requestedPermissions != null) {
-                for (permission in packageInfo.requestedPermissions) {
-                    if (permission == permissionName) {
-                        return true
-                    }
-                }
-            }
+            return packageInfo.requestedPermissions?.contains(permissionName) ?: false
         } catch (e: Exception) {
             Log.e("DriveQuant Permission", "Could not find permission: $permissionName")
         }
