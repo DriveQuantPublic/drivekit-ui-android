@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
@@ -17,7 +16,7 @@ class RankingSelectorView(context: Context) : LinearLayout(context) {
     private val selectorTextView: TextView
 
     init {
-        val view = View.inflate(context, R.layout.dk_ranking_selector_view, null).setDKStyle()
+        val view = View.inflate(context, R.layout.dk_ranking_selector_view, null)
         addView(view)
         this.selectorTextView = view.findViewById(R.id.text_view_selector)
         setStyle()
