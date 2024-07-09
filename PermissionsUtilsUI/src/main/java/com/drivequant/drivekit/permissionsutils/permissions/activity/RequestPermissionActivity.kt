@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1WithColor
 import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.getPackageInfoCompat
 import com.drivequant.drivekit.permissionsutils.R
@@ -99,7 +99,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
             )
             return packageInfo.requestedPermissions?.contains(permissionName) ?: false
         } catch (e: Exception) {
-            Log.e("DriveQuant Permission", "Could not find permission: $permissionName")
+            DriveKitLog.e("DriveQuant Permission", "Could not find permission: $permissionName")
         }
 
         return false
