@@ -7,7 +7,6 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.text.TextUtils
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
@@ -113,10 +112,10 @@ object VehicleUtils {
     private fun getImageOrientation(context: Context, uri: Uri): Int? {
         val stream = context.contentResolver.openInputStream(uri)
 
-        val exifInterface = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && stream != null) {
+        val exifInterface = if (stream != null) {
             ExifInterface(stream)
         } else {
-            null // DriveKit will no longer support Android 6.0 by the end of 2024.
+            null
         }
 
         exifInterface?.let {

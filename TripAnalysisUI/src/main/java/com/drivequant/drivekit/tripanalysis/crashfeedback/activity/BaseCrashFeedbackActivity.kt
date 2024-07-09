@@ -30,9 +30,7 @@ open class BaseCrashFeedbackActivity : AppCompatActivity() {
 
     fun dismissKeyguard() {
         val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager?
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            keyguardManager?.requestDismissKeyguard(this, null)
-        }
+        keyguardManager?.requestDismissKeyguard(this, null)
     }
 
     fun launchPhoneCall() {
