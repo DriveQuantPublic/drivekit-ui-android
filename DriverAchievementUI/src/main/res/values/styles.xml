@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <style name="TripsCount">
         <item name="android:textSize">@dimen/dk_text_medium</item>
         <item name="android:textStyle">bold</item>
