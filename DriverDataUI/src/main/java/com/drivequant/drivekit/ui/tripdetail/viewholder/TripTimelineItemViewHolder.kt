@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.intColor
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -24,8 +25,10 @@ class TripTimelineItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         eventImage.setImageResource(tripEvent.getEventImageResource())
         if (isFirst) lineTop.visibility = View.INVISIBLE else lineTop.visibility = View.VISIBLE
         if (isLast) lineBottom.visibility = View.INVISIBLE else lineBottom.visibility = View.VISIBLE
-        lineTop.setBackgroundColor(DriverDataUI.mapTraceMainColor)
-        lineBottom.setBackgroundColor(DriverDataUI.mapTraceMainColor)
+        DriverDataUI.mapTraceMainColor.intColor(itemView.context).apply {
+            lineTop.setBackgroundColor(this)
+            lineBottom.setBackgroundColor(this)
+        }
 
         itemView.setOnClickListener {
             listener.onItemClicked(adapterPosition)
