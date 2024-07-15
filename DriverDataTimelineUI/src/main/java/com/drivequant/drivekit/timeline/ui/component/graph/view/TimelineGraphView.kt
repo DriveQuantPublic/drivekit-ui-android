@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.GestureDetectorCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -25,7 +24,7 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
     var listener: GraphViewListener? = null
     private val graphTitle: TextView
     private val graphView: GraphViewBase
-    private val gestureDetector = GestureDetectorCompat(context, SwipeGestureDetector(viewModel))
+    private val gestureDetector = GestureDetector(context, SwipeGestureDetector(viewModel))
     private var dispatchMotionEventsToSwipeRecognizer = false
 
     init {
