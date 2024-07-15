@@ -6,7 +6,7 @@
    <string name="dk_achievements_streaks_acceleration_text">Essayez d\'enchaîner une série de trajets sans aucune accélération brutale.\n \nÀ chaque succès, le compteur du nombre de trajets augmente.\n \nEn cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro.\n \nLe nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
    <string name="dk_achievements_streaks_acceleration_title">Aucune accélération brutale</string>
    <string name="dk_achievements_streaks_adherence_reset">Vous avez franchi une limite d\'adherence lors de votre dernier trajet</string>
-   <string name="dk_achievements_streaks_adherence_text">Essayez d\'enchaîner une série de trajets sans aucun franchissement de limite d’adhérence.\n \nÀ chaque succès, le compteur du nombre de trajets augmente.\n \nEn cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro.\n \nLe nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasse.</string>
+   <string name="dk_achievements_streaks_adherence_text">Essayez d\'enchaîner une série de trajets sans aucun franchissement de limite d’adhérence.\n \nÀ chaque succès, le compteur du nombre de trajets augmente.\n \nEn cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro.\n \nLe nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
    <string name="dk_achievements_streaks_adherence_title">Aucune limite d\'adhérence</string>
    <string name="dk_achievements_streaks_best_title">Meilleure séquence</string>
    <string name="dk_achievements_streaks_brake_reset">Vous avez freiné brutalement lors de votre dernier trajet</string>
