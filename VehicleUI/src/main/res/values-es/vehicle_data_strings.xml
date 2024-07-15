@@ -68,7 +68,7 @@
    <string name="dk_vehicle_beacon_setup_replace_description">Si confirma su elección, el beacon %1$s estará asociada al vehículo %2$s.\n\nEl %3$s de su vehículo ya no estará asociado a este beacon.</string>
    <string name="dk_vehicle_beacon_setup_scan_title">La aplicación recupera la información de la baliza y comprueba que funciona correctamente</string>
    <string name="dk_vehicle_beacon_setup_store_notice">Le invitamos a colocar el beacon en la guantera de su vehículo</string>
-   <string name="dk_vehicle_beacon_setup_successlink_message">Felicitaciones! \n\n El beacon %1$s está ahora asociada con el vehículo %2$s</string>
+   <string name="dk_vehicle_beacon_setup_successlink_message">Felicitaciones!\n\nEl beacon %1$s está ahora asociada con el vehículo %2$s</string>
    <string name="dk_vehicle_beacon_start_scan">Coloque su beacon cerca de su teléfono y toque en la pantalla</string>
    <string name="dk_vehicle_beacon_verify_wrong_vehicle">La baliza detectada no está asociada a este vehículo.</string>
    <string name="dk_vehicle_beacon_wait_scan">Espera unos 10 segundos...</string>

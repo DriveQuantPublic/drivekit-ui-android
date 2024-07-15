@@ -68,7 +68,7 @@
    <string name="dk_vehicle_beacon_setup_replace_description">If you confirm your choice, the %1$s beacon will be associated with the %2$s vehicle.\n\nThe %3$s vehicle will no longer be associated with this beacon.</string>
    <string name="dk_vehicle_beacon_setup_scan_title">The application retrieves the information from the beacon and checks that it is running properly</string>
    <string name="dk_vehicle_beacon_setup_store_notice">We invite you to put the beacon in the glove box of your vehicle</string>
-   <string name="dk_vehicle_beacon_setup_successlink_message">Congratulations! \n\n The beacon %1$s is now associated with the vehicle %2$s</string>
+   <string name="dk_vehicle_beacon_setup_successlink_message">Congratulations!\n\nThe beacon %1$s is now associated with the vehicle %2$s</string>
    <string name="dk_vehicle_beacon_start_scan">Place your beacon near your phone and tap on the screen</string>
    <string name="dk_vehicle_beacon_verify_wrong_vehicle">The detected beacon is not associated with this vehicle.</string>
    <string name="dk_vehicle_beacon_wait_scan">Wait about 10 seconds...</string>
