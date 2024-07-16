@@ -239,25 +239,20 @@ internal class TripDetailViewModel(
         route.screenLockedIndex?.let {
             for ((index, indexScreenLocked) in it.withIndex()) {
                 if (indexScreenLocked <= 0 || indexScreenLocked > route.latitude.lastIndex) continue
-                if (route.screenStatus!![index] == 1) {
-                    events.add(
-                        TripEvent(
-                            TripEventType.PHONE_DISTRACTION_UNLOCK,
-                            Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.screenLockedTime!![index] * 1000))),
-                            route.latitude[it[index]],
-                            route.longitude[it[index]]
-                        )
-                    )
+                val tripEventType = if (route.screenStatus!![index] == 1) {
+                    TripEventType.PHONE_DISTRACTION_UNLOCK
                 } else {
-                    events.add(
-                        TripEvent(
-                            TripEventType.PHONE_DISTRACTION_LOCK,
-                            Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.screenLockedTime!![index] * 1000))),
-                            route.latitude[it[index]],
-                            route.longitude[it[index]]
-                        )
-                    )
+                    TripEventType.PHONE_DISTRACTION_LOCK
                 }
+
+                events.add(
+                    TripEvent(
+                        tripEventType,
+                        Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.screenLockedTime!![index] * 1000))),
+                        route.latitude[it[index]],
+                        route.longitude[it[index]]
+                    )
+                )
             }
         }
 
