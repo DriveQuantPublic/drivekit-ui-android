@@ -238,7 +238,12 @@ internal class TripDetailViewModel(
 
         route.screenLockedIndex?.let {
             for ((index, indexScreenLocked) in it.withIndex()) {
-                if (indexScreenLocked <= 0 || indexScreenLocked > route.latitude.lastIndex) continue
+                // avoid case when `indexScreenLocked` has invalid value
+                if (indexScreenLocked < 0 || indexScreenLocked > route.latitude.lastIndex) continue
+
+                // ignore first and last `screenLockedIndex` value
+                if (index == 0 || index == it.lastIndex) continue
+
                 val tripEventType = if (route.screenStatus!![index] == 1) {
                     TripEventType.PHONE_DISTRACTION_UNLOCK
                 } else {
