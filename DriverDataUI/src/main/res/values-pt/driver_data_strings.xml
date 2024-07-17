@@ -127,7 +127,6 @@
    <string name="dk_driverdata_mysynthesis_no_trip_prev_month">Você não dirigiu no mês anterior</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_week">Você não dirigiu na semana anterior</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_year">Você não dirigiu no ano anterior</string>
-   <string name="dk_driverdata_mysynthesis_not_enough_data">Não há dados suficientes para avaliar sua direção.</string>
    <string name="dk_driverdata_mysynthesis_previous_month">O mês anterior:</string>
    <string name="dk_driverdata_mysynthesis_previous_week">A semana anterior:</string>
    <string name="dk_driverdata_mysynthesis_previous_year">Em %1$s :</string>

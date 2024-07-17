@@ -229,7 +229,7 @@
    <string name="vehicle_intro_title">Configuração do veículo</string>
    <string name="welcome_header">Início do DriveKit</string>
    <string name="welcome_invalid_key_title">A sua chave de API não é válida</string>
-   <string name="welcome_ko_description">Para utilizar esta aplicação de demonstração, é essencial configurar uma chave API válida. \Para mais informações sobre a configuração da chave, siga as instruções na nossa documentação.\n\nSe não tiver uma chave de API, contacte-nos em contact@drivequant.com.</string>
+   <string name="welcome_ko_description">Para utilizar esta aplicação de demonstração, é essencial configurar uma chave API válida.\n\nPara mais informações sobre a configuração da chave, siga as instruções na nossa documentação.\n\nSe não tiver uma chave de API, contacte-nos em contact@drivequant.com.</string>
    <string name="welcome_ko_title">A sua chave API não está configurada</string>
    <string name="welcome_ok_button">PRÓXIMO PASSO</string>
    <string name="welcome_ok_description">Parabéns, construiu a aplicação de demonstração do DriveKit 🎉\n\nEsta aplicação mostra-lhe como funcionam os componentes do DriveKit e orienta-o para os instalar na sua aplicação.\n\nA sua chave API é:\n\n%s\n\nEm nenhuma circunstância deve ser partilhada ou utilizada em várias aplicações.</string>

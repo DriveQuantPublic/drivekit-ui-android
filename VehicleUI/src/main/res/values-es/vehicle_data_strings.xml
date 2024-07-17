@@ -55,7 +55,7 @@
    <string name="dk_vehicle_beacon_scan_retry">Toca la pantalla para volver a intentarlo</string>
    <string name="dk_vehicle_beacon_setup_code_hint">Identificador del beacon</string>
    <string name="dk_vehicle_beacon_setup_code_invalid_id">El identificador del beacon %s no es válido</string>
-   <string name="dk_vehicle_beacon_setup_code_not_matched">El identificador %s es válido pero no se ha detectado el beacon correspondiente. \n\n Asegúrate de que esta baliza esté encendida y cerca del teléfono</string>
+   <string name="dk_vehicle_beacon_setup_code_not_matched">El identificador %s es válido pero no se ha detectado el beacon correspondiente.\n\nAsegúrate de que esta baliza esté encendida y cerca del teléfono</string>
    <string name="dk_vehicle_beacon_setup_code_retry_title">Vuelva a introducir el ID del beacon</string>
    <string name="dk_vehicle_beacon_setup_code_success_message">El beacon ha sido comprobada y funciona normalmente</string>
    <string name="dk_vehicle_beacon_setup_code_success_recap">¿ Confirma la asignación del beacon %1$s al vehículo %2$s ?</string>
@@ -87,7 +87,7 @@
    <string name="dk_vehicle_bluetooth_guide_desc3_android">Tendrá que seleccionar el que coincida con el sistema Bluetooth de su vehículo.</string>
    <string name="dk_vehicle_bluetooth_guide_desc3_ios">Conecte el encendido. El teléfono debe estar conectado al vehículo para hacer la asociación.</string>
    <string name="dk_vehicle_bluetooth_guide_header">Antes de empezar</string>
-   <string name="dk_vehicle_bluetooth_not_found">No se detectaron dispositivos Bluetooth. \n \nPara activar el arranque automático, asegúrese de que su teléfono esté conectado al sistema Bluetooth. \n \n¿Puede verificar en la configuración del teléfono que el sistema Bluetooth está conectado a su teléfono?</string>
+   <string name="dk_vehicle_bluetooth_not_found">No se detectaron dispositivos Bluetooth.\n\nPara activar el arranque automático, asegúrese de que su teléfono esté conectado al sistema Bluetooth.\n\n¿Puede verificar en la configuración del teléfono que el sistema Bluetooth está conectado a su teléfono?</string>
    <string name="dk_vehicle_brand_description">¿Marca del vehículo?</string>
    <string name="dk_vehicle_category_car_commercial_description">Esta categoría corresponde a los vehículos de uso profesional destinados generalmente al transporte de mercancías. Estos vehículos tienen una gran capacidad de almacenamiento y el peso total de carga autorizado se sitúa entre 1,5 y 3,5 toneladas.</string>
    <string name="dk_vehicle_category_car_commercial_title">Vehículo comercial</string>
@@ -175,7 +175,7 @@
    <string name="dk_vehicle_odometer_history_not_found">Ninguna referencia kilométrica corresponde al identificador introducido.</string>
    <string name="dk_vehicle_odometer_history_update">Actualizar kilometraje</string>
    <string name="dk_vehicle_odometer_history_update_success">La referencia kilométrica ha sido actualizada</string>
-   <string name="dk_vehicle_odometer_info_analysed_distance_text">La distancia analizada, mostrada en negrita, es la suma de las distancias de todos los viajes registrados desde que se ha estado utilizando la aplicación. \n El valor en la parte inferior de este mapa corresponde a la distancia analizada para el año en curso.</string>
+   <string name="dk_vehicle_odometer_info_analysed_distance_text">La distancia analizada, mostrada en negrita, es la suma de las distancias de todos los viajes registrados desde que se ha estado utilizando la aplicación.\nEl valor en la parte inferior de este mapa corresponde a la distancia analizada para el año en curso.</string>
    <string name="dk_vehicle_odometer_info_analysed_distance_title">Distancia analizada</string>
    <string name="dk_vehicle_odometer_info_estimated_distance_text">Al analizar el uso de su vehículo, la aplicación calcula la distancia que es probable que usted viaje entre el 1 de enero y el 31 de diciembre del año en curso. La primera estimación se mostrará después de 3 semanas de uso de la aplicación.</string>
    <string name="dk_vehicle_odometer_info_estimated_distance_title">Estimación anual</string>
@@ -200,7 +200,7 @@
    <string name="dk_vehicle_rename_title">Renombrar este vehículo</string>
    <string name="dk_vehicle_replace">Reemplazar</string>
    <string name="dk_vehicle_replace_button">Sustituir el vehículo</string>
-   <string name="dk_vehicle_select_bluetooth_description">Seleccione un dispositivo Bluetooth para iniciar la grabación del viaje. \n \n En cuanto el teléfono se conecte a este dispositivo, la aplicación comenzará a analizar su viaje. \n \n Sólo puede seleccionar un dispositivo para este vehículo.</string>
+   <string name="dk_vehicle_select_bluetooth_description">Seleccione un dispositivo Bluetooth para iniciar la grabación del viaje.\n\nEn cuanto el teléfono se conecte a este dispositivo, la aplicación comenzará a analizar su viaje.\n\nSólo puede seleccionar un dispositivo para este vehículo.</string>
    <string name="dk_vehicle_show">Mostrar</string>
    <string name="dk_vehicle_type_car_title">Vehículos ligeros y comerciales de menos de 3,5 t</string>
    <string name="dk_vehicle_type_motorbike_title">Motos</string>

@@ -137,7 +137,7 @@
    <string name="notif_trip_too_short_title">Viaje demasiado corto</string>
    <string name="notif_trip_train_detected">Tu viaje se hizo en tren</string>
    <string name="notif_trip_train_detected_not_displayed">Su viaje no se nota porque se hizo en tren.</string>
-   <string name="notification_description">Las notificaciones son muy importantes para entender el comportamiento de la aplicación. Informan a los usuarios de que un viaje está siendo analizado, cancelado o completado.\n\nAl cabo de unos días o semanas, es posible que los usuarios no quieran ver todas las notificaciones mientras se acostumbran a su funcionamiento. \n\nPor lo tanto, le invitamos a integrar un gestor de notificaciones en su aplicación con los ajustes que se indican a continuación. Para ello, basta con replicar el código de la aplicación de demostración.</string>
+   <string name="notification_description">Las notificaciones son muy importantes para entender el comportamiento de la aplicación. Informan a los usuarios de que un viaje está siendo analizado, cancelado o completado.\n\nAl cabo de unos días o semanas, es posible que los usuarios no quieran ver todas las notificaciones mientras se acostumbran a su funcionamiento.\n\nPor lo tanto, le invitamos a integrar un gestor de notificaciones en su aplicación con los ajustes que se indican a continuación. Para ello, basta con replicar el código de la aplicación de demostración.</string>
    <string name="notification_trip_cancelled_description">Notificarme si un viaje ha sido cancelado o si está en espera de análisis.</string>
    <string name="notification_trip_cancelled_title">Viaje cancelado</string>
    <string name="notification_trip_finished_description">Avíseme tan pronto como se haya analizado un viaje.</string>
@@ -229,9 +229,9 @@
    <string name="vehicle_intro_title">Configuración del vehículo</string>
    <string name="welcome_header">Iniciar DriveKit</string>
    <string name="welcome_invalid_key_title">Su key API no es válida</string>
-   <string name="welcome_ko_description">Para utilizar esta aplicación de demostración, es necesario configurar una key API válida. \n\nPara más información sobre la configuración de la key, siga las instrucciones de nuestra documentación.\n\nSi no tiene una key API, póngase en contacto con nosotros por correo electrónico en contact@drivequant.com.</string>
+   <string name="welcome_ko_description">Para utilizar esta aplicación de demostración, es necesario configurar una key API válida.\n\nPara más información sobre la configuración de la key, siga las instrucciones de nuestra documentación.\n\nSi no tiene una key API, póngase en contacto con nosotros por correo electrónico en contact@drivequant.com.</string>
    <string name="welcome_ko_title">Su key API no está configurada</string>
    <string name="welcome_ok_button">SIGUIENTE PASO</string>
-   <string name="welcome_ok_description">Enhorabuena, acabas de instalar la aplicación de demostración de DriveKit 🎉 \n\nEsta aplicación muestra cómo funcionan los componentes de DriveKit y te guía en la instalación de los mismos en tu aplicación.\n\nTu key API es :\n\n%s\n\nEn ningún caso debe compartirse o utilizarse en múltiples aplicaciones.</string>
+   <string name="welcome_ok_description">Enhorabuena, acabas de instalar la aplicación de demostración de DriveKit 🎉\n\nEsta aplicación muestra cómo funcionan los componentes de DriveKit y te guía en la instalación de los mismos en tu aplicación.\n\nTu key API es :\n\n%s\n\nEn ningún caso debe compartirse o utilizarse en múltiples aplicaciones.</string>
    <string name="welcome_ok_title">Bienvenido a la aplicación de demostración de DriveKit</string>
 </resources>

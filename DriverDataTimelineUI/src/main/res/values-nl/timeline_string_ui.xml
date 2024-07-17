@@ -26,7 +26,6 @@
    <string name="dk_timeline_road_context_no_context_description">Er zijn in deze periode niet genoeg gegevens om de verdeling van wegtypes te berekenen.</string>
    <string name="dk_timeline_road_context_suburban">buiten bebouwde kom</string>
    <string name="dk_timeline_road_context_title">Type verkeer (%s)</string>
-   <string name="dk_timeline_road_context_title_no_data">Geen gegevens om weer te geven</string>
    <string name="dk_timeline_safety_score">Veiligheidsscore: %s</string>
    <string name="dk_timeline_speeding_score">Snelheidsscore: %s</string>
    <string name="dk_timeline_title">Tijdlijn</string>

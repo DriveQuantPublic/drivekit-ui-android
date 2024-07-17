@@ -55,7 +55,7 @@
    <string name="dk_vehicle_beacon_scan_retry">Tapez sur l\'écran pour réessayer</string>
    <string name="dk_vehicle_beacon_setup_code_hint">Identifiant du beacon</string>
    <string name="dk_vehicle_beacon_setup_code_invalid_id">L\'identifiant de beacon %s est invalide</string>
-   <string name="dk_vehicle_beacon_setup_code_not_matched">L\'identifiant %s est valide mais le beacon correspondant n\'a pas été détecté. \n\nVérifiez que ce beacon est allumé et qu\'il est placé à proximité du téléphone</string>
+   <string name="dk_vehicle_beacon_setup_code_not_matched">L\'identifiant %s est valide mais le beacon correspondant n\'a pas été détecté.\n\nVérifiez que ce beacon est allumé et qu\'il est placé à proximité du téléphone</string>
    <string name="dk_vehicle_beacon_setup_code_retry_title">Saisir à nouveau l’identifiant du beacon</string>
    <string name="dk_vehicle_beacon_setup_code_success_message">Le beacon a été vérifié et il fonctionne normalement</string>
    <string name="dk_vehicle_beacon_setup_code_success_recap">Confirmez-vous l\'association du beacon %1$s avec le véhicule %2$s ?</string>
@@ -73,7 +73,7 @@
    <string name="dk_vehicle_beacon_verify_wrong_vehicle">Le beacon détecté n\'est pas associé à ce véhicule.</string>
    <string name="dk_vehicle_beacon_wait_scan">Attendez environ 10 secondes…</string>
    <string name="dk_vehicle_begin">Commencer</string>
-   <string name="dk_vehicle_bluetooth_already_paired">L\'appareil Bluetooth %1$s est déjà connecté à un autre véhicule. Vous devez d\'abord libérer cet appareil avant de l\'associer à %2$s.</string>
+   <string name="dk_vehicle_bluetooth_already_paired">L\'appareil Bluetooth %1$s est déjà connecté à un autre véhicule. Vous devez d\'abord libérer cet appareil avant de l\'associer à %2$s</string>
    <string name="dk_vehicle_bluetooth_combination_view_title">Associer un appareil Bluetooth</string>
    <string name="dk_vehicle_bluetooth_congrats_desc">L\'appareil Bluetooth %1$s est désormais associé au véhicule %2$s</string>
    <string name="dk_vehicle_bluetooth_congrats_notice">Désormais l\'enregistrement de vos trajets démarrera automatiquement dès que votre téléphone se connecte à l\'appareil Bluetooth %s</string>
@@ -87,7 +87,7 @@
    <string name="dk_vehicle_bluetooth_guide_desc3_android">Vous devrez sélectionner celui qui correspond au système Bluetooth de votre véhicule.</string>
    <string name="dk_vehicle_bluetooth_guide_desc3_ios">Allumer le contact. Le téléphone doit être connecté au véhicule pour réaliser l\'association.</string>
    <string name="dk_vehicle_bluetooth_guide_header">Avant de commencer</string>
-   <string name="dk_vehicle_bluetooth_not_found">Aucun appareil Bluetooth n\'a été détecté. \n \nPour activer le démarrage automatique, assurez-vous que votre téléphone soit connecté au système Bluetooth. \n \nPouvez-vous vérifier dans les paramètres du téléphone que le système Bluetooth est bien connecté à votre téléphone ?</string>
+   <string name="dk_vehicle_bluetooth_not_found">Aucun appareil Bluetooth n\'a été détecté.\n\nPour activer le démarrage automatique, assurez-vous que votre téléphone soit connecté au système Bluetooth.\n\nPouvez-vous vérifier dans les paramètres du téléphone que le système Bluetooth est bien connecté à votre téléphone ?</string>
    <string name="dk_vehicle_brand_description">Marque du véhicule ?</string>
    <string name="dk_vehicle_category_car_commercial_description">Cette catégorie correspond aux véhicules à usage professionnel généralement destinés au transport de marchandises. Ces véhicules ont une grande capacité de stockage et le poids total autorisé en charge est compris entre 1,5 tonne et 3,5 tonnes.</string>
    <string name="dk_vehicle_category_car_commercial_title">Utilitaires</string>
@@ -143,7 +143,7 @@
    <string name="dk_vehicle_failed_to_sync">Impossible de récupérer les données du véhicule, réessayez plus tard</string>
    <string name="dk_vehicle_field_name_error">Le nom de votre véhicule ne doit pas dépasser 50 caractères</string>
    <string name="dk_vehicle_gps_already_exists_confirm">Voulez-vous paramétrer le mode de détection %1$s pour le véhicule %2$s ?\n\nLe mode de détection du véhicule %3$s sera basculé à %4$s.</string>
-   <string name="dk_vehicle_is_it_electric">S\'agit-il d\'un véhicule électrique ?</string>
+   <string name="dk_vehicle_is_it_electric">S\'agit-il d'un véhicule électrique ?</string>
    <string name="dk_vehicle_list_empty">Veuillez ajouter au moins un véhicule</string>
    <string name="dk_vehicle_model_description">Modèle du véhicule ?</string>
    <string name="dk_vehicle_my_vehicle">Mon véhicule</string>
@@ -175,7 +175,7 @@
    <string name="dk_vehicle_odometer_history_not_found">Aucune référence kilométrique ne correspond à l\'identifiant renseigné.</string>
    <string name="dk_vehicle_odometer_history_update">Mettre à jour le kilométrage</string>
    <string name="dk_vehicle_odometer_history_update_success">La référence kilométrique a été mise à jour</string>
-   <string name="dk_vehicle_odometer_info_analysed_distance_text">La distance analysée, affichée en gras, correspond à la somme des distances de tous les trajets enregistrés depuis que vous utilisez l’application.\n La valeur qui s’affiche en bas de cette carte correspond à la distance analysée pour l\'année en cours.</string>
+   <string name="dk_vehicle_odometer_info_analysed_distance_text">La distance analysée, affichée en gras, correspond à la somme des distances de tous les trajets enregistrés depuis que vous utilisez l’application.\nLa valeur qui s’affiche en bas de cette carte correspond à la distance analysée pour l\'année en cours.</string>
    <string name="dk_vehicle_odometer_info_analysed_distance_title">Distance analysée</string>
    <string name="dk_vehicle_odometer_info_estimated_distance_text">En analysant votre usage du véhicule, l\'application estime la distance que vous allez probablement parcourir entre le 1er janvier et le 31 décembre de l\'année en cours. La première estimation s\'affichera après 3 semaines d\'utilisation de l\'application.</string>
    <string name="dk_vehicle_odometer_info_estimated_distance_title">Estimation annuelle</string>
@@ -200,7 +200,7 @@
    <string name="dk_vehicle_rename_title">Renommer ce véhicule</string>
    <string name="dk_vehicle_replace">Remplacer</string>
    <string name="dk_vehicle_replace_button">Remplacer le véhicule</string>
-   <string name="dk_vehicle_select_bluetooth_description">Sélectionner un appareil Bluetooth pour déclencher l’enregistrement de vos trajets. \n \nDès que le téléphone se connecte à cet appareil, l\'application démarre l\'analyse de votre trajet. \n \nVous ne pouvez sélectionner qu\'un seul appareil pour ce véhicule.</string>
+   <string name="dk_vehicle_select_bluetooth_description">Sélectionner un appareil Bluetooth pour déclencher l’enregistrement de vos trajets.\n\nDès que le téléphone se connecte à cet appareil, l\'application démarre l\'analyse de votre trajet.\n\nVous ne pouvez sélectionner qu\'un seul appareil pour ce véhicule.</string>
    <string name="dk_vehicle_show">Afficher</string>
    <string name="dk_vehicle_type_car_title">Véhicules légers et utilitaires de moins de 3,5 t</string>
    <string name="dk_vehicle_type_motorbike_title">Deux-roues motorisés</string>

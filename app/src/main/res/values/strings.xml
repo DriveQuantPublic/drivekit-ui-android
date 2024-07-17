@@ -229,7 +229,7 @@
    <string name="vehicle_intro_title">Vehicle configuration</string>
    <string name="welcome_header">DriveKit starting</string>
    <string name="welcome_invalid_key_title">Your API key is not valid</string>
-   <string name="welcome_ko_description">To use this demo application, it is essential to configure a valid API key. \n\nFor more information on configuring the key, follow the instructions in our documentation.\n\nIf you do not have an API key, contact us at contact@drivequant.com.</string>
+   <string name="welcome_ko_description">To use this demo application, it is essential to configure a valid API key.\n\nFor more information on configuring the key, follow the instructions in our documentation.\n\nIf you do not have an API key, contact us at contact@drivequant.com.</string>
    <string name="welcome_ko_title">Your API key is not configured</string>
    <string name="welcome_ok_button">NEXT STEP</string>
    <string name="welcome_ok_description">Congratulations, you have built the DriveKit demo application 🎉\n\nThis application shows you how the DriveKit components work and guides you to install them in your application.\n\nYour API key is:\n\n%s\n\nUnder no circumstances it shouldn\'t be shared or used in multiple applications.</string>

@@ -229,9 +229,9 @@
    <string name="vehicle_intro_title">Configurazione del veicolo</string>
    <string name="welcome_header">Avviare DriveKit</string>
    <string name="welcome_invalid_key_title">La tua key API non è valida</string>
-   <string name="welcome_ko_description">Per utilizzare questa applicazione demo, è necessario configurare una key API valida. \n\nPer maggiori informazioni sulla configurazione della key, segui le istruzioni nella nostra documentazione.\n\nSe non hai una key API, contattaci via email a contact@drivequant.com.</string>
+   <string name="welcome_ko_description">Per utilizzare questa applicazione demo, è necessario configurare una key API valida.\n\nPer maggiori informazioni sulla configurazione della key, segui le istruzioni nella nostra documentazione.\n\nSe non hai una key API, contattaci via email a contact@drivequant.com.</string>
    <string name="welcome_ko_title">La tua key API non è configurata</string>
    <string name="welcome_ok_button">PASSO AVANTI</string>
-   <string name="welcome_ok_description">Congratulazioni, hai appena installato l\'applicazione demo DriveKit 🎉 \n\nQuesta applicazione mostra come funzionano i componenti DriveKit e ti guida attraverso l\'installazione nella tua applicazione.\n\nLa key chiave API è:\n\n%s\n\nIn nessun caso deve essere condiviso o utilizzato in più applicazioni.</string>
+   <string name="welcome_ok_description">Congratulazioni, hai appena installato l\'applicazione demo DriveKit 🎉\n\nQuesta applicazione mostra come funzionano i componenti DriveKit e ti guida attraverso l\'installazione nella tua applicazione.\n\nLa key chiave API è:\n\n%s\n\nIn nessun caso deve essere condiviso o utilizzato in più applicazioni.</string>
    <string name="welcome_ok_title">Benvenuti nell\'applicazione demo DriveKit</string>
 </resources>

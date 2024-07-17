@@ -232,6 +232,6 @@
    <string name="welcome_ko_description">Om deze demo-applicatie te gebruiken, moet je een geldige API-sleutel configureren.\n\nVolg de instructies in onze documentatie voor meer informatie over het configureren van de sleutel.\n\nAls je geen API-sleutel hebt, neem dan contact met ons op via contact@drivequant.com.</string>
    <string name="welcome_ko_title">Uw API-sleutel is niet geconfigureerd</string>
    <string name="welcome_ok_button">VOLGENDE STAP</string>
-   <string name="welcome_ok_description">Gefeliciteerd, je hebt zojuist de DriveKit demonstratietoepassing geïnstalleerd 🎉 \n\nDeze toepassing legt uit hoe de DriveKit componenten werken en begeleidt je bij het installeren ervan in je toepassing.\n\nJe API-sleutel is:\n\n%s\n\nDeze mag nooit worden gedeeld of in meerdere toepassingen worden gebruikt.</string>
+   <string name="welcome_ok_description">Gefeliciteerd, je hebt zojuist de DriveKit demonstratietoepassing geïnstalleerd 🎉\n\nDeze toepassing legt uit hoe de DriveKit componenten werken en begeleidt je bij het installeren ervan in je toepassing.\n\nJe API-sleutel is:\n\n%s\n\nDeze mag nooit worden gedeeld of in meerdere toepassingen worden gebruikt.</string>
    <string name="welcome_ok_title">Welkom bij de DriveKit-demoapplicatie</string>
 </resources>

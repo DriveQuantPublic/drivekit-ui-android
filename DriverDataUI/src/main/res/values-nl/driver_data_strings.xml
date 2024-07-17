@@ -18,14 +18,14 @@
    <string name="dk_driverdata_beginning_authorized_call_info_content">De app heeft het begin van een geautoriseerde oproep gedetecteerd, dit betekent dat er een oproep is gedaan naar je handsfree carkit. Deze actie is niet nadelig voor je telefoongebruikscore, omdat het wettelijk is toegestaan. Het blijft echter een afleiding tijdens het rijden, voor jouw veiligheid en die van andere weggebruikers wordt het sterk aangeraden om te wachten met bellen tot je voertuig geparkeerd is.</string>
    <string name="dk_driverdata_beginning_unauthorized_call">Begin van niet-geautoriseerd gesprek</string>
    <string name="dk_driverdata_beginning_unauthorized_call_info_content">De app heeft het begin van een niet-geautoriseerde oproep gedetecteerd. Dit betekent dat het gesprek niet werd gevoerd met een handsfree-kit. Je telefoon gebruiken tijdens het rijden is erg gevaarlijk. Vergeet niet om jezelf, je passagiers en andere weggebruikers te beschermen. Als je moet bellen, ga je beter met het voertuig op een parkeerplaats staan met de motor uit.</string>
-   <string name="dk_driverdata_calling_time">Tijd bellen = </string>
+   <string name="dk_driverdata_calling_time">Tijd bellen =</string>
    <string name="dk_driverdata_change_transportation_mode">Wijzigen?</string>
    <string name="dk_driverdata_confirm_delete_trip">Rit verwijderen? De rit is definitief verwijderd en zal niet meer zichtbaar zijn. Let op: dit verandert niets aan de gemiddelde waarden van je rijscores of die van een huidige challenge.</string>
    <string name="dk_driverdata_day">Rit overdag</string>
    <string name="dk_driverdata_declared_transportation_mode">Aangegeven modus:</string>
    <string name="dk_driverdata_default_filter_item">Al mijn ritten</string>
    <string name="dk_driverdata_dense_urban">%s in sterk vertraagd verkeer</string>
-   <string name="dk_driverdata_detected_transportation_mode">Gedetecteerde modus: </string>
+   <string name="dk_driverdata_detected_transportation_mode">Gedetecteerde modus:</string>
    <string name="dk_driverdata_distance_card_current_month">Huidige maand</string>
    <string name="dk_driverdata_distance_card_current_week">Huidige week</string>
    <string name="dk_driverdata_distance_card_current_year">Huidig jaar</string>
@@ -127,7 +127,6 @@
    <string name="dk_driverdata_mysynthesis_no_trip_prev_month">Je hebt de afgelopen maand niet gereden</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_week">Je hebt de week ervoor niet gereden</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_year">Je hebt het jaar ervoor niet gereden</string>
-   <string name="dk_driverdata_mysynthesis_not_enough_data">Er zijn niet genoeg gegevens om je rijgedrag te evalueren.</string>
    <string name="dk_driverdata_mysynthesis_previous_month">De vorige maand:</string>
    <string name="dk_driverdata_mysynthesis_previous_week">De vorige week:</string>
    <string name="dk_driverdata_mysynthesis_previous_year">In %1$s:</string>
@@ -233,7 +232,7 @@
    <string name="dk_driverdata_screen_unlock_text">De app heeft een schermontgrendeling gedetecteerd. Je telefoon gebruiken tijdens het rijden is erg gevaarlijk. Denk er altijd aan om jezelf, je passagiers en andere weggebruikers te beschermen. Als je moet bellen of een bericht moet versturen, dan sta je beter op een parkeerplaats met de motor uit.</string>
    <string name="dk_driverdata_speeding_event">Te snel rijden</string>
    <string name="dk_driverdata_speeding_event_info_content">De app heeft gedetecteerd dat de maximumsnelheid op dit deel van de rit is overschreden. Te snel rijden is de belangrijkste factor bij dodelijke verkeersongevallen. Voor jouw veiligheid en die van je passagiers is het essentieel om de snelheidslimieten te respecteren.</string>
-   <string name="dk_driverdata_speeding_events_distance">Relatieve afstand van de overschrijding </string>
+   <string name="dk_driverdata_speeding_events_distance">Relatieve afstand van de overschrijding</string>
    <string name="dk_driverdata_speeding_events_duration">Relatieve duur van de overschrijding</string>
    <string name="dk_driverdata_speeding_events_trip_description">of %s van je rit</string>
    <string name="dk_driverdata_speeding_score">Snelheidsscore</string>

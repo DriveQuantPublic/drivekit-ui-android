@@ -28,7 +28,7 @@
    <string name="dk_perm_utils_app_diag_email_comment">Commentaar :</string>
    <string name="dk_perm_utils_app_diag_email_email">E-mail :</string>
    <string name="dk_perm_utils_app_diag_email_firstname">Voornaam :</string>
-   <string name="dk_perm_utils_app_diag_email_intro">Hallo, ik heb problemen met de applicatie %s en ik wil teruggebeld worden. \n\n</string>
+   <string name="dk_perm_utils_app_diag_email_intro">Hallo, ik heb problemen met de applicatie %s en ik wil teruggebeld worden.\n\n</string>
    <string name="dk_perm_utils_app_diag_email_lastname">Naam :</string>
    <string name="dk_perm_utils_app_diag_email_location">Toestemming voor toegang tot de locatie:</string>
    <string name="dk_perm_utils_app_diag_email_location_accuracy">Precieze locatie:</string>
