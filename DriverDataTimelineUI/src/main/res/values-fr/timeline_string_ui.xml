@@ -26,7 +26,6 @@
    <string name="dk_timeline_road_context_no_context_description">Il n\'y a pas suffisamment de données dans cette période pour calculer la répartition des contextes routiers.</string>
    <string name="dk_timeline_road_context_suburban">Extra urbain</string>
    <string name="dk_timeline_road_context_title">Contexte routier (%s)</string>
-   <string name="dk_timeline_road_context_title_no_data">Pas de données à afficher</string>
    <string name="dk_timeline_safety_score">Score de sécurité : %s</string>
    <string name="dk_timeline_speeding_score">Score de vitesse : %s</string>
    <string name="dk_timeline_title">Timeline</string>

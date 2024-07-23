@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_challenge_acceleration_score">Acceleratiescore</string>
+   <string name="dk_challenge_active">Actief</string>
+   <string name="dk_challenge_all">Alle</string>
+   <string name="dk_challenge_braking_score">Score remmen</string>
+   <string name="dk_challenge_consult_rule_button">Raadpleeg de regels</string>
+   <string name="dk_challenge_distance_kilometer">Afstand (km)</string>
+   <string name="dk_challenge_distraction_score">Afleidingsscore</string>
+   <string name="dk_challenge_eco_driving_score">Eco-driving score</string>
+   <string name="dk_challenge_failed_to_join">Je kunt niet deelnemen aan de challenge. Zorg ervoor dat je verbinding hebt met internet of probeer het later nog eens.</string>
+   <string name="dk_challenge_failed_to_sync_challenges">Synchronisatie van de gegevens van de challenges mislukt, probeer later opnieuw.</string>
+   <string name="dk_challenge_list_join">Doe mee met de uitdaging 🏆</string>
+   <string name="dk_challenge_list_join_among">Doe mee met de %d deelnemers 🏆</string>
+   <string name="dk_challenge_list_not_ranked">Je bent niet gerangschikt</string>
+   <string name="dk_challenge_list_not_registered">Je hebt niet meegedaan 💔</string>
+   <string name="dk_challenge_list_ranked">Mijn positie: %s</string>
+   <string name="dk_challenge_list_registered">Je bent geregistreerd, bon voyage 🚗</string>
+   <string name="dk_challenge_list_registered_among">Je bent een van de %d deelnemers</string>
+   <string name="dk_challenge_menu">Challenges</string>
+   <string name="dk_challenge_nb_trip">Aantal ritten</string>
+   <string name="dk_challenge_no_active_challenge">Geen actuele challenge</string>
+   <string name="dk_challenge_no_all_challenge">Er is nog geen uitdaging geweest.</string>
+   <string name="dk_challenge_no_ranked_challenge_empty_list">Er is nog geen uitdaging geweest.</string>
+   <string name="dk_challenge_no_ranked_challenge_not_ranked_yet">Je bent nog niet gerangschikt in een uitdaging.</string>
+   <string name="dk_challenge_no_ranked_challenge_not_registered_yet">Je hebt nog niet deelgenomen aan een uitdaging.</string>
+   <string name="dk_challenge_not_a_participant">Je hebt niet deelgenomen aan deze challenge of je hebt niet voldaan aan de voorwaarden om deel te nemen aan de rangschikking.</string>
+   <string name="dk_challenge_optin_title">Aanvaard de regels</string>
+   <string name="dk_challenge_participate_button">Ik doe mee</string>
+   <string name="dk_challenge_ranked">Geclassificeerd</string>
+   <string name="dk_challenge_registered_confirmation">Je bent geregistreerd !</string>
+   <string name="dk_challenge_rule_title">Regels van de challenge</string>
+   <string name="dk_challenge_safety_score">Veiligheidsscore</string>
+   <string name="dk_challenge_score_alert_message">De resultaten van deze challenge worden geanalyseerd. Probeer het later nog eens.</string>
+   <string name="dk_challenge_speeding_score">Snelheidsscore</string>
+   <string name="dk_challenge_start">Begin van de challenge in</string>
+   <string name="dk_challenge_synthesis_my_stats">Je statistieken tijdens de uitdaging.</string>
+   <string name="dk_challenge_synthesis_ranked_percentage">%s gerangschikte deelnemers.</string>
+   <string name="dk_challenge_synthesis_ranked_plural">Gerangschikt</string>
+   <string name="dk_challenge_synthesis_ranked_singular">Gerangschikt</string>
+   <string name="dk_challenge_synthesis_registered_plural">geregistreerd</string>
+   <string name="dk_challenge_synthesis_registered_singular">geregistreerd</string>
+   <string name="dk_challenge_synthesis_total_distance">Totale afstand afgelegd door alle deelnemers.</string>
+   <string name="dk_challenge_unranked_conditions_info">Om in de rangschikking te worden opgenomen, moet je aan de onderstaande voorwaarden voldoen:</string>
+</resources>

@@ -28,7 +28,7 @@
    <string name="dk_perm_utils_app_diag_email_comment">Kommentar:</string>
    <string name="dk_perm_utils_app_diag_email_email">E-mail:</string>
    <string name="dk_perm_utils_app_diag_email_firstname">Fornavn :</string>
-   <string name="dk_perm_utils_app_diag_email_intro">Hej, \n\n Jeg har svært ved %s -applikationen, og jeg vil gerne have hjælp.\n\n</string>
+   <string name="dk_perm_utils_app_diag_email_intro">Hej,\n\nJeg har svært ved %s -applikationen, og jeg vil gerne have hjælp.\n\n</string>
    <string name="dk_perm_utils_app_diag_email_lastname">Navn:</string>
    <string name="dk_perm_utils_app_diag_email_location">Tilladelse til at få adgang til din lokation:</string>
    <string name="dk_perm_utils_app_diag_email_location_accuracy">Præcis lokation:</string>
