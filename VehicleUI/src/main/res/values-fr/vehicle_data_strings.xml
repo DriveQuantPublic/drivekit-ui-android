@@ -143,7 +143,7 @@
    <string name="dk_vehicle_failed_to_sync">Impossible de récupérer les données du véhicule, réessayez plus tard</string>
    <string name="dk_vehicle_field_name_error">Le nom de votre véhicule ne doit pas dépasser 50 caractères</string>
    <string name="dk_vehicle_gps_already_exists_confirm">Voulez-vous paramétrer le mode de détection %1$s pour le véhicule %2$s ?\n\nLe mode de détection du véhicule %3$s sera basculé à %4$s.</string>
-   <string name="dk_vehicle_is_it_electric">S\'agit-il d'un véhicule électrique ?</string>
+   <string name="dk_vehicle_is_it_electric">S\'agit-il d\'un véhicule électrique ?</string>
    <string name="dk_vehicle_list_empty">Veuillez ajouter au moins un véhicule</string>
    <string name="dk_vehicle_model_description">Modèle du véhicule ?</string>
    <string name="dk_vehicle_my_vehicle">Mon véhicule</string>

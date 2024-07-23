@@ -58,7 +58,7 @@
    <string name="dk_vehicle_beacon_setup_code_not_matched">Identifier %s er gyldig, men det tilsvarende fyr er ikke blevet opdaget.\n\nSørg for, at denne fyr er tændt og placeret ved siden af ​​telefonen</string>
    <string name="dk_vehicle_beacon_setup_code_retry_title">Indtast Beacon-identifikatoren igen</string>
    <string name="dk_vehicle_beacon_setup_code_success_message">Beacon er blevet kontrolleret og fungerer korrekt</string>
-   <string name="dk_vehicle_beacon_setup_code_success_recap">Bekræfter du parringen af ​​Beacon %1$s med køretøj %2$s?</string>
+   <string name="dk_vehicle_beacon_setup_code_success_recap">Bekræfter du parringen af Beacon %1$s med køretøj %2$s?</string>
    <string name="dk_vehicle_beacon_setup_code_title">Indtast det ID, der vises på Beacon</string>
    <string name="dk_vehicle_beacon_setup_code_unavailable_id">Beacon -identifikatoren %s er ikke tilgængelig</string>
    <string name="dk_vehicle_beacon_setup_guide_desc1">Kom ind i dit køretøj</string>
@@ -76,7 +76,7 @@
    <string name="dk_vehicle_bluetooth_already_paired">Bluetooth %1$s enhed er allerede forbundet til et andet køretøj. Du skal først fjerne enheden, før du parrer den med %2$s.</string>
    <string name="dk_vehicle_bluetooth_combination_view_title">Link en Bluetooth-enhed</string>
    <string name="dk_vehicle_bluetooth_congrats_desc">Bluetooth-enheden %1$s er nu knyttet til køretøjet %2$s</string>
-   <string name="dk_vehicle_bluetooth_congrats_notice">Fra nu af starter optagelsen af ​​dine ture automatisk, så snart din telefon opretter forbindelse til Bluetoothenheden %s</string>
+   <string name="dk_vehicle_bluetooth_congrats_notice">Fra nu af starter optagelsen af dine ture automatisk, så snart din telefon opretter forbindelse til Bluetoothenheden %s</string>
    <string name="dk_vehicle_bluetooth_congrats_title">Tillykke!</string>
    <string name="dk_vehicle_bluetooth_deactivate_alert">%1$s Enheden frakobles fra %2$s køretøjet.\nEr du sikker på, at du vil fortsætte?</string>
    <string name="dk_vehicle_bluetooth_devices_list_title">Bluetooth-enheder:</string>

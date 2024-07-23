@@ -123,7 +123,7 @@
    <string name="dk_driverdata_mysynthesis_minimum">min.</string>
    <string name="dk_driverdata_mysynthesis_my_community">Mijn organisatie</string>
    <string name="dk_driverdata_mysynthesis_no_driving">Je hebt in deze periode niet gereden</string>
-   <string name="dk_driverdata_mysynthesis_no_trip_at_all"> </string>
+   <string name="dk_driverdata_mysynthesis_no_trip_at_all"/>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_month">Je hebt de afgelopen maand niet gereden</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_week">Je hebt de week ervoor niet gereden</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_year">Je hebt het jaar ervoor niet gereden</string>
