@@ -45,7 +45,7 @@
    <string name="dk_perm_utils_app_diag_fsi_ok">As notificações em ecrã inteiro podem agora ser apresentadas. Graças a esta autorização, a aplicação pode apresentar uma notificação em ecrã inteiro quando é detectado um acidente, mesmo que o seu smartphone esteja bloqueado.</string>
    <string name="dk_perm_utils_app_diag_fsi_title">Notificações em ecrã inteiro</string>
    <string name="dk_perm_utils_app_diag_help_request_button">Suporte de contato</string>
-   <string name="dk_perm_utils_app_diag_help_request_text">Se o aplicativo não funcionar após seguir as recomendações acima, você poderá entrar em contato conosco por e -mail. É rápido e o email conterá todas as informações necessárias para analisar a origem do seu problema.</string>
+   <string name="dk_perm_utils_app_diag_help_request_text">Se o aplicativo não funcionar após seguir as recomendações acima, você poderá entrar em contato conosco por e-mail. É rápido e o email conterá todas as informações necessárias para analisar a origem do seu problema.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">O aplicativo não registra suas viagens?</string>
    <string name="dk_perm_utils_app_diag_learn_more">Saber mais</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_ko">A geolocalização do seu telefone está desativada. O aplicativo não pode funcionar se não puder acessar essas informações.</string>
@@ -112,7 +112,7 @@
    <string name="dk_perm_utils_permissions_location_ios13_ko">Para desfrutar da gravação automática de suas viagens, o aplicativo deve acessar a posição do telefone. Para fazer isso, selecione \"sempre\" nas configurações do telefone seguindo as etapas abaixo</string>
    <string name="dk_perm_utils_permissions_location_ios14_ko">Para se beneficiar da gravação automática de suas viagens, o aplicativo deve acessar o local exato do telefone. Para fazer isso, siga as etapas abaixo.</string>
    <string name="dk_perm_utils_permissions_location_popup_title">Permissões</string>
-   <string name="dk_perm_utils_permissions_location_pre_ios13_ko">Você deve permitir que o aplicativo acesse o local do telefone para detectar e digitalizar suas viagens. \ n (3) sempre \ n \ nit é essencial para selecionar a opção (3) sempre, caso contrário, o aplicativo não funcionará.</string>
+   <string name="dk_perm_utils_permissions_location_pre_ios13_ko">Você deve permitir que o aplicativo acesse o local do telefone para detectar e digitalizar suas viagens.\n(1) nunca\n(2) quando o aplicativo estiver em uso\n(3) sempre\n\nit é essencial para selecionar a opção (3) sempre, caso contrário, o aplicativo não funcionará.</string>
    <string name="dk_perm_utils_permissions_location_text1_android">O aplicativo deve ter permissão para acessar o local do telefone para detectar e analisar suas viagens quando estiver sendo executado em segundo plano.</string>
    <string name="dk_perm_utils_permissions_location_text1_android11">O aplicativo deve ter permissão para acessar a posição do telefone para detectar e analisar suas viagens.</string>
    <string name="dk_perm_utils_permissions_location_text1_android12">O aplicativo deve ter permissão para acessar o local preciso do telefone para detectar e analisar suas viagens.</string>

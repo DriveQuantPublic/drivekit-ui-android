@@ -233,6 +233,6 @@ Um Ihnen bei der Implementierung eines.\n\nTBerechtigungspfads zu helfen, haben 
    <string name="welcome_ko_description">Um diese Demo-Anwendung nutzen zu können, müssen Sie einen gültigen API-Key einrichten.\n\nWeitere Informationen zur Einrichtung des Keys finden Sie in unserer Dokumentation.\n\nWenn Sie keinen API-Key haben, wenden Sie sich bitte per E-Mail an contact@drivequant.com an uns.</string>
    <string name="welcome_ko_title">Ihr API-Key ist nicht konfiguriert.</string>
    <string name="welcome_ok_button">NÄCHSTER SCHRITT</string>
-   <string name="welcome_ok_description">Bravo, Sie haben soeben die DriveKit-Demo-App installiert 🎉\n\nDiese App zeigt die Funktionsweise der DriveKit-Komponenten und leitet Sie an, diese in Ihrer App zu installieren.\n\nIhr API-Key ist :\n\n%s\n\n Unter keinen Umständen sollte es gemeinsam genutzt oder in mehreren Anwendungen verwendet werden.</string>
+   <string name="welcome_ok_description">Bravo, Sie haben soeben die DriveKit-Demo-App installiert 🎉\n\nDiese App zeigt die Funktionsweise der DriveKit-Komponenten und leitet Sie an, diese in Ihrer App zu installieren.\n\nIhr API-Key ist :\n\n%s\n\nUnter keinen Umständen sollte es gemeinsam genutzt oder in mehreren Anwendungen verwendet werden.</string>
    <string name="welcome_ok_title">Willkommen bei der DriveKit-Demoanwendung</string>
 </resources>
