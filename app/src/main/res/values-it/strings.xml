@@ -31,13 +31,13 @@
    <string name="drivekit_doc_android_odometer">https://docs.drivequant.com/vehicle/user-interface/android/main-configurations#vehicle-mileage-tracking-and-editing</string>
    <string name="drivekit_doc_android_permissions_management">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
    <string name="drivekit_doc_android_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
-   <string name="drivekit_doc_android_profile">https://docs.drivequant.com/driver-data/user-interface/android/driver-profile</string>
+   <string name="drivekit_doc_android_profile">https://docs.drivequant.com/driver-data/user-interface/android/my-driver-profile</string>
    <string name="drivekit_doc_android_ranking">https://docs.drivequant.com/driver-achievement/user-interface/android#select-ranking-themes</string>
    <string name="drivekit_doc_android_streaks">https://docs.drivequant.com/driver-achievement/user-interface/android#select-streak-themes</string>
-   <string name="drivekit_doc_android_synthesis">https://docs.drivequant.com/driver-data-synthesis-ui/android/get-started</string>
+   <string name="drivekit_doc_android_synthesis">https://docs.drivequant.com/driver-data/user-interface/android/my-synthesis</string>
    <string name="drivekit_doc_android_timeline">https://docs.drivequant.com/driver-data-timeline-ui/android/get-started</string>
-   <string name="drivekit_doc_android_update_user_info">https://docs.drivequant.com/get-started-drivekit/android#update-users-information</string>
-   <string name="drivekit_doc_android_user_id">https://docs.drivequant.com/get-started-drivekit/android#identify-user </string>
+   <string name="drivekit_doc_android_update_user_info">https://docs.drivequant.com/get-started-drivekit/android/advanced-configurations#update-users-information</string>
+   <string name="drivekit_doc_android_user_id">https://docs.drivequant.com/get-started-drivekit/android/quick-start#set-a-user-id</string>
    <string name="drivekit_doc_android_vehicle">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-picker</string>
    <string name="drivekit_doc_android_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-list</string>
    <string name="drivekit_doc_android_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/android/get-started#working-hours</string>
@@ -49,13 +49,13 @@
    <string name="drivekit_doc_ios_odometer">https://docs.drivequant.com/vehicle/user-interface/ios/main-configurations#vehicle-mileage-tracking-and-editing</string>
    <string name="drivekit_doc_ios_permissions_management">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
    <string name="drivekit_doc_ios_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
-   <string name="drivekit_doc_ios_profile">https://docs.drivequant.com/driver-data/user-interface/ios/driver-profile</string>
+   <string name="drivekit_doc_ios_profile">https://docs.drivequant.com/driver-data/user-interface/ios/my-driver-profile</string>
    <string name="drivekit_doc_ios_ranking">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-ranking-themes</string>
    <string name="drivekit_doc_ios_streaks">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-streak-themes</string>
-   <string name="drivekit_doc_ios_synthesis">https://docs.drivequant.com/driver-data-synthesis-ui/ios/get-started</string>
+   <string name="drivekit_doc_ios_synthesis">https://docs.drivequant.com/driver-data/user-interface/ios/my-synthesis</string>
    <string name="drivekit_doc_ios_timeline">https://docs.drivequant.com/driver-data-timeline-ui/ios/get-started</string>
-   <string name="drivekit_doc_ios_update_user_info">https://docs.drivequant.com/get-started-drivekit/ios#update-users-information</string>
-   <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios#identify-user</string>
+   <string name="drivekit_doc_ios_update_user_info">https://docs.drivequant.com/get-started-drivekit/ios/advanced-configurations#update-users-information</string>
+   <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios/quick-start#identify-the-user</string>
    <string name="drivekit_doc_ios_vehicle">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-picker-in-navigation-controller</string>
    <string name="drivekit_doc_ios_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-list-in-navigation-controller</string>
    <string name="drivekit_doc_ios_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#working-hours</string>
@@ -229,9 +229,9 @@
    <string name="vehicle_intro_title">Configurazione del veicolo</string>
    <string name="welcome_header">Avviare DriveKit</string>
    <string name="welcome_invalid_key_title">La tua key API non è valida</string>
-   <string name="welcome_ko_description">Per utilizzare questa applicazione demo, è necessario configurare una key API valida. \n\nPer maggiori informazioni sulla configurazione della key, segui le istruzioni nella nostra documentazione.\n\nSe non hai una key API, contattaci via email a contact@drivequant.com.</string>
+   <string name="welcome_ko_description">Per utilizzare questa applicazione demo, è necessario configurare una key API valida.\n\nPer maggiori informazioni sulla configurazione della key, segui le istruzioni nella nostra documentazione.\n\nSe non hai una key API, contattaci via email a contact@drivequant.com.</string>
    <string name="welcome_ko_title">La tua key API non è configurata</string>
    <string name="welcome_ok_button">PASSO AVANTI</string>
-   <string name="welcome_ok_description">Congratulazioni, hai appena installato l\'applicazione demo DriveKit 🎉 \n\nQuesta applicazione mostra come funzionano i componenti DriveKit e ti guida attraverso l\'installazione nella tua applicazione.\n\nLa key chiave API è:\n\n%s\n\nIn nessun caso deve essere condiviso o utilizzato in più applicazioni.</string>
+   <string name="welcome_ok_description">Congratulazioni, hai appena installato l\'applicazione demo DriveKit 🎉\n\nQuesta applicazione mostra come funzionano i componenti DriveKit e ti guida attraverso l\'installazione nella tua applicazione.\n\nLa key chiave API è:\n\n%s\n\nIn nessun caso deve essere condiviso o utilizzato in più applicazioni.</string>
    <string name="welcome_ok_title">Benvenuti nell\'applicazione demo DriveKit</string>
 </resources>

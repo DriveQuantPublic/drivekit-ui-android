@@ -28,7 +28,7 @@
    <string name="dk_perm_utils_app_diag_email_comment">Comment :</string>
    <string name="dk_perm_utils_app_diag_email_email">Email :</string>
    <string name="dk_perm_utils_app_diag_email_firstname">Firstname :</string>
-   <string name="dk_perm_utils_app_diag_email_intro">Hello,\n\n I\'m having difficulty with the %s application and I want to be called back. \n\n</string>
+   <string name="dk_perm_utils_app_diag_email_intro">Hello,\n\nI\'m having difficulty with the %s application and I want to be called back.\n\n</string>
    <string name="dk_perm_utils_app_diag_email_lastname">Name :</string>
    <string name="dk_perm_utils_app_diag_email_location">Authorization to access the location:</string>
    <string name="dk_perm_utils_app_diag_email_location_accuracy">Precise Location:</string>

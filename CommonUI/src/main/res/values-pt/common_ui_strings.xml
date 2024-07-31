@@ -57,7 +57,6 @@
    <string name="dk_common_period_selector_week">Semana</string>
    <string name="dk_common_period_selector_year">Ano</string>
    <string name="dk_common_permission_camera_rationale">O aplicativo precisa de permissão para acessar a câmera do seu smartphone para usar esse recurso.</string>
-   <string name="dk_common_permission_storage_rationale">O aplicativo precisa de autorização para acessar o armazenamento do seu smartphone para usar esse recurso.</string>
    <string name="dk_common_permissions">Permissões</string>
    <string name="dk_common_pseudo">Pseudo</string>
    <string name="dk_common_ranking_driver">Motorista</string>
@@ -67,7 +66,7 @@
    <string name="dk_common_save">Registro</string>
    <string name="dk_common_see_more_trips">Veja mais viagens</string>
    <string name="dk_common_select_image_gallery">Selecione uma foto existente</string>
-   <string name="dk_common_send_mail_error">Seu dispositivo não está configurado para enviar e -mail</string>
+   <string name="dk_common_send_mail_error">Seu dispositivo não está configurado para enviar e-mail</string>
    <string name="dk_common_settings">Configurações</string>
    <string name="dk_common_speed">Velocidade</string>
    <string name="dk_common_speed_limit">Limite de velocidade</string>

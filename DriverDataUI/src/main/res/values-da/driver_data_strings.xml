@@ -127,7 +127,6 @@
    <string name="dk_driverdata_mysynthesis_no_trip_prev_month">Du har ikke kørt bil i den foregående måned</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_week">Du har ikke kørt bil i den foregående uge</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_year">Du har ikke kørt bil det foregående år</string>
-   <string name="dk_driverdata_mysynthesis_not_enough_data">Der er ikke nok data til at vurdere din kørsel.</string>
    <string name="dk_driverdata_mysynthesis_previous_month">Den foregående måned :</string>
    <string name="dk_driverdata_mysynthesis_previous_week">Den foregående uge :</string>
    <string name="dk_driverdata_mysynthesis_previous_year">I %1$s :</string>

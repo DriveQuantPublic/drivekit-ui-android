@@ -3,23 +3,20 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Build
 import android.text.TextUtils
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
-import androidx.exifinterface.media.ExifInterface
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getImageByTypeIndex
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.VehicleCustomImageHelper
 import java.io.FileNotFoundException
+import java.io.InputStream
 
 object VehicleUtils {
 
@@ -84,50 +81,23 @@ object VehicleUtils {
         vehicle?.getImageByTypeIndex() ?: com.drivequant.drivekit.common.ui.R.drawable.dk_my_trips
 
     fun getVehicleDrawable(context: Context, vehicleId: String): Drawable? {
-        val defaultVehicleDrawable = ResourcesCompat.getDrawable(context.resources, getFilterVehicleDrawable(vehicleId), null)
+        val defaultVehicleDrawable by lazy { ResourcesCompat.getDrawable(context.resources, getFilterVehicleDrawable(vehicleId), null) }
 
-        val imageUri = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))
-        if (!TextUtils.isEmpty(imageUri)) {
-            try {
-                val uri = Uri.parse(imageUri)
-                val stream = context.contentResolver.openInputStream(uri)
+        var stream: InputStream? = null
+        try {
+            val fileUri = VehicleCustomImageHelper.getImageUri(vehicleId)
+            if (fileUri != null) {
+                stream = context.contentResolver.openInputStream(fileUri)
                 val b = BitmapFactory.decodeStream(stream)
                 b.density = Bitmap.DENSITY_NONE
-
-                val orientation = getImageOrientation(context, uri)
-                if (orientation != null) {
-                    val matrix = Matrix()
-                    matrix.setRotate(orientation.toFloat())
-                    val bitmap = Bitmap.createBitmap(b, 0, 0, b.width, b.height, matrix, true)
-                    return BitmapDrawable(context.resources, bitmap)
-                }
                 return BitmapDrawable(context.resources, b)
-            } catch (e: FileNotFoundException){
+            } else {
                 return defaultVehicleDrawable
             }
-        } else {
+        } catch (e: FileNotFoundException){
             return defaultVehicleDrawable
+        } finally {
+            stream?.close()
         }
-    }
-
-    private fun getImageOrientation(context: Context, uri: Uri): Int? {
-        val stream = context.contentResolver.openInputStream(uri)
-
-        val exifInterface = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && stream != null) {
-            ExifInterface(stream)
-        } else {
-            null // DriveKit will no longer support Android 6.0 by the end of 2024.
-        }
-
-        exifInterface?.let {
-            val orientation = it.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-            return when (orientation) {
-                ExifInterface.ORIENTATION_ROTATE_270 -> 270
-                ExifInterface.ORIENTATION_ROTATE_180 -> 180
-                ExifInterface.ORIENTATION_ROTATE_90 -> 90
-                else -> null
-            }
-        }
-        return null
     }
 }

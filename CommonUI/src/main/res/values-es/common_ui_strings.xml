@@ -57,7 +57,6 @@
    <string name="dk_common_period_selector_week">Semana</string>
    <string name="dk_common_period_selector_year">Año</string>
    <string name="dk_common_permission_camera_rationale">La aplicación necesita permiso para acceder a la cámara de su smartphone para utilizar esta función.</string>
-   <string name="dk_common_permission_storage_rationale">La aplicación necesita autorización para acceder al almacenamiento de su smartphone para utilizar esta función.</string>
    <string name="dk_common_permissions">Permisos</string>
    <string name="dk_common_pseudo">Pseudo</string>
    <string name="dk_common_ranking_driver">Conductor</string>
