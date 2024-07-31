@@ -45,7 +45,7 @@
    <string name="dk_perm_utils_app_diag_fsi_ok">Notifikationer kan nu vises i fuld skærm. Takket være denne tilladelse kan appen vise en meddelelse i fuld skærm, når der registreres en ulykke, selv om din smartphone er låst.</string>
    <string name="dk_perm_utils_app_diag_fsi_title">Notifikationer i fuld skærm</string>
    <string name="dk_perm_utils_app_diag_help_request_button">Kontakt support</string>
-   <string name="dk_perm_utils_app_diag_help_request_text">Hvis appen stadig ikke fungerer efter at have fulgt anbefalingerne ovenfor, kan du kontakte os via e -mail. Vi vender hurtigst muligt tilbage, og e-mailen vil indeholde alle de nødvendige oplysninger til at fejlfinde på ​​dit problem.</string>
+   <string name="dk_perm_utils_app_diag_help_request_text">Hvis appen stadig ikke fungerer efter at have fulgt anbefalingerne ovenfor, kan du kontakte os via e-mail. Vi vender hurtigst muligt tilbage, og e-mailen vil indeholde alle de nødvendige oplysninger til at fejlfinde på ​​dit problem.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">Registrerer appen ikke dine ture?</string>
    <string name="dk_perm_utils_app_diag_learn_more">Lær mere</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_ko">Placeringssensoren er deaktiveret på din telefon. Appen fungerer ikke, hvis den ikke kan få adgang til disse oplysninger.</string>
@@ -112,7 +112,7 @@
    <string name="dk_perm_utils_permissions_location_ios13_ko">For at lave automatisk optagelse af dine ture skal appen have adgang til telefonens position. For at gøre dette skal du vælge \"Altid \" i telefonindstillingerne ved at følge nedenstående trin</string>
    <string name="dk_perm_utils_permissions_location_ios14_ko">For at lave automatisk optagelse af dine ture skal applikationen have adgang til den nøjagtige telefonplacering. For at gøre dette skal du følge nedenstående trin.</string>
    <string name="dk_perm_utils_permissions_location_popup_title">Tilladelser</string>
-   <string name="dk_perm_utils_permissions_location_pre_ios13_ko">Du skal give appen mulighed for at få adgang til telefonens placering, så den kan registrere og måle dine ture.\n\nTre indstillinger er tilgængelige:\n(1) aldrig\n(2), mens du bruger appen\n(3) altid \n\n Det er vigtig at vælge mulighed (3) altid, ellers vil appen ikke fungere.</string>
+   <string name="dk_perm_utils_permissions_location_pre_ios13_ko">Du skal give appen mulighed for at få adgang til telefonens placering, så den kan registrere og måle dine ture.\n\nTre indstillinger er tilgængelige:\n(1) aldrig\n(2), mens du bruger appen\n(3) altid\n\nDet er vigtig at vælge mulighed (3) altid, ellers vil appen ikke fungere.</string>
    <string name="dk_perm_utils_permissions_location_text1_android">Appen skal have adgang til telefonens placering for at registrere og analysere dine ture, når den kører i baggrunden.</string>
    <string name="dk_perm_utils_permissions_location_text1_android11">Appen skal have adgang til telefonens position til at registrere og analysere dine ture.</string>
    <string name="dk_perm_utils_permissions_location_text1_android12">Appen skal have adgang til telefonens nøjagtige lokation for at registrere og analysere dine ture.</string>

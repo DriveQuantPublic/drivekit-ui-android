@@ -84,7 +84,7 @@
    <string name="feature_trip_list_title">Driver Data | List and display of trips</string>
    <string name="feature_vehicle_description">A componente Veículo apresenta a lista de veículos e as suas características. Permite acrescentar, substituir ou apagar um veículo. O modo de ativação é configurável por veículo (GPS, iBeacon ou dispositivo Bluetooth).</string>
    <string name="feature_vehicle_odometer_description">O componente Veículo inclui uma função para apresentar a distância analisada e uma estimativa da distância anual. O utilizador pode também introduzir a quilometragem lida a partir do conta-quilómetros do carro.</string>
-   <string name="feature_vehicle_odometer_title">Vehicle | Mileage tracking</string>
+   <string name="feature_vehicle_odometer_title">Vehicle | Monitoramento de Quilometragem</string>
    <string name="feature_vehicle_title">Vehicle | Display and configuration</string>
    <string name="feature_working_hours_description">A componente Análise de Viagens permite ajustar as horas de registo das viagens. Também é possível etiquetar as viagens para cada faixa horária configurada (profissional ou pessoal).</string>
    <string name="feature_working_hours_title">Trip Analysis | Working Hours</string>

@@ -84,7 +84,7 @@
    <string name="feature_trip_list_title">Driver Data | List and display of trips</string>
    <string name="feature_vehicle_description">Komponenten Køretøj viser listen over køretøjer og deres karakteristika. Den gør det muligt at tilføje, udskifte eller slette et køretøj. Aktiveringstilstanden kan konfigureres for hvert køretøj (GPS, iBeacon eller Bluetooth-enhed).</string>
    <string name="feature_vehicle_odometer_description">Køretøjskomponenten indeholder en funktion til at vise den analyserede distance og et skøn over den årlige distance. Brugeren kan også indtaste det aflæste kilometertal fra bilens kilometertæller.</string>
-   <string name="feature_vehicle_odometer_title">Vehicle | Mileage tracking</string>
+   <string name="feature_vehicle_odometer_title">Vehicle | Kilometerovervågning</string>
    <string name="feature_vehicle_title">Vehicle | Display and configuration</string>
    <string name="feature_working_hours_description">Komponenten Turanalyse giver mulighed for at justere timerne for turregistrering. Det er også muligt at mærke turene for hvert konfigureret tidsrum (forretning eller privat).</string>
    <string name="feature_working_hours_title">Trip Analysis | Working Hours</string>

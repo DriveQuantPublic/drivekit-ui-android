@@ -83,8 +83,8 @@
    <string name="feature_trip_list_description">Het onderdeel Driver Data toont de resultaten van de analyse van rijgegevens. Het bevat een lijst met ritten en een kaartweergave met scores per thema: veiligheid, ecorijden, afleiding en snelheidslimiet.</string>
    <string name="feature_trip_list_title">Driver Data | Lijst en weergave van routes</string>
    <string name="feature_vehicle_description">Het onderdeel Voertuig toont de lijst met voertuigen en hun kenmerken. Het kan worden gebruikt om een voertuig toe te voegen, te vervangen of te verwijderen. De activeringsmodus kan voor elk voertuig worden geconfigureerd (GPS, iBeacon of Bluetooth-apparaat).</string>
-   <string name="feature_vehicle_odometer_description">Le composant Vehicle comprend une fonction pour afficher la distance analysée et une estimation de la distance annuelle. L\'utilisateur peut également saisir le kilométrage lu sur le compteur de sa voiture.</string>
-   <string name="feature_vehicle_odometer_title">Vehicle | Suivi kilométrique</string>
+   <string name="feature_vehicle_odometer_description">Het onderdeel Voertuig bevat een functie voor het weergeven van de geanalyseerde afstand en een schatting van de jaarlijkse afstand. Gebruikers kunnen ook de kilometerstand van de kilometerteller van hun auto invoeren.</string>
+   <string name="feature_vehicle_odometer_title">Vehicle | Kilometrage bijhouden</string>
    <string name="feature_vehicle_title">Vehicle | Weergave en configuratie</string>
    <string name="feature_working_hours_description">Met de component Ritanalyse kun je de opnametijden voor ritten instellen. Het is ook mogelijk om ritten te labelen voor elk geconfigureerd tijdslot (zakelijk of privé).</string>
    <string name="feature_working_hours_title">Trip Analysis | Beheer van dienstregelingen</string>
@@ -126,7 +126,7 @@
    <string name="notif_trip_idle_detected">De gegevens komen niet overeen met een voertuigrit.</string>
    <string name="notif_trip_idle_detected_not_displayed">Je reis is niet genoteerd omdat deze niet overeenkomt met een reis per voertuig.</string>
    <string name="notif_trip_no_network">De reis kon niet worden geanalyseerd omdat je telefoon geen verbinding heeft met het mobiele netwerk. De reis zal later worden geanalyseerd.</string>
-   <string name="notif_trip_no_network_title">L\'analyse du trajet est reportée</string>
+   <string name="notif_trip_no_network_title">De routeanalyse wordt gerapporteerd</string>
    <string name="notif_trip_postpone">Stop de analyse als u niet achter het stuur zit</string>
    <string name="notif_trip_save_for_repost">De reis kon niet worden geanalyseerd omdat de internetverbinding te traag is. De reis zal later worden geanalyseerd.</string>
    <string name="notif_trip_skiing_detected">Je reis is gemaakt op ski\'s</string>

@@ -23,7 +23,7 @@
    <string name="dk_achievements_streaks_phone_distraction_text">Tente fazer uma série de viagens sem lidar com seu smartphone enquanto dirige.\n\nde viagens em sua melhor sequência de sucesso é memorizado e você pode tentar superar.</string>
    <string name="dk_achievements_streaks_phone_distraction_title">Sem uso de telefone</string>
    <string name="dk_achievements_streaks_safety_reset">A pontuação de segurança da sua última viagem é inferior a 9,8/10</string>
-   <string name="dk_achievements_streaks_safety_text">Tente fazer uma série de viagens com pontuações de segurança superiores a 9,8/10.\n\nO tempo em que você obtém sucesso, o contador de viagem aumenta.\n\nSe você falhar, o contador é redefinido e você deve reiniciar do zero. O número de viagens em sua melhor sequência de sucesso é memorizado e você pode tentar superar.</string>
+   <string name="dk_achievements_streaks_safety_text">Tente fazer uma série de viagens com pontuações de segurança superiores a 9,8/10.\n\nO tempo em que você obtém sucesso, o contador de viagem aumenta.\n\nSe você falhar, o contador é redefinido e você deve reiniciar do zero.\n\nO número de viagens em sua melhor sequência de sucesso é memorizado e você pode tentar superar.</string>
    <string name="dk_achievements_streaks_safety_title">Direção segura</string>
    <string name="dk_achievements_streaks_since">Desde o %s</string>
    <string name="dk_achievements_streaks_since_to">%1$s para %2$s</string>
