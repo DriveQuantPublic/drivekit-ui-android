@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_timeline_acceleration_score">Acceleratie score: %s</string>
+   <string name="dk_timeline_accelerations">Acceleraties / 100 km: %s</string>
+   <string name="dk_timeline_adherence">bandengriplimieten / 100 km: %s</string>
+   <string name="dk_timeline_brakings">Remmen / 100 km: %s</string>
+   <string name="dk_timeline_button_timeline_detail">Meer informatie over mijn score</string>
+   <string name="dk_timeline_calls_duration">Duur van verboden gesprekken / 100 km: %s</string>
+   <string name="dk_timeline_co2_mass">CO2-massa: %s</string>
+   <string name="dk_timeline_consumption">Verbruik : %s</string>
+   <string name="dk_timeline_deceleration_score">Vertragingsscore: %s</string>
+   <string name="dk_timeline_distraction_score">Afleidingsscore: %s</string>
+   <string name="dk_timeline_eco_score">Eco-driving score: %s</string>
+   <string name="dk_timeline_fuel_savings">Mogelijke brandstofbesparing: %s</string>
+   <string name="dk_timeline_info_accel_score">De acceleratiescore varieert van -5 tot 5. Voor de waarde -5 is de acceleratie te langzaam. Een score van 5 geeft aan dat de acceleratie te snel is. Een score van 0 geeft aan dat de acceleratie perfect past bij een eco-rijstijl.</string>
+   <string name="dk_timeline_info_decel_score">De vertragingsscore loopt van -5 tot 5. Voor de waarde -5 is de vertraging te langzaam. Een score van 5 geeft aan dat de vertraging te snel is. Een score van 0 geeft aan dat de vertraging perfect overeenkomt met een eco-rijstijl.</string>
+   <string name="dk_timeline_info_maintain_score">De score voor constante snelheid varieert van 0 tot 5. Een waarde van 0 geeft aan dat de bestuurder zich op de juiste manier gedraagt en met een constante snelheid rijdt. In het andere geval, wanneer schommelingen in de snelheid worden gedetecteerd, neemt de score toe en kan de bestuurder zich nog verbeteren.</string>
+   <string name="dk_timeline_maintain_score">Constante snelheid score: %s</string>
+   <string name="dk_timeline_nb_unlocks">Aantal keren de telefoon ontgrendeld / 100 km: %s</string>
+   <string name="dk_timeline_overspeeding_distance">Relatieve afstand snelheidsoverschrijding: %s</string>
+   <string name="dk_timeline_overspeeding_duration">Relatieve duur snelheidsoverschrijding: %s</string>
+   <string name="dk_timeline_road_context_city">bebouwde kom</string>
+   <string name="dk_timeline_road_context_description_empty_data">Maak een eerste rit om je eerste grafieken te zien.</string>
+   <string name="dk_timeline_road_context_expressways">autowegen</string>
+   <string name="dk_timeline_road_context_heavy_urban_traffic">sterk vertraagd verkeer</string>
+   <string name="dk_timeline_road_context_no_context_description">Er zijn in deze periode niet genoeg gegevens om de verdeling van wegtypes te berekenen.</string>
+   <string name="dk_timeline_road_context_suburban">buiten bebouwde kom</string>
+   <string name="dk_timeline_road_context_title">Type verkeer (%s)</string>
+   <string name="dk_timeline_safety_score">Veiligheidsscore: %s</string>
+   <string name="dk_timeline_speeding_score">Snelheidsscore: %s</string>
+   <string name="dk_timeline_title">Tijdlijn</string>
+   <string name="dk_timeline_trips_forbidden_calls">Ritten met verboden oproepen: %s</string>
+</resources>

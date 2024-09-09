@@ -40,6 +40,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     private lateinit var viewModel: VehiclePickerViewModel
     private lateinit var binding: ActivityVehiclePickerBinding
     private var steps: MutableList<VehiclePickerStep> = mutableListOf()
+    private val mutex = Any()
 
     companion object {
         private var vehicleToDelete: Vehicle? = null
@@ -154,9 +155,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun updateTitle() {
-        steps.lastOrNull()?.let {
-            updateTitle(it)
-        } ?: updateTitle(getString(R.string.dk_vehicle_my_vehicle))
+        synchronized(this.mutex) {
+            steps.lastOrNull()?.let { updateTitle(it) } ?: updateTitle(getString(R.string.dk_vehicle_my_vehicle))
+        }
     }
 
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
@@ -223,7 +224,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep))
         }
 
-        steps.add(vehiclePickerStep)
+        synchronized(this.mutex) {
+            steps.add(vehiclePickerStep)
+        }
         updateTitle()
 
         supportFragmentManager.beginTransaction()
@@ -251,7 +254,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             finish()
         } else {
             supportFragmentManager.popBackStack()
-            steps.removeLast()
+            synchronized(this.mutex) {
+                steps.removeAt(steps.lastIndex)
+            }
             updateTitle()
         }
     }

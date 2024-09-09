@@ -28,7 +28,7 @@
    <string name="dk_perm_utils_app_diag_email_comment">Motivo (comentarios):</string>
    <string name="dk_perm_utils_app_diag_email_email">Correo electrónico :</string>
    <string name="dk_perm_utils_app_diag_email_firstname">Apellidos :</string>
-   <string name="dk_perm_utils_app_diag_email_intro">Hola, \n\n Tengo problemas con la solicitud de %s y quiero que me contacten de nuevo. \n\n</string>
+   <string name="dk_perm_utils_app_diag_email_intro">Hola,\n\nTengo problemas con la solicitud de %s y quiero que me contacten de nuevo.\n\n</string>
    <string name="dk_perm_utils_app_diag_email_lastname">Nombre :</string>
    <string name="dk_perm_utils_app_diag_email_location">Autorización para acceder a la ubicación:</string>
    <string name="dk_perm_utils_app_diag_email_location_accuracy">Ubicación exacta :</string>
