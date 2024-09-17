@@ -13,9 +13,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.drivekit.demoapp.component.FeatureCard
@@ -95,25 +94,22 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun manageEdgeToEdge() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.test_parent)) { v, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            // Apply the insets as a margin to the view. This solution sets
-            // only the bottom, left, and right dimensions, but you can apply whichever
-            // insets are appropriate to your layout. You can also update the view padding
-            // if that's more appropriate.
-            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+        // Manage the system status bar padding
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.drivequant.drivekit.ui.R.id.toolbar)) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars())
+            /*v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = insets.left
                 rightMargin = insets.right
                 bottomMargin = insets.bottom
                 topMargin = insets.top
-            }
-
-            // Return CONSUMED if you don't want want the window insets to keep passing
-            // down to descendant views.
+            }*/
+            v.updatePadding(top = insets.top)
             WindowInsetsCompat.CONSUMED
         }
+
+        // Manage the system status bar content color
+        val windowInsetsController = ViewCompat.getWindowInsetsController(window.decorView)
+        windowInsetsController?.isAppearanceLightStatusBars = false
     }
 
     override fun onResume() {

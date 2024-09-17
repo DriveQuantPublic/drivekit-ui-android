@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/test_parent"
+    android:id="@+id/root"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:viewBindingIgnore="true">
 
+    <View
+        android:id="@+id/my_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/primaryColor" />
+    
     <include
         android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar" />
