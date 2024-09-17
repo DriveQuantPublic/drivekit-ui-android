@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -94,22 +95,25 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun manageEdgeToEdge() {
+        // Manage the system status bar content color
+        val windowInsetsController = ViewCompat.getWindowInsetsController(window.decorView)
+        windowInsetsController?.isAppearanceLightStatusBars = false
+
         // Manage the system status bar padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.drivequant.drivekit.ui.R.id.toolbar)) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars())
-            /*v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = insets.left
-                rightMargin = insets.right
-                bottomMargin = insets.bottom
-                topMargin = insets.top
-            }*/
             v.updatePadding(top = insets.top)
             WindowInsetsCompat.CONSUMED
         }
 
-        // Manage the system status bar content color
-        val windowInsetsController = ViewCompat.getWindowInsetsController(window.decorView)
-        windowInsetsController?.isAppearanceLightStatusBars = false
+        // Manage the navigation bar padding
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.button_trip_simulator)) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = insets.bottom
+            }
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     override fun onResume() {
