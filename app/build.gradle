@@ -86,6 +86,7 @@ dependencies {
     //implementation "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
     //implementation "com.drivequant.drivekit:drivekit-trip-analysis-ui:$drivekitui_version"
     //implementation "com.drivequant.drivekit:drivekit-driver-data-ui:$drivekitui_version"
+    //implementation "com.drivequant.drivekit:drivekit-driver-data-timeline-ui:$drivekitui_version"
     //implementation "com.drivequant.drivekit:drivekit-vehicle-ui:$drivekitui_version"
     //implementation "com.drivequant.drivekit:drivekit-driver-achievement-ui:$drivekitui_version"
     //implementation "com.drivequant.drivekit:drivekit-permissions-utils-ui:$drivekitui_version"
