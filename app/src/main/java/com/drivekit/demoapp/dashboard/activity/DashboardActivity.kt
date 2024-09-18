@@ -12,11 +12,6 @@ import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.drivekit.demoapp.component.FeatureCard
@@ -32,6 +27,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
@@ -96,24 +92,10 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun manageEdgeToEdge() {
-        // Manage the system status bar content color
-        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
-        windowInsetsController.isAppearanceLightStatusBars = false
-
-        // Manage the system status bar padding
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.drivequant.drivekit.ui.R.id.toolbar)) { v, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars())
-            v.updatePadding(top = insets.top)
-            WindowInsetsCompat.CONSUMED
-        }
-
-        // Manage the navigation bar padding
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.button_trip_simulator)) { v, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = insets.bottom
-            }
-            WindowInsetsCompat.CONSUMED
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundDarkColor(window)
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.button_trip_simulator))
         }
     }
 
