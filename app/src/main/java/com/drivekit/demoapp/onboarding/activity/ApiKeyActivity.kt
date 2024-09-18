@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
@@ -30,13 +29,14 @@ internal class ApiKeyActivity : AppCompatActivity() {
         binding = ActivitySetApiKeyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val toolbar: androidx.appcompat.widget.Toolbar = binding.root.findViewById(com.drivequant.drivekit.vehicle.ui.R.id.dk_toolbar)
+        val actionButton = binding.root.findViewById<Button>(R.id.button_action)
         setSupportActionBar(toolbar)
         setActivityTitle(getString(R.string.welcome_header))
 
         val viewModel = ApiKeyViewModel()
         binding.textViewDescription.text = viewModel.getDescription(this@ApiKeyActivity)
         binding.textViewTitle.setText(viewModel.getTitleResId())
-        binding.root.findViewById<Button>(R.id.button_action).apply {
+        actionButton.apply {
             setText(viewModel.getButtonTextResId())
             setOnClickListener {
                 if (viewModel.isApiKeyValid()) {
@@ -49,6 +49,7 @@ internal class ApiKeyActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             addSystemStatusBarTopPadding(toolbar)
+            addSystemNavigationBarBottomMargin(actionButton)
         }
     }
 }
