@@ -100,7 +100,6 @@ internal class DashboardActivity : AppCompatActivity() {
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = false
 
-
         // Manage the system status bar padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.drivequant.drivekit.ui.R.id.toolbar)) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars())
