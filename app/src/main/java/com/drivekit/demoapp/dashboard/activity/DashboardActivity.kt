@@ -13,6 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -96,8 +97,9 @@ internal class DashboardActivity : AppCompatActivity() {
 
     private fun manageEdgeToEdge() {
         // Manage the system status bar content color
-        val windowInsetsController = ViewCompat.getWindowInsetsController(window.decorView)
-        windowInsetsController?.isAppearanceLightStatusBars = false
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.isAppearanceLightStatusBars = false
+
 
         // Manage the system status bar padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.drivequant.drivekit.ui.R.id.toolbar)) { v, windowInsets ->

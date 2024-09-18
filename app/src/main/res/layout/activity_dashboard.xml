@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:viewBindingIgnore="true">
-
-    <View
-        android:id="@+id/my_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/primaryColor" />
     
     <include
         android:id="@+id/toolbar"
@@ -53,23 +47,17 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/test_bottom_buttons"
+    <fragment
+        android:id="@+id/button_start_stop_trip"
+        android:name="com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <fragment
-            android:id="@+id/button_start_stop_trip"
-            android:name="com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
-            android:layout_marginVertical="@dimen/dk_margin_half" />
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
+        android:layout_marginVertical="@dimen/dk_margin_half" />
 
-        <include
-            android:id="@+id/button_trip_simulator"
-            layout="@layout/layout_button_secondary_action"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <include
+        android:id="@+id/button_trip_simulator"
+        layout="@layout/layout_button_secondary_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
