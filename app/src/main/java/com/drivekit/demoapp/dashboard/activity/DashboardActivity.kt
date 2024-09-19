@@ -89,7 +89,7 @@ internal class DashboardActivity : AppCompatActivity() {
         }
 
         DKEdgeToEdgeManager.apply {
-            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.button_trip_simulator))
         }
     }

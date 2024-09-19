@@ -3,9 +3,11 @@ package com.drivequant.drivekit.ui.mysynthesis
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.ui.R
 
 internal class MySynthesisActivity : AppCompatActivity() {
@@ -21,9 +23,14 @@ internal class MySynthesisActivity : AppCompatActivity() {
     private var fragment: MySynthesisFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mysynthesis)
         setupUi()
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.container))
+        }
     }
 
     private fun setupUi() {

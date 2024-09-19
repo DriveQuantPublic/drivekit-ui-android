@@ -12,12 +12,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -61,6 +63,7 @@ class BeaconActivity : AppCompatActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityBeaconBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -132,6 +135,11 @@ class BeaconActivity : AppCompatActivity() {
             BeaconScanType.VERIFY -> R.string.dk_tag_vehicles_beacon_verify
         }
         DriveKitUI.analyticsListener?.trackScreen(getString(screenNameResId), javaClass.simpleName)
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.container))
+        }
     }
 
     private fun updateTitle() = when (viewModel.scanType) {

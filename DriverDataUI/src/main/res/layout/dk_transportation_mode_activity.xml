@@ -7,7 +7,9 @@
     tools:context=".tripdetail.activity.TripDetailActivity"
     tools:viewBindingIgnore="true">
 
-    <include layout="@layout/dk_layout_toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
 
     <FrameLayout
         android:id="@+id/container"

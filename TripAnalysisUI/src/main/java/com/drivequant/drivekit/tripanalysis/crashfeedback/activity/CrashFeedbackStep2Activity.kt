@@ -3,11 +3,13 @@ package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
 import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityCrashFeedbackStep2Binding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.pixelToSp
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep2ViewModel
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.CrashFeedbackStatus
@@ -22,6 +24,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
     private lateinit var binding: DkLayoutActivityCrashFeedbackStep2Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         binding = DkLayoutActivityCrashFeedbackStep2Binding.inflate(layoutInflater)
@@ -47,6 +50,11 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
 
         initTitle()
         initDescription()
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar)) // TODO not sure
+            addSystemNavigationBarBottomMargin(findViewById(R.id.button_assistance))
+        }
     }
 
     private fun initTitle() {

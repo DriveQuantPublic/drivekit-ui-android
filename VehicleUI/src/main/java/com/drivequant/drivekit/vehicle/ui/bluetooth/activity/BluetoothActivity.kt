@@ -12,12 +12,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.ActivityBluetoothBinding
@@ -43,6 +45,7 @@ class BluetoothActivity : AppCompatActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_bluetooth_add), javaClass.simpleName)
 
@@ -92,6 +95,11 @@ class BluetoothActivity : AppCompatActivity() {
                     hideProgressCircular()
                 }
             }
+        }
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.container))
         }
     }
 

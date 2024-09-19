@@ -5,9 +5,11 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.transportationmode.fragment.TransportationModeFragment
 
@@ -29,6 +31,7 @@ internal class TransportationModeActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_transportation_mode_activity)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -46,6 +49,11 @@ internal class TransportationModeActivity : AppCompatActivity() {
                 FRAGMENT_TAG
             )
             .commit()
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.container))
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

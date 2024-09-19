@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.common.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursDayCard
@@ -36,6 +38,7 @@ class WorkingHoursActivity : AppCompatActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trip_analysis_working_hours), javaClass.simpleName
@@ -47,6 +50,10 @@ class WorkingHoursActivity : AppCompatActivity() {
         outsideHours = findViewById(R.id.outside_hours_container)
         setToolbar()
         setContent()
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.container))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

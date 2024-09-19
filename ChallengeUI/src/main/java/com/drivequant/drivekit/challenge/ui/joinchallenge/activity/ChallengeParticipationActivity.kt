@@ -3,6 +3,7 @@ package com.drivequant.drivekit.challenge.ui.joinchallenge.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +11,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.joinchallenge.fragment.ChallengeParticipationFragment
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 
 class ChallengeParticipationActivity : AppCompatActivity() {
 
@@ -30,6 +32,7 @@ class ChallengeParticipationActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_challenge_join)
 
@@ -53,6 +56,11 @@ class ChallengeParticipationActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.container))
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

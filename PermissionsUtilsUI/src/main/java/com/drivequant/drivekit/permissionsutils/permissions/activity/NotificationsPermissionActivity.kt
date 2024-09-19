@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityNotificationsPermissionBinding
@@ -21,12 +23,17 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
     private lateinit var binding: ActivityNotificationsPermissionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationsPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setToolbar(R.string.dk_perm_utils_app_diag_notification_title)
         setStyle()
         manageSkipButton()
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.scrollview))
+        }
     }
 
     fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {

@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
@@ -19,6 +21,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
     private lateinit var binding: ActivityLocationPermissionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityLocationPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,6 +49,11 @@ class LocationPermissionActivity : BasePermissionActivity() {
                 }
                 binding.textViewLocationPermissionText2.setText(stringResId)
             }
+        }
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
+            addSystemNavigationBarBottomMargin(findViewById(R.id.scrollview))
         }
     }
 
