@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
@@ -14,6 +15,7 @@ import com.drivekit.drivekitdemoapp.databinding.ActivityPermissionsBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 
@@ -29,6 +31,7 @@ internal class PermissionsActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityPermissionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,7 +51,9 @@ internal class PermissionsActivity : AppCompatActivity() {
             text = getString(R.string.permissions_intro_description)
             normalText()
         }
-        binding.root.findViewById<Button>(R.id.button_action).apply {
+
+        val actionButton = binding.root.findViewById<Button>(R.id.button_action)
+        actionButton.apply {
             text = getString(R.string.permissions_intro_button)
             setOnClickListener {
                 PermissionsUtilsUI.showPermissionViews(
@@ -67,6 +72,11 @@ internal class PermissionsActivity : AppCompatActivity() {
             } else {
                 DashboardActivity.launchActivity(this)
             }
+        }
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemNavigationBarBottomMargin(actionButton)
         }
     }
 

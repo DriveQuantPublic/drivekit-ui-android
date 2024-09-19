@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.config.DriveKitConfig
@@ -18,6 +19,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 
 internal class DeleteAccountActivity : AppCompatActivity() {
 
@@ -31,6 +33,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityDeleteAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -40,7 +43,8 @@ internal class DeleteAccountActivity : AppCompatActivity() {
         setActivityTitle(getString(R.string.delete_account_header))
         checkViewModelInitialization()
 
-        binding.buttonDeleteAccount.apply {
+        val deleteButton = binding.buttonDeleteAccount
+        deleteButton.apply {
             normalText()
             setOnClickListener {
                 displayAccountDeletionConfirmation()
@@ -62,6 +66,11 @@ internal class DeleteAccountActivity : AppCompatActivity() {
             updateProgressVisibility(false)
             DriveKitConfig.logout(this)
             restartApplication()
+        }
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemNavigationBarBottomMargin(deleteButton)
         }
     }
 

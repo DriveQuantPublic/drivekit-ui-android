@@ -28,9 +28,8 @@ internal class ApiKeyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySetApiKeyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val toolbar: androidx.appcompat.widget.Toolbar = binding.root.findViewById(com.drivequant.drivekit.vehicle.ui.R.id.dk_toolbar)
         val actionButton = binding.root.findViewById<Button>(R.id.button_action)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.vehicle.ui.R.id.dk_toolbar))
         setActivityTitle(getString(R.string.welcome_header))
 
         val viewModel = ApiKeyViewModel()
@@ -48,7 +47,8 @@ internal class ApiKeyActivity : AppCompatActivity() {
         }
 
         DKEdgeToEdgeManager.apply {
-            addSystemStatusBarTopPadding(toolbar)
+            setSystemStatusBarForegroundDarkColor(window) // TODO why ?
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
             addSystemNavigationBarBottomMargin(actionButton)
         }
     }

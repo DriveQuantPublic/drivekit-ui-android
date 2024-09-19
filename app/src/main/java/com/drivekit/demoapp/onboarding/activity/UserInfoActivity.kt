@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
@@ -16,6 +17,7 @@ import com.drivekit.drivekitdemoapp.databinding.ActivityUserInfoBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 
 internal class UserInfoActivity : AppCompatActivity() {
 
@@ -29,6 +31,7 @@ internal class UserInfoActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityUserInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -58,7 +61,8 @@ internal class UserInfoActivity : AppCompatActivity() {
             openDriveKitUserInfoDoc()
         }
 
-        binding.buttonNextStep.setOnClickListener {
+        val nextStepButton = binding.buttonNextStep
+        nextStepButton.setOnClickListener {
             goToNext()
         }
 
@@ -86,6 +90,11 @@ internal class UserInfoActivity : AppCompatActivity() {
             } else {
                 DashboardActivity.launchActivity(this)
             }
+        }
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemNavigationBarBottomMargin(nextStepButton)
         }
     }
 

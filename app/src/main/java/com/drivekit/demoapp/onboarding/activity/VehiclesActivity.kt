@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
@@ -12,6 +13,7 @@ import com.drivekit.drivekitdemoapp.databinding.ActivityVehiclesBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 
@@ -26,6 +28,7 @@ internal class VehiclesActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityVehiclesBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,7 +48,8 @@ internal class VehiclesActivity : AppCompatActivity() {
             text = getString(R.string.vehicle_intro_description)
             normalText()
         }
-        binding.buttonAddVehicle.apply {
+        val addVehicleButton = binding.buttonAddVehicle
+        addVehicleButton.apply {
             setOnClickListener {
                 VehiclePickerActivity.launchActivity(
                     this@VehiclesActivity,
@@ -56,6 +60,11 @@ internal class VehiclesActivity : AppCompatActivity() {
                         }
                     })
             }
+        }
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemNavigationBarBottomMargin(addVehicleButton)
         }
     }
 

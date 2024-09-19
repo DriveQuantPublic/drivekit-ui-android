@@ -3,6 +3,7 @@ package com.drivekit.demoapp.features.activity
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import com.drivekit.demoapp.features.adapter.FeatureListAdapter
 import com.drivekit.demoapp.features.viewmodel.FeatureListViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 
 @SuppressLint("SourceLockedOrientationActivity")
 internal class FeatureListActivity : AppCompatActivity() {
@@ -18,12 +20,12 @@ internal class FeatureListActivity : AppCompatActivity() {
     private lateinit var adapter: FeatureListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.activity_feature_list)
 
-        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setActivityTitle(getString(R.string.feature_list))
@@ -33,9 +35,15 @@ internal class FeatureListActivity : AppCompatActivity() {
         }
 
         adapter = FeatureListAdapter(this, viewModel.features)
-        findViewById<RecyclerView>(R.id.features_list).let {
-            it.layoutManager = LinearLayoutManager(this)
+        val featureList = findViewById<RecyclerView>(R.id.features_list)
+        featureList.let {
+            it.layoutManager = LinearLayoutManager(this@FeatureListActivity)
             it.adapter = adapter
+        }
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemNavigationBarBottomMargin(featureList)
         }
     }
 

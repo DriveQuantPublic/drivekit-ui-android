@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/dk_layout_toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -251,8 +253,8 @@
         android:id="@+id/button_logout_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:layout_marginBottom="@dimen/dk_margin"
+        android:layout_marginVertical="@dimen/dk_margin"
+        android:paddingBottom="@dimen/dk_margin"
         android:gravity="center"
         android:text="@string/button_logout"
         android:textColor="@color/criticalColor" />

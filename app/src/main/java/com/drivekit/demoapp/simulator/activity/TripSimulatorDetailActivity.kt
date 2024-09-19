@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.component.ChartEntry
@@ -16,11 +17,11 @@ import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModelList
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorDetailBinding
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 
 internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailViewModelListener {
@@ -48,6 +49,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityTripSimulatorDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -77,9 +79,16 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
 
         viewModel.registerListener(this@TripSimulatorDetailActivity)
 
+        val startStopButton = binding.root.findViewById<Button>(R.id.button_action)
+
         initContent()
-        startStopSimulation()
+        startStopSimulation(startStopButton)
         updateContent()
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemNavigationBarBottomMargin(startStopButton)
+        }
     }
 
     private fun initContent() {
@@ -97,17 +106,15 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         binding.simulationRunSdkState.setItemTitle(getString(R.string.trip_simulator_run_sdk_state))
     }
 
-    private fun startStopSimulation() {
-        binding.root.findViewById<Button>(R.id.button_action).apply {
-            setOnClickListener {
-                if (viewModel.isSimulating) {
-                    showStopSimulationPopup { updateContent() }
-                } else {
-                    viewModel.startSimulation()
-                    graphView.clean()
-                }
-                updateContent()
+    private fun startStopSimulation(button: Button) {
+        button.setOnClickListener {
+            if (viewModel.isSimulating) {
+                showStopSimulationPopup { updateContent() }
+            } else {
+                viewModel.startSimulation()
+                graphView.clean()
             }
+            updateContent()
         }
     }
 

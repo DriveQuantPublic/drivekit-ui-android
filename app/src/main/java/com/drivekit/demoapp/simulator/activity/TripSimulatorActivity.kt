@@ -8,16 +8,17 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorBinding
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 
 internal class TripSimulatorActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityTripSimulatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,7 +47,8 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         initFilter()
         checkSimulationError()
 
-        binding.root.findViewById<Button>(R.id.button_action).apply {
+        val actionButton = binding.root.findViewById<Button>(R.id.button_action)
+        actionButton.apply {
             text = getString(R.string.trip_simulator_start_button)
             setOnClickListener {
                 when {
@@ -67,6 +70,11 @@ internal class TripSimulatorActivity : AppCompatActivity() {
 
         viewModel.selectedPresetTripType.observe(this) {
             updateTripDescription()
+        }
+
+        DKEdgeToEdgeManager.apply {
+            addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
+            addSystemNavigationBarBottomMargin(actionButton)
         }
     }
 
