@@ -37,7 +37,12 @@ fun @receiver:ColorRes Int.tintFromHueOfColor(context: Context, @ColorRes color:
 
 fun @receiver:ColorInt Int.shouldInvertTextColor(@ColorInt otherColor: Int) =
     // We should have at least a ratio of 2.8:1 or we need to invert foreground color
-    ColorUtils.calculateContrast(this, otherColor) < 2.8
+    try {
+        ColorUtils.calculateContrast(this, otherColor) < 2.8
+    } catch (e: IllegalArgumentException) {
+        // background can not be translucent
+        false
+    }
 
 @FloatRange(from = 0.0, to = 360.0)
 fun @receiver:ColorInt Int.getHue(): Float = this.getHslValues().getHue()

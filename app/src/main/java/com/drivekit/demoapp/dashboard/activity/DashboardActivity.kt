@@ -93,7 +93,6 @@ internal class DashboardActivity : AppCompatActivity() {
 
     private fun manageEdgeToEdge() {
         DKEdgeToEdgeManager.apply {
-            setSystemStatusBarForegroundDarkColor(window)
             addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.button_trip_simulator))
         }
