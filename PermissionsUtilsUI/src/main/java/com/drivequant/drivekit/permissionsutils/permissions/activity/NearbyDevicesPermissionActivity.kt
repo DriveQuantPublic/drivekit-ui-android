@@ -29,6 +29,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
         setToolbar(R.string.dk_perm_utils_app_diag_nearby_title)
         setStyle()
         DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundDarkColor(window)
             addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.scrollview))
         }

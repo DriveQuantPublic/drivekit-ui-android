@@ -15,7 +15,7 @@ import com.drivequant.drivekit.core.DriveKit
 
 object DKEdgeToEdgeManager {
     fun setSystemStatusBarForegroundDarkColor(window: Window) {
-        val color = DriveKit.applicationContext.getColor(R.color.primaryColorDark)
+        val color = DriveKit.applicationContext.getColor(R.color.colorPrimaryDark)
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = color.shouldInvertTextColor(Color.WHITE)

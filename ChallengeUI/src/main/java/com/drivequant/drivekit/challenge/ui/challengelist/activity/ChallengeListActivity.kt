@@ -23,6 +23,7 @@ internal class ChallengeListActivity : AppCompatActivity() {
             .replace(R.id.container, ChallengeListFragment())
             .commit()
         DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundDarkColor(window)
             addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.container))
         }

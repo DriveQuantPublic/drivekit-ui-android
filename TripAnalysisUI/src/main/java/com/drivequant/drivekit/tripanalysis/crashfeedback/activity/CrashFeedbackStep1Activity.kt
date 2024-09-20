@@ -70,7 +70,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         initTimer()
 
         DKEdgeToEdgeManager.apply {
-            addSystemStatusBarTopPadding(findViewById(R.id.toolbar)) // TODO not sure
+            setSystemStatusBarForegroundDarkColor(window)
             addSystemNavigationBarBottomMargin(findViewById(R.id.button_assistance))
         }
     }

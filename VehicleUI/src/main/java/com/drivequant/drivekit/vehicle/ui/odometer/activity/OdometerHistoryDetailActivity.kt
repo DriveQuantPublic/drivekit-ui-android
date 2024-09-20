@@ -61,6 +61,7 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
             .replace(R.id.container, OdometerHistoryDetailFragment.newInstance(vehicleId, historyId)).commit()
 
         DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundDarkColor(window)
             addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.container))
         }

@@ -93,6 +93,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         }
 
         DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundDarkColor(window)
             addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
             addSystemNavigationBarBottomMargin(nextStepButton)
         }

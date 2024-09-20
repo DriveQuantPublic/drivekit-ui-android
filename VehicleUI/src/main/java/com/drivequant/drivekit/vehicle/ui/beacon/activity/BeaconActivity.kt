@@ -137,6 +137,7 @@ class BeaconActivity : AppCompatActivity() {
         DriveKitUI.analyticsListener?.trackScreen(getString(screenNameResId), javaClass.simpleName)
 
         DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundDarkColor(window)
             addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.container))
         }

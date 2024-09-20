@@ -31,6 +31,7 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
         setStyle()
         manageSkipButton()
         DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundDarkColor(window)
             addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.scrollview))
         }
