@@ -253,9 +253,9 @@
         android:id="@+id/button_logout_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dk_margin"
-        android:paddingBottom="@dimen/dk_margin"
+        android:foreground="?android:attr/selectableItemBackground"
         android:gravity="center"
+        android:paddingVertical="@dimen/dk_margin"
         android:text="@string/button_logout"
         android:textColor="@color/criticalColor" />
 </LinearLayout>
