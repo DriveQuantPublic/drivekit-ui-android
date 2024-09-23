@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.ActivityVehicleDetailBinding
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
@@ -57,6 +58,8 @@ class VehicleDetailActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, VehicleDetailFragment.newInstance(viewModel, vehicleId), "vehicleDetailTag")
             .commit()
+
+        DKEdgeToEdgeManager.setSystemStatusBarForegroundColor(window)
     }
 
     private fun hideProgressCircular() {
