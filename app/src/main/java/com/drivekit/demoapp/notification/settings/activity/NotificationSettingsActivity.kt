@@ -44,7 +44,7 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
         setActivityTitle(getString(R.string.notifications_header))
 
         DKEdgeToEdgeManager.apply {
-            setSystemStatusBarForegroundDarkColor(window)
+            setSystemStatusBarForegroundColor(window)
             addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
             addSystemNavigationBarBottomMargin(binding.root.findViewById(R.id.scrollview))
         }

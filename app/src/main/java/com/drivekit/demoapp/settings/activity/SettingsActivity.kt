@@ -67,7 +67,7 @@ internal class SettingsActivity : AppCompatActivity() {
         initConfiguration()
 
         DKEdgeToEdgeManager.apply {
-            setSystemStatusBarForegroundDarkColor(window)
+            setSystemStatusBarForegroundColor(window)
             addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.button_logout_account))
         }

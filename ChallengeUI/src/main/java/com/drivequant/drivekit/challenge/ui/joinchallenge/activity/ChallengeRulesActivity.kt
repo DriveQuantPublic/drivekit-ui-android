@@ -101,7 +101,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             updateProgressVisibility(false)
 
             DKEdgeToEdgeManager.apply {
-                setSystemStatusBarForegroundDarkColor(window)
+                setSystemStatusBarForegroundColor(window)
                 addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
                 addSystemNavigationBarBottomMargin(findViewById(R.id.text_view_accept_rule))
             }

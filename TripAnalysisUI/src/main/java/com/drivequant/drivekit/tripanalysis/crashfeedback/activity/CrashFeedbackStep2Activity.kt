@@ -52,7 +52,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
         initDescription()
 
         DKEdgeToEdgeManager.apply {
-            setSystemStatusBarForegroundDarkColor(window)
+            setSystemStatusBarForegroundColor(window)
             addSystemNavigationBarBottomMargin(findViewById(R.id.button_assistance))
         }
     }

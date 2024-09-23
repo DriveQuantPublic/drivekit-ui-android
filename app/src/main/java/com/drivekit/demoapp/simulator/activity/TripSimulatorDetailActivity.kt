@@ -86,7 +86,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         updateContent()
 
         DKEdgeToEdgeManager.apply {
-            setSystemStatusBarForegroundDarkColor(window)
+            setSystemStatusBarForegroundColor(window)
             addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
             addSystemNavigationBarBottomMargin(startStopButton)
         }

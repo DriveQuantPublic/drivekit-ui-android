@@ -40,7 +40,7 @@ fun @receiver:ColorInt Int.shouldInvertTextColor(@ColorInt otherColor: Int) =
     try {
         ColorUtils.calculateContrast(this, otherColor) < 2.8
     } catch (e: IllegalArgumentException) {
-        // background can not be translucent
+        // otherColor can not be translucent
         false
     }
 

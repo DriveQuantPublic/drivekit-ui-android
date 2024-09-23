@@ -26,7 +26,7 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
         setToolbar(R.string.dk_perm_utils_permissions_phone_settings_background_title)
         setStyle()
         DKEdgeToEdgeManager.apply {
-            setSystemStatusBarForegroundDarkColor(window)
+            setSystemStatusBarForegroundColor(window)
             addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.scrollview))
         }

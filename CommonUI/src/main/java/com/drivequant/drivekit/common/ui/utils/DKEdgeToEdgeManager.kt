@@ -14,7 +14,7 @@ import com.drivequant.drivekit.common.ui.extension.shouldInvertTextColor
 import com.drivequant.drivekit.core.DriveKit
 
 object DKEdgeToEdgeManager {
-    fun setSystemStatusBarForegroundDarkColor(window: Window) {
+    fun setSystemStatusBarForegroundColor(window: Window) {
         val color = DriveKit.applicationContext.getColor(R.color.colorPrimaryDark)
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)

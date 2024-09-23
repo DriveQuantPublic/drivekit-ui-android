@@ -26,7 +26,7 @@ internal class DriverProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_driverprofile)
         setupUi()
         DKEdgeToEdgeManager.apply {
-            setSystemStatusBarForegroundDarkColor(window)
+            setSystemStatusBarForegroundColor(window)
             addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
             addSystemNavigationBarBottomMargin(findViewById(R.id.container))
         }
