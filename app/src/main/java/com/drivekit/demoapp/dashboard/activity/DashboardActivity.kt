@@ -90,8 +90,8 @@ internal class DashboardActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
-            addSystemNavigationBarBottomMargin(findViewById(R.id.button_trip_simulator))
+            addInsetsPaddings(findViewById(R.id.toolbar))
+            addInsetsMargins(findViewById(R.id.button_trip_simulator))
         }
     }
 

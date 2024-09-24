@@ -53,8 +53,8 @@ class LocationPermissionActivity : BasePermissionActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
-            addSystemNavigationBarBottomMargin(findViewById(R.id.scrollview))
+            addInsetsPaddings(findViewById(R.id.toolbar))
+            addInsetsMargins(findViewById(R.id.scrollview))
         }
     }
 

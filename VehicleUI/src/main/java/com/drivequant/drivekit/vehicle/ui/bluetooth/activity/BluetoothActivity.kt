@@ -99,8 +99,8 @@ class BluetoothActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addSystemStatusBarTopPadding(findViewById(R.id.toolbar))
-            addSystemNavigationBarBottomMargin(findViewById(R.id.container))
+            addInsetsPaddings(findViewById(R.id.toolbar))
+            addInsetsMargins(findViewById(R.id.container))
         }
     }
 
