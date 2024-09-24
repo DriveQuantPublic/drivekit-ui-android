@@ -13,13 +13,12 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.shouldInvertTextColor
-import com.drivequant.drivekit.core.DriveKit
 
 object DKEdgeToEdgeManager {
 
     @JvmStatic
     fun setSystemStatusBarForegroundColor(window: Window) {
-        val color = DriveKit.applicationContext.getColor(R.color.colorPrimaryDark)
+        val color = window.context.getColor(R.color.colorPrimaryDark)
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = color.shouldInvertTextColor(Color.WHITE)
