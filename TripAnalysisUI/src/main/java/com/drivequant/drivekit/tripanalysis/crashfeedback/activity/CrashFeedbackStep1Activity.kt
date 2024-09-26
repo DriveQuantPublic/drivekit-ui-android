@@ -71,7 +71,9 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addInsetsMargins(findViewById(R.id.button_assistance))
+            update(binding.root) { view, insets ->
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 
