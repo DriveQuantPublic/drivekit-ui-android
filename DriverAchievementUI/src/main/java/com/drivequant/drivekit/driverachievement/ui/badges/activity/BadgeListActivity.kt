@@ -25,8 +25,10 @@ class BadgeListActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addInsetsPaddings(findViewById(R.id.toolbar))
-            addInsetsMargins(findViewById(R.id.container))
+            update(findViewById(R.id.root)) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 
