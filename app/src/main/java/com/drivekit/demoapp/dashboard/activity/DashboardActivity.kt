@@ -90,8 +90,10 @@ internal class DashboardActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addInsetsPaddings(findViewById(R.id.toolbar))
-            addInsetsMargins(findViewById(R.id.button_trip_simulator))
+            update(findViewById(com.drivequant.drivekit.driverachievement.ui.R.id.root)) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.driverachievement.ui.R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 

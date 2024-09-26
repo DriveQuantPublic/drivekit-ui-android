@@ -2,15 +2,11 @@ package com.drivequant.drivekit.common.ui.utils
 
 import android.graphics.Color
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginBottom
-import androidx.core.view.marginTop
-import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.shouldInvertTextColor
@@ -30,13 +26,6 @@ object DKEdgeToEdgeManager {
     }
 
     @JvmStatic
-    fun addSystemNavigationBarBottomMargin(view: View, insets: Insets) {
-        view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-            bottomMargin = insets.bottom
-        }
-    }
-
-    @JvmStatic
     fun addSystemNavigationBarBottomPadding(view: View, insets: Insets) {
         view.updatePadding(bottom = insets.bottom)
     }
@@ -49,22 +38,4 @@ object DKEdgeToEdgeManager {
             WindowInsetsCompat.CONSUMED
         }
     }
-
-
-    // TODO to be removed
-    @JvmStatic
-    fun addInsetsPaddings(view: View, direction: DKEdgeToEdgeDirection = DKEdgeToEdgeDirection.TOP) {
-       // do nothing
-    }
-
-    // TODO to be removed
-    @JvmStatic
-    fun addInsetsMargins(view: View, direction: DKEdgeToEdgeDirection = DKEdgeToEdgeDirection.BOTTOM) {
-        // do nothing
-    }
-}
-
-// TODO to be removed
-enum class DKEdgeToEdgeDirection {
-    TOP, BOTTOM, VERTICAL
 }

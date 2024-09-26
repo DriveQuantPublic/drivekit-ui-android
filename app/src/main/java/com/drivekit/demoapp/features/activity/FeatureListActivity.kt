@@ -43,8 +43,10 @@ internal class FeatureListActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addInsetsPaddings(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
-            addInsetsMargins(featureList)
+            update(findViewById(com.drivequant.drivekit.driverachievement.ui.R.id.root)) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.driverachievement.ui.R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 

@@ -70,8 +70,10 @@ internal class DeleteAccountActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addInsetsPaddings(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
-            addInsetsMargins(deleteButton)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 
