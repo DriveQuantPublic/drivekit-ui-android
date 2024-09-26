@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +27,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
@@ -57,6 +59,7 @@ internal class DashboardActivity : AppCompatActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         DriveKitConfig.setUserOnboarded(this)
@@ -82,6 +85,14 @@ internal class DashboardActivity : AppCompatActivity() {
                     delay(300)
                     startStopTripButton?.showConfirmationDialog()
                 }
+            }
+        }
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(findViewById(com.drivequant.drivekit.driverachievement.ui.R.id.root)) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
             }
         }
     }

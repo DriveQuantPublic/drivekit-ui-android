@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.R
@@ -20,12 +22,20 @@ class FullScreenIntentPermissionActivity : BasePermissionActivity() {
     private lateinit var binding: ActivityFullScreenIntentPermissionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityFullScreenIntentPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setToolbar(R.string.dk_perm_utils_fsi_activity_title)
         setStyle()
         manageSkipButton()
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
+        }
     }
 
     fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {

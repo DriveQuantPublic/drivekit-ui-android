@@ -11,10 +11,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.TruckType
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
@@ -60,6 +62,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_add), javaClass.simpleName)
 
@@ -143,6 +146,14 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             }
         }
         viewModel.computeNextScreen(this, null)
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
+        }
     }
 
     @SuppressLint("MissingSuperCall")

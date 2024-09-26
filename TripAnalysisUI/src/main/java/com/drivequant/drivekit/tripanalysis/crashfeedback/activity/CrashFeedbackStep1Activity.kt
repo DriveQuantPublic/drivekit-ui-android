@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
 import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityCrashFeedbackStep1Binding
@@ -12,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.pixelToSp
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DurationUnit
 import com.drivequant.drivekit.common.ui.utils.FormatType
@@ -34,6 +36,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
     private lateinit var binding: DkLayoutActivityCrashFeedbackStep1Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         binding = DkLayoutActivityCrashFeedbackStep1Binding.inflate(layoutInflater)
@@ -65,6 +68,13 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         initTitle()
         initDescription()
         initTimer()
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(binding.root) { view, insets ->
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
+        }
     }
 
     private fun initTitle() {

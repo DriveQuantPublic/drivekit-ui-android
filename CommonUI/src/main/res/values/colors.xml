@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primaryColor">#0B4D6E</color>
+    <color name="colorPrimaryDark">@color/primaryColor</color>
     <color name="secondaryColor">#77E2B0</color>
     <color name="mainFontColor">#161616</color>
     <color name="complementaryFontColor">#9E9E9E</color>

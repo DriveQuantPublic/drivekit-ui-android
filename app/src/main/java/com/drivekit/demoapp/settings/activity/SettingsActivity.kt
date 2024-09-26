@@ -16,6 +16,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +35,7 @@ import com.drivequant.drivekit.common.ui.extension.normalTextWithColor
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
@@ -53,6 +55,7 @@ internal class SettingsActivity : AppCompatActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -62,6 +65,14 @@ internal class SettingsActivity : AppCompatActivity() {
         setActivityTitle(getString(R.string.parameters_header))
 
         initConfiguration()
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
+        }
     }
 
     override fun onResume() {

@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -21,6 +22,7 @@ import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.TextArg
 import com.drivequant.drivekit.core.DriveKit
@@ -69,6 +71,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_permissions_diagnosis), javaClass.simpleName)
@@ -109,6 +112,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayBatteryOptimizationItem()
         displayBatteryOptimizationSection()
         displayReportSection()
+
+        DKEdgeToEdgeManager.apply {
+            DKEdgeToEdgeManager.apply {
+                setSystemStatusBarForegroundColor(window)
+                update(this@AppDiagnosisActivity.diagnosisRoot) { view, insets ->
+                    addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                    addSystemNavigationBarBottomPadding(view, insets)
+                }
+            }
+        }
     }
 
     private fun setToolbar() {
