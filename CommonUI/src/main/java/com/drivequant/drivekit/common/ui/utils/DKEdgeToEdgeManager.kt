@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,57 +20,51 @@ object DKEdgeToEdgeManager {
     @JvmStatic
     fun setSystemStatusBarForegroundColor(window: Window) {
         val color = window.context.getColor(R.color.colorPrimaryDark)
-
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = color.shouldInvertTextColor(Color.WHITE)
     }
 
     @JvmStatic
-    fun addInsetsPaddings(view: View, direction: DKEdgeToEdgeDirection = DKEdgeToEdgeDirection.TOP) {
-        ViewCompat.setOnApplyWindowInsetsListener(view) { v, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.navigationBars())
-            when (direction) {
-                DKEdgeToEdgeDirection.TOP -> v.updatePadding(top = insets.top)
-                DKEdgeToEdgeDirection.BOTTOM -> v.updatePadding(bottom = insets.bottom)
-                DKEdgeToEdgeDirection.VERTICAL-> v.updatePadding(top = insets.top, bottom = insets.bottom)
-            }
-            WindowInsetsCompat.CONSUMED
+    fun addSystemStatusBarTopPadding(view: View, insets: Insets) {
+        view.updatePadding(top = insets.top)
+    }
+
+    @JvmStatic
+    fun addSystemNavigationBarBottomMargin(view: View, insets: Insets) {
+        view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            bottomMargin = insets.bottom
         }
     }
 
     @JvmStatic
-    fun addInsetsMargins(view: View, direction: DKEdgeToEdgeDirection = DKEdgeToEdgeDirection.BOTTOM) {
-        var isConsumed = false // for some reason, the listener can be triggered multiple times
-        ViewCompat.setOnApplyWindowInsetsListener(view) { v, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.navigationBars())
-            if (!isConsumed) {
-                when (direction) {
-                    DKEdgeToEdgeDirection.TOP -> {
-                        v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                            topMargin = v.marginTop + insets.top
-                        }
-                    }
+    fun addSystemNavigationBarBottomPadding(view: View, insets: Insets) {
+        view.updatePadding(bottom = insets.bottom)
+    }
 
-                    DKEdgeToEdgeDirection.BOTTOM -> {
-                        v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                            bottomMargin = v.marginBottom + insets.bottom
-                        }
-                    }
-
-                    DKEdgeToEdgeDirection.VERTICAL -> {
-                        v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                            topMargin = v.marginTop + insets.top
-                            bottomMargin = v.marginBottom + insets.bottom
-                        }
-                    }
-                }
-            }
-            isConsumed = true
+    @JvmStatic
+    fun update(rootView: View, callback: ((View, Insets) -> Unit)) {
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.statusBars())
+            callback(rootView, insets)
             WindowInsetsCompat.CONSUMED
         }
     }
+
+
+    // TODO to be removed
+    @JvmStatic
+    fun addInsetsPaddings(view: View, direction: DKEdgeToEdgeDirection = DKEdgeToEdgeDirection.TOP) {
+       // do nothing
+    }
+
+    // TODO to be removed
+    @JvmStatic
+    fun addInsetsMargins(view: View, direction: DKEdgeToEdgeDirection = DKEdgeToEdgeDirection.BOTTOM) {
+        // do nothing
+    }
 }
 
+// TODO to be removed
 enum class DKEdgeToEdgeDirection {
     TOP, BOTTOM, VERTICAL
 }
