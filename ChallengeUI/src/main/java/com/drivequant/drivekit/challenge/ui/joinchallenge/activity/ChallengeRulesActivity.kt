@@ -138,6 +138,14 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 }
             }
         }
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
+        }
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
