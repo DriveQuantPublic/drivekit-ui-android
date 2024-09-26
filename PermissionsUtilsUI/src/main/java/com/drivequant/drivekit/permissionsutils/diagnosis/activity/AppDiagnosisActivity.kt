@@ -114,9 +114,13 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayReportSection()
 
         DKEdgeToEdgeManager.apply {
-            setSystemStatusBarForegroundColor(window)
-            addInsetsPaddings(findViewById(R.id.toolbar))
-            addInsetsMargins(findViewById(R.id.scrollview))
+            DKEdgeToEdgeManager.apply {
+                setSystemStatusBarForegroundColor(window)
+                update(this@AppDiagnosisActivity.diagnosisRoot) { view, insets ->
+                    addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                    addSystemNavigationBarBottomPadding(view, insets)
+                }
+            }
         }
     }
 

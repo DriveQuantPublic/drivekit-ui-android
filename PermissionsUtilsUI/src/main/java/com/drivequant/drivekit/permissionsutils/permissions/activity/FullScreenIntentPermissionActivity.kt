@@ -31,8 +31,10 @@ class FullScreenIntentPermissionActivity : BasePermissionActivity() {
         manageSkipButton()
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addInsetsPaddings(findViewById(R.id.toolbar))
-            addInsetsMargins(findViewById(R.id.button_skip))
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 

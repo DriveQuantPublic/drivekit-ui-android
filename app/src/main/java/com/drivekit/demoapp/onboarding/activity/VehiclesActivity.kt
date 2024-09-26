@@ -65,7 +65,7 @@ internal class VehiclesActivity : AppCompatActivity() {
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
             update(binding.root) { view, insets ->
-                addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar), insets)
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
                 addSystemNavigationBarBottomPadding(view, insets)
             }
         }
