@@ -52,8 +52,7 @@ internal class PermissionsActivity : AppCompatActivity() {
             normalText()
         }
 
-        val actionButton = binding.root.findViewById<Button>(R.id.button_action)
-        actionButton.apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.permissions_intro_button)
             setOnClickListener {
                 PermissionsUtilsUI.showPermissionViews(

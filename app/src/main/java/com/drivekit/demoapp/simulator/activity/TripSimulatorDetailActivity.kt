@@ -79,10 +79,8 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
 
         viewModel.registerListener(this@TripSimulatorDetailActivity)
 
-        val startStopButton = binding.root.findViewById<Button>(R.id.button_action)
-
         initContent()
-        startStopSimulation(startStopButton)
+        startStopSimulation()
         updateContent()
 
         DKEdgeToEdgeManager.apply {
@@ -109,15 +107,17 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         binding.simulationRunSdkState.setItemTitle(getString(R.string.trip_simulator_run_sdk_state))
     }
 
-    private fun startStopSimulation(button: Button) {
-        button.setOnClickListener {
-            if (viewModel.isSimulating) {
-                showStopSimulationPopup { updateContent() }
-            } else {
-                viewModel.startSimulation()
-                graphView.clean()
+    private fun startStopSimulation() {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
+            setOnClickListener {
+                if (viewModel.isSimulating) {
+                    showStopSimulationPopup { updateContent() }
+                } else {
+                    viewModel.startSimulation()
+                    graphView.clean()
+                }
+                updateContent()
             }
-            updateContent()
         }
     }
 

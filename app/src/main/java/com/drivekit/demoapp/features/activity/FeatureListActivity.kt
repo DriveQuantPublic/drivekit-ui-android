@@ -35,8 +35,7 @@ internal class FeatureListActivity : AppCompatActivity() {
         }
 
         adapter = FeatureListAdapter(this, viewModel.features)
-        val featureList = findViewById<RecyclerView>(R.id.features_list)
-        featureList.let {
+        findViewById<RecyclerView>(R.id.features_list).let {
             it.layoutManager = LinearLayoutManager(this@FeatureListActivity)
             it.adapter = adapter
         }
@@ -44,7 +43,7 @@ internal class FeatureListActivity : AppCompatActivity() {
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
             update(findViewById(com.drivequant.drivekit.driverachievement.ui.R.id.root)) { view, insets ->
-                addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.driverachievement.ui.R.id.toolbar), insets)
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
                 addSystemNavigationBarBottomPadding(view, insets)
             }
         }

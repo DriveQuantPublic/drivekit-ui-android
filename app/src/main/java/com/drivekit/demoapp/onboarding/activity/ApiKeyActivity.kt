@@ -28,14 +28,14 @@ internal class ApiKeyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySetApiKeyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val actionButton = binding.root.findViewById<Button>(R.id.button_action)
+
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.vehicle.ui.R.id.dk_toolbar))
         setActivityTitle(getString(R.string.welcome_header))
 
         val viewModel = ApiKeyViewModel()
         binding.textViewDescription.text = viewModel.getDescription(this@ApiKeyActivity)
         binding.textViewTitle.setText(viewModel.getTitleResId())
-        actionButton.apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             setText(viewModel.getButtonTextResId())
             setOnClickListener {
                 if (viewModel.isApiKeyValid()) {

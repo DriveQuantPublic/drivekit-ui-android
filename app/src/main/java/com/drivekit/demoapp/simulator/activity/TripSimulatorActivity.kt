@@ -47,8 +47,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         initFilter()
         checkSimulationError()
 
-        val actionButton = binding.root.findViewById<Button>(R.id.button_action)
-        actionButton.apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.trip_simulator_start_button)
             setOnClickListener {
                 when {

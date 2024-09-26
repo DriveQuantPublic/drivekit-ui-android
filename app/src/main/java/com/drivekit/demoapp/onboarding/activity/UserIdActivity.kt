@@ -57,8 +57,8 @@ class UserIdActivity : AppCompatActivity() {
                 openDriveKitUserIdDoc()
             }
         }
-        val actionButton = binding.root.findViewById<Button>(R.id.button_action)
-        actionButton.apply {
+
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             setOnClickListener {
                 validateUserId()

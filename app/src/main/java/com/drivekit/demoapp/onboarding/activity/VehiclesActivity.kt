@@ -48,8 +48,8 @@ internal class VehiclesActivity : AppCompatActivity() {
             text = getString(R.string.vehicle_intro_description)
             normalText()
         }
-        val addVehicleButton = binding.buttonAddVehicle
-        addVehicleButton.apply {
+
+        binding.buttonAddVehicle.apply {
             setOnClickListener {
                 VehiclePickerActivity.launchActivity(
                     this@VehiclesActivity,

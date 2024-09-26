@@ -43,8 +43,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
         setActivityTitle(getString(R.string.delete_account_header))
         checkViewModelInitialization()
 
-        val deleteButton = binding.buttonDeleteAccount
-        deleteButton.apply {
+        binding.buttonDeleteAccount.apply {
             normalText()
             setOnClickListener {
                 displayAccountDeletionConfirmation()
