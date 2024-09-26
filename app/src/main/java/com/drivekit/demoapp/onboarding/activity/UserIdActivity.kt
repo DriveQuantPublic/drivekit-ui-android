@@ -81,8 +81,10 @@ class UserIdActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addInsetsPaddings(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
-            addInsetsMargins(actionButton)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 

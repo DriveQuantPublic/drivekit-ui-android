@@ -61,8 +61,7 @@ internal class UserInfoActivity : AppCompatActivity() {
             openDriveKitUserInfoDoc()
         }
 
-        val nextStepButton = binding.buttonNextStep
-        nextStepButton.setOnClickListener {
+        binding.buttonNextStep.setOnClickListener {
             goToNext()
         }
 
@@ -94,8 +93,10 @@ internal class UserInfoActivity : AppCompatActivity() {
 
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
-            addInsetsPaddings(findViewById(com.drivequant.drivekit.ui.R.id.toolbar))
-            addInsetsMargins(nextStepButton)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 
