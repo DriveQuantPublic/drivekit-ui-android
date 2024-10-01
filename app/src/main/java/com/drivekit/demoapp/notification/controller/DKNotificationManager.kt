@@ -7,7 +7,6 @@ import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.text.TextUtils
 import com.drivekit.demoapp.DriveKitDemoApplication
 import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
@@ -26,15 +25,12 @@ import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEve
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
-import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripListener
-import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
-import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
-import com.drivequant.drivekit.tripanalysis.utils.TripResponseStatus
+import com.drivequant.drivekit.tripanalysis.utils.TripResult
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
@@ -123,8 +119,8 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         manageTripCancelled(DriveKit.applicationContext, cancelTrip)
     }
 
-    override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
-        manageTripFinished(DriveKit.applicationContext, response)
+    override fun tripFinished(result: TripResult) {
+        manageTripFinished(DriveKit.applicationContext, result)
     }
 
     override fun tripSavedForRepost() {
@@ -139,21 +135,21 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         manageDeviceConfigurationEventNotification()
     }
 
-    private fun manageTripFinished(context: Context, response: PostGenericResponse) {
-        when (val tripStatus = DriveKitTripAnalysis.getTripResponseStatus(response)) {
-            is TripResponseStatus.TripValid -> {
-                tripStatus.info.forEach {
+    private fun manageTripFinished(context: Context, tripResult: TripResult) {
+        when (tripResult) {
+            is TripResult.TripValid -> {
+                tripResult.info.forEach {
                     DriveKitLog.i("Application", "Trip response info: ${it.comment}")
                 }
-                if (tripStatus.hasSafetyAndEcoDrivingScore) {
-                    manageTripFinishedAndValid(context, response)
+                if (tripResult.hasSafetyAndEcoDrivingScore) {
+                    manageTripFinishedAndValid(context, tripResult)
                 } else {
-                    sendTripTooShortNotification(context, response)
+                    sendTripTooShortNotification(context, tripResult)
                 }
             }
-            is TripResponseStatus.TripError -> {
-                DriveKitLog.i("Application", "Trip response error: ${tripStatus.tripResponseError.name}")
-                sendTripErrorNotification(context, response, tripStatus)
+            is TripResult.TripError -> {
+                DriveKitLog.i("Application", "Trip response error: ${tripResult.tripResponseError.name}")
+                sendTripErrorNotification(context, tripResult)
             }
         }
     }
@@ -183,9 +179,8 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         }
     }
 
-    private fun manageTripFinishedAndValid(context: Context, response: PostGenericResponse) {
-        val dkTrip = DbTripAccess.findTrip(response.itinId).executeOneTrip()?.toTrip()
-        dkTrip?.let {
+    private fun manageTripFinishedAndValid(context: Context, tripResult: TripResult.TripValid) {
+        tripResult.getTrip()?.let {
             val contentIntent = buildTripFinishedContentIntent(context, it.transportationMode, it.tripAdvices, it.itinId)
             if (it.transportationMode.isAlternative() && it.transportationMode.isAlternativeNotificationManaged()) {
                 sendNotification(context, NotificationType.TripEnded(it.transportationMode, it.tripAdvices.size), contentIntent)
@@ -203,15 +198,15 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         }
     }
 
-    private fun sendTripTooShortNotification(context: Context, response: PostGenericResponse) {
-        val contentIntent = buildTripFinishedContentIntent(context, null, null, response.itinId)
+    private fun sendTripTooShortNotification(context: Context, tripResult: TripResult.TripValid) {
+        val contentIntent = buildTripFinishedContentIntent(context, null, null, tripResult.itinId)
         sendNotification(context, NotificationType.TripTooShort, contentIntent)
     }
 
-    private fun sendTripErrorNotification(context: Context, response: PostGenericResponse, error: TripResponseStatus.TripError) {
+    private fun sendTripErrorNotification(context: Context, error: TripResult.TripError) {
         val errorNotification = TripResponseErrorNotification.fromTripResponseError(error.tripResponseError)
         if (errorNotification != null) {
-            val contentIntent = buildTripFinishedContentIntent(context, null, null, response.itinId)
+            val contentIntent = buildTripFinishedContentIntent(context, null, null, null)
             sendNotification(context, NotificationType.TripAnalysisError(errorNotification), contentIntent)
         }
     }
@@ -236,10 +231,10 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         context: Context,
         transportationMode: TransportationMode?,
         tripAdvices: List<TripAdvice>?,
-        itinId: String
+        itinId: String?
     ): PendingIntent? {
         val intent = Intent(context, DashboardActivity::class.java)
-        if (!TextUtils.isEmpty(itinId)) {
+        if (!itinId.isNullOrEmpty()) {
             val hasTripAdvices = !tripAdvices.isNullOrEmpty()
             intent.putExtra(TRIP_DETAIL_NOTIFICATION_KEY, true)
             intent.putExtra(TripDetailActivity.ITINID_EXTRA, itinId)
