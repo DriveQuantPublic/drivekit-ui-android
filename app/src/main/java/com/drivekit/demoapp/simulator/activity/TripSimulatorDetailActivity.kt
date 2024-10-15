@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.component.ChartEntry
@@ -16,11 +17,11 @@ import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModelList
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorDetailBinding
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 
 internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailViewModelListener {
@@ -48,6 +49,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityTripSimulatorDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -80,6 +82,14 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         initContent()
         startStopSimulation()
         updateContent()
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
+        }
     }
 
     private fun initContent() {

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -15,6 +16,7 @@ import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
@@ -54,6 +56,7 @@ class BeaconDetailActivity : AppCompatActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_beacon_info), javaClass.simpleName)
 
@@ -101,6 +104,14 @@ class BeaconDetailActivity : AppCompatActivity() {
             )
             .replace(R.id.container, BeaconDetailFragment.newInstance(viewModel))
             .commit()
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(findViewById(R.id.root)) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

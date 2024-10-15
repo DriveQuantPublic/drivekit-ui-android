@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.manager.SyncStatus
@@ -18,6 +19,7 @@ import com.drivekit.drivekitdemoapp.databinding.ActivitySetUserIdBinding
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.networking.RequestError
 
 class UserIdActivity : AppCompatActivity() {
@@ -32,6 +34,7 @@ class UserIdActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivitySetUserIdBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -54,6 +57,7 @@ class UserIdActivity : AppCompatActivity() {
                 openDriveKitUserIdDoc()
             }
         }
+
         binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             setOnClickListener {
@@ -72,6 +76,14 @@ class UserIdActivity : AppCompatActivity() {
         viewModel.syncUserInfo.observe(this) {
             if (it) {
                 UserInfoActivity.launchActivity(this@UserIdActivity)
+            }
+        }
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(com.drivequant.drivekit.ui.R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
             }
         }
     }

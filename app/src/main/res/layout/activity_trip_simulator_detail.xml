@@ -6,7 +6,9 @@
     android:orientation="vertical"
     tools:context="com.drivekit.demoapp.simulator.activity.TripSimulatorDetailActivity">
 
-    <include layout="@layout/dk_layout_toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -102,5 +104,5 @@
         layout="@layout/layout_button_primary_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin_double" />
+        android:layout_marginBottom="@dimen/dk_margin" />
 </LinearLayout>

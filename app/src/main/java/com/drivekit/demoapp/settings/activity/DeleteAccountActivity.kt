@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.config.DriveKitConfig
@@ -18,6 +19,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 
 internal class DeleteAccountActivity : AppCompatActivity() {
 
@@ -31,6 +33,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityDeleteAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -62,6 +65,14 @@ internal class DeleteAccountActivity : AppCompatActivity() {
             updateProgressVisibility(false)
             DriveKitConfig.logout(this)
             restartApplication()
+        }
+
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(binding.root) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 

@@ -8,8 +8,6 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.tripanalysis.TripListener
-import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
-import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
@@ -17,6 +15,7 @@ import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.Cras
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
+import com.drivequant.drivekit.tripanalysis.utils.TripResult
 import com.drivequant.drivekit.tripsimulator.DriveKitTripSimulator
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -137,18 +136,23 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     override fun potentialTripStart(startMode: StartMode) {
         // Nothing to do.
     }
+
     override fun tripPoint(tripPoint: TripPoint) {
         // Nothing to do.
     }
+
     override fun tripSavedForRepost() {
         stopSimulation()
     }
+
     override fun tripStarted(startMode: StartMode) {
         // Nothing to do.
     }
-    override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
+
+    override fun tripFinished(result: TripResult) {
         stopSimulation()
     }
+
     override fun sdkStateChanged(state: State) {
         updateStoppingTime(state)
         updateNeeded()
