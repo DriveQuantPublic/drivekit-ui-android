@@ -136,7 +136,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
             update(binding.root) { view, insets ->
-                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbarContainer), insets)
                 addSystemNavigationBarBottomPadding(view, insets)
             }
         }
