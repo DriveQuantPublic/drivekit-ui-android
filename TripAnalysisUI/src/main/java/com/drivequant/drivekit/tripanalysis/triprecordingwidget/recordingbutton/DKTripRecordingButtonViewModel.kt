@@ -61,7 +61,7 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
 
     init {
         if (DriveKitTripAnalysis.isTripRunning()) {
-            DriveKitTripAnalysis.getLastTripPoint()?.let {
+            DriveKitTripAnalysis.getLastTripPointOfCurrentTrip()?.let {
                 tripPoint(it)
             } ?: DriveKitTripAnalysis.getCurrentTripStartDate()?.let {
                 synchronized(this.lock) {
