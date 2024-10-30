@@ -226,6 +226,7 @@ internal object DriveKitConfig {
             notification.cancelIconId = R.drawable.ic_notification
         }
         notification.channelId = DKNotificationChannel.TRIP_STARTED.getChannelId()
+        notification.channelName = notification.title
 
         val intent = Intent(context, DashboardActivity::class.java)
         DKNotificationManager.configureTripAnalysisNotificationIntent(intent)
