@@ -76,7 +76,7 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
                 redirectTripStartedSettings(context)
             }
         }
-        configureSwitchSettings(binding.notificationTripCancelled, DKNotificationChannel.TRIP_CANCELLED)
+        configureSwitchSettings(binding.notificationTripCanceled, DKNotificationChannel.TRIP_CANCELED)
         configureSwitchSettings(binding.notificationTripFinished, DKNotificationChannel.TRIP_ENDED)
     }
 

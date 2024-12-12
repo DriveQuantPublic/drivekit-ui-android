@@ -18,7 +18,7 @@ internal sealed class NotificationType {
         val advices: Int,
         val additionalBody: String? = null
     ) : NotificationType()
-    data class TripCancelled(val reason: TripCancellationReason) : NotificationType()
+    data class TripCanceled(val reason: TripCancelationReason) : NotificationType()
     data class TripAnalysisError(val errorNotification: TripResponseErrorNotification) : NotificationType()
     object NoNetwork : NotificationType()
     object TripTooShort : NotificationType()
@@ -27,12 +27,12 @@ internal sealed class NotificationType {
 
     fun getChannel() = when (this) {
         is TripAnalysisError -> this.errorNotification.getNotificationChannel()
-        is TripCancelled -> DKNotificationChannel.TRIP_CANCELLED
+        is TripCanceled -> DKNotificationChannel.TRIP_CANCELED
         is TripEnded -> {
             if (!transportationMode.isAlternative() || (transportationMode.isAlternativeNotificationManaged() && DriverDataUI.enableAlternativeTrips)) {
                 DKNotificationChannel.TRIP_ENDED
             } else {
-                DKNotificationChannel.TRIP_CANCELLED
+                DKNotificationChannel.TRIP_CANCELED
             }
         }
         is TripTooShort -> DKNotificationChannel.TRIP_ENDED
@@ -42,11 +42,11 @@ internal sealed class NotificationType {
 
     fun getNotificationId(): Int = when (this) {
         is TripAnalysisError -> this.errorNotification.getNotificationId()
-        is TripCancelled -> when (this.reason) {
-            TripCancellationReason.NO_BEACON -> 252
-            TripCancellationReason.NO_BLUETOOTH_DEVICE -> 253
-            TripCancellationReason.HIGH_SPEED -> 250
-            TripCancellationReason.NO_GPS_POINT -> 251
+        is TripCanceled -> when (this.reason) {
+            TripCancelationReason.NO_BEACON -> 252
+            TripCancelationReason.NO_BLUETOOTH_DEVICE -> 253
+            TripCancelationReason.HIGH_SPEED -> 250
+            TripCancelationReason.NO_GPS_POINT -> 251
         }
         is TripEnded -> {
             when (transportationMode) {
@@ -74,11 +74,11 @@ internal sealed class NotificationType {
 
     private fun getTitleResId() = when (this) {
         is TripAnalysisError -> R.string.app_name
-        is TripCancelled -> when (this.reason) {
-            TripCancellationReason.NO_BEACON,
-            TripCancellationReason.NO_BLUETOOTH_DEVICE,
-            TripCancellationReason.HIGH_SPEED -> R.string.notif_trip_cancelled_title
-            TripCancellationReason.NO_GPS_POINT -> R.string.notif_trip_cancelled_no_gps_data_title
+        is TripCanceled -> when (this.reason) {
+            TripCancelationReason.NO_BEACON,
+            TripCancelationReason.NO_BLUETOOTH_DEVICE,
+            TripCancelationReason.HIGH_SPEED -> R.string.notif_trip_cancelled_title
+            TripCancelationReason.NO_GPS_POINT -> R.string.notif_trip_cancelled_no_gps_data_title
         }
         is TripEnded -> R.string.notif_trip_finished_title
         is TripTooShort -> R.string.notif_trip_too_short_title
@@ -88,11 +88,11 @@ internal sealed class NotificationType {
 
     private fun getDescription(context: Context, additionalBody: String?): String = when (this) {
         is TripAnalysisError -> context.getString(this.errorNotification.descriptionKey)
-        is TripCancelled -> when (this.reason) {
-            TripCancellationReason.NO_BEACON -> R.string.notif_trip_cancelled_no_beacon
-            TripCancellationReason.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_cancelled_no_bluetooth_device
-            TripCancellationReason.HIGH_SPEED -> R.string.notif_trip_cancelled_highspeed
-            TripCancellationReason.NO_GPS_POINT -> R.string.notif_trip_cancelled_no_gps_data
+        is TripCanceled -> when (this.reason) {
+            TripCancelationReason.NO_BEACON -> R.string.notif_trip_cancelled_no_beacon
+            TripCancelationReason.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_cancelled_no_bluetooth_device
+            TripCancelationReason.HIGH_SPEED -> R.string.notif_trip_cancelled_highspeed
+            TripCancelationReason.NO_GPS_POINT -> R.string.notif_trip_cancelled_no_gps_data
         }.let {
             context.getString(it)
         }

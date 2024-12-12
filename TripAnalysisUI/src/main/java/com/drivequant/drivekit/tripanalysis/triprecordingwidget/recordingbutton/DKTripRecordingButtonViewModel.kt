@@ -220,18 +220,6 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         }
     }
 
-    override fun tripCancelled(cancelTrip: CancelTrip) {
-        // Nothing to do.
-    }
-
-    override fun tripSavedForRepost() {
-        // Nothing to do.
-    }
-
-    override fun tripStarted(startMode: StartMode) {
-        // Nothing to do.
-    }
-
     @Suppress("UNCHECKED_CAST")
     class DKTripRecordingButtonViewModelFactory(private val tripRecordingUserMode: DKTripRecordingUserMode) :
         ViewModelProvider.NewInstanceFactory() {

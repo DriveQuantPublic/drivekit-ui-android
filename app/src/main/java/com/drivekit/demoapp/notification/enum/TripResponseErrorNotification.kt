@@ -65,7 +65,7 @@ internal enum class TripResponseErrorNotification(@StringRes val descriptionKey:
             ACCOUNT_LIMIT_REACHED -> DKNotificationChannel.TRIP_ENDED
 
             MISSING_BEACON,
-            INVALID_BEACON -> DKNotificationChannel.TRIP_CANCELLED
+            INVALID_BEACON -> DKNotificationChannel.TRIP_CANCELED
         }
 
     fun getNotificationId() =

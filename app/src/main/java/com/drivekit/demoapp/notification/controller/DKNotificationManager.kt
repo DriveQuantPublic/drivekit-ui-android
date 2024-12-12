@@ -12,7 +12,7 @@ import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
-import com.drivekit.demoapp.notification.enum.TripCancellationReason
+import com.drivekit.demoapp.notification.enum.TripCancelationReason
 import com.drivekit.demoapp.notification.enum.TripResponseErrorNotification
 import com.drivekit.demoapp.utils.WorkerManager
 import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
@@ -28,8 +28,8 @@ import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripListener
-import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
-import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
+import com.drivequant.drivekit.tripanalysis.model.triplistener.DKTripCancelationReason
+import com.drivequant.drivekit.tripanalysis.model.triplistener.DKTripRecordingCanceledState
 import com.drivequant.drivekit.tripanalysis.utils.TripResult
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
@@ -115,8 +115,8 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         notificationType.cancel(context)
     }
 
-    override fun tripCancelled(cancelTrip: CancelTrip) {
-        manageTripCancelled(DriveKit.applicationContext, cancelTrip)
+    override fun tripRecordingCanceled(state: DKTripRecordingCanceledState) {
+        manageTripCanceled(DriveKit.applicationContext, state.cancelationReason)
     }
 
     override fun tripFinished(result: TripResult) {
@@ -125,10 +125,6 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
 
     override fun tripSavedForRepost() {
         sendNotification(DriveKit.applicationContext, NotificationType.NoNetwork)
-    }
-
-    override fun tripStarted(startMode: StartMode) {
-        // Nothing to do.
     }
 
     override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
@@ -154,28 +150,29 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         }
     }
 
-    private fun manageTripCancelled(context: Context, status: CancelTrip) {
-        when (status) {
-            CancelTrip.NO_GPS_DATA -> R.string.notif_trip_cancelled_no_gps_data
-            CancelTrip.NO_BEACON -> R.string.notif_trip_cancelled_no_beacon
-            CancelTrip.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_cancelled_no_bluetooth_device
+    private fun manageTripCanceled(context: Context, cancelationReason: DKTripCancelationReason) {
+        when (cancelationReason) {
+            DKTripCancelationReason.NO_LOCATION_DATA -> R.string.notif_trip_cancelled_no_gps_data
+            DKTripCancelationReason.NO_BEACON -> R.string.notif_trip_cancelled_no_beacon
+            DKTripCancelationReason.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_cancelled_no_bluetooth_device
             else -> R.string.trip_cancelled_reset
         }.let { messageResId ->
             DriveKitDemoApplication.showNotification(context, context.getString(messageResId))
         }
-        when (status) {
-            CancelTrip.HIGHSPEED -> TripCancellationReason.HIGH_SPEED
-            CancelTrip.NO_BEACON -> TripCancellationReason.NO_BEACON
-            CancelTrip.NO_GPS_DATA -> TripCancellationReason.NO_GPS_POINT
-            CancelTrip.USER,
-            CancelTrip.NO_SPEED,
-            CancelTrip.MISSING_CONFIGURATION,
-            CancelTrip.RESET,
-            CancelTrip.BEACON_NO_SPEED,
-            CancelTrip.BLUETOOTH_DEVICE_NO_SPEED -> null
-            CancelTrip.NO_BLUETOOTH_DEVICE -> TripCancellationReason.NO_BLUETOOTH_DEVICE
+        when (cancelationReason) {
+            DKTripCancelationReason.HIGH_SPEED -> TripCancelationReason.HIGH_SPEED
+            DKTripCancelationReason.NO_BEACON -> TripCancelationReason.NO_BEACON
+            DKTripCancelationReason.NO_LOCATION_DATA -> TripCancelationReason.NO_GPS_POINT
+            DKTripCancelationReason.USER,
+            DKTripCancelationReason.NO_SPEED,
+            DKTripCancelationReason.MISSING_CONFIGURATION,
+            DKTripCancelationReason.RESET,
+            DKTripCancelationReason.BEACON_NO_SPEED,
+            DKTripCancelationReason.BLUETOOTH_DEVICE_NO_SPEED -> null
+            DKTripCancelationReason.NO_BLUETOOTH_DEVICE -> TripCancelationReason.NO_BLUETOOTH_DEVICE
+            DKTripCancelationReason.APP_KILLED -> null
         }?.let {
-            sendNotification(context, NotificationType.TripCancelled(it))
+            sendNotification(context, NotificationType.TripCanceled(it))
         }
     }
 

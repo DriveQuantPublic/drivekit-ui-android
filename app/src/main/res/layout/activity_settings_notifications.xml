@@ -45,7 +45,7 @@
                 android:background="@color/neutralColor" />
 
             <com.drivequant.drivekit.common.ui.component.SwitchSettings
-                android:id="@+id/notification_trip_cancelled"
+                android:id="@+id/notification_trip_canceled"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

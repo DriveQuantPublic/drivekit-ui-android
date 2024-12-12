@@ -10,6 +10,7 @@ import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
+import com.drivequant.drivekit.tripanalysis.model.triplistener.DKTripRecordingCanceledState
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
@@ -119,34 +120,8 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
         listener?.updateNeeded(updatedValue, timestamp)
     }
 
-    override fun beaconDetected() {
-        // Nothing to do.
-    }
-    override fun crashDetected(crashInfo: DKCrashInfo) {
-        // Nothing to do.
-    }
-    override fun crashFeedbackSent(
-        crashInfo: DKCrashInfo,
-        feedbackType: CrashFeedbackType,
-        severity: CrashFeedbackSeverity
-    ) {
-        // Nothing to do.
-    }
-
-    override fun potentialTripStart(startMode: StartMode) {
-        // Nothing to do.
-    }
-
-    override fun tripPoint(tripPoint: TripPoint) {
-        // Nothing to do.
-    }
-
     override fun tripSavedForRepost() {
         stopSimulation()
-    }
-
-    override fun tripStarted(startMode: StartMode) {
-        // Nothing to do.
     }
 
     override fun tripFinished(result: TripResult) {
@@ -158,8 +133,8 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
         updateNeeded()
     }
 
-    override fun tripCancelled(cancelTrip: CancelTrip) {
-        // Nothing to do.
+    override fun tripRecordingCanceled(state: DKTripRecordingCanceledState) {
+        stopSimulation()
     }
 
     override fun onLocationSent(location: Location, durationSinceStart: Long) {
