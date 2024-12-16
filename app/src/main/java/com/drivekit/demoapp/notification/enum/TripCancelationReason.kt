@@ -1,6 +1,6 @@
 package com.drivekit.demoapp.notification.enum
 
-internal enum class TripCancellationReason {
+internal enum class TripCancelationReason {
     NO_BEACON,
     NO_BLUETOOTH_DEVICE,
     HIGH_SPEED,

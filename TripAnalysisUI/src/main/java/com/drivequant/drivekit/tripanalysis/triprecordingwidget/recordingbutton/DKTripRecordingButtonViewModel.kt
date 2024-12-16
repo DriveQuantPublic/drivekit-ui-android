@@ -14,8 +14,6 @@ import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
-import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
-import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -218,18 +216,6 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
                 }
             }
         }
-    }
-
-    override fun tripCancelled(cancelTrip: CancelTrip) {
-        // Nothing to do.
-    }
-
-    override fun tripSavedForRepost() {
-        // Nothing to do.
-    }
-
-    override fun tripStarted(startMode: StartMode) {
-        // Nothing to do.
     }
 
     @Suppress("UNCHECKED_CAST")
