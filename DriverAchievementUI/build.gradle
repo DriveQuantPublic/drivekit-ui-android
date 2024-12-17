@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
 }
 
 project.ext {
@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation "androidx.startup:startup-runtime:$startup_runtime"
+    implementation libs.androidx.startup.runtime
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
