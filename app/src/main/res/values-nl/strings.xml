@@ -28,6 +28,7 @@
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
    <string name="drivekit_doc_android_driver_data">https://docs.drivequant.com/driver-data/user-interface/android/get-started</string>
    <string name="drivekit_doc_android_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-android</string>
+   <string name="drivekit_doc_android_location_sharing">https://docs.drivequant.com/trip-analysis/user-interface/android/get-started#trip-sharing</string>
    <string name="drivekit_doc_android_odometer">https://docs.drivequant.com/vehicle/user-interface/android/main-configurations#vehicle-mileage-tracking-and-editing</string>
    <string name="drivekit_doc_android_permissions_management">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
    <string name="drivekit_doc_android_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
@@ -46,6 +47,7 @@
    <string name="drivekit_doc_ios_diag">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#sdk-diagnosis</string>
    <string name="drivekit_doc_ios_driver_data">https://docs.drivequant.com/driver-data/user-interface/ios/get-started</string>
    <string name="drivekit_doc_ios_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-ios</string>
+   <string name="drivekit_doc_ios_location_sharing">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#trip-sharing</string>
    <string name="drivekit_doc_ios_odometer">https://docs.drivequant.com/vehicle/user-interface/ios/main-configurations#vehicle-mileage-tracking-and-editing</string>
    <string name="drivekit_doc_ios_permissions_management">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
    <string name="drivekit_doc_ios_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
@@ -65,6 +67,8 @@
    <string name="feature_challenges_title">Challenge | Lijst en resultaten</string>
    <string name="feature_list">Lijst met functies</string>
    <string name="feature_list_description">DriveKit is een veelzijdige SDK die functies bevat voor het analyseren van telefoonsensoren, het weergeven van rijgegevens, coaching van bestuurders en gamification. Ontdek ze voordat je ze in je app integreert 🚀.</string>
+   <string name="feature_location_sharing_description">Het onderdeel Ritanalyse bevat een functie om familie en vrienden tijdens het rijden gerust te stellen, dankzij een deelbare link die de positie van het voertuig tijdens het rijden weergeeft.</string>
+   <string name="feature_location_sharing_title">Trip Analysis | Locatie delen</string>
    <string name="feature_permission_onboarding_ok">Rechten verzamelen is niet beschikbaar omdat je alle rechten al hebt toegekend.</string>
    <string name="feature_permission_utils_description">De component Permissions Utils bevat een diagnosefunctie om de status van sensoren en permissies te controleren. Deze component waarschuwt de gebruiker en begeleidt hem bij het instellen van zijn telefoon.</string>
    <string name="feature_permission_utils_onboarding_description">De component Permissions Utils bevat schermen die de toestemmingsaanvragen weergeven die nodig zijn voor de werking van de automatische modus en gegevensanalyse. We nodigen je uit om deze component te gebruiken of te repliceren in je app.</string>

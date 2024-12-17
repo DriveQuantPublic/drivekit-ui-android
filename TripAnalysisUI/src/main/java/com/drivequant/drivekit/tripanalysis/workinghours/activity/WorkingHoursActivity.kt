@@ -27,7 +27,7 @@ import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursDayCar
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
 import com.drivequant.drivekit.tripanalysis.workinghours.viewmodel.WorkingHoursViewModel
 
-class WorkingHoursActivity : AppCompatActivity() {
+internal class WorkingHoursActivity : AppCompatActivity() {
 
     private lateinit var viewModel: WorkingHoursViewModel
     private lateinit var insideHours: WorkingHoursSpinnerSettings
