@@ -31,7 +31,7 @@ internal enum class FeatureType {
         DRIVERACHIEVEMENT_BADGES -> R.drawable.ic_feature_driverachievement_badges
         DRIVERACHIEVEMENT_STREAKS -> R.drawable.ic_feature_driverachievement_streaks
         TRIPANALYSIS_WORKINGHOURS -> R.drawable.ic_feature_tripanalysis_workinghours
-        TRIPANALYSIS_TRIPSHARING -> R.drawable.ic_feature_tripanalysis_workinghours //TODO: Use right image.
+        TRIPANALYSIS_TRIPSHARING -> R.drawable.ic_feature_tripanalysis_location_sharing
         DRIVERDATA_TIMELINE -> R.drawable.ic_feature_driverdata_timeline
         DRIVERDATA_MYSYNTHESIS -> R.drawable.ic_feature_my_driving
         DRIVERDATA_DRIVERPROFILE -> R.drawable.ic_feature_profile
