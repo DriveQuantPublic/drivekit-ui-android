@@ -3,6 +3,10 @@ buildscript {
     ext {
         drivekitui_version = version
         drivekit_version = '2.9.0'
+        kotlinCompilerExtension_version = '1.4.8'
+    }
+    project.ext {
+        testDavid = "drivekit-trip-analysis-ui"
     }
 }
 
