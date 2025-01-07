@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import androidx.annotation.DimenRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -65,12 +65,12 @@ enum class DKStyle {
     }
 
     @Composable
-    fun DKTextStyle(fontFamily: FontFamily = primaryFont): TextStyle {
+    fun dkTextStyle(fontFamily: FontFamily = primaryFont, color: Color): TextStyle {
         return TextStyle(
             fontFamily = fontFamily,
             fontWeight = this.fontWeight(),
             fontSize = dimensionResource(this.dimensionId()).value.sp,
-            color = colorResource(R.color.mainFontColor),
+            color = color,
         )
     }
 }

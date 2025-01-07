@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +34,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drivekit.tripanalysis.ui.R
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
+import com.drivequant.drivekit.common.ui.component.DKText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
@@ -61,14 +64,18 @@ internal class TripSharingActivity : ComponentActivity() {
                 backgroundColor = Color(DKColors.backgroundViewColor),
             ) { innerPadding ->
                 Column(
-                    modifier = Modifier.padding(innerPadding).padding(16.dp),
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(dimensionResource(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_medium)),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(
                         painterResource(R.drawable.dk_trip_analysis_location_sharing_inactive),
                         contentDescription = "Illustration",
-                        Modifier.fillMaxWidth(0.6f).aspectRatio(1.0f)
+                        Modifier
+                            .fillMaxWidth(0.6f)
+                            .aspectRatio(1.0f)
                     )
                     DKText(
                         text = stringResource(R.string.dk_location_sharing_inactive_description_1),
@@ -82,6 +89,8 @@ internal class TripSharingActivity : ComponentActivity() {
                         text = stringResource(R.string.dk_location_sharing_inactive_description_3),
                         style = DKStyle.NORMAL_TEXT,
                     )
+                    Spacer(Modifier.weight(1f))
+                    DKPrimaryButton(stringResource(R.string.dk_location_sharing_inactive_enable)) { }
                 }
             }
         }
@@ -106,15 +115,6 @@ internal class TripSharingActivity : ComponentActivity() {
             },
             backgroundColor = Color(DKColors.primaryColor),
             contentColor = Color(DKColors.fontColorOnPrimaryColor),
-        )
-    }
-
-    @Composable
-    fun DKText(text: String, style: DKStyle, modifier: Modifier = Modifier) {
-        Text(
-            text = text,
-            modifier = modifier,
-            style = style.DKTextStyle(),
         )
     }
 }
