@@ -176,7 +176,7 @@ class ChallengeParticipationFragment : Fragment() {
             binding.timerContainer.visibility = View.VISIBLE
             binding.challengeStart.apply {
                 setText(R.string.dk_challenge_start)
-                typeface = DriveKitUI.primaryFont(context)
+                setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             }
         }
     }

@@ -53,6 +53,6 @@ fun DKSecondaryButton(text: String, onClick: () -> Unit) {
         border = BorderStroke(1.75.dp, colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)),
         onClick = { onClick() }
     ) {
-        DKText(text.uppercase(), DKStyle.NORMAL_TEXT, color = Color.Unspecified)
+        DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
     }
 }

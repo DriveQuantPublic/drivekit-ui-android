@@ -25,7 +25,10 @@ open class DKButtonBase : androidx.appcompat.widget.AppCompatButton {
 
     init {
         this.background = shape
-        this.typeface = DriveKitUI.primaryFont(context)
+    }
+
+    fun updateTypeface() {
+        setTypeface(DriveKitUI.primaryFont(context), typeface.style)
     }
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
@@ -34,7 +37,7 @@ open class DKButtonBase : androidx.appcompat.widget.AppCompatButton {
         val corners = floatArrayOf(radius, radius, radius, radius, radius, radius, radius, radius)
 
         this.rect.set(0f, 0f, width.toFloat(), height.toFloat())
-        
+
         this.path.reset()
         this.path.addRoundRect(this.rect, corners, Path.Direction.CW)
 

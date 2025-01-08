@@ -82,7 +82,7 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
     }
 
     private fun setStyle() {
-        titleTextView.typeface = DriveKitUI.primaryFont(context)
+        titleTextView.setTypeface(DriveKitUI.primaryFont(context), titleTextView.typeface.style)
         dateTextView.smallText()
         conditionsTextView.normalText()
         rulesTextView.normalText()
