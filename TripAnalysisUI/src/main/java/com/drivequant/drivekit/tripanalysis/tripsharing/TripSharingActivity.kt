@@ -26,7 +26,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -36,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.component.DKText
-import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 
@@ -61,7 +59,7 @@ internal class TripSharingActivity : ComponentActivity() {
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
                 topBar = { AppBar() },
-                backgroundColor = Color(DKColors.backgroundViewColor),
+                backgroundColor = colorResource(com.drivequant.drivekit.common.ui.R.color.backgroundViewColor),
             ) { innerPadding ->
                 Column(
                     modifier = Modifier
@@ -113,8 +111,8 @@ internal class TripSharingActivity : ComponentActivity() {
                     )
                 }
             },
-            backgroundColor = Color(DKColors.primaryColor),
-            contentColor = Color(DKColors.fontColorOnPrimaryColor),
+            backgroundColor = colorResource(com.drivequant.drivekit.common.ui.R.color.primaryColor),
+            contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.fontColorOnPrimaryColor),
         )
     }
 }
