@@ -54,6 +54,7 @@ dependencies {
     implementation libs.androidx.ui.graphics
     implementation libs.androidx.material
     implementation libs.androidx.material.icons
+    implementation libs.androidx.lifecycle.viewmodel.compose
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.tooling.preview
 
