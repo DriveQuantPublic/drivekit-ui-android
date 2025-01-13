@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -29,6 +30,10 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,16 +44,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.component.DKCriticalActionButton
 import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.component.DKText
+import com.drivequant.drivekit.common.ui.component.DKTextButton
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
-import java.util.Date
+import com.drivequant.drivekit.common.ui.utils.DurationUnit
 
 internal class TripSharingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +82,12 @@ internal class TripSharingActivity : ComponentActivity() {
         shareLink: () -> Unit = { },
         stopSharing: () -> Unit = { },
     ) {
+        var showRevokeConfirmationDialog by remember { mutableStateOf(false) }
+
+        if (showRevokeConfirmationDialog) {
+            RevokeLinkConfirmationDialog(stopSharing) { showRevokeConfirmationDialog = false }
+        }
+
         Box(
             modifier = Modifier
                 .background(colorResource(com.drivequant.drivekit.common.ui.R.color.colorPrimaryDark))
@@ -105,7 +116,9 @@ internal class TripSharingActivity : ComponentActivity() {
                         cancelSetupTripSharing = cancelSetupTripSharing,
                         activateTripSharing = activateTripSharing,
                         shareLink = shareLink,
-                        stopSharing = stopSharing,
+                        stopSharing = {
+                            showRevokeConfirmationDialog = true
+                        },
                     )
                 }
                 if (uiState.isLoading) {
@@ -147,6 +160,7 @@ internal class TripSharingActivity : ComponentActivity() {
     @Composable
     private fun Description(uiState: TripSharingUiState) {
         if (uiState.link != null) {
+            val (remainingTime, unit) = uiState.linkDuration ?: Pair(0, null)
             DKText(
                 text = stringResource(R.string.dk_location_sharing_active_status),
                 style = DKStyle.NORMAL_TEXT,
@@ -158,7 +172,27 @@ internal class TripSharingActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
             )
             DKText(
-                text = "TODO",
+                text = when (unit) {
+                    DurationUnit.MINUTE -> if (remainingTime > 1) {
+                        stringResource(R.string.dk_location_sharing_active_info_minutes, remainingTime)
+                    } else {
+                        stringResource(R.string.dk_location_sharing_active_info_minute)
+                    }
+
+                    DurationUnit.HOUR -> if (remainingTime > 1) {
+                        stringResource(R.string.dk_location_sharing_active_info_hours, remainingTime)
+                    } else {
+                        stringResource(R.string.dk_location_sharing_active_info_hour)
+                    }
+
+                    DurationUnit.DAY -> if (remainingTime > 1) {
+                        stringResource(R.string.dk_location_sharing_active_info_days, remainingTime)
+                    } else {
+                        stringResource(R.string.dk_location_sharing_active_info_day)
+                    }
+
+                    else -> ""
+                },
                 style = DKStyle.NORMAL_TEXT,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -218,6 +252,30 @@ internal class TripSharingActivity : ComponentActivity() {
     }
 
     @Composable
+    private fun RevokeLinkConfirmationDialog(confirmAction: () -> Unit, onDismiss: () -> Unit) {
+        AlertDialog(
+            text = {
+                Text(
+                    text = stringResource(R.string.dk_location_sharing_active_disable_confirmation)
+                )
+            },
+            onDismissRequest = onDismiss,
+            confirmButton = {
+                DKTextButton(stringResource(R.string.dk_location_sharing_active_disable)) {
+                    onDismiss()
+                    confirmAction()
+                }
+            },
+            dismissButton = {
+                DKTextButton(
+                    stringResource(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel),
+                    onClick = onDismiss
+                )
+            },
+        )
+    }
+
+    @Composable
     private fun AppBar() {
         TopAppBar(
             title = {
@@ -244,37 +302,4 @@ internal class TripSharingActivity : ComponentActivity() {
     private fun TripSharingPreview(@PreviewParameter(TripSharingPreviewParameterProvider::class) state: TripSharingUiState) {
         TripSharing(state)
     }
-}
-
-private class TripSharingPreviewParameterProvider : PreviewParameterProvider<TripSharingUiState> {
-    override val values = sequenceOf(
-        TripSharingUiState(
-            isLoading = true,
-            isCreatingLink = false,
-            link = null,
-            endDate = null,
-            errorMessage = null
-        ),
-        TripSharingUiState(
-            isLoading = false,
-            isCreatingLink = false,
-            link = null,
-            endDate = null,
-            errorMessage = null
-        ),
-        TripSharingUiState(
-            isLoading = false,
-            isCreatingLink = true,
-            link = null,
-            endDate = null,
-            errorMessage = null
-        ),
-        TripSharingUiState(
-            isLoading = false,
-            isCreatingLink = false,
-            link = "test",
-            endDate = Date(System.currentTimeMillis() + 3600000),
-            errorMessage = null
-        )
-    )
 }

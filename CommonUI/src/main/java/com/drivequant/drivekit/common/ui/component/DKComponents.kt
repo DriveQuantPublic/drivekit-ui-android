@@ -69,6 +69,20 @@ fun DKSecondaryButton(text: String, onClick: () -> Unit) {
 }
 
 @Composable
+fun DKTextButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    TextButton(
+        modifier = modifier,
+        colors = buttonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)
+        ),
+        onClick = onClick
+    ) {
+        DKText(text.uppercase(), DKStyle.NORMAL_TEXT, color = Color.Unspecified)
+    }
+}
+
+@Composable
 fun DKCriticalActionButton(text: String, onClick: () -> Unit) {
     TextButton(
         modifier = Modifier.defaultMinSize(minHeight = 48.dp).fillMaxWidth(),
