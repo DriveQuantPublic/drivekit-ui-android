@@ -11,28 +11,35 @@ internal class TripSharingPreviewParameterProvider :
             isCreatingLink = false,
             link = null,
             linkDuration = null,
-            errorMessage = null
+            hasError = false
         ),
         TripSharingUiState(
             isLoading = false,
             isCreatingLink = false,
             link = null,
             linkDuration = null,
-            errorMessage = null
+            hasError = false
         ),
         TripSharingUiState(
             isLoading = false,
             isCreatingLink = true,
             link = null,
             linkDuration = null,
-            errorMessage = null
+            hasError = false
         ),
         TripSharingUiState(
             isLoading = false,
             isCreatingLink = false,
             link = "test",
             linkDuration = Pair(14, DurationUnit.HOUR),
-            errorMessage = null
+            hasError = false
+        ),
+        TripSharingUiState(
+            isLoading = false,
+            isCreatingLink = true,
+            link = null,
+            linkDuration = null,
+            hasError = true
         )
     )
 }

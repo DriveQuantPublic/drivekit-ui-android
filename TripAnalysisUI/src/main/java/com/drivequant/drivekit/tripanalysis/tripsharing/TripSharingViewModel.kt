@@ -26,9 +26,9 @@ internal class TripSharingViewModel : ViewModel() {
     private fun updateState(isLoading: Boolean, synchronizationType: SynchronizationType) {
         DriveKitTripAnalysis.tripSharing.getLink(synchronizationType = synchronizationType) { status, link ->
             uiState = when (status) {
-                GetTripSharingLinkStatus.SUCCESS, GetTripSharingLinkStatus.FAILED_TO_GET_CACHE_ONLY -> TripSharingUiState(isLoading, false, link?.url, computeLinkDuration(link?.endDate), null)
+                GetTripSharingLinkStatus.SUCCESS, GetTripSharingLinkStatus.FAILED_TO_GET_CACHE_ONLY -> TripSharingUiState(isLoading, false, link?.url, computeLinkDuration(link?.endDate), false)
                 GetTripSharingLinkStatus.NO_ACTIVE_LINK -> uiState.copy(isLoading = isLoading)
-                else -> uiState.copy(isLoading = isLoading, errorMessage = "TODO")
+                else -> uiState.copy(isLoading = isLoading, hasError = true)
             }
         }
     }
@@ -47,8 +47,7 @@ internal class TripSharingViewModel : ViewModel() {
             when (status) {
                 CreateTripSharingLinkStatus.SUCCESS -> uiState = TripSharingUiState(isLoading = false, link = link?.url, linkDuration = computeLinkDuration(link?.endDate))
                 CreateTripSharingLinkStatus.ACTIVE_LINK_ALREADY_EXISTS -> updateState(false, SynchronizationType.DEFAULT)
-                CreateTripSharingLinkStatus.USER_NOT_CONNECTED -> uiState = uiState.copy(errorMessage = "TODO: no connection")
-                else -> uiState = uiState.copy(isLoading = false, errorMessage = "TODO: ERROR")
+                else -> uiState = uiState.copy(isLoading = false, hasError = true)
             }
         }
     }
@@ -58,9 +57,13 @@ internal class TripSharingViewModel : ViewModel() {
         DriveKitTripAnalysis.tripSharing.revokeLink { status ->
             uiState = when (status) {
                 RevokeTripSharingLinkStatus.SUCCESS, RevokeTripSharingLinkStatus.NO_ACTIVE_LINK -> TripSharingUiState(isLoading = false)
-                else -> uiState.copy(isLoading = false, errorMessage = "TODO: ERROR")
+                else -> uiState.copy(isLoading = false, hasError = true)
             }
         }
+    }
+
+    fun didReadError() {
+        uiState = uiState.copy(hasError = false)
     }
 
     private fun computeLinkDuration(endDate: Date?): Pair<Int, DurationUnit>? {

@@ -7,5 +7,5 @@ internal data class TripSharingUiState(
     val isCreatingLink: Boolean = false,
     val link: String? = null,
     val linkDuration: Pair<Int, DurationUnit>? = null,
-    val errorMessage: String? = null
+    val hasError: Boolean = false
 )

@@ -70,6 +70,7 @@ internal class TripSharingActivity : ComponentActivity() {
                 activateTripSharing = { duration -> viewModel.activateTripSharing(duration) },
                 shareLink = { }, //TODO
                 stopSharing = { viewModel.revokeLink() },
+                didReadError = { viewModel.didReadError() }
             )
         }
     }
@@ -82,11 +83,15 @@ internal class TripSharingActivity : ComponentActivity() {
         activateTripSharing: (durationInSeconds: Int) -> Unit = { },
         shareLink: () -> Unit = { },
         stopSharing: () -> Unit = { },
+        didReadError: () -> Unit = { },
     ) {
         var showRevokeConfirmationDialog by remember { mutableStateOf(false) }
 
         if (showRevokeConfirmationDialog) {
             RevokeLinkConfirmationDialog(stopSharing) { showRevokeConfirmationDialog = false }
+        }
+        if (uiState.hasError) {
+            ErrorDialog(didReadError)
         }
 
         Box(
@@ -290,7 +295,23 @@ internal class TripSharingActivity : ComponentActivity() {
     }
 
     @Composable
+    private fun ErrorDialog(onDismiss: () -> Unit) {
+        AlertDialog(
+            text = {
+                Text(stringResource(com.drivequant.drivekit.common.ui.R.string.dk_common_error_message))
+            },
+            onDismissRequest = onDismiss,
+            confirmButton = {
+                DKTextButton(stringResource(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) {
+                    onDismiss()
+                }
+            },
+        )
+    }
+
+    @Composable
     private fun AppBar() {
+        println("----------- AppBar -----------")
         TopAppBar(
             title = {
                 Text(
