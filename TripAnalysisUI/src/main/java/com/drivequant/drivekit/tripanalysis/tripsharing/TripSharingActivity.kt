@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -62,7 +63,7 @@ internal class TripSharingActivity : ComponentActivity() {
         DKEdgeToEdgeManager.setSystemStatusBarForegroundColor(window)
         setContent {
             val viewModel: TripSharingViewModel = viewModel()
-            TripSharing(
+            TripSharingScreen(
                 viewModel.uiState,
                 setupTripSharing = { viewModel.setupTripSharing() },
                 cancelSetupTripSharing = { viewModel.cancelSetupTripSharing() },
@@ -74,7 +75,7 @@ internal class TripSharingActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun TripSharing(
+    private fun TripSharingScreen(
         uiState: TripSharingUiState,
         setupTripSharing: () -> Unit = { },
         cancelSetupTripSharing: () -> Unit = { },
@@ -98,28 +99,30 @@ internal class TripSharingActivity : ComponentActivity() {
                 topBar = { AppBar() },
                 backgroundColor = colorResource(com.drivequant.drivekit.common.ui.R.color.backgroundViewColor),
             ) { innerPadding ->
-                Column(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .padding(16.dp)
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(dimensionResource(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_medium)),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    TripSharingImage(uiState = uiState)
-                    Description(uiState = uiState)
-                    Spacer(Modifier.weight(1f))
-                    Actions(
-                        uiState = uiState,
-                        setupTripSharing = setupTripSharing,
-                        cancelSetupTripSharing = cancelSetupTripSharing,
-                        activateTripSharing = activateTripSharing,
-                        shareLink = shareLink,
-                        stopSharing = {
-                            showRevokeConfirmationDialog = true
-                        },
-                    )
+                AnimateContentIfNeeded(uiState = uiState) { uiState ->
+                    Column(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .padding(16.dp)
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.spacedBy(dimensionResource(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_medium)),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        TripSharingImage(uiState = uiState)
+                        Description(uiState = uiState)
+                        Spacer(Modifier.weight(1f))
+                        Actions(
+                            uiState = uiState,
+                            setupTripSharing = setupTripSharing,
+                            cancelSetupTripSharing = cancelSetupTripSharing,
+                            activateTripSharing = activateTripSharing,
+                            shareLink = shareLink,
+                            stopSharing = {
+                                showRevokeConfirmationDialog = true
+                            },
+                        )
+                    }
                 }
                 if (uiState.isLoading) {
                     Box(
@@ -136,6 +139,17 @@ internal class TripSharingActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun AnimateContentIfNeeded(uiState: TripSharingUiState, content: @Composable (targetState: TripSharingUiState) -> Unit) {
+        if (!uiState.isLoading) {
+            AnimatedContent(targetState = uiState) {
+                content(it)
+            }
+        } else {
+            content(uiState)
         }
     }
 
@@ -300,6 +314,6 @@ internal class TripSharingActivity : ComponentActivity() {
     @Preview(showBackground = true)
     @Composable
     private fun TripSharingPreview(@PreviewParameter(TripSharingPreviewParameterProvider::class) state: TripSharingUiState) {
-        TripSharing(state)
+        TripSharingScreen(state)
     }
 }
