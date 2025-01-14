@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.tripanalysis.tripsharing
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -68,10 +69,25 @@ internal class TripSharingActivity : ComponentActivity() {
                 setupTripSharing = { viewModel.setupTripSharing() },
                 cancelSetupTripSharing = { viewModel.cancelSetupTripSharing() },
                 activateTripSharing = { duration -> viewModel.activateTripSharing(duration) },
-                shareLink = { }, //TODO
+                shareLink = { shareLink(viewModel.uiState.link) },
                 stopSharing = { viewModel.revokeLink() },
-                didReadError = { viewModel.didReadError() }
+                errorShown = { viewModel.errorShown() }
             )
+        }
+    }
+
+    private fun shareLink(url: String?) {
+        if (url != null) {
+            val share = Intent.createChooser(Intent().apply {
+                type = "text/plain"
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.dk_location_sharing_sharesheet_content, getString(R.string.app_name), url))
+                // Title of the content.
+                putExtra(Intent.EXTRA_TITLE, getString(R.string.dk_location_sharing_sharesheet_title))
+                // Subject of the mail.
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.dk_location_sharing_sharesheet_title))
+            }, null)
+            startActivity(share)
         }
     }
 
@@ -83,7 +99,7 @@ internal class TripSharingActivity : ComponentActivity() {
         activateTripSharing: (durationInSeconds: Int) -> Unit = { },
         shareLink: () -> Unit = { },
         stopSharing: () -> Unit = { },
-        didReadError: () -> Unit = { },
+        errorShown: () -> Unit = { },
     ) {
         var showRevokeConfirmationDialog by remember { mutableStateOf(false) }
 
@@ -91,7 +107,7 @@ internal class TripSharingActivity : ComponentActivity() {
             RevokeLinkConfirmationDialog(stopSharing) { showRevokeConfirmationDialog = false }
         }
         if (uiState.hasError) {
-            ErrorDialog(didReadError)
+            ErrorDialog(errorShown)
         }
 
         Box(

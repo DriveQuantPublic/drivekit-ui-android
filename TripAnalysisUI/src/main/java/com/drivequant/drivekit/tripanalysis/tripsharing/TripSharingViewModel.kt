@@ -62,7 +62,7 @@ internal class TripSharingViewModel : ViewModel() {
         }
     }
 
-    fun didReadError() {
+    fun errorShown() {
         uiState = uiState.copy(hasError = false)
     }
 
