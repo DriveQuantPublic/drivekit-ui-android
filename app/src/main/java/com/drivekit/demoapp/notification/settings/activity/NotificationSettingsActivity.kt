@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
@@ -99,18 +97,9 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
     private fun redirectTripStartedSettings(context: Context) {
         val intent = Intent()
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
-                intent.action = Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
-                intent.putExtra(Settings.EXTRA_CHANNEL_ID, DKNotificationChannel.TRIP_STARTED.getChannelId())
-                intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-            }
-            else -> {
-                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                intent.addCategory(Intent.CATEGORY_DEFAULT)
-                intent.data = Uri.parse("package:" + context.packageName)
-            }
-        }
+        intent.action = Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
+        intent.putExtra(Settings.EXTRA_CHANNEL_ID, DKNotificationChannel.TRIP_STARTED.getChannelId())
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
         context.startActivity(intent)
     }
 
