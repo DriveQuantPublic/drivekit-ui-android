@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.activity.result.ActivityResultLauncher
@@ -28,7 +27,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
 
 
 /**
@@ -123,17 +121,10 @@ internal object VehicleCustomImageHelper {
         }
 
     private fun getImageOrientation(context: Context, uri: Uri): Int? {
-        var stream: InputStream? = null
         try {
-            stream = context.contentResolver.openInputStream(uri)
-            val exifInterface = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && stream != null) {
-                ExifInterface(stream)
-            } else {
-                null // DriveKit will no longer support Android 6.0 and 7.0 in Q4 2024.
-            }
-
-            exifInterface?.let {
-                val orientation = it.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+            context.contentResolver.openInputStream(uri)?.use { stream ->
+                val exifInterface = ExifInterface(stream)
+                val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
                 return when (orientation) {
                     ExifInterface.ORIENTATION_ROTATE_270 -> 270
                     ExifInterface.ORIENTATION_ROTATE_180 -> 180
@@ -143,8 +134,6 @@ internal object VehicleCustomImageHelper {
             }
         } catch (e: Exception) {
             DriveKitLog.e(DriveKitVehicleUI.TAG, "Couldn't get image orientation: $e")
-        } finally {
-            stream?.close()
         }
         return null
     }

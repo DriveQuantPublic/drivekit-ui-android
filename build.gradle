@@ -2,7 +2,7 @@ buildscript {
     def version = System.getenv("BITRISE_GIT_TAG") ?: '0.0.1'
     ext {
         drivekitui_version = version
-        drivekit_version = '2.9.1'
+        drivekit_version = '2.10-beta1'
 
         kotlin_version = '1.8.22'
         android_gradle_plugin = '8.1.4'
@@ -32,7 +32,7 @@ plugins {
 
 allprojects {
     project.ext {
-        min_sdk_version = 23
+        min_sdk_version = 26
         compile_sdk_version = 35
         target_sdk_version = 35
     }
