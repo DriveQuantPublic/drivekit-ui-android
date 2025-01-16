@@ -327,7 +327,6 @@ internal class TripSharingActivity : ComponentActivity() {
 
     @Composable
     private fun AppBar() {
-        println("----------- AppBar -----------")
         TopAppBar(
             title = {
                 Text(
