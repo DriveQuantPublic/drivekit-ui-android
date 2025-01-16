@@ -20,6 +20,10 @@
             android:screenOrientation="portrait"
             android:showOnLockScreen="true"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivequant.drivekit.tripanalysis.tripsharing.TripSharingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

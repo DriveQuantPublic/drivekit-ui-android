@@ -49,7 +49,7 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
             }).append(condition, context.resSpans {
                 color(DKColors.primaryColor)
             }).toSpannable()
-            typeface = DriveKitUI.primaryFont(context)
+            setTypeface(DriveKitUI.primaryFont(context), typeface.style)
         }
     }
 

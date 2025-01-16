@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
 }
 
 project.ext {
@@ -22,6 +22,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     buildTypes {
@@ -35,6 +36,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "$kotlinCompilerExtension_version"
+    }
 
     publishing {
         singleVariant('release')
@@ -44,15 +48,20 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api "com.google.android.material:material:$material"
-    api "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout"
-    api "androidx.legacy:legacy-preference-v14:$legacy_preference"
-    api "androidx.appcompat:appcompat:$appcompat"
-    api "androidx.gridlayout:gridlayout:$grid_layout"
-    api "androidx.constraintlayout:constraintlayout:$constraint_layout"
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.startup:startup-runtime:$startup_runtime"
+    api libs.android.material
+    api libs.androidx.swiperefreshlayout
+    api libs.androidx.legacy.preference
+    api libs.androidx.appcompat
+    api libs.androidx.gridlayout
+    api libs.androidx.constraintlayout
+    api libs.androidx.lifecycle.viewmodel.ktx
+    api libs.androidx.lifecycle.livedata.ktx
+    implementation libs.androidx.startup.runtime
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.ui
+    implementation libs.androidx.material
+    debugImplementation libs.androidx.ui.tooling
+    debugImplementation libs.androidx.ui.tooling.preview
 
     api "com.drivequant.drivekit:drivekit-core:$drivekit_version"
 }

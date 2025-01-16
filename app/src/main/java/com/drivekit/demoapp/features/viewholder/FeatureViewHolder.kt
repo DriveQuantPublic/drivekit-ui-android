@@ -9,8 +9,6 @@ import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.features.enum.FeatureType
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
@@ -108,6 +106,9 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
             }
             FeatureType.TRIPANALYSIS_WORKINGHOURS -> {
                 DriveKitTripAnalysisUI.startWorkingHoursActivity(context)
+            }
+            FeatureType.TRIPANALYSIS_TRIPSHARING -> {
+                DriveKitTripAnalysisUI.startTripSharingActivity(context)
             }
             FeatureType.DRIVERDATA_TIMELINE -> {
                 DriveKitDriverDataTimelineUI.startTimelineActivity(context)

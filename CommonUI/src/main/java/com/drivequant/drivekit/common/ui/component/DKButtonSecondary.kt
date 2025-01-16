@@ -18,5 +18,6 @@ class DKButtonSecondary : DKButtonBase {
 
     init {
         super.shape.setStroke(2.convertDpToPx(), R.color.secondaryColor.intColor(context))
+        updateTypeface()
     }
 }

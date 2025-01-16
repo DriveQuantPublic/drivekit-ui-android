@@ -73,9 +73,11 @@ object PseudoUtils {
             setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
             show()
         }
-        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).typeface = DriveKitUI.primaryFont(context)
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).let {
+            it.setTypeface(DriveKitUI.primaryFont(context), it.typeface.style)
+        }
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).apply {
-            typeface = DriveKitUI.primaryFont(context)
+            setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             setOnClickListener {
                 val newPseudo = editText.editableText.toString()
                 if (newPseudo.isNotBlank()) {
@@ -111,7 +113,7 @@ object PseudoUtils {
         }
         editText.apply {
             setHint(R.string.dk_common_pseudo)
-            typeface = DriveKitUI.primaryFont(context)
+            setTypeface(DriveKitUI.primaryFont(context), typeface.style)
         }
     }
 

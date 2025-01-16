@@ -3,6 +3,14 @@ package com.drivequant.drivekit.common.ui.graphical
 import android.content.Context
 import android.graphics.Typeface
 import androidx.annotation.DimenRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.drivequant.drivekit.common.ui.R
 
 enum class DKStyle {
@@ -38,5 +46,31 @@ enum class DKStyle {
         HIGHLIGHT_BIG -> Typeface.BOLD
         HIGHLIGHT_NORMAL -> Typeface.BOLD
         HIGHLIGHT_SMALL -> Typeface.BOLD
+    }
+
+    fun fontWeight(): FontWeight = when (this) {
+        HEADLINE1 -> FontWeight.Bold
+        HEADLINE2 -> FontWeight.Bold
+        BIG_TEXT -> FontWeight.Normal
+        NORMAL_TEXT -> FontWeight.Normal
+        SMALL_TEXT -> FontWeight.Normal
+        HIGHLIGHT_BIG -> FontWeight.Bold
+        HIGHLIGHT_NORMAL -> FontWeight.Bold
+        HIGHLIGHT_SMALL -> FontWeight.Bold
+    }
+
+    companion object {
+        val primaryFont = FontFamily(Font(R.font.dkprimary))
+        val secondaryFont = FontFamily(Font(R.font.dksecondary))
+    }
+
+    @Composable
+    fun dkTextStyle(fontFamily: FontFamily = primaryFont, color: Color): TextStyle {
+        return TextStyle(
+            fontFamily = fontFamily,
+            fontWeight = this.fontWeight(),
+            fontSize = dimensionResource(this.dimensionId()).value.sp,
+            color = color,
+        )
     }
 }

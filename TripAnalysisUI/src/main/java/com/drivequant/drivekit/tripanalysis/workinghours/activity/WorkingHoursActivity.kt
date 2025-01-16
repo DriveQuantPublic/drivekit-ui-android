@@ -27,7 +27,7 @@ import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursDayCar
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
 import com.drivequant.drivekit.tripanalysis.workinghours.viewmodel.WorkingHoursViewModel
 
-class WorkingHoursActivity : AppCompatActivity() {
+internal class WorkingHoursActivity : AppCompatActivity() {
 
     private lateinit var viewModel: WorkingHoursViewModel
     private lateinit var insideHours: WorkingHoursSpinnerSettings
@@ -221,11 +221,11 @@ class WorkingHoursActivity : AppCompatActivity() {
             val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
             title?.apply {
                 text = getString(R.string.app_name)
-                typeface = DriveKitUI.primaryFont(context)
+                setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             }
             description?.apply {
                 setText(R.string.dk_working_hours_back_save_alert)
-                typeface = DriveKitUI.primaryFont(context)
+                setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             }
 
         } else {

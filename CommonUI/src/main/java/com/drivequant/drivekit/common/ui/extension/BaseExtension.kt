@@ -51,7 +51,7 @@ fun TabLayout.updateTabsFont() {
             for (i in 0 until tabChildsCount) {
                 val tabViewChild = viewGroupTab.getChildAt(i)
                 if (tabViewChild is TextView) {
-                    tabViewChild.typeface = DriveKitUI.primaryFont(this.context)
+                    tabViewChild.setTypeface(DriveKitUI.primaryFont(this.context), tabViewChild.typeface.style)
                 }
             }
         }
