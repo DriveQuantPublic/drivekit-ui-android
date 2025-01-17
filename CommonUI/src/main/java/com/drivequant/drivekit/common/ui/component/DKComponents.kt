@@ -90,6 +90,7 @@ fun DKCriticalActionButton(text: String, onClick: () -> Unit) {
             backgroundColor = Color.Transparent,
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.criticalColor)
         ),
+        shape = CircleShape,
         onClick = onClick
     ) {
         DKText(text, DKStyle.HEADLINE2, color = Color.Unspecified)
