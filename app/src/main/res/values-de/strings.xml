@@ -28,7 +28,7 @@
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
    <string name="drivekit_doc_android_driver_data">https://docs.drivequant.com/driver-data/user-interface/android/get-started</string>
    <string name="drivekit_doc_android_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-android</string>
-   <string name="drivekit_doc_android_location_sharing">https://docs.drivequant.com/trip-analysis/user-interface/android/get-started#trip-sharing</string>
+   <string name="drivekit_doc_android_location_sharing">https://docs.drivequant.com/trip-analysis/user-interface/android/location-sharing</string>
    <string name="drivekit_doc_android_odometer">https://docs.drivequant.com/vehicle/user-interface/android/main-configurations#vehicle-mileage-tracking-and-editing</string>
    <string name="drivekit_doc_android_permissions_management">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
    <string name="drivekit_doc_android_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
@@ -41,13 +41,13 @@
    <string name="drivekit_doc_android_user_id">https://docs.drivequant.com/get-started-drivekit/android/quick-start#set-a-user-id</string>
    <string name="drivekit_doc_android_vehicle">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-picker</string>
    <string name="drivekit_doc_android_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-list</string>
-   <string name="drivekit_doc_android_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/android/get-started#working-hours</string>
+   <string name="drivekit_doc_android_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/android/working-hours</string>
    <string name="drivekit_doc_ios_badges">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-badges-categories</string>
    <string name="drivekit_doc_ios_challenges">https://docs.drivequant.com/challenge/user-interface/ios/get-started#display-challenge-list</string>
    <string name="drivekit_doc_ios_diag">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#sdk-diagnosis</string>
    <string name="drivekit_doc_ios_driver_data">https://docs.drivequant.com/driver-data/user-interface/ios/get-started</string>
    <string name="drivekit_doc_ios_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-ios</string>
-   <string name="drivekit_doc_ios_location_sharing">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#trip-sharing</string>
+   <string name="drivekit_doc_ios_location_sharing">https://docs.drivequant.com/trip-analysis/user-interface/ios/location-sharing</string>
    <string name="drivekit_doc_ios_odometer">https://docs.drivequant.com/vehicle/user-interface/ios/main-configurations#vehicle-mileage-tracking-and-editing</string>
    <string name="drivekit_doc_ios_permissions_management">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
    <string name="drivekit_doc_ios_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
@@ -60,7 +60,7 @@
    <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios/quick-start#identify-the-user</string>
    <string name="drivekit_doc_ios_vehicle">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-picker-in-navigation-controller</string>
    <string name="drivekit_doc_ios_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-list-in-navigation-controller</string>
-   <string name="drivekit_doc_ios_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#working-hours</string>
+   <string name="drivekit_doc_ios_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/ios/working-hours</string>
    <string name="feature_badges_description">Die Komponente Driver Achievement enthält eine Funktion, mit der die Leistungen des Fahrers mit Abzeichen belohnt werden. Die Abzeichen werden auf der Grundlage der Fahrergebnisse vergeben.</string>
    <string name="feature_badges_title">Driver Achievement | Badges</string>
    <string name="feature_challenges_description">Eine Fahr-Challenge ist ein einmaliges Ereignis, bei dem Fahrer um die höchste Punktzahl im Fahren konkurrieren. Die Challenge-Komponente bietet verschiedene Themen an: Eco-Driving, Sicherheit, Ablenkung und Geschwindigkeitsbegrenzung.</string>
