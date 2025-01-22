@@ -16,5 +16,6 @@ class DKButtonPrimary : DKButtonBase {
 
     init {
         super.shape.setColor(DKColors.secondaryColor)
+        updateTypeface()
     }
 }

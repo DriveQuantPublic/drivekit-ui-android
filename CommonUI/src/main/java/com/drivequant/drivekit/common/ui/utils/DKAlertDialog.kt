@@ -89,7 +89,7 @@ object DKAlertDialog {
                     DialogInterface.BUTTON_NEUTRAL
                 ).forEach { buttonType ->
                     getButton(buttonType)?.apply {
-                        typeface = DriveKitUI.primaryFont(context)
+                        setTypeface(DriveKitUI.primaryFont(context), typeface.style)
                         setTextColor(DKColors.secondaryColor)
                     }
                 }

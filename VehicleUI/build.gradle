@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
 }
 
 project.ext {
@@ -43,12 +43,11 @@ android {
 }
 
 dependencies {
-    implementation "androidx.startup:startup-runtime:$startup_runtime"
+    implementation libs.androidx.startup.runtime
+    implementation libs.androidx.exifinterface
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
-
-    implementation "androidx.exifinterface:exifinterface:$exif_interface"
 
     api "com.drivequant.drivekit:drivekit-vehicle:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-trip-analysis:$drivekit_version"

@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import com.drivekit.demoapp.DriveKitDemoApplication
 import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
@@ -48,17 +47,15 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     fun createChannels(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DKNotificationChannel.values().forEach { channel ->
-                if (channel.isEnabled(context)) {
-                    createChannel(context, channel)
-                }
+        DKNotificationChannel.values().forEach { channel ->
+            if (channel.isEnabled(context)) {
+                createChannel(context, channel)
             }
         }
     }
 
     fun createChannel(context: Context, channel: DKNotificationChannel) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && channel.canCreate()) {
+        if (channel.canCreate()) {
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val notificationChannel = NotificationChannel(
                 channel.getChannelId(),
@@ -70,15 +67,13 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     private fun deleteChannels(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DKNotificationChannel.values().forEach {
-                deleteChannel(context, it)
-            }
+        DKNotificationChannel.values().forEach {
+            deleteChannel(context, it)
         }
     }
 
     fun deleteChannel(context: Context, channel: DKNotificationChannel) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && channel.canDelete()) {
+        if (channel.canDelete()) {
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.deleteNotificationChannel(channel.getChannelId())
         }

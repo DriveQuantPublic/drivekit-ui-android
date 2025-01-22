@@ -192,7 +192,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                         inputType = InputType.TYPE_CLASS_NUMBER
                         if (viewModel.canAddHistory()) {
                             this.hint = getString(R.string.dk_vehicle_odometer_mileage_kilometer)
-                            this.typeface = DriveKitUI.primaryFont(context)
+                            setTypeface(DriveKitUI.primaryFont(context), typeface.style)
                         } else {
                             this.setText(viewModel.getFormattedMileageDistance(context, false))
                         }
@@ -210,7 +210,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                         setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
                         show()
                         getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
-                            typeface = DriveKitUI.primaryFont(context)
+                            setTypeface(DriveKitUI.primaryFont(context), typeface.style)
                         }
                     }
                 }

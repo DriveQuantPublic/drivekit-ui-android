@@ -102,7 +102,7 @@ enum class VehicleAction(
 
         vehicleFieldInputEditText?.apply {
             setText(vehicleName)
-            typeface = DriveKitUI.primaryFont(context)
+            setTypeface(DriveKitUI.primaryFont(context), typeface.style)
         }
     }
 

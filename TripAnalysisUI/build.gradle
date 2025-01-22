@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
 }
 
 project.ext {
@@ -22,6 +22,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     buildTypes {
@@ -35,6 +36,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "$kotlinCompilerExtension_version"
+    }
 
     publishing {
         singleVariant('release')
@@ -42,8 +46,18 @@ android {
 }
 
 dependencies {
-    implementation "androidx.startup:startup-runtime:$startup_runtime"
-    implementation "com.github.PhilJay:MPAndroidChart:$mp_chart"
+    implementation libs.androidx.startup.runtime
+    implementation libs.mpandroidchart
+    implementation libs.androidx.activity.compose
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.ui
+    implementation libs.androidx.ui.graphics
+    implementation libs.androidx.animation
+    implementation libs.androidx.material
+    implementation libs.androidx.material.icons
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    debugImplementation libs.androidx.ui.tooling
+    debugImplementation libs.androidx.ui.tooling.preview
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"

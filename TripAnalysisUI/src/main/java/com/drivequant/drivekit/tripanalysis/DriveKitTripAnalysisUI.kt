@@ -13,6 +13,7 @@ import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursD
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
+import com.drivequant.drivekit.tripanalysis.tripsharing.TripSharingActivity
 import com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity
 
 object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
@@ -46,6 +47,12 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
 
     override fun startWorkingHoursActivity(context: Context) {
         val intent = Intent(context, WorkingHoursActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    override fun startTripSharingActivity(context: Context) {
+        val intent = Intent(context, TripSharingActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }

@@ -53,7 +53,9 @@ class BadgesListFragment : Fragment() {
         this.silverBadgeCounter = view.findViewById(R.id.silverContainer)
         this.goldBadgeCounter = view.findViewById(R.id.goldContainer)
 
-        this.badgeCounterTitle.typeface = DriveKitUI.primaryFont(view.context)
+        this.badgeCounterTitle.apply {
+            setTypeface(DriveKitUI.primaryFont(view.context), typeface.style)
+        }
 
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_badges), javaClass.simpleName)
         badgesRecyclerView.layoutManager = LinearLayoutManager(view.context)

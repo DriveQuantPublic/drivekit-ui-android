@@ -309,11 +309,11 @@ class TripDetailFragment : Fragment() {
 
             headerText.apply {
                 text = viewModel.getAdviceTitle(mapItem)
-                typeface = DriveKitUI.primaryFont(context)
+                setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             }
             viewModel.getAdviceMessage(mapItem)?.let {
                 adviceView.findViewById<TextView>(R.id.text_view_advice_content).apply {
-                    typeface = DriveKitUI.primaryFont(context)
+                    setTypeface(DriveKitUI.primaryFont(context), typeface.style)
                     text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 }
             }
@@ -351,7 +351,7 @@ class TripDetailFragment : Fragment() {
             adviceAlertDialog = builder.show()
             adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
                 setTextColor(DKColors.secondaryColor)
-                typeface = DriveKitUI.primaryFont(context)
+                setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             }
         }
     }
@@ -393,11 +393,11 @@ class TripDetailFragment : Fragment() {
         feedbackAlertDialog?.apply {
             getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
                 isEnabled = false
-                typeface = DriveKitUI.primaryFont(context)
+                setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             }
             getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
                 setTextColor(DKColors.secondaryColor)
-                typeface = DriveKitUI.primaryFont(context)
+                setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             }
         }
     }
@@ -417,7 +417,7 @@ class TripDetailFragment : Fragment() {
             feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)
                 ?.apply {
                     setTextColor(DKColors.secondaryColor)
-                    typeface = DriveKitUI.primaryFont(context)
+                    setTypeface(DriveKitUI.primaryFont(context), typeface.style)
                 }
         } else {
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
