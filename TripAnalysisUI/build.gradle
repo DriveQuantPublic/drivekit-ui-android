@@ -56,8 +56,8 @@ dependencies {
     implementation libs.androidx.material
     implementation libs.androidx.material.icons
     implementation libs.androidx.lifecycle.viewmodel.compose
-    implementation libs.androidx.ui.tooling
-    implementation libs.androidx.ui.tooling.preview
+    debugImplementation libs.androidx.ui.tooling
+    debugImplementation libs.androidx.ui.tooling.preview
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"

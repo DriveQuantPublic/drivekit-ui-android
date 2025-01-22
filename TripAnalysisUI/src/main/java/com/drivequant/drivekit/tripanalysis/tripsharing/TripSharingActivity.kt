@@ -47,8 +47,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivekit.tripanalysis.ui.R
@@ -60,7 +58,7 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DurationUnit
 
-internal class TripSharingActivity : ComponentActivity() {
+internal open class TripSharingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -95,7 +93,7 @@ internal class TripSharingActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun TripSharingScreen(
+    fun TripSharingScreen(
         uiState: TripSharingUiState,
         setupTripSharing: () -> Unit = { },
         cancelSetupTripSharing: () -> Unit = { },
@@ -349,11 +347,5 @@ internal class TripSharingActivity : ComponentActivity() {
             backgroundColor = colorResource(com.drivequant.drivekit.common.ui.R.color.primaryColor),
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.fontColorOnPrimaryColor),
         )
-    }
-
-    @Preview(showBackground = true)
-    @Composable
-    private fun TripSharingPreview(@PreviewParameter(TripSharingPreviewParameterProvider::class) state: TripSharingUiState) {
-        TripSharingScreen(state)
     }
 }
