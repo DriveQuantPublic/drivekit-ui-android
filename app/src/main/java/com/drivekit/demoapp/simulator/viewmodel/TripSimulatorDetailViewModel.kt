@@ -12,6 +12,18 @@ import com.drivequant.drivekit.tripanalysis.model.triplistener.DKTripRecordingCa
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.tripanalysis.utils.TripResult
 import com.drivequant.drivekit.tripsimulator.DriveKitTripSimulator
+import com.drivequant.drivekit.tripsimulatorapi.DKTripSimulatorListener
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.BOAT_TRIP
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.BUS_TRIP
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.CITY_TRIP
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.HIGHWAY_TRIP
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.MIXED_TRIP
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.SHORT_TRIP
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.SUBURBAN_TRIP
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.TRAIN_TRIP
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.TRIP_WITH_CRASH_1
+import com.drivequant.drivekit.tripsimulatorapi.PresetTrip.TRIP_WITH_CRASH_2_STILL_DRIVING
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -21,7 +33,7 @@ internal interface TripSimulatorDetailViewModelListener {
 
 internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) :
     ViewModel(),
-    DriveKitTripSimulator.DKTripSimulatorListener, TripListener {
+    DKTripSimulatorListener, TripListener {
 
     var isSimulating: Boolean = false
     private var listener: TripSimulatorDetailViewModelListener? = null
