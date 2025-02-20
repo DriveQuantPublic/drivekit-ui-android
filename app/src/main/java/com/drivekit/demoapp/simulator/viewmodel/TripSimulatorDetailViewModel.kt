@@ -122,6 +122,20 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
         "-"
     }
 
+    // TODO just for this first beta
+    fun PresetTrip.getSimulationDuration() = when (this) {
+        SHORT_TRIP -> 511.0
+        MIXED_TRIP -> 814.0
+        CITY_TRIP -> 1089.0
+        SUBURBAN_TRIP -> 1734.0
+        HIGHWAY_TRIP -> 3214.0
+        BOAT_TRIP -> 2472.0
+        TRAIN_TRIP -> 529.0
+        BUS_TRIP -> 789.0
+        is TRIP_WITH_CRASH_1 -> 300.0
+        is TRIP_WITH_CRASH_2_STILL_DRIVING -> 1400.0
+    }
+
     private fun updateNeeded(updatedValue: Double? = null, timestamp: Double? = null) {
         listener?.updateNeeded(updatedValue, timestamp)
     }
