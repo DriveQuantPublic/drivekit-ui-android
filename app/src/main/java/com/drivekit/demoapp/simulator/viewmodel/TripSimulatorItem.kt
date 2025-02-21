@@ -2,8 +2,8 @@ package com.drivekit.demoapp.simulator.viewmodel
 
 import androidx.annotation.StringRes
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.tripsimulatorapi.PresetTrip
-import com.drivequant.drivekit.tripsimulatorapi.model.PresetTripCrash1
+import com.drivequant.drivekit.tripsimulator.PresetTrip
+import com.drivequant.drivekit.tripsimulator.model.PresetTripCrash1
 
 internal enum class PresetTripType {
     SHORT_TRIP,
