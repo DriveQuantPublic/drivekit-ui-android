@@ -70,7 +70,9 @@ dependencies {
     implementation "com.drivequant.drivekit:drivekit-vehicle:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-challenge:$drivekit_version"
-    debugImplementation "com.drivequant.drivekit:drivekit-trip-simulator:$drivekit_version" // This module MUST be used only during tests !
+    debugImplementation "com.drivequant.drivekit:drivekit-trip-simulator:$drivekit_version"
+    releaseImplementation "com.drivequant.drivekit:drivekit-trip-simulator-noop:$drivekit_version" // You can use the no-op module when building in release mode
+
 
     // In this project we can locally build DriveKit UI modules:
     implementation project(':CommonUI')
