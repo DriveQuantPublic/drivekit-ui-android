@@ -12,6 +12,8 @@ import com.drivequant.drivekit.tripanalysis.model.triplistener.DKTripRecordingCa
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.tripanalysis.utils.TripResult
 import com.drivequant.drivekit.tripsimulator.DriveKitTripSimulator
+import com.drivequant.drivekit.tripsimulator.DKTripSimulatorListener
+import com.drivequant.drivekit.tripsimulator.DriveKitTripSimulator.getSimulationDuration
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -21,7 +23,7 @@ internal interface TripSimulatorDetailViewModelListener {
 
 internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) :
     ViewModel(),
-    DriveKitTripSimulator.DKTripSimulatorListener, TripListener {
+    DKTripSimulatorListener, TripListener {
 
     var isSimulating: Boolean = false
     private var listener: TripSimulatorDetailViewModelListener? = null
