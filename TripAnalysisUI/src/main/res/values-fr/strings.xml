@@ -25,7 +25,7 @@
    <string name="dk_location_sharing_inactive_description_1">Pour rassurer vos proches, l\'application vous permet de partager votre position pendant que vous conduisez.</string>
    <string name="dk_location_sharing_inactive_description_2">Votre position est accessible grâce à un lien de suivi et n\'est visible que pendant vos trajets.</string>
    <string name="dk_location_sharing_inactive_description_3">Vous pouvez définir la durée de validité du lien de suivi et interrompre le partage de position à tout moment.</string>
-   <string name="dk_location_sharing_inactive_enable">PARTAGER MA POSTION</string>
+   <string name="dk_location_sharing_inactive_enable">PARTAGER MA POSITION</string>
    <string name="dk_location_sharing_select_cancel">Annuler</string>
    <string name="dk_location_sharing_select_day">UNE JOURNÉE</string>
    <string name="dk_location_sharing_select_description_1">Pendant combien de temps souhaitez-vous partager votre position ?</string>

@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
@@ -167,12 +168,17 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initTripSimulatorButton() {
-        tripSimulatorButtonContainer.findViewById<Button>(R.id.button_action).apply {
-            tripSimulatorButton = this
-            tripSimulatorButton.text = getString(R.string.simulate_trip)
-            setOnClickListener {
-                TripSimulatorActivity.launchActivity(this@DashboardActivity)
+        if (viewModel.displayTripSimulator) {
+            tripSimulatorButtonContainer.visibility = View.VISIBLE
+            tripSimulatorButtonContainer.findViewById<Button>(R.id.button_action).apply {
+                tripSimulatorButton = this
+                tripSimulatorButton.text = getString(R.string.simulate_trip)
+                setOnClickListener {
+                    TripSimulatorActivity.launchActivity(this@DashboardActivity)
+                }
             }
+        } else {
+            tripSimulatorButtonContainer.visibility = View.GONE
         }
     }
 
