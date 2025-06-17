@@ -50,6 +50,12 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    signingConfigs {
+        debug {
+            storeFile file("./debug.keystore")
+        }
+    }
+
     lint {
         checkDependencies true
     }
