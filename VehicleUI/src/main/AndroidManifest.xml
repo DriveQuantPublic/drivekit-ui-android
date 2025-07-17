@@ -11,7 +11,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".vehicles.activity.VehiclesListActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".vehicledetail.activity.VehicleDetailActivity"
@@ -32,23 +31,18 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".odometer.activity.OdometerVehicleListActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".odometer.activity.OdometerVehicleDetailActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".odometer.activity.OdometerHistoriesListActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".odometer.activity.OdometerHistoryDetailActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".odometer.activity.OdometerInitActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <provider
             android:name="androidx.startup.InitializationProvider"
