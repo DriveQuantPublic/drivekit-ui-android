@@ -9,34 +9,30 @@
     <application android:supportsRtl="true">
         <activity
             android:name=".diagnosis.activity.AppDiagnosisActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".permissions.activity.RequestPermissionActivity" />
         <activity android:name=".permissions.activity.BasePermissionActivity" />
         <activity
             android:name=".permissions.activity.NotificationsPermissionActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:targetApi="33" />
         <activity
             android:name=".permissions.activity.LocationPermissionActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".permissions.activity.BackgroundTaskPermissionActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".permissions.activity.ActivityRecognitionPermissionActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".permissions.activity.NearbyDevicesPermissionActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:targetApi="31" />
         <activity
             android:name=".permissions.activity.FullScreenIntentPermissionActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:targetApi="34" />
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
