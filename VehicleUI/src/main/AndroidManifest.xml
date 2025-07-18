@@ -18,7 +18,6 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".bluetooth.activity.BluetoothActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".beacon.activity.BeaconActivity"

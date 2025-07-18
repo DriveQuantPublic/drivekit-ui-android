@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothSuccessBinding
@@ -27,9 +29,20 @@ class SuccessBluetoothFragment : Fragment() {
     }
 
     private lateinit var viewModel: BluetoothViewModel
+    private lateinit var vehicleId: String
+    private lateinit var vehicleName: String
     private lateinit var vehicle: Vehicle
     private var _binding: FragmentBluetoothSuccessBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::viewModel.isInitialized) {
+            outState.putString("vehicleId", viewModel.vehicleId)
+            outState.putString("vehicleName", viewModel.vehicleName)
+        }
+        super.onSaveInstanceState(outState)
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBluetoothSuccessBinding.inflate(inflater, container, false)
@@ -39,6 +52,21 @@ class SuccessBluetoothFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (savedInstanceState?.getString("vehicleId"))?.let {
+            vehicleId = it
+            if (!this::vehicle.isInitialized) {
+                DbVehicleAccess.findVehicle(it).executeOne()?.let { vehicle ->
+                    this@SuccessBluetoothFragment.vehicle = vehicle
+                }
+            }
+            (savedInstanceState?.getString("vehicleName"))?.let {
+                vehicleName = it
+            }
+        }
+
+        checkViewModelInitialization()
+
         val btDeviceName = vehicle.bluetooth?.name ?: ""
 
         binding.textViewCongratsTitle.headLine1()
@@ -64,6 +92,12 @@ class SuccessBluetoothFragment : Fragment() {
             setOnClickListener {
                 activity?.finish()
             }
+        }
+    }
+
+    private fun checkViewModelInitialization() {
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProvider(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName))[BluetoothViewModel::class.java]
         }
     }
 
