@@ -60,9 +60,9 @@ class SuccessBluetoothFragment : Fragment() {
                     this@SuccessBluetoothFragment.vehicle = vehicle
                 }
             }
-            (savedInstanceState?.getString("vehicleName"))?.let {
-                vehicleName = it
-            }
+        }
+        (savedInstanceState?.getString("vehicleName"))?.let {
+            vehicleName = it
         }
 
         checkViewModelInitialization()
