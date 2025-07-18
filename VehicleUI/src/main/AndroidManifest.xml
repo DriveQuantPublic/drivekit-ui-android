@@ -21,11 +21,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".beacon.activity.BeaconActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".beacon.activity.BeaconDetailActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".odometer.activity.OdometerVehicleListActivity"

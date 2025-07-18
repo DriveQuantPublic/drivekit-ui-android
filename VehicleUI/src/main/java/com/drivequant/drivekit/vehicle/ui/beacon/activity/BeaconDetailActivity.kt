@@ -61,7 +61,6 @@ class BeaconDetailActivity : AppCompatActivity() {
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_beacon_info), javaClass.simpleName)
 
         setContentView(R.layout.activity_beacon)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
