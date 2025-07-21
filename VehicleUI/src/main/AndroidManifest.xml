@@ -17,7 +17,9 @@
             android:name=".vehicledetail.activity.VehicleDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <property android:name="android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY" android:value="true" />
+        </activity>
         <activity
             android:name=".bluetooth.activity.BluetoothActivity"
             android:theme="@style/AppTheme.NoActionBar" />
