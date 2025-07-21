@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <application android:supportsRtl="true">
+    <application
+        android:enableOnBackInvokedCallback="false"
+        android:supportsRtl="true">
         <activity
             android:name="com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity"
             android:theme="@style/AppTheme.NoActionBar" />

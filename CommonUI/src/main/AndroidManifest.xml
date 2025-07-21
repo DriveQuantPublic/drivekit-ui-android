@@ -6,6 +6,7 @@
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
+            android:enableOnBackInvokedCallback="false"
             tools:node="merge">
             <meta-data
                 android:name="com.drivequant.drivekit.common.ui.DriveKitUIInitializer"

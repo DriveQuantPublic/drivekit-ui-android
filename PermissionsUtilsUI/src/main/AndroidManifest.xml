@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
-    <application android:supportsRtl="true">
+    <application
+        android:enableOnBackInvokedCallback="false"
+        android:supportsRtl="true">
         <activity
             android:name=".diagnosis.activity.AppDiagnosisActivity"
             android:theme="@style/AppTheme.NoActionBar" />
