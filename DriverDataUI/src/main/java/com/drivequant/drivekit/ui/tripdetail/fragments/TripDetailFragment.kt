@@ -356,6 +356,10 @@ class TripDetailFragment : Fragment() {
         }
     }
 
+    fun displayTripPassenger() {
+        DriverDataUI.startTripListActivity(requireContext())
+    }
+
     private fun displayAdviceFeedback(mapItem: DKMapItem) {
         val feedbackView = View.inflate(context, R.layout.view_trip_advice_feedback, null)
         FontUtils.overrideFonts(context,feedbackView)

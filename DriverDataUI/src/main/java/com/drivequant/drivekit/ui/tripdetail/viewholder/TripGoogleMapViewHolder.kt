@@ -58,6 +58,7 @@ internal class TripGoogleMapViewHolder(
         viewModel.displayMapItem.observe(fragment.viewLifecycleOwner) {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
+                configurePassengerButton(mapItem)
                 when (mapItem) {
                     MapItem.SPEEDING -> {
                         traceRoute(mapItem, MapTraceType.SPEEDING)
@@ -141,6 +142,33 @@ internal class TripGoogleMapViewHolder(
                     }
                 }
             }
+        }
+    }
+
+    private fun configurePassengerButton(mapItem: DKMapItem) {
+        val passengerFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_passenger)
+        passengerFabButton.backgroundTintList = ColorStateList.valueOf(DKColors.secondaryColor)
+        var shouldDisplayAdvice = false
+        viewModel.trip?.let {
+            shouldDisplayAdvice = true //TODO mock
+
+
+            passengerFabButton.hide()
+            if (shouldDisplayAdvice) {
+
+                //TODO set image resource + imageTintList
+
+                passengerFabButton.apply {
+                    show()
+                    setOnClickListener {
+                        //TODO should we?
+                        //DriveKitUI.analyticsListener?.trackScreen(itemView.context.getString(R.string.…), javaClass.simpleName)
+
+                        fragment.displayTripPassenger()
+                    }
+                }
+            }
+
         }
     }
 
