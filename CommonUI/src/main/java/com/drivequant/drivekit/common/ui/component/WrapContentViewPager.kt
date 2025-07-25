@@ -15,6 +15,9 @@ class WrapContentViewPager : ViewPager {
         context!!, attrs)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        // call a first time to manage Android 16+ issue
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
         var height = 0
         for (i in 0 until childCount) {
             val child = getChildAt(i)
