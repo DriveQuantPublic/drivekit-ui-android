@@ -33,15 +33,6 @@
         android:layout_marginHorizontal="@dimen/dk_screen_border"
         android:paddingVertical="@dimen/dk_margin_quarter" />
 
-    <LinearLayout
-        android:id="@+id/road_context_container"
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/dk_screen_border"
-        android:paddingVertical="@dimen/dk_margin_quarter" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
@@ -51,6 +42,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/road_context_container"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dk_screen_border"
+                android:paddingVertical="@dimen/dk_margin_quarter" />
 
             <LinearLayout
                 android:id="@+id/graph_container"

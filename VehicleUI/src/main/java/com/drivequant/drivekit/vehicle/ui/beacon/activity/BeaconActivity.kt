@@ -6,7 +6,6 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -67,7 +66,6 @@ class BeaconActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBeaconBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 

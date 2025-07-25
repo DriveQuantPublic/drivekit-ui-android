@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.tripanalysis.workinghours.activity
 
 import android.annotation.SuppressLint
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -40,9 +39,7 @@ internal class WorkingHoursActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trip_analysis_working_hours), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trip_analysis_working_hours), javaClass.simpleName)
 
         binding = DkLayoutActivityWorkingHoursBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -161,6 +158,8 @@ internal class WorkingHoursActivity : AppCompatActivity() {
     }
 
     private fun configureDays() {
+        binding.daysContainer.removeAllViews()
+        days.clear()
         DKDay.values().forEachIndexed { index, _ ->
             viewModel.config?.dayConfiguration?.get(index)?.let {
                 val day = WorkingHoursDayCard(this, it)
@@ -200,7 +199,9 @@ internal class WorkingHoursActivity : AppCompatActivity() {
 
     private fun dataUpdated(changed: Boolean) {
         viewModel.dataChanged = changed
-        menu.findItem(R.id.action_save)?.isVisible = changed
+        if (this::menu.isInitialized) {
+            menu.findItem(R.id.action_save)?.isVisible = changed
+        }
     }
 
     @Suppress("OverrideDeprecatedMigration")

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -77,7 +76,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_permissions_diagnosis), javaClass.simpleName)
 
         setContentView(R.layout.activity_app_diagnosis)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         this.itemLocation = findViewById(R.id.diag_item_location)
         this.itemActivityRecognition = findViewById(R.id.diag_item_activity_recognition)

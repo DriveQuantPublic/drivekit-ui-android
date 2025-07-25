@@ -1,7 +1,6 @@
 package com.drivekit.demoapp.features.activity
 
 import android.annotation.SuppressLint
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +21,6 @@ internal class FeatureListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.activity_feature_list)
 
         setSupportActionBar(findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
