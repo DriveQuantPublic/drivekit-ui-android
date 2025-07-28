@@ -18,6 +18,8 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
+import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
+import com.drivequant.drivekit.driverdata.trip.UpdateDriverPassengerModeStatus
 import com.drivequant.drivekit.driverdata.trip.driverpassengermode.DriverPassengerMode
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.DkFragmentDriverPassengerModeBinding
@@ -31,7 +33,7 @@ internal class DriverPassengerModeFragment : Fragment() {
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     private val transportationModesViews = mutableListOf<CircularButtonItemView>()
-    private val driverPassengerModeViews = mutableListOf<CircularButtonItemView>()
+    private val carOccupantRoleViews = mutableListOf<CircularButtonItemView>()
 
     companion object {
         fun newInstance(itinId: String): DriverPassengerModeFragment {
@@ -86,20 +88,40 @@ internal class DriverPassengerModeFragment : Fragment() {
             }
         })
         binding.textCommentError.smallText()
-
-        //updateTransportationProfileVisibility()
         bindTransportationModeItems()
         bindTransportationProfileItems()
-        viewModel.updateObserver.observe(viewLifecycleOwner) { status ->
+        viewModel.updateCarOccupantRoleObserver.observe(viewLifecycleOwner) { status ->
             hideProgressCircular()
             if (status != null) {
-                /*when (status) {
-                    TransportationModeUpdateStatus.NO_ERROR -> {
-                        requireActivity().apply {
-                            setResult(Activity.RESULT_OK)
-                            finish()
-                        }
+                when (status) {
+                    UpdateDriverPassengerModeStatus.SUCCESS -> displaySuccessMessage()
+                    UpdateDriverPassengerModeStatus.FAILED_TO_UPDATE_MODE -> {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.dk_driverdata_failed_to_declare_transportation, //TODO missing string resource
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                    UpdateDriverPassengerModeStatus.COMMENT_TOO_LONG -> {
+                        displayCommentTooLongMessage()
+                    }
+
+                    UpdateDriverPassengerModeStatus.USER_NOT_CONNECTED,
+                    UpdateDriverPassengerModeStatus.INVALID_TRANSPORTATION_MODE,
+                    UpdateDriverPassengerModeStatus.INVALID_ITINERARY_ID
+                        -> {
+                        // do nothing, should not happen.
+                    }
+                }
+            }
+        }
+
+        viewModel.updatePassengerTransportationModeObserver.observe(viewLifecycleOwner) { status ->
+            hideProgressCircular()
+            if (status != null) {
+                when (status) {
+                    TransportationModeUpdateStatus.NO_ERROR -> displaySuccessMessage()
+
                     TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
                         Toast.makeText(
                             requireContext(),
@@ -107,17 +129,25 @@ internal class DriverPassengerModeFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    TransportationModeUpdateStatus.COMMENT_TOO_LONG -> {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.dk_driverdata_transportation_mode_declaration_comment_error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }*/
+
+                    TransportationModeUpdateStatus.COMMENT_TOO_LONG -> displayCommentTooLongMessage()
+                }
             }
         }
         initDefaultValues()
+    }
+
+    private fun displaySuccessMessage() {
+        binding.descriptionTitle.text =
+            getString(R.string.dk_driverdata_ocupant_declaration_thanks)
+    }
+
+    private fun displayCommentTooLongMessage() {
+        Toast.makeText(
+            requireContext(),
+            R.string.dk_driverdata_transportation_mode_declaration_comment_error,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onDestroyView() {
@@ -138,48 +168,56 @@ internal class DriverPassengerModeFragment : Fragment() {
         for (item in viewModel.buildDriverPassengerModes()) {
             val itemView: CircularButtonItemView? = view?.findViewById(getItemIdByTransportationProfile(item))
             itemView?.let {
-                driverPassengerModeViews.add(it)
+                carOccupantRoleViews.add(it)
             }
         }
     }
 
-    //Todo clear "driver passenger mode" selection
     fun onTransportationModeClicked(view: View) {
         for (transportationModeItemView in transportationModesViews) {
             val transportationMode: TransportationMode? = getTransportationModeByItemId(transportationModeItemView.id)
             if (view.id == transportationModeItemView.id) {
                 if (transportationMode != null) {
-                    viewModel.selectedDriverPassengerMode = DriverPassengerMode.PASSENGER // TODO mode in viewmodel
-                    viewModel.selectedTransportationMode  = transportationMode
+                    viewModel.selectTransportationMode(transportationMode)
                     transportationModeItemView.setItemSelectedState(true)
                 }
             } else {
                 transportationModeItemView.setItemSelectedState(false)
             }
         }
+        clearCarOccupantViewsSelection()
     }
 
-    //Todo clear transportation mode selection
-    fun onTransportationProfileClicked(view: View) {
-        for (driverPassengerModeItemView in driverPassengerModeViews) {
-            if (view.id == driverPassengerModeItemView.id) {
-                val driverPassengerMode: DriverPassengerMode? = getDriverPassengerModeByItemId(driverPassengerModeItemView.id)
-                if (driverPassengerMode != null) {
-                    viewModel.selectedDriverPassengerMode = driverPassengerMode
-                    driverPassengerModeItemView.setItemSelectedState(true)
+    fun onCarOccupantRoleClicked(view: View) {
+        for (carOccupantRoleItemView in carOccupantRoleViews) {
+            if (view.id == carOccupantRoleItemView.id) {
+                getDriverPassengerModeByItemId(carOccupantRoleItemView.id)?.let { driverPassengerMode ->
+                    viewModel.selectCarOccupantRole(driverPassengerMode)
+                    carOccupantRoleItemView.setItemSelectedState(true)
                 }
             } else {
-                driverPassengerModeItemView.setItemSelectedState(false)
+                carOccupantRoleItemView.setItemSelectedState(false)
             }
         }
+        clearTransportationModeViewsSelection()
     }
 
-    fun onValidate(){
+    private fun clearCarOccupantViewsSelection() {
+        carOccupantRoleViews.forEach { it.setItemSelectedState(false) }
+    }
+
+    private fun clearTransportationModeViewsSelection() {
+        transportationModesViews.forEach { it.setItemSelectedState(false) }
+    }
+
+    fun onChangeButtonClicked(){
         viewModel.comment = binding.editTextComment.text.toString()
         if (viewModel.checkFieldsValidity()) {
             showProgressCircular()
-            viewModel.updateInformations()
+            viewModel.updateDriverPassengerMode()
         } else {
+            //TODo should we disable the Validate button, when enable it once an item is selected?
+            //TODO Missing error message
             Toast.makeText(
                 requireContext(),
                 R.string.dk_driverdata_failed_to_declare_transportation,
@@ -191,7 +229,8 @@ internal class DriverPassengerModeFragment : Fragment() {
     private fun initDefaultValues() {
         viewModel.trip?.let { trip ->
             val declaredTransportationMode = trip.declaredTransportationMode?.transportationMode
-            if (declaredTransportationMode != null) {
+            // TODO how should we restore the data?
+            /*if (declaredTransportationMode != null) {
                 for (transportationViewItem in transportationModesViews) {
                     if (declaredTransportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
                         viewModel.selectedTransportationMode = declaredTransportationMode
@@ -215,59 +254,41 @@ internal class DriverPassengerModeFragment : Fragment() {
                 trip.declaredTransportationMode?.comment?.let {
                     binding.editTextComment.setText(it)
                 }
-            }
+            }*/
         }
     }
 
-    private fun getItemIdByTransportationMode(transportationMode: TransportationMode): Int {
-        return when (transportationMode) {
-            TransportationMode.CAR -> R.id.transportation_mode_car
-            TransportationMode.MOTO -> R.id.transportation_mode_motorcycle
-            TransportationMode.TRUCK -> R.id.transportation_mode_truck
+    private fun getItemIdByTransportationMode(transportationMode: TransportationMode): Int =
+        when (transportationMode) {
+            TransportationMode.FLIGHT -> R.id.transportation_mode_flight
             TransportationMode.BUS -> R.id.transportation_mode_bus
-            TransportationMode.TRAIN ->  R.id.transportation_mode_train
+            TransportationMode.TRAIN -> R.id.transportation_mode_train
             TransportationMode.BOAT -> R.id.transportation_mode_boat
             TransportationMode.BIKE -> R.id.transportation_mode_bike
-            TransportationMode.FLIGHT ->  R.id.transportation_mode_flight
-            TransportationMode.SKIING -> R.id.transportation_mode_skiing
             TransportationMode.ON_FOOT -> R.id.transportation_mode_on_foot
-            TransportationMode.IDLE -> R.id.transportation_mode_idle
-            TransportationMode.OTHER -> R.id.transportation_mode_other
             else -> -1
         }
+
+    private fun getTransportationModeByItemId(itemId: Int): TransportationMode? = when (itemId) {
+        R.id.transportation_mode_flight -> TransportationMode.FLIGHT
+        R.id.transportation_mode_bus -> TransportationMode.BUS
+        R.id.transportation_mode_train -> TransportationMode.TRAIN
+        R.id.transportation_mode_boat -> TransportationMode.BOAT
+        R.id.transportation_mode_bike -> TransportationMode.BIKE
+        R.id.transportation_mode_on_foot -> TransportationMode.ON_FOOT
+        else -> null
     }
 
-    private fun getTransportationModeByItemId(itemId: Int): TransportationMode? {
-        return when (itemId) {
-            R.id.transportation_mode_car -> TransportationMode.CAR
-            R.id.transportation_mode_motorcycle -> TransportationMode.MOTO
-            R.id.transportation_mode_truck -> TransportationMode.TRUCK
-            R.id.transportation_mode_bus -> TransportationMode.BUS
-            R.id.transportation_mode_train -> TransportationMode.TRAIN
-            R.id.transportation_mode_boat -> TransportationMode.BOAT
-            R.id.transportation_mode_bike -> TransportationMode.BIKE
-            R.id.transportation_mode_flight -> TransportationMode.FLIGHT
-            R.id.transportation_mode_skiing -> TransportationMode.SKIING
-            R.id.transportation_mode_on_foot -> TransportationMode.ON_FOOT
-            R.id.transportation_mode_idle -> TransportationMode.IDLE
-            R.id.transportation_mode_other -> TransportationMode.OTHER
-            else -> null
-        }
-    }
-
-    private fun getItemIdByTransportationProfile(transportationProfile: DriverPassengerMode): Int {
-        return when (transportationProfile) {
+    private fun getItemIdByTransportationProfile(transportationProfile: DriverPassengerMode): Int =
+        when (transportationProfile) {
             DriverPassengerMode.PASSENGER -> R.id.transportation_profile_passenger
             DriverPassengerMode.DRIVER -> R.id.transportation_profile_driver
         }
-    }
 
-    private fun getDriverPassengerModeByItemId(itemId: Int): DriverPassengerMode? {
-        when (itemId) {
-            R.id.transportation_profile_passenger -> return DriverPassengerMode.PASSENGER
-            R.id.transportation_profile_driver -> return DriverPassengerMode.DRIVER
-        }
-        return null
+    private fun getDriverPassengerModeByItemId(itemId: Int): DriverPassengerMode? = when (itemId) {
+        R.id.transportation_profile_passenger -> DriverPassengerMode.PASSENGER
+        R.id.transportation_profile_driver -> DriverPassengerMode.DRIVER
+        else -> null
     }
 
     private fun showProgressCircular() {

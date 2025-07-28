@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dk_margin_half"
-                        android:onClick="onTransportationProfileItemClicked"
+                        android:onClick="onCarOccupantRoleItemClicked"
                         app:dkCircularButtonItemDrawable="@drawable/dk_transportation_driver"
                         app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_profile_driver" />
 
@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dk_margin_half"
-                        android:onClick="onTransportationProfileItemClicked"
+                        android:onClick="onCarOccupantRoleItemClicked"
                         app:dkCircularButtonItemDrawable="@drawable/dk_transportation_passenger"
                         app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_profile_passenger" />
                 </LinearLayout>
@@ -184,11 +184,11 @@
             </LinearLayout>
 
             <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
-                android:id="@+id/button_validate"
+                android:id="@+id/button_change"
                 style="@style/DKButton"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:text="@string/dk_common_validate"
-                android:onClick="onValidateClicked" />
+                android:text="@string/dk_common_change"
+                android:onClick="onChangeButtonClicked" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

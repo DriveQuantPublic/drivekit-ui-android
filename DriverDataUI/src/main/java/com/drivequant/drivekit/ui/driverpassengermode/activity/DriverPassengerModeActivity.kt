@@ -11,16 +11,12 @@ import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.driverpassengermode.fragment.DriverPassengerModeFragment
-import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
-import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity.Companion
-import com.drivequant.drivekit.ui.transportationmode.fragment.TransportationModeFragment
 
 internal class DriverPassengerModeActivity : AppCompatActivity() {
 
     companion object {
         private const val FRAGMENT_TAG = "driver-passenger-mode-fragment-tag"
         private const val ITINID_EXTRA = "itinId-extra"
-        const val UPDATE_DRIVER_PASSENGER_MODE = 105
 
         fun launchActivity(
             activity: Activity,
@@ -28,7 +24,7 @@ internal class DriverPassengerModeActivity : AppCompatActivity() {
         ) {
             val intent = Intent(activity, DriverPassengerModeActivity::class.java)
             intent.putExtra(ITINID_EXTRA, itinId)
-            activity.startActivityForResult(intent, UPDATE_DRIVER_PASSENGER_MODE)
+            activity.startActivity(intent)
         }
     }
 
@@ -74,8 +70,12 @@ internal class DriverPassengerModeActivity : AppCompatActivity() {
         getFragment()?.onTransportationModeClicked(view)
     }
 
-    fun onTransportationProfileItemClicked(view: View) {
-        getFragment()?.onTransportationProfileClicked(view)
+    fun onCarOccupantRoleItemClicked(view: View) {
+        getFragment()?.onCarOccupantRoleClicked(view)
+    }
+
+    fun onChangeButtonClicked(@Suppress("UNUSED_PARAMETER")  view: View) {
+        getFragment()?.onChangeButtonClicked()
     }
 
     private fun getFragment(): DriverPassengerModeFragment? {
@@ -86,7 +86,4 @@ internal class DriverPassengerModeActivity : AppCompatActivity() {
             null
         }
     }
-
-
-    // TODO the rest
 }
