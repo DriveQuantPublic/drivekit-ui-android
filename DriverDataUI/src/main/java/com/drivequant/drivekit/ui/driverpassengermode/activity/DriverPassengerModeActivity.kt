@@ -17,6 +17,7 @@ internal class DriverPassengerModeActivity : AppCompatActivity() {
     companion object {
         private const val FRAGMENT_TAG = "driver-passenger-mode-fragment-tag"
         private const val ITINID_EXTRA = "itinId-extra"
+        const val UPDATE_DRIVER_PASSENGER_MODE = 105
 
         fun launchActivity(
             activity: Activity,
@@ -24,7 +25,7 @@ internal class DriverPassengerModeActivity : AppCompatActivity() {
         ) {
             val intent = Intent(activity, DriverPassengerModeActivity::class.java)
             intent.putExtra(ITINID_EXTRA, itinId)
-            activity.startActivity(intent)
+            activity.startActivityForResult(intent, UPDATE_DRIVER_PASSENGER_MODE)
         }
     }
 

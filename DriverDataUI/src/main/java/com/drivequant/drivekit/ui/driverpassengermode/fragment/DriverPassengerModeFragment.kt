@@ -32,8 +32,8 @@ internal class DriverPassengerModeFragment : Fragment() {
     private var _binding: DkFragmentDriverPassengerModeBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
-    private val transportationModesViews = mutableListOf<CircularButtonItemView>()
     private val carOccupantRoleViews = mutableListOf<CircularButtonItemView>()
+    private val transportationModesViews = mutableListOf<CircularButtonItemView>()
 
     companion object {
         fun newInstance(itinId: String): DriverPassengerModeFragment {
@@ -102,16 +102,14 @@ internal class DriverPassengerModeFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     UpdateDriverPassengerModeStatus.COMMENT_TOO_LONG -> {
                         displayCommentTooLongMessage()
                     }
 
                     UpdateDriverPassengerModeStatus.USER_NOT_CONNECTED,
                     UpdateDriverPassengerModeStatus.INVALID_TRANSPORTATION_MODE,
-                    UpdateDriverPassengerModeStatus.INVALID_ITINERARY_ID
-                        -> {
-                        // do nothing, should not happen.
-                    }
+                    UpdateDriverPassengerModeStatus.INVALID_ITINERARY_ID -> displayErrorMessage()
                 }
             }
         }
@@ -121,15 +119,7 @@ internal class DriverPassengerModeFragment : Fragment() {
             if (status != null) {
                 when (status) {
                     TransportationModeUpdateStatus.NO_ERROR -> displaySuccessMessage()
-
-                    TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.dk_driverdata_failed_to_declare_transportation,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
+                    TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> displayErrorMessage()
                     TransportationModeUpdateStatus.COMMENT_TOO_LONG -> displayCommentTooLongMessage()
                 }
             }
@@ -137,6 +127,7 @@ internal class DriverPassengerModeFragment : Fragment() {
         initDefaultValues()
     }
 
+    //TODO should we display the message when we go back to a trip detail which has a declared data?
     private fun displaySuccessMessage() {
         binding.descriptionTitle.text =
             getString(R.string.dk_driverdata_ocupant_declaration_thanks)
@@ -146,6 +137,14 @@ internal class DriverPassengerModeFragment : Fragment() {
         Toast.makeText(
             requireContext(),
             R.string.dk_driverdata_transportation_mode_declaration_comment_error,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun displayErrorMessage() {
+        Toast.makeText(
+            requireContext(),
+            R.string.dk_driverdata_failed_to_declare_transportation, //TODO missing string resource
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -216,37 +215,32 @@ internal class DriverPassengerModeFragment : Fragment() {
             showProgressCircular()
             viewModel.updateDriverPassengerMode()
         } else {
-            //TODo should we disable the Validate button, when enable it once an item is selected?
+            //TODO should we disable the Validate button, when enable it once an item is selected?
             //TODO Missing error message
-            Toast.makeText(
-                requireContext(),
-                R.string.dk_driverdata_failed_to_declare_transportation,
-                Toast.LENGTH_SHORT
-            ).show()
+            displayErrorMessage()
         }
     }
 
     private fun initDefaultValues() {
         viewModel.trip?.let { trip ->
-            val declaredTransportationMode = trip.declaredTransportationMode?.transportationMode
-            // TODO how should we restore the data?
-            /*if (declaredTransportationMode != null) {
-                for (transportationViewItem in transportationModesViews) {
-                    if (declaredTransportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
-                        viewModel.selectedTransportationMode = declaredTransportationMode
-                        transportationViewItem.setItemSelectedState(true)
-                    } else {
-                        transportationViewItem.setItemSelectedState(false)
-                    }
-                }
-                trip.declaredTransportationMode?.passenger?.let {
-                    val transportationProfile = if (it) DriverPassengerMode.PASSENGER else DriverPassengerMode.DRIVER
-                    for (declaredTransportationProfileItem in driverPassengerModeViews) {
-                        if (transportationProfile == getDriverPassengerModeByItemId(declaredTransportationProfileItem.id)) {
-                            viewModel.selectedDriverPassengerMode = transportationProfile
-                            declaredTransportationProfileItem.setItemSelectedState(true)
+            trip.declaredTransportationMode?.let { declaredTransportationMode ->
+                if (declaredTransportationMode.transportationMode == TransportationMode.CAR) {
+                    val carOccupantRole = if (declaredTransportationMode.passenger == true) DriverPassengerMode.PASSENGER else DriverPassengerMode.DRIVER
+                    for (occupantRoleItem in carOccupantRoleViews) {
+                        if (carOccupantRole == getDriverPassengerModeByItemId(occupantRoleItem.id)) {
+                            viewModel.selectedDriverPassengerMode = carOccupantRole
+                            occupantRoleItem.setItemSelectedState(true)
                         } else {
-                            declaredTransportationProfileItem.setItemSelectedState(false)
+                            occupantRoleItem.setItemSelectedState(false)
+                        }
+                    }
+                } else {
+                    for (transportationViewItem in transportationModesViews) {
+                        if (declaredTransportationMode.transportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
+                            viewModel.selectedTransportationMode = declaredTransportationMode.transportationMode
+                            transportationViewItem.setItemSelectedState(true)
+                        } else {
+                            transportationViewItem.setItemSelectedState(false)
                         }
                     }
                 }
@@ -254,7 +248,7 @@ internal class DriverPassengerModeFragment : Fragment() {
                 trip.declaredTransportationMode?.comment?.let {
                     binding.editTextComment.setText(it)
                 }
-            }*/
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.geocoder.CheckReverseGeocodeListener
 import com.drivequant.drivekit.databaseutils.entity.Call
 import com.drivequant.drivekit.databaseutils.entity.Route
+import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -303,6 +305,21 @@ internal class TripDetailViewModel(
 
     fun shouldDisplayAdvice(mapItem: DKMapItem): Boolean {
         return getAdviceByMapItem(mapItem) != null
+    }
+
+    fun displayDriverPassengerFab(): Boolean = trip?.let {
+        DriverDataUI.enableOccupantDeclaration && !it.unscored && it.transportationMode == TransportationMode.CAR //TODO check CAR of all motorized modes?
+    } ?: false
+
+    @DrawableRes
+    fun getDriverPassengerModeFabIcon(): Int? = this.trip?.let {
+        if (it.declaredTransportationMode?.passenger == true) {
+            R.drawable.dk_transportation_passenger
+        } else {
+            R.drawable.dk_transportation_driver
+        }
+    } ?: run {
+        null
     }
 
     private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? = trip?.let { mapItem.getAdvice(it) }

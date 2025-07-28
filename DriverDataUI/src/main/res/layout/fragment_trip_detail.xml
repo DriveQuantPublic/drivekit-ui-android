@@ -87,18 +87,16 @@
         tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_trip_passenger"
+        android:id="@+id/fab_trip_driver_passenger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin"
         android:layout_marginEnd="@dimen/dk_margin"
-        android:scaleType="center"
-        android:visibility="visible"
-        app:borderWidth="2dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/google_map"
         app:layout_constraintTop_toBottomOf="@id/tab_layout"
-        app:maxImageSize="@dimen/dk_ic_big"
-        tools:src="@drawable/dk_advice_agree"
+        app:maxImageSize="56dp"
+        tools:src="@drawable/dk_transportation_passenger"
         tools:visibility="visible" />
 
     <ImageButton

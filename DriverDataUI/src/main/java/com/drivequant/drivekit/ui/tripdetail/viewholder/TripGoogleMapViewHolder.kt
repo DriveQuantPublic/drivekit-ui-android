@@ -55,10 +55,12 @@ internal class TripGoogleMapViewHolder(
     }
 
     init {
+
+        configureDriverPassengerButton()
+
         viewModel.displayMapItem.observe(fragment.viewLifecycleOwner) {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
-                configurePassengerButton(mapItem)
                 when (mapItem) {
                     MapItem.SPEEDING -> {
                         traceRoute(mapItem, MapTraceType.SPEEDING)
@@ -145,30 +147,24 @@ internal class TripGoogleMapViewHolder(
         }
     }
 
-    private fun configurePassengerButton(mapItem: DKMapItem) {
-        val passengerFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_passenger)
-        passengerFabButton.backgroundTintList = ColorStateList.valueOf(DKColors.secondaryColor)
-        var shouldDisplayAdvice = false
-        viewModel.trip?.let {
-            shouldDisplayAdvice = true //TODO mock
+    private fun configureDriverPassengerButton() {
+        val driverPassengerFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_driver_passenger)
+        driverPassengerFabButton.backgroundTintList = ColorStateList.valueOf(DKColors.secondaryColor)
+        driverPassengerFabButton.hide()
+        if (viewModel.displayDriverPassengerFab()) {
+            driverPassengerFabButton.apply {
+                viewModel.getDriverPassengerModeFabIcon()?.let {
+                    setImageResource(it)
+                }
+                imageTintList = ColorStateList.valueOf(DKColors.fontColorOnSecondaryColor)
+                show()
+                setOnClickListener {
+                    //TODO should we?
+                    //DriveKitUI.analyticsListener?.trackScreen(itemView.context.getString(R.string.…), javaClass.simpleName)
 
-
-            passengerFabButton.hide()
-            if (shouldDisplayAdvice) {
-
-                //TODO set image resource + imageTintList
-
-                passengerFabButton.apply {
-                    show()
-                    setOnClickListener {
-                        //TODO should we?
-                        //DriveKitUI.analyticsListener?.trackScreen(itemView.context.getString(R.string.…), javaClass.simpleName)
-
-                        fragment.displayDriverPassengerMode()
-                    }
+                    fragment.displayDriverPassengerMode()
                 }
             }
-
         }
     }
 

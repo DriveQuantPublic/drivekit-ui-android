@@ -17,8 +17,8 @@ internal class DriverPassengerModeViewModel(private val itinId: String) : ViewMo
         private set
     val updateCarOccupantRoleObserver: MutableLiveData<UpdateDriverPassengerModeStatus> = MutableLiveData()
     val updatePassengerTransportationModeObserver: MutableLiveData<TransportationModeUpdateStatus> = MutableLiveData()
-    private var selectedTransportationMode: TransportationMode? = null
-    private var selectedDriverPassengerMode: DriverPassengerMode? = null
+    var selectedTransportationMode: TransportationMode? = null
+    var selectedDriverPassengerMode: DriverPassengerMode? = null
     var comment: String = ""
 
     init {
