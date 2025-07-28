@@ -93,7 +93,8 @@
         android:layout_marginTop="@dimen/dk_margin_medium"
         android:layout_marginEnd="@dimen/dk_margin_medium"
         android:elevation="8dp"
-        android:background="@drawable/dk_occupant_role_trip_labelled"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="@id/google_map"
         app:layout_constraintTop_toBottomOf="@id/tab_layout" />
 
