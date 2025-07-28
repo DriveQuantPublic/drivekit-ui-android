@@ -370,6 +370,7 @@ internal class TripDetailViewModel(
         }
     }
 
+    // TODO good definition?
     private fun getDeclarationBadgeStatus(): DeclarationBadgeStatus =
         if (trip?.declaredTransportationMode != null) {
             DeclarationBadgeStatus.LABELLED

@@ -65,6 +65,7 @@ internal class DriverPassengerModeFragment : Fragment() {
             )[DriverPassengerModeViewModel::class.java]
         }
 
+        //TODO should we align with TransportationMode declaretion UI or the new Figma one?
         (binding.descriptionTitle.background as GradientDrawable).setColor(DKColors.warningColor)
         binding.descriptionTitle.normalText()
 
@@ -215,7 +216,6 @@ internal class DriverPassengerModeFragment : Fragment() {
             showProgressCircular()
             viewModel.updateDriverPassengerMode()
         } else {
-            //TODO should we disable the Validate button, when enable it once an item is selected?
             //TODO Missing error message
             displayErrorMessage()
         }
@@ -236,14 +236,11 @@ internal class DriverPassengerModeFragment : Fragment() {
                     }
                 } else {
                     for (transportationViewItem in transportationModesViews) {
-                        declaredTransportationMode.transportationMode?.let {
-                            if (declaredTransportationMode.transportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
-                                viewModel.selectTransportationMode(it)
-                                transportationViewItem.setItemSelectedState(true)
-                            } else {
-                                transportationViewItem.setItemSelectedState(false)
-                            }
-                        } ?: run {
+                        val transportationMode = declaredTransportationMode.transportationMode
+                        if (transportationMode != null && transportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
+                            viewModel.selectTransportationMode(transportationMode)
+                            transportationViewItem.setItemSelectedState(true)
+                        } else {
                             transportationViewItem.setItemSelectedState(false)
                         }
                     }
