@@ -228,7 +228,7 @@ internal class DriverPassengerModeFragment : Fragment() {
                     val carOccupantRole = if (declaredTransportationMode.passenger == true) DriverPassengerMode.PASSENGER else DriverPassengerMode.DRIVER
                     for (occupantRoleItem in carOccupantRoleViews) {
                         if (carOccupantRole == getDriverPassengerModeByItemId(occupantRoleItem.id)) {
-                            viewModel.selectedDriverPassengerMode = carOccupantRole
+                            viewModel.selectCarOccupantRole(carOccupantRole)
                             occupantRoleItem.setItemSelectedState(true)
                         } else {
                             occupantRoleItem.setItemSelectedState(false)
@@ -236,10 +236,14 @@ internal class DriverPassengerModeFragment : Fragment() {
                     }
                 } else {
                     for (transportationViewItem in transportationModesViews) {
-                        if (declaredTransportationMode.transportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
-                            viewModel.selectedTransportationMode = declaredTransportationMode.transportationMode
-                            transportationViewItem.setItemSelectedState(true)
-                        } else {
+                        declaredTransportationMode.transportationMode?.let {
+                            if (declaredTransportationMode.transportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
+                                viewModel.selectTransportationMode(it)
+                                transportationViewItem.setItemSelectedState(true)
+                            } else {
+                                transportationViewItem.setItemSelectedState(false)
+                            }
+                        } ?: run {
                             transportationViewItem.setItemSelectedState(false)
                         }
                     }

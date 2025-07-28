@@ -164,6 +164,15 @@ class TripDetailFragment : Fragment() {
         loadTripData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        //TODO we should improve that
+        if (this::tripMapViewHolder.isInitialized) {
+            viewModel.updateLocalTripData()
+            tripMapViewHolder.configureDriverPassengerButton()
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         this.itinId?.let {
             outState.putString("itinId", it)

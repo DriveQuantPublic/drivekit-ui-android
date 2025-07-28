@@ -55,7 +55,6 @@ internal class TripGoogleMapViewHolder(
     }
 
     init {
-
         configureDriverPassengerButton()
 
         viewModel.displayMapItem.observe(fragment.viewLifecycleOwner) {
@@ -147,7 +146,7 @@ internal class TripGoogleMapViewHolder(
         }
     }
 
-    private fun configureDriverPassengerButton() {
+    fun configureDriverPassengerButton() {
         val driverPassengerFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_driver_passenger)
         driverPassengerFabButton.backgroundTintList = ColorStateList.valueOf(DKColors.secondaryColor)
         driverPassengerFabButton.hide()

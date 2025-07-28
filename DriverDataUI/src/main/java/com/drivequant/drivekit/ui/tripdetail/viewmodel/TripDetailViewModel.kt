@@ -17,6 +17,7 @@ import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.RouteQueryListener
 import com.drivequant.drivekit.driverdata.trip.RouteStatus
@@ -118,6 +119,10 @@ internal class TripDetailViewModel(
                 }
             })
         }
+    }
+
+    fun updateLocalTripData() {
+        this@TripDetailViewModel.trip = DbTripAccess.findTrip(itinId).executeOneTrip()?.toTrip()
     }
 
     private fun updateTripAdvice(
