@@ -164,7 +164,7 @@ internal class TripGoogleMapViewHolder(
                         //TODO should we?
                         //DriveKitUI.analyticsListener?.trackScreen(itemView.context.getString(R.string.…), javaClass.simpleName)
 
-                        fragment.displayTripPassenger()
+                        fragment.displayDriverPassengerMode()
                     }
                 }
             }
