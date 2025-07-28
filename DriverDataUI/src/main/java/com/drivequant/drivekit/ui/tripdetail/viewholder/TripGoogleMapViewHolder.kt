@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
 import android.content.res.ColorStateList
+import android.media.Image
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -148,9 +149,21 @@ internal class TripGoogleMapViewHolder(
 
     fun configureDriverPassengerButton() {
         val driverPassengerFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_driver_passenger)
+        val driverPassengerLabel = itemView.findViewById<ImageView>(R.id.driver_passenger_label_image)
+
         driverPassengerFabButton.backgroundTintList = ColorStateList.valueOf(DKColors.secondaryColor)
         driverPassengerFabButton.hide()
+        driverPassengerLabel.visibility = View.GONE
         if (viewModel.displayDriverPassengerFab()) {
+            driverPassengerLabel.apply {
+                viewModel.getDeclarationBadgeResId()?.let {
+                    setImageResource(it)
+                    visibility = View.VISIBLE
+                } ?: run {
+                    visibility = View.GONE
+                }
+            }
+
             driverPassengerFabButton.apply {
                 viewModel.getDriverPassengerModeFabIcon()?.let {
                     setImageResource(it)

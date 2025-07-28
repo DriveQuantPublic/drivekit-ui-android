@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.geocoder.CheckReverseGeocodeListener
 import com.drivequant.drivekit.databaseutils.entity.Call
+import com.drivequant.drivekit.databaseutils.entity.OccupantRole
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -27,6 +28,7 @@ import com.drivequant.drivekit.driverdata.trip.TripQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.tripdetail.model.DeclarationBadgeStatus
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import java.util.Date
@@ -365,6 +367,24 @@ internal class TripDetailViewModel(
                         }
                     })
             }
+        }
+    }
+
+    private fun getDeclarationBadgeStatus(): DeclarationBadgeStatus =
+        if (trip?.declaredTransportationMode != null) {
+            DeclarationBadgeStatus.LABELLED
+        } else if (trip?.occupantInfo?.role == OccupantRole.DRIVER) {
+            DeclarationBadgeStatus.TO_LABEL
+        } else {
+            DeclarationBadgeStatus.NONE
+        }
+
+    @DrawableRes
+    fun getDeclarationBadgeResId(): Int? {
+        return when (getDeclarationBadgeStatus()) {
+            DeclarationBadgeStatus.NONE -> null
+            DeclarationBadgeStatus.TO_LABEL -> R.drawable.dk_occupant_role_trip_to_label
+            DeclarationBadgeStatus.LABELLED -> R.drawable.dk_occupant_role_trip_labelled
         }
     }
 
