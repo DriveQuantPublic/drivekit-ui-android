@@ -185,10 +185,9 @@
             </LinearLayout>
 
             <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
-                android:id="@+id/button_change"
+                android:id="@+id/button_submit"
                 style="@style/DKButton"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:text="@string/dk_common_change"
                 android:onClick="onChangeButtonClicked" />
         </LinearLayout>
     </ScrollView>

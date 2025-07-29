@@ -19,8 +19,8 @@ internal class DriverPassengerModeViewModel(private val itinId: String) : ViewMo
         private set
     val updateCarOccupantRoleObserver: MutableLiveData<UpdateDriverPassengerModeStatus> = MutableLiveData()
     val updatePassengerTransportationModeObserver: MutableLiveData<TransportationModeUpdateStatus> = MutableLiveData()
-    var selectedTransportationMode: TransportationMode? = null
-    var selectedDriverPassengerMode: DriverPassengerMode? = null
+    private var selectedTransportationMode: TransportationMode? = null
+    private var selectedDriverPassengerMode: DriverPassengerMode? = null
     var comment: String = ""
 
     init {
@@ -84,6 +84,13 @@ internal class DriverPassengerModeViewModel(private val itinId: String) : ViewMo
         R.string.dk_driverdata_ocupant_declaration_info
     } else {
         R.string.dk_driverdata_ocupant_declaration_thanks
+    }
+
+    @StringRes
+    fun getSubmitText(): Int = if (trip?.declaredTransportationMode == null) {
+        com.drivequant.drivekit.common.ui.R.string.dk_common_validate
+    } else {
+        com.drivequant.drivekit.common.ui.R.string.dk_common_change
     }
 
     @Suppress("UNCHECKED_CAST")

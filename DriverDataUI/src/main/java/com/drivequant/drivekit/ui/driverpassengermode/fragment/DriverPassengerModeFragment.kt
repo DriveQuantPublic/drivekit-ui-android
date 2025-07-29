@@ -90,6 +90,7 @@ internal class DriverPassengerModeFragment : Fragment() {
                 }
             }
         })
+        binding.buttonSubmit.text = getString(viewModel.getSubmitText())
         binding.textCommentError.smallText()
         bindTransportationModeItems()
         bindTransportationProfileItems()
@@ -101,18 +102,10 @@ internal class DriverPassengerModeFragment : Fragment() {
                         activity?.finish()
                         displaySuccessMessage()
                     }
-                    UpdateDriverPassengerModeStatus.FAILED_TO_UPDATE_MODE -> {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.dk_driverdata_failed_to_declare_transportation, //TODO missing string resource
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
 
-                    UpdateDriverPassengerModeStatus.COMMENT_TOO_LONG -> {
-                        displayCommentTooLongMessage()
-                    }
+                    UpdateDriverPassengerModeStatus.COMMENT_TOO_LONG -> displayCommentTooLongMessage()
 
+                    UpdateDriverPassengerModeStatus.FAILED_TO_UPDATE_MODE,
                     UpdateDriverPassengerModeStatus.USER_NOT_CONNECTED,
                     UpdateDriverPassengerModeStatus.INVALID_TRANSPORTATION_MODE,
                     UpdateDriverPassengerModeStatus.INVALID_ITINERARY_ID -> displayErrorMessage()
@@ -135,6 +128,7 @@ internal class DriverPassengerModeFragment : Fragment() {
         }
         initDefaultValues()
     }
+
 
     private fun displaySuccessMessage() {
         Toast.makeText(
@@ -231,8 +225,8 @@ internal class DriverPassengerModeFragment : Fragment() {
     }
 
     private fun initDefaultValues() {
-        viewModel.trip?.let { trip ->
-            trip.declaredTransportationMode?.let { declaredTransportationMode ->
+        viewModel.trip.let { trip ->
+            trip?.declaredTransportationMode?.let { declaredTransportationMode ->
                 if (declaredTransportationMode.transportationMode == TransportationMode.CAR) {
                     val carOccupantRole = if (declaredTransportationMode.passenger == true) DriverPassengerMode.PASSENGER else DriverPassengerMode.DRIVER
                     for (occupantRoleItem in carOccupantRoleViews) {
