@@ -2,7 +2,7 @@ buildscript {
     def version = System.getenv("BITRISE_GIT_TAG") ?: '0.0.1'
     ext {
         drivekitui_version = version
-        drivekit_version = '2.19-beta2'
+        drivekit_version = '2.19-beta3'
         kotlinCompilerExtension_version = '1.4.8'
     }
 }
