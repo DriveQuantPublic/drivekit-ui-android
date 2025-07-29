@@ -3,6 +3,7 @@
     <string name="dk_tag_trips_list" translatable="false">drivekit-trips-list</string>
     <string name="dk_tag_trips_detail" translatable="false">drivekit-trips-detail</string>
     <string name="dk_tag_trips_detail_transportation_mode" translatable="false">drivekit-trips-detail-transportation_mode</string>
+    <string name="dk_tag_trips_detail_driver_passenger" translatable="false">drivekit-trips-detail-driver-passenger</string>
     <string name="dk_tag_trips_detail_advice_safety" translatable="false">drivekit-trips-detail-advice-safety</string>
     <string name="dk_tag_trips_detail_advice_efficiency" translatable="false">drivekit-trips-detail-advice-efficiency</string>
     <string name="dk_tag_my_synthesis" translatable="false">drivekit-my-synthesis</string>

@@ -169,6 +169,11 @@
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo en bedankt voor je voorzichtigheid!</string>
    <string name="dk_driverdata_no_trip_placeholder">Je hebt nog geen ritten gemaakt met dit voertuig.</string>
    <string name="dk_driverdata_no_trips_recorded">De app heeft je ritten nog niet geanalyseerd. Om je rijstijl te meten en tips en adviezen te krijgen om je rijstijl te verbeteren, controleer je of de app goed is ingesteld en voer je een rit uit.</string>
+   <string name="dk_driverdata_ocupant_declaration_info">Om de app te verbeteren, geef aan hoe deze rit is gemaakt (slechts één keuze)</string>
+   <string name="dk_driverdata_ocupant_declaration_role_question">Was u bestuurder of passagier in een auto?</string>
+   <string name="dk_driverdata_ocupant_declaration_thanks">❤️ Bedankt dat u uw vervoermiddel voor deze rit heeft opgegeven. U kunt uw keuze aanpassen.</string>
+   <string name="dk_driverdata_ocupant_declaration_title">Reismodus</string>
+   <string name="dk_driverdata_ocupant_declaration_transportation_question">Anders, welk vervoermiddel heeft u gebruikt?</string>
    <string name="dk_driverdata_phone_call_plur">%s telefoongesprekken</string>
    <string name="dk_driverdata_phone_call_sing">%s telefoongesprek</string>
    <string name="dk_driverdata_profile_activity_always_text">Sinds je de app gebruikt, heb je je auto elke week gebruikt.</string>

@@ -62,6 +62,7 @@ internal object DriveKitConfig {
 
     private val tripData: TripData = TripData.SAFETY
     private const val enableAlternativeTrips: Boolean = true
+    private const val enableOccupantDeclaration: Boolean = true
     private val tripRecordingUserMode: DKTripRecordingUserMode = DKTripRecordingUserMode.START_STOP
 
     private val vehicleTypes: List<VehicleType> = VehicleType.values().toList()
@@ -162,6 +163,7 @@ internal object DriveKitConfig {
     private fun configureDriverDataUI() {
         DriverDataUI.configureTripData(tripData)
         DriverDataUI.enableAlternativeTrips(enableAlternativeTrips)
+        DriverDataUI.enableOccupantDeclaration(enableOccupantDeclaration)
     }
 
     private fun configureVehicleUI() {

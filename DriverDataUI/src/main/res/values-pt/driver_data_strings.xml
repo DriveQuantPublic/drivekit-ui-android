@@ -169,6 +169,11 @@
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo e obrigado por sua cautela!</string>
    <string name="dk_driverdata_no_trip_placeholder">Ainda não efectuou qualquer viagem com este veículo.</string>
    <string name="dk_driverdata_no_trips_recorded">Faça sua primeira viagem para preencher esta listaA aplicação ainda não analisou as suas viagens.\n\nPara medir o seu estilo de condução e receber dicas e conselhos sobre como melhorar, verifique se a aplicação está corretamente configurada e faça uma viagem.\n\nQuando o modo automático está ativado, a aplicação detecta e analisa os seus movimentos mesmo quando não está aberta.</string>
+   <string name="dk_driverdata_ocupant_declaration_info">Para melhorar o app, indique como esta viagem foi feita (uma opção)</string>
+   <string name="dk_driverdata_ocupant_declaration_role_question">Você estava dirigindo ou era passageiro de um carro?</string>
+   <string name="dk_driverdata_ocupant_declaration_thanks">❤️ Obrigado por declarar o seu modo de deslocamento para esta viagem. Pode alterar a sua escolha.</string>
+   <string name="dk_driverdata_ocupant_declaration_title">Modo de deslocamento</string>
+   <string name="dk_driverdata_ocupant_declaration_transportation_question">Caso contrário, que meio de transporte utilizou?</string>
    <string name="dk_driverdata_phone_call_plur">%s liga</string>
    <string name="dk_driverdata_phone_call_sing">%s telefonema</string>
    <string name="dk_driverdata_profile_activity_always_text">Desde que você usa o aplicativo, você usou seu carro toda semana.</string>

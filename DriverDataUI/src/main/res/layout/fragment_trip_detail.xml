@@ -86,6 +86,32 @@
         app:maxImageSize="@dimen/dk_ic_big"
         tools:visibility="visible" />
 
+    <ImageView
+        android:id="@+id/driver_passenger_label_image"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="@dimen/dk_margin_medium"
+        android:layout_marginEnd="@dimen/dk_margin_medium"
+        android:elevation="8dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@id/google_map"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_trip_driver_passenger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dk_margin"
+        android:layout_marginEnd="@dimen/dk_margin"
+        android:visibility="gone"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="@id/google_map"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        app:maxImageSize="56dp"
+        tools:src="@drawable/dk_transportation_passenger"
+        tools:visibility="visible" />
+
     <ImageButton
         android:id="@+id/center_button"
         android:layout_width="48dp"

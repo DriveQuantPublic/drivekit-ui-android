@@ -169,6 +169,11 @@
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo und vielen Dank für Ihre Vorsicht!</string>
    <string name="dk_driverdata_no_trip_placeholder">Sie haben noch keine Fahrten mit diesem Fahrzeug unternommen.</string>
    <string name="dk_driverdata_no_trips_recorded">Die Anwendung hat Ihre Fahrten noch nicht analysiert.\n\nUm Ihren Fahrstil zu messen und Tipps und Ratschläge zur Verbesserung zu erhalten, überprüfen Sie, ob die Anwendung richtig konfiguriert ist, und führen Sie eine Fahrt durch.\n\nWenn der automatische Modus aktiviert ist, erkennt und analysiert die Anwendung Ihre Bewegungen, auch wenn sie nicht geöffnet ist.</string>
+   <string name="dk_driverdata_ocupant_declaration_info">Zur Verbesserung der App wählen Sie bitte, wie diese Fahrt durchgeführt wurde (eine Auswahl möglich)</string>
+   <string name="dk_driverdata_ocupant_declaration_role_question">Waren Sie Fahrer oder Beifahrer in einem Auto?</string>
+   <string name="dk_driverdata_ocupant_declaration_thanks">❤️ Danke, dass Sie Ihren Reisemodus für diese Fahrt angegeben haben. Sie können Ihre Auswahl ändern.</string>
+   <string name="dk_driverdata_ocupant_declaration_title">Reisemodus</string>
+   <string name="dk_driverdata_ocupant_declaration_transportation_question">Andernfalls, welchen Verkehrsträger haben Sie genutzt?</string>
    <string name="dk_driverdata_phone_call_plur">%s Telefonate</string>
    <string name="dk_driverdata_phone_call_sing">%s Telefonat</string>
    <string name="dk_driverdata_profile_activity_always_text">Siden du begyndte at bruge appen, har du brugt din bil hver uge.</string>

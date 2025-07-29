@@ -89,7 +89,7 @@ class TripDetailActivity : AppCompatActivity() {
     @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == TransportationModeActivity.UPDATE_TRIP_TRANSPORTATION_MODE){
+        if (resultCode == RESULT_OK && requestCode == TransportationModeActivity.UPDATE_TRIP_TRANSPORTATION_MODE) {
             shouldRefreshTrips = true
         }
     }

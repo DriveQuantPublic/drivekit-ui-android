@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Intent
@@ -44,6 +45,7 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.FragmentTripDetailBinding
 import com.drivequant.drivekit.ui.extension.toDKTripItem
+import com.drivequant.drivekit.ui.driverpassengermode.activity.DriverPassengerModeActivity
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
@@ -160,6 +162,16 @@ class TripDetailFragment : Fragment() {
             setHasOptionsMenu(true)
         }
         loadTripData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //TODO we should improve that
+        if (this::tripMapViewHolder.isInitialized) {
+            viewModel.updateLocalTripData()
+            tripMapViewHolder.configureDriverPassengerButton()
+            setViewPager()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -353,6 +365,12 @@ class TripDetailFragment : Fragment() {
                 setTextColor(DKColors.secondaryColor)
                 setTypeface(DriveKitUI.primaryFont(context), typeface.style)
             }
+        }
+    }
+
+    fun displayDriverPassengerMode() {
+        viewModel.trip?.let {
+            DriverPassengerModeActivity.launchActivity(context as Activity, it.itinId)
         }
     }
 

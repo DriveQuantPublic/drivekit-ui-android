@@ -15,6 +15,9 @@
             android:name=".transportationmode.activity.TransportationModeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".driverpassengermode.activity.DriverPassengerModeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".mysynthesis.MySynthesisActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

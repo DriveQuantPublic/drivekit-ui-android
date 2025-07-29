@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,9 +13,12 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.geocoder.CheckReverseGeocodeListener
 import com.drivequant.drivekit.databaseutils.entity.Call
+import com.drivequant.drivekit.databaseutils.entity.OccupantRole
 import com.drivequant.drivekit.databaseutils.entity.Route
+import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.RouteQueryListener
 import com.drivequant.drivekit.driverdata.trip.RouteStatus
@@ -24,6 +28,7 @@ import com.drivequant.drivekit.driverdata.trip.TripQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.tripdetail.model.DeclarationBadgeStatus
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import java.util.Date
@@ -56,6 +61,7 @@ internal class TripDetailViewModel(
         set(value) {
             field = value
             field?.let { trip ->
+                configurableMapItems.clear()
                 if (!trip.unscored) {
                     for (item in mapItems) {
                         item.canShowMapItem(trip)?.let {
@@ -116,6 +122,10 @@ internal class TripDetailViewModel(
                 }
             })
         }
+    }
+
+    fun updateLocalTripData() {
+        this@TripDetailViewModel.trip = DbTripAccess.findTrip(itinId).executeOneTrip()?.toTrip()
     }
 
     private fun updateTripAdvice(
@@ -305,6 +315,40 @@ internal class TripDetailViewModel(
         return getAdviceByMapItem(mapItem) != null
     }
 
+    fun displayDriverPassengerFab(): Boolean = trip?.let {
+        DriverDataUI.enableOccupantDeclaration && !it.unscored && it.transportationMode == TransportationMode.CAR
+    } ?: false
+
+    @DrawableRes
+    fun getDriverPassengerModeFabIcon(): Int = this.trip?.declaredTransportationMode?.let {
+        when (it.transportationMode) {
+            TransportationMode.CAR -> {
+                if (it.passenger == true) {
+                    R.drawable.dk_transportation_passenger
+                } else {
+                    R.drawable.dk_transportation_driver
+                }
+            }
+
+            TransportationMode.BUS -> R.drawable.dk_transportation_bus
+            TransportationMode.TRAIN -> R.drawable.dk_transportation_train
+            TransportationMode.BIKE -> R.drawable.dk_transportation_bicycle
+            TransportationMode.BOAT -> R.drawable.dk_transportation_boat
+            TransportationMode.FLIGHT -> R.drawable.dk_transportation_plane
+            TransportationMode.ON_FOOT -> R.drawable.dk_transportation_on_foot
+
+            TransportationMode.UNKNOWN,
+            TransportationMode.MOTO,
+            TransportationMode.TRUCK,
+            TransportationMode.IDLE,
+            TransportationMode.OTHER,
+            TransportationMode.SKIING,
+            null -> null
+        }
+    } ?: run {
+        R.drawable.dk_transportation_driver
+    }
+
     private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? = trip?.let { mapItem.getAdvice(it) }
 
     fun getAdviceTitle(mapItem: DKMapItem): String? {
@@ -343,6 +387,24 @@ internal class TripDetailViewModel(
                         }
                     })
             }
+        }
+    }
+
+    private fun getDeclarationBadgeStatus(): DeclarationBadgeStatus =
+        if (trip?.declaredTransportationMode != null) {
+            DeclarationBadgeStatus.LABELLED
+        } else if (trip?.occupantInfo?.role == OccupantRole.DRIVER) {
+            DeclarationBadgeStatus.TO_LABEL
+        } else {
+            DeclarationBadgeStatus.NONE
+        }
+
+    @DrawableRes
+    fun getDeclarationBadgeResId(): Int? {
+        return when (getDeclarationBadgeStatus()) {
+            DeclarationBadgeStatus.NONE -> null
+            DeclarationBadgeStatus.TO_LABEL -> R.drawable.dk_occupant_role_trip_to_label
+            DeclarationBadgeStatus.LABELLED -> R.drawable.dk_occupant_role_trip_labelled
         }
     }
 
