@@ -2,7 +2,6 @@ package com.drivequant.drivekit.ui.transportationmode.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -34,7 +33,6 @@ internal class TransportationModeActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_transportation_mode_activity)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)

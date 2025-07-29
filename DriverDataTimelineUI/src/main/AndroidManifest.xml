@@ -2,16 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <application android:supportsRtl="true">
+    <application
+        android:enableOnBackInvokedCallback="false"
+        android:supportsRtl="true">
         <activity
             android:name=".timeline.TimelineActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".timelinedetail.TimelineDetailActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <provider

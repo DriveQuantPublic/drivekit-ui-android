@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.extension.headLine1
@@ -29,8 +30,17 @@ class SelectBluetoothFragment : Fragment() {
 
     private lateinit var viewModel: BluetoothViewModel
     private lateinit var vehicleId: String
+    private lateinit var vehicleName: String
     private lateinit var globalView: View
     private lateinit var adapter: BluetoothItemRecyclerViewAdapter
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::viewModel.isInitialized) {
+            outState.putString("vehicleId", viewModel.vehicleId)
+            outState.putString("vehicleName", viewModel.vehicleName)
+        }
+        super.onSaveInstanceState(outState)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         globalView = inflater.inflate(R.layout.fragment_bluetooth_select, container, false).setDKStyle()
@@ -39,6 +49,15 @@ class SelectBluetoothFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (savedInstanceState?.getString("vehicleId"))?.let {
+            vehicleId = it
+        }
+        (savedInstanceState?.getString("vehicleName"))?.let {
+            vehicleName = it
+        }
+
+        checkViewModelInitialization()
 
         view.findViewById<TextView>(R.id.text_view_select_description).normalText()
         view.findViewById<TextView>(R.id.text_view_select_list_title).headLine1()
@@ -49,6 +68,12 @@ class SelectBluetoothFragment : Fragment() {
             identifier?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
             }
+        }
+    }
+
+    private fun checkViewModelInitialization() {
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProvider(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName))[BluetoothViewModel::class.java]
         }
     }
 
