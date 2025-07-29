@@ -12,7 +12,6 @@ import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.driverpassengermode.activity.DriverPassengerModeActivity
 import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
@@ -92,15 +91,8 @@ class TripDetailActivity : AppCompatActivity() {
     @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                TransportationModeActivity.UPDATE_TRIP_TRANSPORTATION_MODE ->
-                    shouldRefreshTrips = true
-
-                DriverPassengerModeActivity.UPDATE_DRIVER_PASSENGER_MODE -> {
-                    // todo refresh fab icon
-                }
-            }
+        if (resultCode == RESULT_OK && requestCode == TransportationModeActivity.UPDATE_TRIP_TRANSPORTATION_MODE) {
+            shouldRefreshTrips = true
         }
     }
 
