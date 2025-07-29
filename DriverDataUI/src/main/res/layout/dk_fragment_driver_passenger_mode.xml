@@ -82,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
                 android:text="@string/dk_driverdata_ocupant_declaration_transportation_question"
+                android:textColor="@color/mainFontColor"
                 android:layout_marginBottom="@dimen/dk_margin_half" />
 
             <GridLayout

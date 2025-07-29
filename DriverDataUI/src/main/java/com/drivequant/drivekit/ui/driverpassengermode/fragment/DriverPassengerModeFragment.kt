@@ -71,6 +71,8 @@ internal class DriverPassengerModeFragment : Fragment() {
 
         binding.transportationProfileTitle.normalText()
 
+        binding.transportationModeTitle.normalText()
+
         binding.commentTitle.normalText()
 
         val editTextBackground = binding.editTextComment.background as GradientDrawable
