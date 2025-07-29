@@ -316,15 +316,34 @@ internal class TripDetailViewModel(
     }
 
     fun displayDriverPassengerFab(): Boolean = trip?.let {
-        DriverDataUI.enableOccupantDeclaration && !it.unscored && it.transportationMode == TransportationMode.CAR //TODO check CAR of all motorized modes?
+        DriverDataUI.enableOccupantDeclaration && !it.unscored && it.transportationMode == TransportationMode.CAR
     } ?: false
 
     @DrawableRes
-    fun getDriverPassengerModeFabIcon(): Int? = this.trip?.let {
-        if (it.declaredTransportationMode?.passenger == true) {
-            R.drawable.dk_transportation_passenger
-        } else {
-            R.drawable.dk_transportation_driver
+    fun getDriverPassengerModeFabIcon(): Int? = this.trip?.declaredTransportationMode?.let {
+        when (it.transportationMode) {
+            TransportationMode.CAR -> {
+                if (it.passenger == true) {
+                    R.drawable.dk_transportation_passenger
+                } else {
+                    R.drawable.dk_transportation_driver
+                }
+            }
+
+            TransportationMode.BUS -> R.drawable.dk_transportation_bus
+            TransportationMode.TRAIN -> R.drawable.dk_transportation_train
+            TransportationMode.BIKE -> R.drawable.dk_transportation_bicycle
+            TransportationMode.BOAT -> R.drawable.dk_transportation_boat
+            TransportationMode.FLIGHT -> R.drawable.dk_transportation_plane
+            TransportationMode.ON_FOOT -> R.drawable.dk_transportation_on_foot
+
+            TransportationMode.UNKNOWN,
+            TransportationMode.MOTO,
+            TransportationMode.TRUCK,
+            TransportationMode.IDLE,
+            TransportationMode.OTHER,
+            TransportationMode.SKIING,
+            null -> null
         }
     } ?: run {
         null
@@ -371,7 +390,6 @@ internal class TripDetailViewModel(
         }
     }
 
-    // TODO good definition?
     private fun getDeclarationBadgeStatus(): DeclarationBadgeStatus =
         if (trip?.declaredTransportationMode != null) {
             DeclarationBadgeStatus.LABELLED
