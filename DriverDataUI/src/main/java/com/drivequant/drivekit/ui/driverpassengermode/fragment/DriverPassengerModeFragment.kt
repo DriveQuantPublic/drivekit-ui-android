@@ -236,11 +236,14 @@ internal class DriverPassengerModeFragment : Fragment() {
                     }
                 } else {
                     for (transportationViewItem in transportationModesViews) {
-                        val transportationMode = declaredTransportationMode.transportationMode
-                        if (transportationMode != null && transportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
-                            viewModel.selectTransportationMode(transportationMode)
-                            transportationViewItem.setItemSelectedState(true)
-                        } else {
+                        declaredTransportationMode.transportationMode?.let {
+                            if (declaredTransportationMode.transportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
+                                viewModel.selectTransportationMode(it)
+                                transportationViewItem.setItemSelectedState(true)
+                            } else {
+                                transportationViewItem.setItemSelectedState(false)
+                            }
+                        } ?: run {
                             transportationViewItem.setItemSelectedState(false)
                         }
                     }
