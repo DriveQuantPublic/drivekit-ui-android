@@ -61,6 +61,7 @@ internal class TripDetailViewModel(
         set(value) {
             field = value
             field?.let { trip ->
+                configurableMapItems.clear()
                 if (!trip.unscored) {
                     for (item in mapItems) {
                         item.canShowMapItem(trip)?.let {

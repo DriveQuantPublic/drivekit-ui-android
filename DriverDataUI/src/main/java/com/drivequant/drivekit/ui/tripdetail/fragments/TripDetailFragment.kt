@@ -170,6 +170,7 @@ class TripDetailFragment : Fragment() {
         if (this::tripMapViewHolder.isInitialized) {
             viewModel.updateLocalTripData()
             tripMapViewHolder.configureDriverPassengerButton()
+            setViewPager()
         }
     }
 
