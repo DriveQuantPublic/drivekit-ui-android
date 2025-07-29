@@ -320,7 +320,7 @@ internal class TripDetailViewModel(
     } ?: false
 
     @DrawableRes
-    fun getDriverPassengerModeFabIcon(): Int? = this.trip?.declaredTransportationMode?.let {
+    fun getDriverPassengerModeFabIcon(): Int = this.trip?.declaredTransportationMode?.let {
         when (it.transportationMode) {
             TransportationMode.CAR -> {
                 if (it.passenger == true) {
@@ -346,7 +346,7 @@ internal class TripDetailViewModel(
             null -> null
         }
     } ?: run {
-        null
+        R.drawable.dk_transportation_driver
     }
 
     private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? = trip?.let { mapItem.getAdvice(it) }
