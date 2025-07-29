@@ -10,25 +10,37 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".bluetooth.activity.BluetoothActivity">
 
-    <TextView
-        android:id="@+id/text_view_bluetooth_failed"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginVertical="@dimen/dk_margin"
-        android:layout_weight="0.65"
-        android:gravity="center"
-        android:text="@string/dk_vehicle_bluetooth_not_found"
-        android:textColor="@color/mainFontColor" />
+        android:layout_height="wrap_content">
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
-        android:id="@+id/button_cancel"
-        style="@style/DKButton"
-        android:layout_marginBottom="@dimen/dk_margin_half"
-        android:text="@string/dk_common_cancel" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
-        android:id="@+id/text_view_open_settings"
-        style="@style/DKButton.Secondary"
-        android:layout_marginVertical="@dimen/dk_margin"
-        android:text="@string/dk_vehicle_open_bluetooth_settings" />
+            <TextView
+                android:id="@+id/text_view_bluetooth_failed"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:layout_weight="0.65"
+                android:gravity="center"
+                android:text="@string/dk_vehicle_bluetooth_not_found"
+                android:textColor="@color/mainFontColor" />
+
+            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+                android:id="@+id/button_cancel"
+                style="@style/DKButton"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                android:text="@string/dk_common_cancel" />
+
+            <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
+                android:id="@+id/text_view_open_settings"
+                style="@style/DKButton.Secondary"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:text="@string/dk_vehicle_open_bluetooth_settings" />
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

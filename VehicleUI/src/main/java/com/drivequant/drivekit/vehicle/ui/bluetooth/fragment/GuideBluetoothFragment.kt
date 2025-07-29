@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -24,8 +25,17 @@ class GuideBluetoothFragment : Fragment() {
 
     private lateinit var viewModel: BluetoothViewModel
     private lateinit var vehicleId: String
+    private lateinit var vehicleName: String
     private var _binding: FragmentBluetoothGuideBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::viewModel.isInitialized) {
+            outState.putString("vehicleId", viewModel.vehicleId)
+            outState.putString("vehicleName", viewModel.vehicleName)
+        }
+        super.onSaveInstanceState(outState)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBluetoothGuideBinding.inflate(inflater, container, false)
@@ -36,12 +46,27 @@ class GuideBluetoothFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (savedInstanceState?.getString("vehicleId"))?.let {
+            vehicleId = it
+        }
+        (savedInstanceState?.getString("vehicleName"))?.let {
+            vehicleName = it
+        }
+
+        checkViewModelInitialization()
+
         binding.textViewGuideTitle.headLine1()
         binding.textViewGuideDesc1.normalText()
         binding.textViewGuideDesc2.normalText()
         binding.textViewGuideDesc3.normalText()
         binding.buttonStart.setOnClickListener {
             viewModel.onStartButtonClicked()
+        }
+    }
+
+    private fun checkViewModelInitialization() {
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProvider(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName))[BluetoothViewModel::class.java]
         }
     }
 

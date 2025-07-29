@@ -3,7 +3,6 @@ package com.drivekit.demoapp.dashboard.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -64,8 +63,6 @@ internal class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         DriveKitConfig.setUserOnboarded(this)
-
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setContentView(R.layout.activity_dashboard)
         val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)

@@ -26,7 +26,7 @@ internal class WorkingHoursViewModel : ViewModel() {
                         SyncWorkingHoursStatus.SUCCESS -> true
                         SyncWorkingHoursStatus.FAILED_TO_SYNC_CACHE_ONLY -> false
                     }
-                    config = if (workingHours?.dayConfiguration?.isNullOrEmpty() == true) {
+                    config = if (workingHours?.dayConfiguration.isNullOrEmpty()) {
                         DriveKitTripAnalysisUI.defaultWorkHours
                     } else {
                         workingHours

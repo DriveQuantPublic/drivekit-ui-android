@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.tripanalysis.tripsharing
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,10 +18,13 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -43,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -178,6 +183,10 @@ internal open class TripSharingActivity : ComponentActivity() {
 
     @Composable
     private fun TripSharingImage(uiState: TripSharingUiState) {
+
+        val configuration = LocalConfiguration.current
+        val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        val maxWidth = if (isPortrait) 0.6f else 0.2f
         val imageResource = if (uiState.link != null) {
             R.drawable.dk_trip_analysis_location_sharing_active
         } else if (uiState.isCreatingLink) {
@@ -189,8 +198,8 @@ internal open class TripSharingActivity : ComponentActivity() {
             painterResource(imageResource),
             contentDescription = "Illustration",
             Modifier
-                .fillMaxWidth(0.6f)
-                .aspectRatio(1.0f)
+                .fillMaxWidth(maxWidth)
+                .aspectRatio(1f)
         )
     }
 
