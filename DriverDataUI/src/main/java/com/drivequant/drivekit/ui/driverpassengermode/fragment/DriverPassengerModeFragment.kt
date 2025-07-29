@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.CircularButtonItemView
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -55,7 +56,7 @@ internal class DriverPassengerModeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trips_detail_transportation_mode), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trips_detail_transportation_mode), javaClass.simpleName)
         savedInstanceState?.getString("itinId")?.let{
             itinId = it
         }

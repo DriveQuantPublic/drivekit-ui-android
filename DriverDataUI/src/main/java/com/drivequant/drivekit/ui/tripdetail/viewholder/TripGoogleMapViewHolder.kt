@@ -165,15 +165,10 @@ internal class TripGoogleMapViewHolder(
             }
 
             driverPassengerFabButton.apply {
-                viewModel.getDriverPassengerModeFabIcon()?.let {
-                    setImageResource(it)
-                }
+                setImageResource(viewModel.getDriverPassengerModeFabIcon())
                 imageTintList = ColorStateList.valueOf(DKColors.fontColorOnSecondaryColor)
                 show()
                 setOnClickListener {
-                    //TODO should we?
-                    //DriveKitUI.analyticsListener?.trackScreen(itemView.context.getString(R.string.…), javaClass.simpleName)
-
                     fragment.displayDriverPassengerMode()
                 }
             }
