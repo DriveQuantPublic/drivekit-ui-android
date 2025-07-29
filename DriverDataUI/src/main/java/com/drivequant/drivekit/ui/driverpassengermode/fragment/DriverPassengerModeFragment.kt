@@ -65,9 +65,9 @@ internal class DriverPassengerModeFragment : Fragment() {
             )[DriverPassengerModeViewModel::class.java]
         }
 
-        //TODO should we align with TransportationMode declaretion UI or the new Figma one?
         (binding.descriptionTitle.background as GradientDrawable).setColor(DKColors.warningColor)
         binding.descriptionTitle.normalText()
+        binding.descriptionTitle.text = getString(viewModel.getDescriptionTitle())
 
         binding.transportationProfileTitle.normalText()
 
@@ -95,7 +95,10 @@ internal class DriverPassengerModeFragment : Fragment() {
             hideProgressCircular()
             if (status != null) {
                 when (status) {
-                    UpdateDriverPassengerModeStatus.SUCCESS -> displaySuccessMessage()
+                    UpdateDriverPassengerModeStatus.SUCCESS -> {
+                        activity?.finish()
+                        displaySuccessMessage()
+                    }
                     UpdateDriverPassengerModeStatus.FAILED_TO_UPDATE_MODE -> {
                         Toast.makeText(
                             requireContext(),
@@ -119,7 +122,10 @@ internal class DriverPassengerModeFragment : Fragment() {
             hideProgressCircular()
             if (status != null) {
                 when (status) {
-                    TransportationModeUpdateStatus.NO_ERROR -> displaySuccessMessage()
+                    TransportationModeUpdateStatus.NO_ERROR -> {
+                        activity?.finish()
+                        displaySuccessMessage()
+                    }
                     TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> displayErrorMessage()
                     TransportationModeUpdateStatus.COMMENT_TOO_LONG -> displayCommentTooLongMessage()
                 }
@@ -128,10 +134,12 @@ internal class DriverPassengerModeFragment : Fragment() {
         initDefaultValues()
     }
 
-    //TODO should we display the message when we go back to a trip detail which has a declared data?
     private fun displaySuccessMessage() {
-        binding.descriptionTitle.text =
-            getString(R.string.dk_driverdata_ocupant_declaration_thanks)
+        Toast.makeText(
+            requireContext(),
+            R.string.dk_driverdata_ocupant_declaration_thanks,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun displayCommentTooLongMessage() {
@@ -145,7 +153,7 @@ internal class DriverPassengerModeFragment : Fragment() {
     private fun displayErrorMessage() {
         Toast.makeText(
             requireContext(),
-            R.string.dk_driverdata_failed_to_declare_transportation, //TODO missing string resource
+            R.string.dk_driverdata_failed_to_declare_transportation,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -216,7 +224,6 @@ internal class DriverPassengerModeFragment : Fragment() {
             showProgressCircular()
             viewModel.updateDriverPassengerMode()
         } else {
-            //TODO Missing error message
             displayErrorMessage()
         }
     }

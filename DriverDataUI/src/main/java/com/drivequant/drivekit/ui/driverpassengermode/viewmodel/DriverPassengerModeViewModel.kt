@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.driverpassengermode.viewmodel
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,7 @@ import com.drivequant.drivekit.driverdata.trip.TransportationModeQueryListener
 import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
 import com.drivequant.drivekit.driverdata.trip.UpdateDriverPassengerModeStatus
 import com.drivequant.drivekit.driverdata.trip.driverpassengermode.DriverPassengerMode
+import com.drivequant.drivekit.ui.R
 
 internal class DriverPassengerModeViewModel(private val itinId: String) : ViewModel() {
     var trip: Trip?
@@ -76,6 +78,13 @@ internal class DriverPassengerModeViewModel(private val itinId: String) : ViewMo
     )
 
     fun buildDriverPassengerModes() = DriverPassengerMode.values().asList()
+
+    @StringRes
+    fun getDescriptionTitle(): Int = if (trip?.declaredTransportationMode == null) {
+        R.string.dk_driverdata_ocupant_declaration_info
+    } else {
+        R.string.dk_driverdata_ocupant_declaration_thanks
+    }
 
     @Suppress("UNCHECKED_CAST")
     class DriverPassengerModeViewModelFactory(private val itinId: String) :

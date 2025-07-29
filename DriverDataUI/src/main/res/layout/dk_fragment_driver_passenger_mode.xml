@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/dk_placeholder_rounded_edges"
                 android:padding="@dimen/dk_margin_half"
-                android:text="@string/dk_driverdata_ocupant_declaration_info"
+                tools:text="@string/dk_driverdata_ocupant_declaration_info"
                 android:textColor="@color/fontColorOnSecondaryColor" />
 
             <LinearLayout
