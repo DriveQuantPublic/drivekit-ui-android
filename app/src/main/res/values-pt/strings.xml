@@ -95,6 +95,7 @@
    <string name="firstname">Nome próprio</string>
    <string name="forbidden_error">Não tem os direitos necessários</string>
    <string name="info_banner_diagnosis_title">Foi detectado um problema! Tem de configurar o seu telemóvel.</string>
+   <string name="info_banner_passenger_declaration_title">Sabia que pode declarar uma viagem feita como passageiro?</string>
    <string name="lastname">Último nome</string>
    <string name="limit_reached_error">O número máximo de condutores nesta chave API foi atingido</string>
    <string name="logout_confirmation">Tem a certeza de que pretende terminar a sessão?</string>

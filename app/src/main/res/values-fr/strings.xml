@@ -95,6 +95,7 @@
    <string name="firstname">Prénom</string>
    <string name="forbidden_error">Vous n\'avez pas les droits nécessaires</string>
    <string name="info_banner_diagnosis_title">Un problème a été détecté ! Vous devez régler votre téléphone.</string>
+   <string name="info_banner_passenger_declaration_title">Saviez-vous que vous pouvez déclarer un trajet effectué en tant que passager ?</string>
    <string name="lastname">Nom</string>
    <string name="limit_reached_error">Le nombre maximum de conducteurs sur cette clé API a été atteint</string>
    <string name="logout_confirmation">Etes-vous sûr de vouloir vous déconnecter ?</string>
