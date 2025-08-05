@@ -346,7 +346,11 @@ internal class TripDetailViewModel(
             null -> null
         }
     } ?: run {
-        R.drawable.dk_transportation_driver
+        if (this.trip?.occupantInfo?.role == OccupantRole.PASSENGER) {
+            R.drawable.dk_transportation_passenger
+        } else {
+            R.drawable.dk_transportation_driver
+        }
     }
 
     private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? = trip?.let { mapItem.getAdvice(it) }
@@ -393,7 +397,7 @@ internal class TripDetailViewModel(
     private fun getDeclarationBadgeStatus(): DeclarationBadgeStatus =
         if (trip?.declaredTransportationMode != null) {
             DeclarationBadgeStatus.LABELLED
-        } else if (trip?.occupantInfo?.role == OccupantRole.DRIVER) {
+        } else if (trip?.occupantInfo?.role == OccupantRole.PASSENGER) {
             DeclarationBadgeStatus.TO_LABEL
         } else {
             DeclarationBadgeStatus.NONE
