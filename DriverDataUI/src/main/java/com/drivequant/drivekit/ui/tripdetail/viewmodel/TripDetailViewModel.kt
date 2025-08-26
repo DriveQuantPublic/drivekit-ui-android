@@ -346,11 +346,7 @@ internal class TripDetailViewModel(
             null -> null
         }
     } ?: run {
-        if (this.trip?.occupantInfo?.role == OccupantRole.PASSENGER) {
-            R.drawable.dk_transportation_passenger
-        } else {
-            R.drawable.dk_transportation_driver
-        }
+        R.drawable.dk_transportation_driver
     }
 
     private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? = trip?.let { mapItem.getAdvice(it) }
