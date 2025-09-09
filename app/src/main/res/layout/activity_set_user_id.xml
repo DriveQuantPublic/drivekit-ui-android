@@ -14,48 +14,53 @@
             android:id="@+id/toolbar"
             layout="@layout/dk_layout_toolbar" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dk_margin_double"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/dk_margin"
-            android:paddingEnd="@dimen/dk_margin">
-
-            <TextView
-                android:id="@+id/text_view_user_id_title"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin_double"
-                android:textColor="@color/mainFontColor"
-                android:textStyle="bold"
-                tools:text="@string/authentication_title" />
+                android:layout_marginTop="@dimen/dk_margin_double"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin">
 
-            <TextView
-                android:id="@+id/text_view_user_id_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin"
-                android:textColor="@color/complementaryFontColor"
-                tools:text="@string/authentication_description" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_layout_user_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin"
-                android:hint="@string/authentication_unique_identifier">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_view_user_id_field"
+                <TextView
+                    android:id="@+id/text_view_user_id_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:textSize="@dimen/dk_text_normal" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="@dimen/dk_margin_double"
+                    android:textColor="@color/mainFontColor"
+                    android:textStyle="bold"
+                    tools:text="@string/authentication_title" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/text_view_user_id_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dk_margin"
+                    android:textColor="@color/complementaryFontColor"
+                    tools:text="@string/authentication_description" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_user_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dk_margin"
+                    android:hint="@string/authentication_unique_identifier">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/text_view_user_id_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/dk_text_normal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
         <include
             layout="@layout/layout_button_primary_action"
             android:layout_width="match_parent"

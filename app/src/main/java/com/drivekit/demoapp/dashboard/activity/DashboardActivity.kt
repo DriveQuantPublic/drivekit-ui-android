@@ -3,7 +3,6 @@ package com.drivekit.demoapp.dashboard.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -30,6 +29,9 @@ import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
+import com.drivequant.drivekit.databaseutils.Query
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
+import com.drivequant.drivekit.driverdata.trip.driverpassengermode.DriverPassengerMode
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton
@@ -64,8 +66,6 @@ internal class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         DriveKitConfig.setUserOnboarded(this)
-
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setContentView(R.layout.activity_dashboard)
         val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
@@ -125,6 +125,20 @@ internal class DashboardActivity : AppCompatActivity() {
                     override fun onInfoBannerClicked() {
                         when (it) {
                             InfoBannerType.DIAGNOSIS -> PermissionsUtilsUI.startAppDiagnosisActivity(this@DashboardActivity)
+                            InfoBannerType.DRIVER_PASSENGER -> {
+                                DbTripAccess.tripsQuery()
+                                    .whereEqualTo(
+                                        "OccupantInfo_role",
+                                        DriverPassengerMode.PASSENGER.name
+                                    )
+                                    .orderBy("endDate", Query.Direction.DESCENDING)
+                                    .queryOne().executeOne()?.let { trip ->
+                                        DriverDataUI.startTripDetailActivity(
+                                            this@DashboardActivity,
+                                            trip.itinId
+                                        )
+                                    }
+                            }
                         }
                     }
                 })

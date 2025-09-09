@@ -24,6 +24,8 @@ object DKColors {
     @ColorInt
     val backgroundViewColor: Int = appContext.getColor(R.color.backgroundViewColor)
     @ColorInt
+    val informationColor: Int = appContext.getColor(R.color.informationColor)
+    @ColorInt
     val warningColor: Int = appContext.getColor(R.color.warningColor)
     @ColorInt
     val criticalColor: Int = appContext.getColor(R.color.criticalColor)

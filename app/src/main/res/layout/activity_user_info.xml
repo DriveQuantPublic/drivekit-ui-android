@@ -14,78 +14,85 @@
             android:id="@+id/toolbar"
             layout="@layout/dk_layout_toolbar" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dk_margin_double"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/dk_margin"
-            android:paddingEnd="@dimen/dk_margin">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/text_view_user_info_title"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin_double"
-                android:textColor="@color/mainFontColor"
-                android:textSize="@dimen/dk_text_medium"
-                android:textStyle="bold"
-                tools:text="@string/user_info_title" />
+                android:layout_marginTop="@dimen/dk_margin_double"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin">
 
-            <TextView
-                android:id="@+id/text_view_user_info_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin"
-                android:textColor="@color/complementaryFontColor"
-                tools:text="@string/user_info_description" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_layout_firstname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin"
-                android:hint="@string/firstname">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_view_firstname_field"
+                <TextView
+                    android:id="@+id/text_view_user_info_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:textSize="@dimen/dk_text_normal" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="@dimen/dk_margin_double"
+                    android:textColor="@color/mainFontColor"
+                    android:textSize="@dimen/dk_text_medium"
+                    android:textStyle="bold"
+                    tools:text="@string/user_info_title" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_layout_lastname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin"
-                android:hint="@string/lastname">
+                <TextView
+                    android:id="@+id/text_view_user_info_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dk_margin"
+                    android:textColor="@color/complementaryFontColor"
+                    tools:text="@string/user_info_description" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_view_lastname_field"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_firstname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:textSize="@dimen/dk_text_normal" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="@dimen/dk_margin"
+                    android:hint="@string/firstname">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_layout_pseudo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin"
-                android:hint="@string/pseudo">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/text_view_firstname_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/dk_text_normal" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_view_pseudo_field"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_lastname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:textSize="@dimen/dk_text_normal" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="@dimen/dk_margin"
+                    android:hint="@string/lastname">
 
-        </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/text_view_lastname_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/dk_text_normal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_pseudo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dk_margin"
+                    android:hint="@string/pseudo">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/text_view_pseudo_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/dk_text_normal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <include
             layout="@layout/layout_button_primary_action"

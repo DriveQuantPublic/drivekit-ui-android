@@ -118,7 +118,11 @@ internal class TripsListViewModel(
                     if (!configuration.transportationMode.isAlternative()) {
                         trips.filter { it.declaredTransportationMode?.transportationMode == mode }
                     } else {
-                        trips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }
+                        trips.filter {
+                            (it.transportationMode == mode && it.declaredTransportationMode == null)
+                                ||
+                            (it.declaredTransportationMode?.transportationMode == mode && it.transportationMode.isAlternative())
+                        }
                     }
                 }
                 if (trips.isNotEmpty()) {

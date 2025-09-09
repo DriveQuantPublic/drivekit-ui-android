@@ -40,6 +40,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
         private set
     var enableAlternativeTrips: Boolean = false
         private set
+    var enableOccupantDeclaration: Boolean = false
+        private set
     internal var mapItems: List<MapItem> = listOf(
         MapItem.SAFETY,
         MapItem.ECO_DRIVING,
@@ -128,6 +130,11 @@ object DriverDataUI : DriverDataUIEntryPoint {
     @JvmStatic
     fun enableAlternativeTrips(enableAlternativeTrips: Boolean) {
         this.enableAlternativeTrips = enableAlternativeTrips
+    }
+
+    @JvmStatic
+    fun enableOccupantDeclaration(enableOccupantDeclaration: Boolean) {
+        this.enableOccupantDeclaration = enableOccupantDeclaration
     }
 
     @JvmStatic

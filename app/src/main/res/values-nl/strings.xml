@@ -95,6 +95,7 @@
    <string name="firstname">Voornaam</string>
    <string name="forbidden_error">U heeft niet de benodigde rechten</string>
    <string name="info_banner_diagnosis_title">Er is een probleem gedetecteerd! U moet uw telefoon aanpassen.</string>
+   <string name="info_banner_passenger_declaration_title">Wist je dat je een rit als passagier kunt opgeven?</string>
    <string name="lastname">Achternaam</string>
    <string name="limit_reached_error">Het maximum aantal drivers voor deze API-sleutel is bereikt.</string>
    <string name="logout_confirmation">Weet je zeker dat je de verbinding wilt verbreken?</string>

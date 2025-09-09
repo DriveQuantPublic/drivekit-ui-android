@@ -95,6 +95,7 @@
    <string name="firstname">Fornavn</string>
    <string name="forbidden_error">Du har ikke de nødvendige rettigheder</string>
    <string name="info_banner_diagnosis_title">Der er opdaget et problem! Du skal konfigurere din telefon.</string>
+   <string name="info_banner_passenger_declaration_title">Vidste du, at du kan registrere en tur som passager?</string>
    <string name="lastname">Efternavn</string>
    <string name="limit_reached_error">Det maksimale antal drivere på denne API-nøgle er nået.</string>
    <string name="logout_confirmation">Er du sikker på, at du vil logge ud?</string>

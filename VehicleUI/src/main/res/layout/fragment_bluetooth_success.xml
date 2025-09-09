@@ -10,47 +10,59 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".bluetooth.activity.BluetoothActivity">
 
-    <TextView
-        android:id="@+id/text_view_congrats_title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dk_margin"
-        android:gravity="center"
-        android:paddingTop="@dimen/dk_margin"
-        android:text="@string/dk_vehicle_bluetooth_congrats_title"
-        android:textColor="@color/mainFontColor" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/text_view_congrats_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dk_margin"
-        android:gravity="center"
-        android:paddingTop="@dimen/dk_margin_quarter"
-        android:textColor="@color/mainFontColor"
-        tools:text="This is a description text lorem" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/image_view_success"
-        android:layout_width="152dp"
-        android:layout_height="152dp"
-        android:layout_gravity="center"
-        android:layout_marginVertical="@dimen/dk_margin"
-        android:src="@drawable/dk_thumbs_up" />
+            <TextView
+                android:id="@+id/text_view_congrats_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:gravity="center"
+                android:paddingTop="@dimen/dk_margin"
+                android:text="@string/dk_vehicle_bluetooth_congrats_title"
+                android:textColor="@color/mainFontColor" />
 
-    <TextView
-        android:id="@+id/text_view_congrats_notice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/dk_margin"
-        android:gravity="center"
-        android:paddingTop="@dimen/dk_margin"
-        android:textColor="@color/mainFontColor" />
+            <TextView
+                android:id="@+id/text_view_congrats_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:gravity="center"
+                android:paddingTop="@dimen/dk_margin_quarter"
+                android:textColor="@color/mainFontColor"
+                tools:text="This is a description text lorem" />
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
-        android:id="@+id/button_finish"
-        style="@style/DKButton"
-        android:layout_marginTop="@dimen/dk_margin_half"
-        android:text="@string/dk_common_finish"
-        android:visibility="visible" />
+            <ImageView
+                android:id="@+id/image_view_success"
+                android:layout_width="152dp"
+                android:layout_height="152dp"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:src="@drawable/dk_thumbs_up" />
+
+            <TextView
+                android:id="@+id/text_view_congrats_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:gravity="center"
+                android:paddingTop="@dimen/dk_margin"
+                android:textColor="@color/mainFontColor" />
+
+            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+                android:id="@+id/button_finish"
+                style="@style/DKButton"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:text="@string/dk_common_finish"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

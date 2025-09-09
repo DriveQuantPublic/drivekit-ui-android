@@ -2,7 +2,6 @@ package com.drivequant.drivekit.ui.tripdetail.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -49,7 +48,6 @@ class TripDetailActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_detail)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
@@ -91,7 +89,7 @@ class TripDetailActivity : AppCompatActivity() {
     @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == TransportationModeActivity.UPDATE_TRIP_TRANSPORTATION_MODE){
+        if (resultCode == RESULT_OK && requestCode == TransportationModeActivity.UPDATE_TRIP_TRANSPORTATION_MODE) {
             shouldRefreshTrips = true
         }
     }

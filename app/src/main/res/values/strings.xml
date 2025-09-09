@@ -95,6 +95,7 @@
    <string name="firstname">First name</string>
    <string name="forbidden_error">You do not have the required rights</string>
    <string name="info_banner_diagnosis_title">A problem has been detected! You must set up your phone.</string>
+   <string name="info_banner_passenger_declaration_title">Did you know that you can declare a trip taken as a passenger?</string>
    <string name="lastname">Last name</string>
    <string name="limit_reached_error">The maximum number of drivers on this API key has been reached</string>
    <string name="logout_confirmation">Are you sure you want to logout?</string>

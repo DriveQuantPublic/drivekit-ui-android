@@ -9,6 +9,7 @@
     <color name="fontColorOnSecondaryColor">@android:color/white</color>
     <color name="neutralColor">#F0F0F0</color>
     <color name="backgroundViewColor">#FAFAFA</color>
+    <color name="informationColor">#34B2F7</color>
     <color name="warningColor">#F7A334</color>
     <color name="criticalColor">#E52027</color>
     <color name="transparentColor">#000000FF</color>

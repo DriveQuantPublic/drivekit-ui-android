@@ -95,6 +95,7 @@
    <string name="firstname">Nome</string>
    <string name="forbidden_error">Non hai i diritti necessari</string>
    <string name="info_banner_diagnosis_title">È stato rilevato un problema! Devi configurare il tuo telefono.</string>
+   <string name="info_banner_passenger_declaration_title">Sapevi che puoi dichiarare un viaggio effettuato come passeggero?</string>
    <string name="lastname">Cognome</string>
    <string name="limit_reached_error">È stato raggiunto il numero massimo di conducenti su questa chiave API.</string>
    <string name="logout_confirmation">Sei sicuro di voler disconnettere?</string>
