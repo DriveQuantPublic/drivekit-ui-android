@@ -6,7 +6,8 @@ interface DriveKitAnalyticsListener {
 }
 
 enum class DKAnalyticsEvent {
-    TRIP_OPEN
+    TRIP_OPEN,
+    DRIVER_PASSENGER_OPEN
 }
 
 enum class DKAnalyticsEventKey {

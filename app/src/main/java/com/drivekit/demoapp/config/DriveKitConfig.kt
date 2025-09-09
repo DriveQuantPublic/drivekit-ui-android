@@ -43,6 +43,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import kotlin.random.Random
+import androidx.core.content.edit
 
 
 /**
@@ -57,6 +58,7 @@ internal object DriveKitConfig {
 
     private const val TRIP_ANALYSIS_AUTO_START_PREF_KEY = "tripAnalysisAutoStartPrefKey"
     private const val USER_ALREADY_ONBOARDED_PREF_KEY = "userAlreadyOnboardedPrefKey"
+    private const val USER_ALREADY_OPENED_DRIVER_PASSENGER_MODE_PREF_KEY = "userAlreadyOpenDriverPassengerModePrefKey"
 
     private const val enableTripAnalysisCrashDetection: Boolean = true
 
@@ -111,19 +113,42 @@ internal object DriveKitConfig {
             .getBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, true)
 
     fun enableTripAnalysisAutoStart(context: Context, activate: Boolean) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, activate).apply()
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(
+                TRIP_ANALYSIS_AUTO_START_PREF_KEY,
+                activate
+            )
+        }
         DriveKitTripAnalysis.activateAutoStart(activate)
     }
 
     @SuppressLint("ApplySharedPref")
     fun setUserOnboarded(context: Context) {
         if (!PreferenceManager.getDefaultSharedPreferences(context).contains(USER_ALREADY_ONBOARDED_PREF_KEY)) {
-            PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(USER_ALREADY_ONBOARDED_PREF_KEY, true).commit()
+            PreferenceManager.getDefaultSharedPreferences(context).edit(commit = true) {
+                putBoolean(
+                    USER_ALREADY_ONBOARDED_PREF_KEY,
+                    true
+                )
+            }
         }
     }
 
     fun isUserOnboarded(context: Context): Boolean =
         PreferenceManager.getDefaultSharedPreferences(context).getBoolean(USER_ALREADY_ONBOARDED_PREF_KEY, false)
+
+    fun setUserOpenedDriverPassengerMode(context: Context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit(commit = true) {
+            putBoolean(
+                USER_ALREADY_OPENED_DRIVER_PASSENGER_MODE_PREF_KEY,
+                true
+            )
+        }
+    }
+
+    fun hasUserAlreadyOpenedDriverPassengerMode(context: Context): Boolean =
+        PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(USER_ALREADY_OPENED_DRIVER_PASSENGER_MODE_PREF_KEY, false)
 
     private fun configureCore(context: Context) {
         if (apiKey.isNotBlank()) {
@@ -155,7 +180,9 @@ internal object DriveKitConfig {
             }
 
             override fun trackEvent(event: DKAnalyticsEvent, parameters: Map<DKAnalyticsEventKey, Any>?) {
-                // TODO: manage event tracking here
+                if (event == DKAnalyticsEvent.DRIVER_PASSENGER_OPEN) {
+                   setUserOpenedDriverPassengerMode(DriveKit.applicationContext)
+                }
             }
         })
     }

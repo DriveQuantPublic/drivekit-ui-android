@@ -29,6 +29,9 @@ import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
+import com.drivequant.drivekit.databaseutils.Query
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
+import com.drivequant.drivekit.driverdata.trip.driverpassengermode.DriverPassengerMode
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton
@@ -122,6 +125,20 @@ internal class DashboardActivity : AppCompatActivity() {
                     override fun onInfoBannerClicked() {
                         when (it) {
                             InfoBannerType.DIAGNOSIS -> PermissionsUtilsUI.startAppDiagnosisActivity(this@DashboardActivity)
+                            InfoBannerType.DRIVER_PASSENGER -> {
+                                DbTripAccess.tripsQuery()
+                                    .whereEqualTo(
+                                        "OccupantInfo_role",
+                                        DriverPassengerMode.PASSENGER.name
+                                    )
+                                    .orderBy("endDate", Query.Direction.DESCENDING)
+                                    .queryOne().executeOne()?.let { trip ->
+                                        DriverDataUI.startTripDetailActivity(
+                                            this@DashboardActivity,
+                                            trip.itinId
+                                        )
+                                    }
+                            }
                         }
                     }
                 })

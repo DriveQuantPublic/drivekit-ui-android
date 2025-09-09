@@ -393,7 +393,7 @@ internal class TripDetailViewModel(
     private fun getDeclarationBadgeStatus(): DeclarationBadgeStatus =
         if (trip?.declaredTransportationMode != null) {
             DeclarationBadgeStatus.LABELLED
-        } else if (trip?.occupantInfo?.role == OccupantRole.DRIVER) {
+        } else if (trip?.occupantInfo?.role == OccupantRole.PASSENGER) {
             DeclarationBadgeStatus.TO_LABEL
         } else {
             DeclarationBadgeStatus.NONE
