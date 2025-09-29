@@ -188,12 +188,12 @@
    <string name="trip_simulator_city_title">Viaje en la ciudad (8 km)</string>
    <string name="trip_simulator_crash_0_description">Este ejemplo es un viaje corto con una colisión que el algoritmo de detección no confirma.</string>
    <string name="trip_simulator_crash_0_title">Accidente no confirmado</string>
-   <string name="trip_simulator_crash_10_description">Este ejemplo es un viaje corto con un accidente confirmado a una velocidad de 10 km/h.</string>
-   <string name="trip_simulator_crash_10_title">Accidente confirmado a 10 km/h</string>
    <string name="trip_simulator_crash_20_description">Este ejemplo es un viaje corto con un accidente confirmado a una velocidad de 20 km/h.</string>
    <string name="trip_simulator_crash_20_title">Accidente confirmado a 20 km/h</string>
    <string name="trip_simulator_crash_30_description">Este ejemplo es un viaje corto con un accidente confirmado a una velocidad de 30 km/h.</string>
    <string name="trip_simulator_crash_30_title">Accidente confirmado a 30 km/h</string>
+   <string name="trip_simulator_crash_40_description">Este ejemplo es un viaje corto con un accidente confirmado a una velocidad de 40 km/h.</string>
+   <string name="trip_simulator_crash_40_title">Accidente confirmado a 40 km/h</string>
    <string name="trip_simulator_crash_followed_by_driving_description">Este ejemplo incluye un accidente confirmado menos de dos minutos después del inicio del viaje, tras el cual el conductor ha seguido conduciendo.</string>
    <string name="trip_simulator_crash_followed_by_driving_title">Accidente confirmado y viaje reanudado</string>
    <string name="trip_simulator_description">El simulador tiene como objetivo ayudarle a reproducir un viaje y a comprender el ciclo de vida del componente de análisis de viajes de DriveKit. Le aconsejamos que lo utilice después de la integración del SDK. Reproduce datos GPS reales para varios tipos de viajes.\n\nSe trata de una herramienta de prueba, no debe incrustarla en una aplicación de producción.\n\nTambién le recomendamos que siempre pruebe su aplicación en condiciones reales antes de publicarla.</string>

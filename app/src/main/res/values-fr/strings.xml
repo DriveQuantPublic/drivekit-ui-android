@@ -188,12 +188,12 @@
    <string name="trip_simulator_city_title">Trajet en ville (8 km)</string>
    <string name="trip_simulator_crash_0_description">Cet exemple est un trajet court avec une collision que l\'algorithme de détection ne confirme pas.</string>
    <string name="trip_simulator_crash_0_title">Accident non confirmé</string>
-   <string name="trip_simulator_crash_10_description">Cet exemple est un trajet court avec un accident confirmé à une vitesse de 10 km/h.</string>
-   <string name="trip_simulator_crash_10_title">Accident confirmé à 10 km/h</string>
    <string name="trip_simulator_crash_20_description">Cet exemple est un trajet court avec un accident confirmé à une vitesse de 20 km/h.</string>
    <string name="trip_simulator_crash_20_title">Accident confirmé à 20 km/h</string>
    <string name="trip_simulator_crash_30_description">Cet exemple est un trajet court avec un accident confirmé à une vitesse de 30 km/h.</string>
    <string name="trip_simulator_crash_30_title">Accident confirmé à 30 km/h</string>
+   <string name="trip_simulator_crash_40_description">Cet exemple est un trajet court avec un accident confirmé à une vitesse de 40 km/h.</string>
+   <string name="trip_simulator_crash_40_title">Accident confirmé à 40 km/h</string>
    <string name="trip_simulator_crash_followed_by_driving_description">Cet exemple comprend un accident confirmé moins de deux minutes après le début du trajet et après lequel le conducteur a continué son trajet.</string>
    <string name="trip_simulator_crash_followed_by_driving_title">Accident confirmé et trajet poursuivi</string>
    <string name="trip_simulator_description">Le simulateur a pour objectif de vous aider à reproduire un trajet et à comprendre le cycle de vie du composant Trip Analysis de DriveKit. Nous vous conseillons de l\'utiliser après l\'intégration du SDK. Il reproduit des données GPS réelles pour plusieurs types de trajets.\n\nC\'est un outil de test, il ne faut pas l\'embarquer dans une application de production.\n\nNous vous recommandons également de toujours tester votre application en condition réelles avant de la publier.</string>
