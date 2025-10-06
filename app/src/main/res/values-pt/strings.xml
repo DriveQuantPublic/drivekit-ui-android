@@ -188,12 +188,12 @@
    <string name="trip_simulator_city_title">Viagem pela cidade (8 km)</string>
    <string name="trip_simulator_crash_0_description">Este exemplo é uma viagem curta com uma colisão que o algoritmo de deteção não confirma.</string>
    <string name="trip_simulator_crash_0_title">Viagem com colisão não confirmada</string>
-   <string name="trip_simulator_crash_10_description">Este exemplo é uma viagem curta com um acidente confirmado a uma velocidade de 10 km/h.</string>
-   <string name="trip_simulator_crash_10_title">Acidente confirmado a 10 km/h</string>
    <string name="trip_simulator_crash_20_description">Este exemplo é de uma viagem curta com um acidente confirmado a uma velocidade de 20 km/h.</string>
    <string name="trip_simulator_crash_20_title">Colisão confirmada a 20 km/h</string>
    <string name="trip_simulator_crash_30_description">Este exemplo representa uma curta viagem com um acidente confirmado a uma velocidade de 30 km/h.</string>
    <string name="trip_simulator_crash_30_title">Acidente confirmado a 30 km/h</string>
+   <string name="trip_simulator_crash_40_description">Este exemplo é uma viagem curta com um acidente confirmado a uma velocidade de 40 km/h.</string>
+   <string name="trip_simulator_crash_40_title">Acidente confirmado a 40 km/h</string>
    <string name="trip_simulator_crash_followed_by_driving_description">Este exemplo inclui um acidente confirmado menos de dois minutos após o início da viagem, após o qual o condutor continuou a sua viagem.</string>
    <string name="trip_simulator_crash_followed_by_driving_title">Acidente confirmado e viagem retomada</string>
    <string name="trip_simulator_description">O objetivo do simulador é ajudá-lo a reproduzir uma viagem e a compreender o ciclo de vida da componente Análise de Viagens do DriveKit. Aconselhamos a sua utilização após a integração do SDK. Reproduz dados GPS reais para vários tipos de viagens.\n\nÉ uma ferramenta de teste, não a deve integrar numa aplicação de produção.\n\nTambém recomendamos que teste sempre a sua aplicação em condições reais antes de a publicar.</string>
