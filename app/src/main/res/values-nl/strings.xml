@@ -188,12 +188,12 @@
    <string name="trip_simulator_city_title">Reis naar de stad (8 km)</string>
    <string name="trip_simulator_crash_0_description">Dit voorbeeld is een korte rit met een botsing die niet wordt bevestigd door het detectiealgoritme.</string>
    <string name="trip_simulator_crash_0_title">Onbevestigd ongeval</string>
-   <string name="trip_simulator_crash_10_description">Dit voorbeeld is een korte reis met een bevestigd ongeval bij een snelheid van 10 km/u.</string>
-   <string name="trip_simulator_crash_10_title">Ongeval bevestigd bij 10 km/u</string>
    <string name="trip_simulator_crash_20_description">Dit voorbeeld is een korte reis met een bevestigd ongeval bij een snelheid van 20 km/u.</string>
    <string name="trip_simulator_crash_20_title">Ongeval bevestigd bij 20 km/u</string>
    <string name="trip_simulator_crash_30_description">Dit voorbeeld is een korte reis met een bevestigd ongeval bij een snelheid van 30 km/u.</string>
    <string name="trip_simulator_crash_30_title">Ongeval bevestigd bij 30 km/u</string>
+   <string name="trip_simulator_crash_40_description">Dit voorbeeld is een korte reis met een bevestigd ongeval bij een snelheid van 40 km/u.</string>
+   <string name="trip_simulator_crash_40_title">Ongeval bevestigd bij 40 km/u</string>
    <string name="trip_simulator_crash_followed_by_driving_description">Dit voorbeeld omvat een ongeval dat minder dan twee minuten na het begin van de reis werd bevestigd, waarna de bestuurder zijn reis voortzette.</string>
    <string name="trip_simulator_crash_followed_by_driving_title">Ongeval bevestigd en reis voortgezet</string>
    <string name="trip_simulator_description">Het doel van de simulator is om je te helpen een reis te reproduceren en de levenscyclus van de ritanalysecomponent van DriveKit te begrijpen. We raden aan dat je het gebruikt na het integreren van de SDK. Het reproduceert echte GPS-gegevens voor verschillende soorten reizen.\n\nHet is een testtool, dus zet het niet in een productietoepassing.\n\nWe raden je ook aan om je applicatie altijd te testen in echte omstandigheden voordat je deze publiceert.</string>

@@ -188,12 +188,12 @@
    <string name="trip_simulator_city_title">Bytur (8 km)</string>
    <string name="trip_simulator_crash_0_description">Dette eksempel er en kort tur med en kollision, som detektionsalgoritmen ikke bekræfter.</string>
    <string name="trip_simulator_crash_0_title">Tur med ubekræftet kollision</string>
-   <string name="trip_simulator_crash_10_description">Dette eksempel er en kort tur med et bekræftet uheld ved en hastighed på 10 km/t.</string>
-   <string name="trip_simulator_crash_10_title">Bekræftet sammenstød ved 10 km/t</string>
    <string name="trip_simulator_crash_20_description">Dette eksempel er en kort tur med en bekræftet ulykke ved en hastighed på 20 km/t.</string>
    <string name="trip_simulator_crash_20_title">Crash bekræftet ved 20 km/t</string>
    <string name="trip_simulator_crash_30_description">Dette eksempel er en kort tur med en bekræftet ulykke ved en hastighed på 30 km/t.</string>
    <string name="trip_simulator_crash_30_title">Crash bekræftet ved 30 km/t</string>
+   <string name="trip_simulator_crash_40_description">Dette eksempel er en kort tur med et bekræftet uheld ved en hastighed på 40 km/t.</string>
+   <string name="trip_simulator_crash_40_title">Bekræftet sammenstød ved 40 km/t</string>
    <string name="trip_simulator_crash_followed_by_driving_description">Dette eksempel omfatter en ulykke, der er bekræftet mindre end to minutter efter turens start, hvorefter føreren har fortsat med at køre.</string>
    <string name="trip_simulator_crash_followed_by_driving_title">Ulykke bekræftet og turen genoptaget</string>
    <string name="trip_simulator_description">Formålet med simulatoren er at hjælpe dig med at reproducere en tur og forstå livscyklussen for Trip Analysis-komponenten i DriveKit. Vi anbefaler, at du bruger den efter SDK-integrationen. Den gengiver ægte GPS-data for flere typer ture.\n\nDet er et testværktøj, du bør ikke integrere det i en produktionsapplikation.\n\nVi anbefaler også, at du altid tester din applikation under virkelige forhold, før du offentliggør den.</string>

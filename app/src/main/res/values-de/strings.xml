@@ -189,12 +189,12 @@ Um Ihnen bei der Implementierung eines.\n\nTBerechtigungspfads zu helfen, haben 
    <string name="trip_simulator_city_title">Fahrt in die Stadt (8 km)</string>
    <string name="trip_simulator_crash_0_description">Bei diesem Beispiel handelt es sich um eine Kurzstrecke mit einem Zusammenstoß, den der Erkennungsalgorithmus nicht bestätigt.</string>
    <string name="trip_simulator_crash_0_title">Unbestätigter Unfall</string>
-   <string name="trip_simulator_crash_10_description">Bei diesem Beispiel handelt es sich um eine kurze Strecke mit einem bestätigten Unfall bei einer Geschwindigkeit von 10 km/h.</string>
-   <string name="trip_simulator_crash_10_title">Unfall bei 10 km/h bestätigt</string>
    <string name="trip_simulator_crash_20_description">Bei diesem Beispiel handelt es sich um eine kurze Strecke mit einem bestätigten Unfall bei einer Geschwindigkeit von 20 km/h.</string>
    <string name="trip_simulator_crash_20_title">Unfall bei 20 km/h bestätigt</string>
    <string name="trip_simulator_crash_30_description">Bei diesem Beispiel handelt es sich um eine kurze Strecke mit einem bestätigten Unfall bei einer Geschwindigkeit von 30 km/h.</string>
    <string name="trip_simulator_crash_30_title">Unfall bei 30 km/h bestätigt</string>
+   <string name="trip_simulator_crash_40_description">Bei diesem Beispiel handelt es sich um eine kurze Strecke mit einem bestätigten Unfall bei einer Geschwindigkeit von 40 km/h.</string>
+   <string name="trip_simulator_crash_40_title">Unfall bei 40 km/h bestätigt</string>
    <string name="trip_simulator_crash_followed_by_driving_description">In diesem Beispiel geht es um einen Unfall, der weniger als zwei Minuten nach Beginn der Fahrt bestätigt wurde und nach dem der Fahrer seine Fahrt fortgesetzt hat.</string>
    <string name="trip_simulator_crash_followed_by_driving_title">Unfall bestätigt und Reise fortgesetzt</string>
    <string name="trip_simulator_description">Der Simulator soll Ihnen helfen, eine Fahrt nachzuvollziehen und den Lebenszyklus der DriveKit-Komponente Trip Analysis zu verstehen. Wir empfehlen Ihnen, ihn nach der Integration des SDK zu verwenden. Es reproduziert echte GPS-Daten für verschiedene Arten von Fahrten.\n\nEs ist ein Testwerkzeug und sollte nicht in eine Produktionsanwendung eingebaut werden.\n\nWir empfehlen Ihnen außerdem, Ihre Anwendung immer unter realen Bedingungen zu testen, bevor Sie sie veröffentlichen.</string>
