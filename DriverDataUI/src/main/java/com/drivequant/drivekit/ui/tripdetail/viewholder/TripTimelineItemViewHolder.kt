@@ -20,7 +20,7 @@ class TripTimelineItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
     private val lineBottom: View = itemView.findViewById(R.id.line_bottom)
 
     fun bind(tripEvent : TripEvent, isFirst: Boolean, isLast: Boolean, listener :OnItemClickListener){
-        eventHour.text = tripEvent.time.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        eventHour.text = tripEvent.time.formatDate(DKDatePattern.HOUR_MINUTE)
         eventDescription.text = tripEvent.getTitle(itemView.context)
         eventImage.setImageResource(tripEvent.getEventImageResource())
         if (isFirst) lineTop.visibility = View.INVISIBLE else lineTop.visibility = View.VISIBLE

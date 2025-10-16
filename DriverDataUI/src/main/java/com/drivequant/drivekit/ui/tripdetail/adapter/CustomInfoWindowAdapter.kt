@@ -32,7 +32,7 @@ internal class CustomInfoWindowAdapter(
         FontUtils.overrideFonts(context, view)
         val event = tripDetailViewModel.displayEvents[marker.tag as Int]
         val eventHour = view.findViewById<TextView>(R.id.text_view_time)
-        eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE)
 
         val bubbleTitle = view.findViewById<TextView>(R.id.bubble_title)
         bubbleTitle.text = event.getTitle(context)

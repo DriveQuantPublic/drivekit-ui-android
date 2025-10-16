@@ -75,7 +75,7 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
     fun title(context: Context): String = this.state.let {
         when (it) {
             is RecordingState.Recording -> {
-                val dateText = it.startingDate.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+                val dateText = it.startingDate.formatDate(DKDatePattern.HOUR_MINUTE)
                 context.getString(R.string.dk_tripwidget_record_title, dateText)
             }
 
