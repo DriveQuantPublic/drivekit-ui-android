@@ -64,9 +64,9 @@ class UnscoredTripFragment : Fragment() {
         }
 
         binding.tripDuration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!).convertToString()
-        binding.tripStartEnd.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        binding.tripStartEnd.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE)
             .plus(" - ")
-            .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER))
+            .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.HOUR_MINUTE))
 
         binding.tripDuration.highlightMedium()
         binding.imageViewUnscoredTripInfo.background.tint(view.context, com.drivequant.drivekit.common.ui.R.color.warningColor)

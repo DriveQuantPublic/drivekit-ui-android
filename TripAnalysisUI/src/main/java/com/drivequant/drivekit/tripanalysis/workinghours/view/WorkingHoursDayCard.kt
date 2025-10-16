@@ -195,7 +195,7 @@ internal class WorkingHoursDayCard : FrameLayout {
     }
 
     private fun rawHoursValueToDate(hours: Float): String? {
-        val dateFormat = SimpleDateFormat(DKDatePattern.HOUR_MINUTE_LETTER.getPattern(), Locale.getDefault())
+        val dateFormat = SimpleDateFormat(DKDatePattern.HOUR_MINUTE.getPattern(), Locale.getDefault())
         val calendar = Calendar.getInstance()
         calendar[Calendar.HOUR_OF_DAY] = 0
         calendar[Calendar.MINUTE] = 0
