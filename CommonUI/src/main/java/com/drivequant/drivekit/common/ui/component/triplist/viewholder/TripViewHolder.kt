@@ -47,9 +47,9 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                 itemView.setPadding(it, 0, it, 0)
             }
         }
-        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE)
         textViewDepartureCity.text = trip.computeDepartureInfo()
-        textViewArrivalTime.text = trip.getEndDate().formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        textViewArrivalTime.text = trip.getEndDate().formatDate(DKDatePattern.HOUR_MINUTE)
         textViewArrivalCity.text = trip.computeArrivalInfo()
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
 
