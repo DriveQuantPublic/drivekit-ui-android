@@ -31,8 +31,11 @@
    <string name="dk_driverdata_distance_card_current_year">Ano atual</string>
    <string name="dk_driverdata_distance_card_estimation">Estimativa</string>
    <string name="dk_driverdata_distance_card_title_month">Distância mensal (km)</string>
+   <string name="dk_driverdata_distance_card_title_month_miles">Distância mensal (mi)</string>
    <string name="dk_driverdata_distance_card_title_week">Distância semanal (km)</string>
+   <string name="dk_driverdata_distance_card_title_week_miles">Distância semanal (mi)</string>
    <string name="dk_driverdata_distance_card_title_year">Distância anual (km)</string>
+   <string name="dk_driverdata_distance_card_title_year_miles">Distância anual (mi)</string>
    <string name="dk_driverdata_distance_travelled">%s viajou</string>
    <string name="dk_driverdata_distraction_score">Pontuação de distração</string>
    <string name="dk_driverdata_distraction_score_info">A pontuação de distração (uso do telefone enquanto dirige) mede as interações do motorista com o smartphone enquanto dirige. Isso inclui o número de vezes que o telefone é desbloqueado e a duração das chamadas telefônicas durante a viagem. O uso do telefone pode distrair a atenção do motorista e aumenta significativamente o risco de acidente de carro. As chamadas feitas com o kit de mãos livres do seu veículo são permitidas e não diminuem sua pontuação.</string>
@@ -41,7 +44,9 @@
    <string name="dk_driverdata_drivingconditions_cloud">Nublado</string>
    <string name="dk_driverdata_drivingconditions_day">Dia</string>
    <string name="dk_driverdata_drivingconditions_distance_plural">KM viajou</string>
+   <string name="dk_driverdata_drivingconditions_distance_plural_miles">MI viajou</string>
    <string name="dk_driverdata_drivingconditions_distance_singular">KM viajou</string>
+   <string name="dk_driverdata_drivingconditions_distance_singular_miles">MI viajou</string>
    <string name="dk_driverdata_drivingconditions_empty_data">Dirija com o aplicativo e grave suas viagens para visualizar e obtenha um resumo das suas condições de condução.</string>
    <string name="dk_driverdata_drivingconditions_fog">Enevoado</string>
    <string name="dk_driverdata_drivingconditions_ice">Gelado</string>
@@ -169,6 +174,7 @@
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo e obrigado por sua cautela!</string>
    <string name="dk_driverdata_no_trip_placeholder">Ainda não efectuou qualquer viagem com este veículo.</string>
    <string name="dk_driverdata_no_trips_recorded">Faça sua primeira viagem para preencher esta listaA aplicação ainda não analisou as suas viagens.\n\nPara medir o seu estilo de condução e receber dicas e conselhos sobre como melhorar, verifique se a aplicação está corretamente configurada e faça uma viagem.\n\nQuando o modo automático está ativado, a aplicação detecta e analisa os seus movimentos mesmo quando não está aberta.</string>
+   <string name="dk_driverdata_ocupant_declaration_comment">Você tem algum comentário? (opcional)</string>
    <string name="dk_driverdata_ocupant_declaration_info">Para melhorar o app, indique como esta viagem foi feita (uma opção)</string>
    <string name="dk_driverdata_ocupant_declaration_role_question">Você estava dirigindo ou era passageiro de um carro?</string>
    <string name="dk_driverdata_ocupant_declaration_thanks">❤️ Obrigado por declarar o seu modo de deslocamento para esta viagem. Pode alterar a sua escolha.</string>
@@ -201,11 +207,13 @@
    <string name="dk_driverdata_profile_mobility_narrow">Sua zona de mobilidade é estreita</string>
    <string name="dk_driverdata_profile_mobility_small">Sua zona de mobilidade é pequena</string>
    <string name="dk_driverdata_profile_mobility_text">A maioria de suas viagens é feita em um raio de %s km.</string>
+   <string name="dk_driverdata_profile_mobility_text_miles">A maioria de suas viagens é feita em um raio de %s mi.</string>
    <string name="dk_driverdata_profile_mobility_vast">Sua zona de mobilidade é vasta</string>
    <string name="dk_driverdata_profile_mobility_wide">Sua zona de mobilidade é larga</string>
    <string name="dk_driverdata_profile_regularity_intermittent_text">Seus hábitos de direção mudam de uma semana para outra. Você raramente cobre a mesma distância e o número de viagens semanais flutua.</string>
    <string name="dk_driverdata_profile_regularity_intermittent_title">Seus hábitos de direção são irregulares</string>
    <string name="dk_driverdata_profile_regularity_regular_text">Você é um motorista regular e suas semanas são semelhantes. Em média, você faz %1$s e cobre %2$s km.</string>
+   <string name="dk_driverdata_profile_regularity_regular_text_miles">Você é um motorista regular e suas semanas são semelhantes. Em média, você faz %1$s e cobre %2$s mi.</string>
    <string name="dk_driverdata_profile_regularity_regular_title">Seus hábitos de direção são regulares</string>
    <string name="dk_driverdata_profile_roadcontext_city_text">%s %% da distância que você dirige está no tráfego da cidade, em condições bastante fluidas.</string>
    <string name="dk_driverdata_profile_roadcontext_city_title">Você dirige principalmente na cidade</string>

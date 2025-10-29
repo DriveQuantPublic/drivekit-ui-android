@@ -2,10 +2,14 @@
 <resources>
    <string name="dk_timeline_acceleration_score">Pontuação de aceleração: %s</string>
    <string name="dk_timeline_accelerations">Acelerações / 100 km: %s</string>
+   <string name="dk_timeline_accelerations_miles">Acelerações / 100 mi: %s</string>
    <string name="dk_timeline_adherence">Limites de aderência / 100 km: %s</string>
+   <string name="dk_timeline_adherence_miles">Limites de aderência / 100 mi: %s</string>
    <string name="dk_timeline_brakings">Freios / 100 km: %s</string>
+   <string name="dk_timeline_brakings_miles">Freios / 100 mi: %s</string>
    <string name="dk_timeline_button_timeline_detail">Veja mais detalhes sobre minha pontuação</string>
    <string name="dk_timeline_calls_duration">Duração das chamadas telefônicas / 100 km: %s</string>
+   <string name="dk_timeline_calls_duration_miles">Duração das chamadas telefônicas / 100 mi: %s</string>
    <string name="dk_timeline_co2_mass">Missa de CO2: %s</string>
    <string name="dk_timeline_consumption">Consumos: %s</string>
    <string name="dk_timeline_deceleration_score">Pontuação de desaceleração: %s</string>
@@ -17,6 +21,7 @@
    <string name="dk_timeline_info_maintain_score">A velocidade de manutenção varia de 0 a 5. Um valor 0 indica que o driver tem um comportamento apropriado e aciona a uma velocidade constante. Caso contrário, quando as oscilações em velocidade são detectadas, a pontuação aumenta e o motorista pode progredir.</string>
    <string name="dk_timeline_maintain_score">Velocidade Manter a pontuação: %s</string>
    <string name="dk_timeline_nb_unlocks">Número de desbloqueios por telefone / 100 km: %s</string>
+   <string name="dk_timeline_nb_unlocks_miles">Número de desbloqueios por telefone / 100 mi: %s</string>
    <string name="dk_timeline_overspeeding_distance">Distância percorrida em excesso de velocidade: %s</string>
    <string name="dk_timeline_overspeeding_duration">Tempo acima da velocidade permitida: %s</string>
    <string name="dk_timeline_road_context_city">Cidade</string>

@@ -6,6 +6,7 @@
    <string name="dk_challenge_braking_score">Bremsescore</string>
    <string name="dk_challenge_consult_rule_button">Tjek regler og vilkår</string>
    <string name="dk_challenge_distance_kilometer">Afstand (km)</string>
+   <string name="dk_challenge_distance_miles">Afstand (mi)</string>
    <string name="dk_challenge_distraction_score">Distraktionsscore</string>
    <string name="dk_challenge_eco_driving_score">Øko-kørselsscore</string>
    <string name="dk_challenge_failed_to_join">Kan ikke deltage i udfordringen, sørg for, at du er tilsluttet internettet eller prøv igen senere.</string>

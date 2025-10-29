@@ -31,8 +31,11 @@
    <string name="dk_driverdata_distance_card_current_year">Current year</string>
    <string name="dk_driverdata_distance_card_estimation">Estimation</string>
    <string name="dk_driverdata_distance_card_title_month">Monthly distance (km)</string>
+   <string name="dk_driverdata_distance_card_title_month_miles">Monthly distance (mi)</string>
    <string name="dk_driverdata_distance_card_title_week">Weekly distance (km)</string>
+   <string name="dk_driverdata_distance_card_title_week_miles">Weekly distance (mi)</string>
    <string name="dk_driverdata_distance_card_title_year">Annual distance (km)</string>
+   <string name="dk_driverdata_distance_card_title_year_miles">Annual distance (mi)</string>
    <string name="dk_driverdata_distance_travelled">%s travelled</string>
    <string name="dk_driverdata_distraction_score">Distraction score</string>
    <string name="dk_driverdata_distraction_score_info">The distraction score (phone use while driving) measures the driver\'s interactions with the smartphone while driving. This includes both the number of times the phone is unlocked and the duration of phone calls during the trip. Using the phone can distract the driver\'s attention and significantly increases the risk of car accident. Calls made with the hands-free kit of your vehicle are allowed and will not lower your score.</string>
@@ -41,7 +44,9 @@
    <string name="dk_driverdata_drivingconditions_cloud">Cloudy</string>
    <string name="dk_driverdata_drivingconditions_day">Day</string>
    <string name="dk_driverdata_drivingconditions_distance_plural">km travelled</string>
+   <string name="dk_driverdata_drivingconditions_distance_plural_miles">mi travelled</string>
    <string name="dk_driverdata_drivingconditions_distance_singular">km travelled</string>
+   <string name="dk_driverdata_drivingconditions_distance_singular_miles">mi travelled</string>
    <string name="dk_driverdata_drivingconditions_empty_data">Drive with the app and record your trips to view and get a summary of your driving conditions.</string>
    <string name="dk_driverdata_drivingconditions_fog">Foggy</string>
    <string name="dk_driverdata_drivingconditions_ice">Icy</string>
@@ -169,6 +174,7 @@
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo and thank you for your caution!</string>
    <string name="dk_driverdata_no_trip_placeholder">You have not yet made any trips with this vehicle.</string>
    <string name="dk_driverdata_no_trips_recorded">The application has not yet analyzed your trips.\n\nTo measure your driving style and receive tips and advice on how to improve, check that the application is properly configured and carry out a trip.\n\nWhen automatic mode is activated, the application detects and analyzes your movements even when it is not open.</string>
+   <string name="dk_driverdata_ocupant_declaration_comment">Do you have any comments? (optional)</string>
    <string name="dk_driverdata_ocupant_declaration_info">To improve the app, please select how this trip was completed (one choice allowed)</string>
    <string name="dk_driverdata_ocupant_declaration_role_question">Were you driving or a passenger in a car?</string>
    <string name="dk_driverdata_ocupant_declaration_thanks">❤️ Thanks for declaring your travel mode for this trip. You can change your choice.</string>
@@ -201,11 +207,13 @@
    <string name="dk_driverdata_profile_mobility_narrow">Your mobility zone is narrow</string>
    <string name="dk_driverdata_profile_mobility_small">Your mobility zone is small</string>
    <string name="dk_driverdata_profile_mobility_text">The majority of your trips are made in a radius of %s km.</string>
+   <string name="dk_driverdata_profile_mobility_text_miles">The majority of your trips are made in a radius of %s mi.</string>
    <string name="dk_driverdata_profile_mobility_vast">Your mobility zone is vast</string>
    <string name="dk_driverdata_profile_mobility_wide">Your mobility zone is wide</string>
    <string name="dk_driverdata_profile_regularity_intermittent_text">Your driving habits change from a week to another. You rarely cover the same distance, and the number of weekly trips fluctuates.</string>
    <string name="dk_driverdata_profile_regularity_intermittent_title">Your driving habits are irregular</string>
    <string name="dk_driverdata_profile_regularity_regular_text">You are a regular driver and your weeks are similar. On average, you make %1$s trips and cover %2$s km.</string>
+   <string name="dk_driverdata_profile_regularity_regular_text_miles">You are a regular driver and your weeks are similar. On average, you make %1$s trips and cover %2$s mi.</string>
    <string name="dk_driverdata_profile_regularity_regular_title">Your driving habits are regular</string>
    <string name="dk_driverdata_profile_roadcontext_city_text">%s %% of the distance you drive is in city traffic, in fairly fluid conditions.</string>
    <string name="dk_driverdata_profile_roadcontext_city_title">You mainly drive in the city</string>
