@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.ui.R
@@ -84,7 +86,7 @@ internal class SpeedingFragment : Fragment() {
 
         val meters = Meter(speedingDistance.toDouble())
 
-        val distanceValue = if (speedingDistance >= 1000) {
+        val distanceValue = if (meters.value >= 1000 || DriveKitUI.unitSystem == DKUnitSystem.IMPERIAL) {
             DKDataFormatter.formatInKmOrMile(
                 requireContext(),
                 DKDataFormatter.ceilDistance(meters, 10000)).convertToString()

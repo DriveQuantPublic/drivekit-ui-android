@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.KilometerPerHour
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
@@ -104,7 +105,7 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
             context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no_value)
         } else {
             trip.tripStatistics?.let {
-                DKDataFormatter.formatSpeedMean(context, it.speedMean)
+                DKDataFormatter.formatMeanSpeed(context, KilometerPerHour(it.speedMean))
             } ?: run {
                 context.getString(R.string.dk_driverdata_unknown)
             }

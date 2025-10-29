@@ -371,20 +371,36 @@ object DKDataFormatter {
         }
     }
 
-    fun formatSpeedMean(context: Context, speed: Double): String =
-        "${speed.roundToInt()}"
-            .plus(nbsp)
-            .plus(context.getString(R.string.dk_common_unit_km_per_hour))
+    fun formatMeanSpeed(context: Context, kmh: KilometerPerHour): String =
+        when (DriveKitUI.unitSystem) {
+            DKUnitSystem.METRIC -> "${kmh.value.roundToInt()}"
+                .plus(nbsp)
+                .plus(context.getString(R.string.dk_common_unit_km_per_hour))
+
+            DKUnitSystem.IMPERIAL -> {
+                "${kmh.toMilePerHour().value.roundToInt()}"
+                    .plus(nbsp)
+                    .plus(context.getString(R.string.dk_common_unit_mph))
+            }
+        }
 
     fun formatConsumption(
         context: Context,
-        consumption: Double,
+        consumption: Double, // l/100kmh
         type: DKConsumptionType = DKConsumptionType.FUEL) = when (type) {
-            DKConsumptionType.FUEL -> R.string.dk_common_unit_l_per_100km
+            DKConsumptionType.FUEL ->
+                when (DriveKitUI.unitSystem) {
+                    DKUnitSystem.METRIC -> R.string.dk_common_unit_l_per_100km
+                    DKUnitSystem.IMPERIAL -> R.string.dk_common_unit_mpg
+                }
             DKConsumptionType.ELECTRIC -> R.string.dk_common_unit_kwh_per_100km
         }.let {
+            val value = when (DriveKitUI.unitSystem) {
+                DKUnitSystem.METRIC -> consumption.removeZeroDecimal()
+                DKUnitSystem.IMPERIAL -> LitersPer100Kmh(consumption).toMilesPerGallon().value.removeZeroDecimal()
+            }
             listOf(
-                FormatType.VALUE(consumption.removeZeroDecimal()),
+                FormatType.VALUE(value),
                 FormatType.SEPARATOR(),
                 FormatType.UNIT(context.getString(it))
             )

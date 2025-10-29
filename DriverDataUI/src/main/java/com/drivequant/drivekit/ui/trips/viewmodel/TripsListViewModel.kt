@@ -10,12 +10,14 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
@@ -29,6 +31,7 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.extension.text
@@ -199,8 +202,11 @@ internal class TripsListViewModel(
     fun getTripSynthesisText(context: Context): SpannableString {
         val tripsNumber = filteredTrips.size
         val tripsDistance = filteredTrips.computeTotalDistance()
-        val trip =
-            context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, tripsNumber)
+        val trip = context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, tripsNumber)
+        val distanceUnitResId = when (DriveKitUI.unitSystem) {
+            DKUnitSystem.METRIC -> com.drivequant.drivekit.common.ui.R.string.dk_common_unit_kilometer
+            DKUnitSystem.IMPERIAL -> com.drivequant.drivekit.common.ui.R.string.dk_common_unit_mile
+        }
         return DKSpannable().append("$tripsNumber", context.resSpans {
             color(DKColors.primaryColor)
             size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
@@ -214,7 +220,7 @@ internal class TripsListViewModel(
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 typeface(Typeface.BOLD)
             }
-        ).append(" km", context.resSpans { // TODO
+        ).append(" ${context.getString(distanceUnitResId)}", context.resSpans {
             color(DKColors.complementaryFontColor)
         }).toSpannable()
     }

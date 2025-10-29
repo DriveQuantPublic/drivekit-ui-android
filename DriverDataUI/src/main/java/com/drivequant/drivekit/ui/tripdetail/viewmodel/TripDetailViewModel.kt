@@ -5,11 +5,13 @@ import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.geocoder.CheckReverseGeocodeListener
@@ -454,7 +456,7 @@ internal class TripDetailViewModel(
         val distance = trip?.calls?.map { call -> call.distance }?.sum() ?: 0
         val meters = Meter(distance.toDouble())
         DKDataFormatter.apply {
-            return if (distance >= 1000) {
+            return if (meters.value >= 1000 || DriveKitUI.unitSystem == DKUnitSystem.IMPERIAL) {
                 formatInKmOrMile(context, ceilDistance(meters, 10000)).convertToString()
             } else {
                 formatMeterDistance(context, meters).convertToString()
