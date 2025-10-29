@@ -36,7 +36,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
             OdometerItemType.ANALYZED -> it.analyzedDistance
             OdometerItemType.ESTIMATED -> it.estimatedYearDistance
         }.let { distance ->
-            getFormattedDistance(context, distance)
+            getFormattedDistance(context, Meter(distance))
         }
     }
 
@@ -78,10 +78,10 @@ internal class OdometerItemViewModel(val vehicleId: String) {
         } ?: ""
     }"
 
-    private fun getFormattedDistance(context: Context, distance: Double) =
+    private fun getFormattedDistance(context: Context, meters: Meter) =
         DKDataFormatter.formatInKmOrMile(
             context,
-            Meter(distance * 1000),
+            meters,
             minDistanceToRemoveFractions = 0.0,
             forcedUnitSystem = DKUnitSystem.METRIC
         ).convertToString()
