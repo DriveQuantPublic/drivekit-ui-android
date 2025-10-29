@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DurationUnit
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.StreakResult
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
@@ -92,7 +93,7 @@ internal class StreaksData(
     }
 
     fun getCurrentStreakData(context: Context) : SpannableString {
-        val currentDistance = DKDataFormatter.formatMeterDistanceInKm(context, current.distance).convertToString()
+        val currentDistance = DKDataFormatter.formatInKmOrMile(context, Meter(current.distance)).convertToString()
         val currentDuration = DKDataFormatter.formatDuration(context, current.duration, DurationUnit.HOUR).convertToString()
         val trip = context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, currentTripsCount)
 
@@ -109,7 +110,7 @@ internal class StreaksData(
     }
 
     fun getBestStreakData(context: Context): SpannableString {
-        val bestDistance = DKDataFormatter.formatMeterDistanceInKm(context, best.distance).convertToString()
+        val bestDistance = DKDataFormatter.formatInKmOrMile(context, Meter(best.distance)).convertToString()
         val bestDuration = DKDataFormatter.formatDuration(context, best.duration, DurationUnit.HOUR).convertToString()
         val trip = context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, bestTripsCount)
 

@@ -8,6 +8,7 @@ import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
@@ -56,11 +57,11 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
 
     fun getHistoryDistance(context: Context) = vehicleOdometerHistory?.let {
         mileageDistance = it.distance
-        DKDataFormatter.formatMeterDistanceInKm(context, it.distance * 1000, minDistanceToRemoveFractions = 0.0).convertToString()
+        DKDataFormatter.formatInKmOrMile(context, Meter(it.distance * 1000), minDistanceToRemoveFractions = 0.0).convertToString()
     } ?: context.getString(R.string.dk_vehicle_odometer_mileage_kilometer)
 
     fun getFormattedMileageDistance(context: Context, unit: Boolean = true) =
-        DKDataFormatter.formatMeterDistanceInKm(context, mileageDistance * 1000, unit, minDistanceToRemoveFractions = 0.0).convertToString()
+        DKDataFormatter.formatInKmOrMile(context, Meter(mileageDistance * 1000), unit, minDistanceToRemoveFractions = 0.0).convertToString()
 
     fun getHistoryUpdateDate() = if (canAddHistory()) {
         Calendar.getInstance().time

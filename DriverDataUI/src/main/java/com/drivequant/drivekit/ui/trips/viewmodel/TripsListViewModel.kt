@@ -16,7 +16,7 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.common.ui.utils.DistanceUnit
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
@@ -29,7 +29,6 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
-import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.extension.text
@@ -150,9 +149,9 @@ internal class TripsListViewModel(
 
     @StringRes
     fun getNoTripsTextResId() = if (this.trips.isEmpty()) {
-        R.string.dk_driverdata_no_trips_recorded
+        com.drivequant.drivekit.ui.R.string.dk_driverdata_no_trips_recorded
     } else {
-        R.string.dk_driverdata_no_trip_placeholder
+        com.drivequant.drivekit.ui.R.string.dk_driverdata_no_trip_placeholder
     }
 
     private fun getTransportationModeFilterItems(): List<FilterItem> {
@@ -209,13 +208,13 @@ internal class TripsListViewModel(
         }).append(" $trip - ", context.resSpans {
             color(DKColors.complementaryFontColor)
         }).append(
-            DKDataFormatter.formatMeterDistanceInKm(context, tripsDistance, false).convertToString(),
+            DKDataFormatter.formatInKmOrMile(context, tripsDistance, false).convertToString(),
             context.resSpans {
                 color(DKColors.primaryColor)
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 typeface(Typeface.BOLD)
             }
-        ).append(" ${DistanceUnit.configuredUnit(context)}", context.resSpans {
+        ).append(" km", context.resSpans { // TODO
             color(DKColors.complementaryFontColor)
         }).toSpannable()
     }

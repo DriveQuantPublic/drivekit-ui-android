@@ -22,6 +22,7 @@ import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 
 
@@ -96,9 +97,9 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                         DKDataFormatter.formatDuration(itemView.context, trip.computeCeilDuration())
                             .convertToString()
                     } else {
-                        DKDataFormatter.formatMeterDistanceInKm(
+                        DKDataFormatter.formatInKmOrMile(
                             itemView.context,
-                            trip.getScore(tripData)
+                            Meter(50.0) // TODO mock, was trip.getScore(tripData)
                         ).convertToString()
                     }
             }

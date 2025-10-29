@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.geocoder.CheckReverseGeocodeListener
 import com.drivequant.drivekit.databaseutils.entity.Call
@@ -436,13 +437,11 @@ internal class TripDetailViewModel(
     override fun getUnlockDistance(context: Context): String {
         trip?.driverDistraction?.distanceUnlock?.let {
             DKDataFormatter.apply {
+                val meters = Meter(it)
                 return if (it >= 1000) {
-                    formatMeterDistanceInKm(context, ceilDistance(it, 10000)).convertToString()
+                    formatInKmOrMile(context, ceilDistance(meters, 10000)).convertToString()
                 } else {
-                    formatMeterDistance(
-                        context,
-                        trip?.driverDistraction?.distanceUnlock
-                    ).convertToString()
+                    formatMeterDistance(context, meters).convertToString()
                 }
             }
         }
@@ -453,15 +452,12 @@ internal class TripDetailViewModel(
 
     override fun getPhoneCallsDistance(context: Context): String {
         val distance = trip?.calls?.map { call -> call.distance }?.sum() ?: 0
+        val meters = Meter(distance.toDouble())
         DKDataFormatter.apply {
             return if (distance >= 1000) {
-                formatMeterDistanceInKm(context,
-                    ceilDistance(distance.toDouble(), 10000)).convertToString()
+                formatInKmOrMile(context, ceilDistance(meters, 10000)).convertToString()
             } else {
-                formatMeterDistance(
-                    context,
-                    distance.toDouble()
-                ).convertToString()
+                formatMeterDistance(context, meters).convertToString()
             }
         }
     }

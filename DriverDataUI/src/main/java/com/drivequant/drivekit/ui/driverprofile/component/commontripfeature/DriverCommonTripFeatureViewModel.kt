@@ -9,5 +9,5 @@ internal data class DriverCommonTripFeatureViewModel(
     @StringRes val roadContextId: Int,
     val isRealData: Boolean
 ) {
-    @StringRes val distanceUnitId: Int = com.drivequant.drivekit.common.ui.R.string.dk_common_unit_kilometer
+    @StringRes val distanceUnitId: Int = com.drivequant.drivekit.common.ui.R.string.dk_common_unit_kilometer // TODO
 }

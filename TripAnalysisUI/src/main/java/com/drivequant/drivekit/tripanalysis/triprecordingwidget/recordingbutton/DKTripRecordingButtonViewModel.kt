@@ -9,6 +9,7 @@ import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
@@ -85,9 +86,9 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
 
     fun distanceSubtitle(context: Context): String? = this.state.let {
         when (it) {
-            is RecordingState.Recording -> DKDataFormatter.formatMeterDistanceInKm(
+            is RecordingState.Recording -> DKDataFormatter.formatInKmOrMile(
                 context,
-                it.distance,
+                Meter(it.distance),
                 true,
                 minDistanceToRemoveFractions = Double.MAX_VALUE
             ).convertToString()

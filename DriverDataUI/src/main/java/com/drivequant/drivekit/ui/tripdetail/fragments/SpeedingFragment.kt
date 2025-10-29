@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.SpeedingFragmentBinding
@@ -81,12 +82,14 @@ internal class SpeedingFragment : Fragment() {
         val speedingDuration = viewModel.getSpeedingDurationAndPercent(requireContext()).first
         val totalDurationPercent = viewModel.getSpeedingDurationAndPercent(requireContext()).second
 
+        val meters = Meter(speedingDistance.toDouble())
+
         val distanceValue = if (speedingDistance >= 1000) {
-            DKDataFormatter.formatMeterDistanceInKm(
+            DKDataFormatter.formatInKmOrMile(
                 requireContext(),
-                DKDataFormatter.ceilDistance(speedingDistance.toDouble(), 10000)).convertToString()
+                DKDataFormatter.ceilDistance(meters, 10000)).convertToString()
         } else {
-            DKDataFormatter.formatMeterDistance(requireContext(), speedingDistance.toDouble()).convertToString()
+            DKDataFormatter.formatMeterDistance(requireContext(), meters).convertToString()
         }
 
         val durationValue = DKDataFormatter.formatDuration(

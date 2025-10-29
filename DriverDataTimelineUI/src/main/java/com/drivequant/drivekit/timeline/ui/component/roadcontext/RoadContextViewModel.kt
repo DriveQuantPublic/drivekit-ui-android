@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
@@ -77,9 +77,9 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
     fun displayData() = emptyRoadContextType == null
 
     private fun formatDistanceInKm(context: Context): String {
-        return DKDataFormatter.formatMeterDistanceInKm(
+        return DKDataFormatter.formatInKmOrMile(
             context = context,
-            distance = totalDistanceForAllContext * 1000,
+            meters = Meter(totalDistanceForAllContext * 1000),
             minDistanceToRemoveFractions = 10.0
         ).convertToString()
     }

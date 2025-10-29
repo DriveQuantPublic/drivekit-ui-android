@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -41,7 +42,7 @@ fun List<Trip>.computeActiveDays(): Int {
     return this.distinctBy { it.endDate.formatDateWithPattern(simpleDateFormat) }.size
 }
 
-fun List<Trip>.computeTotalDistance(): Double {
+fun List<Trip>.computeTotalDistance(): Meter {
     val iterator = this.listIterator()
     var totalDistance: Double = 0.toDouble()
     for (currentTrip in iterator) {
@@ -51,7 +52,7 @@ fun List<Trip>.computeTotalDistance(): Double {
             }
         }
     }
-    return totalDistance
+    return Meter(totalDistance)
 }
 
 fun List<Trip>.computeTotalDuration(): Double {
