@@ -274,12 +274,18 @@ object DKDataFormatter {
         return formattingTypes
     }
 
-
-    fun formatInKmOrMile(context: Context, meters: Meter?, unit: Boolean = true, minDistanceToRemoveFractions: Double = 100.0): List<FormatType> {
+    fun formatInKmOrMile(
+        context: Context,
+        meters: Meter?,
+        unit: Boolean = true,
+        minDistanceToRemoveFractions: Double = 100.0,
+        forcedUnitSystem: DKUnitSystem? = null
+    ): List<FormatType> {
         val formattingTypes = mutableListOf<FormatType>()
         val kilometers = meters?.toKilometers()
+        val desiredUnitSystem = forcedUnitSystem ?: DriveKitUI.unitSystem
 
-        when (DriveKitUI.unitSystem) {
+        when (desiredUnitSystem) {
             DKUnitSystem.METRIC -> {
                 formattingTypes.add(FormatType.VALUE(formatDistanceValue(kilometers?.value, minDistanceToRemoveFractions) ?: ""))
                 if (unit) {
@@ -336,7 +342,7 @@ object DKDataFormatter {
 
     fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
         distance?.let {
-            val floatingNumber = if (distance >= minDistanceRemoveFraction) 0 else 1
+            val floatingNumber = if (distance >= minDistanceRemoveFraction) 0 else 1 // TODO maybe replace 1 with 2 in case of mile
             val ret = distance.format(floatingNumber)
             return ret
         }
