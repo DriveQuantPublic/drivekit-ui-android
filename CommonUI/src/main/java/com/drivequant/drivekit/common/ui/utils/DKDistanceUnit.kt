@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.common.ui.utils
 
-internal const val MILES_TO_KM_FACTOR = 1.609344
+const val MILES_TO_KM_FACTOR = 1.609344
 
 @JvmInline
 value class Kilometer(val value: Double) {
