@@ -335,14 +335,11 @@ object DKDataFormatter {
         }
     }
 
-    fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
+    fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? =
         distance?.let {
             val floatingNumber = if (distance >= minDistanceRemoveFraction) 0 else 1
-            val ret = distance.format(floatingNumber)
-            return ret
+            return distance.format(floatingNumber)
         }
-        return null
-    }
 
     fun formatCO2Emission(context: Context, emission: Double) : String =
         "${emission.roundToInt()}"
@@ -387,7 +384,7 @@ object DKDataFormatter {
 
     fun formatConsumption(
         context: Context,
-        consumption: Double, // l/100kmh
+        consumption: Double,
         type: DKConsumptionType = DKConsumptionType.FUEL) = when (type) {
             DKConsumptionType.FUEL ->
                 when (DriveKitUI.unitSystem) {

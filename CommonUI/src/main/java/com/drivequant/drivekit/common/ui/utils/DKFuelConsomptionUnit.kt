@@ -8,6 +8,4 @@ value class LitersPer100Kmh(val value: Double) {
 }
 
 @JvmInline
-value class MilesPerGallon(val value: Double) {
-
-}
+value class MilesPerGallon(val value: Double)

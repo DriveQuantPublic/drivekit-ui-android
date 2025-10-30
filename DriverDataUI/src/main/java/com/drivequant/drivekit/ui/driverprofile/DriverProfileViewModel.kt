@@ -103,7 +103,7 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
                     it.distanceEstimation.yearDistance
                 ),
                 DriverDistanceEstimationViewModel(
-                    if (isMetric) R.string.dk_driverdata_distance_card_title_month else R.string.dk_driverdata_distance_card_title_month,
+                    if (isMetric) R.string.dk_driverdata_distance_card_title_month else R.string.dk_driverdata_distance_card_title_month_miles,
                     R.string.dk_driverdata_distance_card_current_month,
                     this.currentDrivenDistanceByPeriod[DKPeriod.MONTH] ?: 0.0,
                     it.distanceEstimation.monthDistance

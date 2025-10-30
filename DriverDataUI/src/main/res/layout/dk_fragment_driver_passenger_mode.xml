@@ -157,7 +157,7 @@
                     android:id="@+id/comment_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/dk_driverdata_transportation_mode_declaration_comment"
+                    android:text="@string/dk_driverdata_ocupant_declaration_comment"
                     android:textColor="@color/mainFontColor" />
 
                 <EditText

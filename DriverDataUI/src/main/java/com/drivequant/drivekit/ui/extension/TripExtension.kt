@@ -43,15 +43,7 @@ fun List<Trip>.computeActiveDays(): Int {
 }
 
 fun List<Trip>.computeTotalDistance(): Meter {
-    val iterator = this.listIterator()
-    var totalDistance: Double = 0.toDouble()
-    for (currentTrip in iterator) {
-        currentTrip.tripStatistics?.distance.let {
-            if (it != null) {
-                totalDistance += it
-            }
-        }
-    }
+    val totalDistance = sumOf { it.tripStatistics?.distance ?: 0.0 }
     return Meter(totalDistance)
 }
 

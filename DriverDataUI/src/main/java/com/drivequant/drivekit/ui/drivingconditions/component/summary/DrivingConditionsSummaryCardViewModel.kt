@@ -23,6 +23,5 @@ internal class DrivingConditionsSummaryCardViewModel : ViewModel() {
 
     fun formatTripsCount(): String = DKDataFormatter.formatNumber(this.tripCount)
 
-    fun formatDistanceKmOld() = DKDataFormatter.formatDistanceValue(this.distance, 10.0)
     fun formatDistanceKm(context: Context) = DKDataFormatter.formatInKmOrMile(context, Meter(this.distance * 1000), unit = false, minDistanceToRemoveFractions = 10.0)
 }

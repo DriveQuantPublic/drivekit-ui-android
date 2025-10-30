@@ -80,8 +80,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
             setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
         this.distanceLabel.apply {
-            val useSingular = (viewModel?.tripCount ?: 0) > 1
-
+            val useSingular = (viewModel?.tripCount ?: 0) <= 1
 
             val textResId = when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> {
