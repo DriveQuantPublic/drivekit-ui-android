@@ -162,8 +162,8 @@ class ChallengeParticipationFragment : Fragment() {
                 val driverProgression: Int
                 val goal: Int
                 if (key == "km") { // TODO should be improved
-                    driverProgression = (it.driverConditions.getValue(key).toDouble() * distanceFactor).roundToInt()
-                    goal = (it.conditions.getValue(key).toDouble() * distanceFactor).roundToInt()
+                    driverProgression = (it.driverConditions.getValue(key).toDouble() / distanceFactor).roundToInt()
+                    goal = (it.conditions.getValue(key).toDouble() / distanceFactor).roundToInt()
                 } else {
                     driverProgression = it.driverConditions.getValue(key).toDouble().roundToInt()
                     goal = it.conditions.getValue(key).toDouble().roundToInt()

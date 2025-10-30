@@ -10,21 +10,16 @@ import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.NumberFormat
-import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 import kotlin.text.Typography.nbsp
 
 object DKDataFormatter {
 
-    @JvmOverloads
-    fun formatNumber(value: Number, maximumFractionDigits: Int? = null, forcedUnitSystem: DKUnitSystem? = null): String {
-        val desiredUnitSystem = forcedUnitSystem ?: DriveKitUI.unitSystem
-        val numberFormat = when (desiredUnitSystem) {
-            DKUnitSystem.METRIC -> NumberFormat.getNumberInstance(Locale.getDefault())
-            DKUnitSystem.IMPERIAL -> NumberFormat.getNumberInstance(Locale.UK)
-        }
+    private val numberFormat = NumberFormat.getNumberInstance()
 
+    @JvmOverloads
+    fun formatNumber(value: Number, maximumFractionDigits: Int? = null): String {
         if (maximumFractionDigits != null) {
             numberFormat.maximumFractionDigits = maximumFractionDigits
         }
@@ -436,10 +431,14 @@ object DKDataFormatter {
 
     fun formatPercentage(value: Double) = value.format(1).plus("%")
 
-    fun formatLiter(context: Context, liter: Double): String =
-        liter.format(1)
+    fun formatVolume(context: Context, liter: Liter): String =
+        liter.value.format(1)
             .plus(nbsp)
-            .plus(context.getString(R.string.dk_common_unit_liter))
+            .plus(when (DriveKitUI.unitSystem) {
+                DKUnitSystem.METRIC -> context.getString(R.string.dk_common_unit_liter)
+                DKUnitSystem.IMPERIAL -> context.getString(R.string.dk_common_unit_gallon)
+            }
+        )
 
     @StringRes
     fun getAccelerationDescriptionKey(score: Double): Int {

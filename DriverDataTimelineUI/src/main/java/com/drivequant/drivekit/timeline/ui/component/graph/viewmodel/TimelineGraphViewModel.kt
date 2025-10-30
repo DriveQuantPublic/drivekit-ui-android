@@ -333,7 +333,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         return 0.0
                     }
                     return allContextItem.safety?.acceleration?.let { acceleration ->
-                        (acceleration / totalDistance * 100.0) / distanceFactor
+                        (acceleration / totalDistance * 100.0) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.SAFETY_BRAKING -> {
@@ -341,7 +341,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         return 0.0
                     }
                     return allContextItem.safety?.braking?.let { braking ->
-                        (braking / totalDistance * 100.0) / distanceFactor
+                        (braking / totalDistance * 100.0) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.SAFETY_ADHERENCE -> {
@@ -349,7 +349,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         return 0.0
                     }
                     return allContextItem.safety?.adherence?.let { adherence ->
-                        (adherence / totalDistance * 100.0) / distanceFactor
+                        (adherence / totalDistance * 100.0) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> allContextItem.ecoDriving?.efficiencyAcceleration
@@ -367,7 +367,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         return 0.0
                     }
                     return allContextItem.phoneDistraction?.unlock?.let { unlock ->
-                        (unlock / totalDistance * 100.0) / distanceFactor
+                        (unlock / totalDistance * 100.0) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> {
@@ -376,7 +376,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     }
                     return allContextItem.phoneDistraction?.callForbiddenDuration?.let { callForbiddenDuration ->
                         // The result is converted in minute and rounded up to greater integer value
-                        (ceil((callForbiddenDuration / 60).toDouble() / totalDistance * 100.0)) / distanceFactor
+                        (ceil((callForbiddenDuration / 60).toDouble() / totalDistance * 100.0)) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> {

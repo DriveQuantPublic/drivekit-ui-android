@@ -7,6 +7,7 @@ import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.Co2Unit
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.Liter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.timeline.ui.R
@@ -109,9 +110,9 @@ internal sealed class GraphItem {
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> context.getString(DKDataFormatter.getAccelerationDescriptionKey(value))
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> context.getString(DKDataFormatter.getDecelerationDescriptionKey(value))
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> context.getString(DKDataFormatter.getSpeedMaintainDescription(value))
-            TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> DKDataFormatter.formatLiter(context, value)
+            TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> DKDataFormatter.formatVolume(context, Liter(value))
             TimelineScoreItemType.ECODRIVING_CO2MASS -> DKDataFormatter.formatCO2Mass(context, value, Co2Unit.KILOGRAM, Co2Unit.KILOGRAM)
-            TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> DKDataFormatter.formatLiter(context, value)
+            TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> DKDataFormatter.formatVolume(context, (Liter(value)))
             TimelineScoreItemType.DISTRACTION_UNLOCK -> value.format(1)
             TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> {
                 // The value is in minute so we convert it back to seconds before reformatting. The conversion is done here to keep the graph Y Axis in minute
