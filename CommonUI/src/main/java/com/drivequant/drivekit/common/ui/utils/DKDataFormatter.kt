@@ -284,14 +284,10 @@ object DKDataFormatter {
         val formattingTypes = mutableListOf<FormatType>()
         val kilometers = meters?.toKilometers()
         val desiredUnitSystem = forcedUnitSystem ?: DriveKitUI.unitSystem
-        val desiredMinDistanceToRemoveFraction = when (DriveKitUI.unitSystem) {
-            DKUnitSystem.METRIC -> minDistanceToRemoveFractions
-            DKUnitSystem.IMPERIAL -> 1.0
-        }
 
         when (desiredUnitSystem) {
             DKUnitSystem.METRIC -> {
-                formattingTypes.add(FormatType.VALUE(formatDistanceValue(kilometers?.value, desiredMinDistanceToRemoveFraction) ?: ""))
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(kilometers?.value, minDistanceToRemoveFractions) ?: ""))
                 if (unit) {
                     formattingTypes.add(FormatType.SEPARATOR())
                     formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_kilometer)))
@@ -299,7 +295,7 @@ object DKDataFormatter {
             }
             DKUnitSystem.IMPERIAL -> {
                 val miles = kilometers?.toMiles()
-                formattingTypes.add(FormatType.VALUE(formatDistanceValue(miles?.value, desiredMinDistanceToRemoveFraction) ?: ""))
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(miles?.value, minDistanceToRemoveFractions) ?: ""))
                 if (unit) {
                     formattingTypes.add(FormatType.SEPARATOR())
                     formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_mile)))
@@ -346,10 +342,7 @@ object DKDataFormatter {
 
     fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
         distance?.let {
-            val floatingNumber = if (distance >= minDistanceRemoveFraction) 0 else when (DriveKitUI.unitSystem) {
-                DKUnitSystem.METRIC -> 1
-                DKUnitSystem.IMPERIAL -> 2
-            }
+            val floatingNumber = if (distance >= minDistanceRemoveFraction) 0 else 1
             val ret = distance.format(floatingNumber)
             return ret
         }

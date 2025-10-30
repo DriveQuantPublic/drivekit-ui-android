@@ -5,6 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.removeTime
@@ -89,23 +91,25 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
             )
         }
 
-    fun getDriverDistanceEstimationViewModels(): List<DriverDistanceEstimationViewModel> =
-        this.driverProfile?.let {
+    fun getDriverDistanceEstimationViewModels(): List<DriverDistanceEstimationViewModel> {
+        val isMetric = DriveKitUI.unitSystem == DKUnitSystem.METRIC
+
+        return this.driverProfile?.let {
             listOf(
                 DriverDistanceEstimationViewModel(
-                    R.string.dk_driverdata_distance_card_title_year,
+                    if (isMetric) R.string.dk_driverdata_distance_card_title_year else R.string.dk_driverdata_distance_card_title_year_miles,
                     R.string.dk_driverdata_distance_card_current_year,
                     this.currentDrivenDistanceByPeriod[DKPeriod.YEAR] ?: 0.0,
                     it.distanceEstimation.yearDistance
                 ),
                 DriverDistanceEstimationViewModel(
-                    R.string.dk_driverdata_distance_card_title_month,
+                    if (isMetric) R.string.dk_driverdata_distance_card_title_month else R.string.dk_driverdata_distance_card_title_month,
                     R.string.dk_driverdata_distance_card_current_month,
                     this.currentDrivenDistanceByPeriod[DKPeriod.MONTH] ?: 0.0,
                     it.distanceEstimation.monthDistance
                 ),
                 DriverDistanceEstimationViewModel(
-                    R.string.dk_driverdata_distance_card_title_week,
+                    if (isMetric) R.string.dk_driverdata_distance_card_title_week else R.string.dk_driverdata_distance_card_title_week_miles,
                     R.string.dk_driverdata_distance_card_current_week,
                     this.currentDrivenDistanceByPeriod[DKPeriod.WEEK] ?: 0.0,
                     it.distanceEstimation.weekDistance
@@ -114,13 +118,14 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
         } ?: run {
             listOf(
                 DriverDistanceEstimationViewModel(
-                    R.string.dk_driverdata_distance_card_title_year,
+                    if (isMetric) R.string.dk_driverdata_distance_card_title_year else R.string.dk_driverdata_distance_card_title_year_miles,
                     R.string.dk_driverdata_distance_card_current_year,
                     null,
                     null
                 )
             )
         }
+    }
 
     fun getDriverCommonTripFeatureViewModels(): List<DriverCommonTripFeatureViewModel> =
         this.driverProfile?.commonTripByType?.get(DKCommonTripType.MOST_FREQUENT)?.let {

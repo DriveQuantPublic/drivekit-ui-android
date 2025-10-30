@@ -5,8 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
@@ -16,6 +18,7 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardViewModel
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.drivingconditions.component.context.DKContextKind
 import com.drivequant.drivekit.ui.drivingconditions.component.context.DrivingConditionsContextsViewModel
 import java.util.*
 
@@ -36,7 +39,10 @@ internal class DrivingConditionsViewModel(
         private set
     private val selectedPeriod: DKPeriod
         get() = this.periodSelectorViewModel.selectedPeriod
-    private val contexts = DriverDataUI.contextKinds
+    private val contexts = when (DriveKitUI.unitSystem) {
+        DKUnitSystem.METRIC -> DriverDataUI.contextKinds
+        DKUnitSystem.IMPERIAL -> DriverDataUI.contextKinds.filter { it != DKContextKind.TRIP_DISTANCE }
+    }
 
     init {
         configurePeriodSelector(initialSelectedPeriod ?: this.selectedPeriod)

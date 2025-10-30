@@ -1,7 +1,9 @@
 package com.drivequant.drivekit.ui.drivingconditions.component.summary
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.Meter
 
 internal class DrivingConditionsSummaryCardViewModel : ViewModel() {
 
@@ -21,5 +23,6 @@ internal class DrivingConditionsSummaryCardViewModel : ViewModel() {
 
     fun formatTripsCount(): String = DKDataFormatter.formatNumber(this.tripCount)
 
-    fun formatDistanceKm() = DKDataFormatter.formatDistanceValue(this.distance, 10.0)
+    fun formatDistanceKmOld() = DKDataFormatter.formatDistanceValue(this.distance, 10.0)
+    fun formatDistanceKm(context: Context) = DKDataFormatter.formatInKmOrMile(context, Meter(this.distance * 1000), unit = false, minDistanceToRemoveFractions = 10.0)
 }
