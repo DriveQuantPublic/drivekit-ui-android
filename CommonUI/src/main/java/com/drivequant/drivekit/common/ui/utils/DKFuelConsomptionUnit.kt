@@ -4,7 +4,13 @@ internal const val LITERS_PER_100_KM_TO_MPG_FACTOR = 282.481053
 
 @JvmInline
 value class LitersPer100Kmh(val value: Double) {
-    fun toMilesPerGallon() = MilesPerGallon(LITERS_PER_100_KM_TO_MPG_FACTOR / value)
+    fun toMilesPerGallon(): MilesPerGallon {
+        return if (value == 0.0) {
+             MilesPerGallon(0.0)
+        } else {
+            MilesPerGallon(LITERS_PER_100_KM_TO_MPG_FACTOR / value)
+        }
+    }
 }
 
 @JvmInline
