@@ -3,14 +3,15 @@ package com.drivequant.drivekit.ui.driverprofile.component.commontripfeature
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.TextArg
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.driverprofile.component.DriverProfileView
 
@@ -40,7 +41,11 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
             "%s ${context.getString(viewModel.distanceUnitId)}",
             if (viewModel.isRealData) DKColors.mainFontColor else noDataColor,
             TextArg(
-                viewModel.distance.toDouble().format(0),
+                DKDataFormatter.formatInKmOrMile(
+                    this@DriverCommonTripFeatureView.context,
+                    Meter(viewModel.distance.toDouble() * 1000),
+                    unit = false
+                ).convertToString(),
                 if (viewModel.isRealData) DKColors.primaryColor else noDataColor,
                 DKStyle.HIGHLIGHT_SMALL
             )

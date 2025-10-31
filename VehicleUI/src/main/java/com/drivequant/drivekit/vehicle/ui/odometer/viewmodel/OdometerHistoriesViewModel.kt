@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import java.util.*
@@ -37,6 +39,11 @@ internal data class OdometerHistoryData(
     val historyId: Int,
     private val realDistance: Double,
     private val date: Date?) {
-    fun getRealDistance(context: Context) = DKDataFormatter.formatMeterDistanceInKm(context, realDistance * 1000, minDistanceToRemoveFractions = 0.0).convertToString()
+    fun getRealDistance(context: Context) = DKDataFormatter.formatInKmOrMile(
+        context,
+        Meter(realDistance * 1000),
+        minDistanceToRemoveFractions = 0.0,
+        forcedUnitSystem = DKUnitSystem.METRIC
+    ).convertToString()
     fun getUpdateDate() = date?.formatDate(DKDatePattern.FULL_DATE)
 }

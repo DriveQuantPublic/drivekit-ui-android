@@ -10,6 +10,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.ui.R
 
 internal class DrivingConditionsSummaryCardView(context: Context, attrs: AttributeSet?) :
@@ -73,12 +75,31 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
             normalText()
         }
         this.distanceValue.apply {
-            text = this@DrivingConditionsSummaryCardView.viewModel?.formatDistanceKm()
+            text = this@DrivingConditionsSummaryCardView.viewModel?.formatDistanceKm(context)?.convertToString()
             highlightMedium()
             setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
         this.distanceLabel.apply {
-            text = context.resources.getQuantityString(R.plurals.dk_driverdata_drivingconditions_distance, viewModel?.tripCount ?: 0)
+            val useSingular = (viewModel?.tripCount ?: 0) <= 1
+
+            val textResId = when (DriveKitUI.unitSystem) {
+                DKUnitSystem.METRIC -> {
+                    if (useSingular) {
+                        R.string.dk_driverdata_drivingconditions_distance_singular
+                    } else {
+                        R.string.dk_driverdata_drivingconditions_distance_plural
+                    }
+                }
+                DKUnitSystem.IMPERIAL -> {
+                    if (useSingular) {
+                        R.string.dk_driverdata_drivingconditions_distance_singular_miles
+                    } else {
+                        R.string.dk_driverdata_drivingconditions_distance_plural_miles
+                    }
+                }
+            }
+
+            text = context.getString(textResId)
             normalText()
         }
     }

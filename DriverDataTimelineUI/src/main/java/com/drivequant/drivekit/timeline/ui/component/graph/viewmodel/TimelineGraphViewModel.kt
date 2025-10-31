@@ -3,8 +3,12 @@ package com.drivequant.drivekit.timeline.ui.component.graph.viewmodel
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.LITERS_TO_GALLON_UK_FACTOR
+import com.drivequant.drivekit.common.ui.utils.MILES_TO_KM_FACTOR
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.add
 import com.drivequant.drivekit.core.extension.diffWith
@@ -44,6 +48,16 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
     private var timelineSelectedIndex: Int? = null
     private var indexOfFirstPointInTimeline: Int? = null
     private var indexOfLastPointInTimeline: Int? = null
+
+    private val distanceFactor = when (DriveKitUI.unitSystem) {
+        DKUnitSystem.METRIC -> 1.0
+        DKUnitSystem.IMPERIAL -> MILES_TO_KM_FACTOR
+    }
+
+    private val volumeFactor = when (DriveKitUI.unitSystem) {
+        DKUnitSystem.METRIC -> 1.0
+        DKUnitSystem.IMPERIAL -> LITERS_TO_GALLON_UK_FACTOR
+    }
 
     fun configure(context: Context, timeline: DKDriverTimeline, dates: List<Date>, timelineSelectedIndex: Int, graphItem: GraphItem, period: DKPeriod) {
         val internalDates: List<Date> = dates.map { it.removeTime() }
@@ -319,7 +333,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         return 0.0
                     }
                     return allContextItem.safety?.acceleration?.let { acceleration ->
-                        acceleration / totalDistance * 100.0
+                        (acceleration / totalDistance * 100.0) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.SAFETY_BRAKING -> {
@@ -327,7 +341,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         return 0.0
                     }
                     return allContextItem.safety?.braking?.let { braking ->
-                        braking / totalDistance * 100.0
+                        (braking / totalDistance * 100.0) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.SAFETY_ADHERENCE -> {
@@ -335,21 +349,25 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         return 0.0
                     }
                     return allContextItem.safety?.adherence?.let { adherence ->
-                        adherence / totalDistance * 100.0
+                        (adherence / totalDistance * 100.0) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> allContextItem.ecoDriving?.efficiencyAcceleration
                 TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> allContextItem.ecoDriving?.efficiencyBrake
                 TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> allContextItem.ecoDriving?.efficiencySpeedMaintain
-                TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> allContextItem.ecoDriving?.fuelVolume
-                TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> allContextItem.ecoDriving?.fuelSaving
+                TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> allContextItem.ecoDriving?.fuelVolume?.let {
+                    it * volumeFactor
+                }
+                TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> allContextItem.ecoDriving?.fuelSaving?.let {
+                    it * volumeFactor
+                }
                 TimelineScoreItemType.ECODRIVING_CO2MASS -> allContextItem.ecoDriving?.co2Mass
                 TimelineScoreItemType.DISTRACTION_UNLOCK -> {
                     if (totalDistance <= 0) {
                         return 0.0
                     }
                     return allContextItem.phoneDistraction?.unlock?.let { unlock ->
-                        unlock / totalDistance * 100.0
+                        (unlock / totalDistance * 100.0) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> {
@@ -358,7 +376,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     }
                     return allContextItem.phoneDistraction?.callForbiddenDuration?.let { callForbiddenDuration ->
                         // The result is converted in minute and rounded up to greater integer value
-                        ceil((callForbiddenDuration / 60).toDouble() / totalDistance * 100.0)
+                        (ceil((callForbiddenDuration / 60).toDouble() / totalDistance * 100.0)) * distanceFactor
                     }
                 }
                 TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> {
@@ -370,7 +388,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     if (numberTripTotal <= 0) {
                         return 0.0
                     }
-                    return numberTripWithForbiddenCall.toDouble() / numberTripTotal.toDouble() * 100.0
+                    return (numberTripWithForbiddenCall.toDouble() / numberTripTotal.toDouble() * 100.0)
                 }
                 TimelineScoreItemType.SPEEDING_DURATION -> {
                     if (totalDuration <= 0) {
@@ -385,7 +403,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         return 0.0
                     }
                     return allContextItem.speeding?.speedingDistance?.let { speedingDistance ->
-                        (speedingDistance / 1000.0) / totalDistance * 100.0
+                        ((speedingDistance / 1000.0) / totalDistance * 100.0) * distanceFactor
                     }
                 }
             }

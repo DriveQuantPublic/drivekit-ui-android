@@ -6,6 +6,7 @@
    <string name="dk_challenge_braking_score">Braking score</string>
    <string name="dk_challenge_consult_rule_button">Consult the rules</string>
    <string name="dk_challenge_distance_kilometer">Distance (km)</string>
+   <string name="dk_challenge_distance_miles">Distance (mi)</string>
    <string name="dk_challenge_distraction_score">Distraction score</string>
    <string name="dk_challenge_eco_driving_score">Eco-driving score</string>
    <string name="dk_challenge_failed_to_join">Unable to participate in the challenge, make sure you are connected to the internet or try again later.</string>
@@ -26,7 +27,7 @@
    <string name="dk_challenge_no_ranked_challenge_not_registered_yet">You haven\'t participated in a challenge yet.</string>
    <string name="dk_challenge_not_a_participant">You did not participate to this challenge or you did not fill the conditions to join the ranking.</string>
    <string name="dk_challenge_optin_title">Accept the rules</string>
-   <string name="dk_challenge_participate_button">I participate</string>
+   <string name="dk_challenge_participate_button">Enter now</string>
    <string name="dk_challenge_ranked">Ranked</string>
    <string name="dk_challenge_registered_confirmation">You are registered !</string>
    <string name="dk_challenge_rule_title">Challenge rules</string>

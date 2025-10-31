@@ -6,6 +6,8 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -34,7 +36,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
             OdometerItemType.ANALYZED -> it.analyzedDistance
             OdometerItemType.ESTIMATED -> it.estimatedYearDistance
         }.let { distance ->
-            getFormattedDistance(context, distance)
+            getFormattedDistance(context, Meter(distance))
         }
     }
 
@@ -50,8 +52,11 @@ internal class OdometerItemViewModel(val vehicleId: String) {
 
     private fun getAnalyzedDistanceDescription(context: Context): String {
         val analyzedDistance = vehicleOdometer?.let {
-            DKDataFormatter.formatMeterDistanceInKm(context, it.yearAnalyzedDistance * 1000,
-                false, minDistanceToRemoveFractions = 0.0).convertToString() } ?: ""
+            DKDataFormatter.formatInKmOrMile(
+                context, Meter(it.yearAnalyzedDistance * 1000),
+                false, minDistanceToRemoveFractions = 0.0, forcedUnitSystem = DKUnitSystem.METRIC
+            ).convertToString()
+        } ?: ""
 
        return DKResource.buildString(
             context, DKColors.mainFontColor, DKColors.mainFontColor,
@@ -73,6 +78,11 @@ internal class OdometerItemViewModel(val vehicleId: String) {
         } ?: ""
     }"
 
-    private fun getFormattedDistance(context: Context, distance: Double) =
-        DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000, minDistanceToRemoveFractions = 0.0).convertToString()
+    private fun getFormattedDistance(context: Context, meters: Meter) =
+        DKDataFormatter.formatInKmOrMile(
+            context,
+            meters,
+            minDistanceToRemoveFractions = 0.0,
+            forcedUnitSystem = DKUnitSystem.METRIC
+        ).convertToString()
 }

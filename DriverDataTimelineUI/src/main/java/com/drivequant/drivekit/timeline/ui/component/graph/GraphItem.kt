@@ -2,9 +2,12 @@ package com.drivequant.drivekit.timeline.ui.component.graph
 
 import android.content.Context
 import androidx.annotation.StringRes
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.Co2Unit
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.Liter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.timeline.ui.R
@@ -107,9 +110,9 @@ internal sealed class GraphItem {
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> context.getString(DKDataFormatter.getAccelerationDescriptionKey(value))
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> context.getString(DKDataFormatter.getDecelerationDescriptionKey(value))
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> context.getString(DKDataFormatter.getSpeedMaintainDescription(value))
-            TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> DKDataFormatter.formatLiter(context, value)
+            TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> DKDataFormatter.formatVolume(context, Liter(value))
             TimelineScoreItemType.ECODRIVING_CO2MASS -> DKDataFormatter.formatCO2Mass(context, value, Co2Unit.KILOGRAM, Co2Unit.KILOGRAM)
-            TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> DKDataFormatter.formatLiter(context, value)
+            TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> DKDataFormatter.formatVolume(context, (Liter(value)))
             TimelineScoreItemType.DISTRACTION_UNLOCK -> value.format(1)
             TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> {
                 // The value is in minute so we convert it back to seconds before reformatting. The conversion is done here to keep the graph Y Axis in minute
@@ -152,18 +155,20 @@ internal sealed class GraphItem {
 
     @StringRes
     private fun getGraphTitleKey(scoreItemType: TimelineScoreItemType): Int {
+        val isMetric = DriveKitUI.unitSystem == DKUnitSystem.METRIC
+
         return when (scoreItemType) {
-            TimelineScoreItemType.SAFETY_ACCELERATION -> R.string.dk_timeline_accelerations
-            TimelineScoreItemType.SAFETY_BRAKING -> R.string.dk_timeline_brakings
-            TimelineScoreItemType.SAFETY_ADHERENCE -> R.string.dk_timeline_adherence
+            TimelineScoreItemType.SAFETY_ACCELERATION -> if (isMetric) R.string.dk_timeline_accelerations else R.string.dk_timeline_accelerations_miles
+            TimelineScoreItemType.SAFETY_BRAKING -> if (isMetric) R.string.dk_timeline_brakings else R.string.dk_timeline_brakings_miles
+            TimelineScoreItemType.SAFETY_ADHERENCE -> if (isMetric) R.string.dk_timeline_adherence else R.string.dk_timeline_adherence_miles
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> R.string.dk_timeline_acceleration_score
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> R.string.dk_timeline_deceleration_score
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> R.string.dk_timeline_maintain_score
             TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> R.string.dk_timeline_consumption
             TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> R.string.dk_timeline_fuel_savings
             TimelineScoreItemType.ECODRIVING_CO2MASS -> R.string.dk_timeline_co2_mass
-            TimelineScoreItemType.DISTRACTION_UNLOCK -> R.string.dk_timeline_nb_unlocks
-            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> R.string.dk_timeline_calls_duration
+            TimelineScoreItemType.DISTRACTION_UNLOCK -> if (isMetric) R.string.dk_timeline_nb_unlocks else R.string.dk_timeline_nb_unlocks_miles
+            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> if (isMetric) R.string.dk_timeline_calls_duration else R.string.dk_timeline_calls_duration_miles
             TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> R.string.dk_timeline_trips_forbidden_calls
             TimelineScoreItemType.SPEEDING_DURATION -> R.string.dk_timeline_overspeeding_duration
             TimelineScoreItemType.SPEEDING_DISTANCE -> R.string.dk_timeline_overspeeding_distance

@@ -1,7 +1,10 @@
 package com.drivequant.drivekit.ui.driverprofile.component.distanceestimation
 
 import androidx.annotation.StringRes
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.MILES_TO_KM_FACTOR
 import kotlin.math.min
 
 internal data class DriverDistanceEstimationViewModel(
@@ -13,11 +16,24 @@ internal data class DriverDistanceEstimationViewModel(
     val hasValue: Boolean
         get() = this.distance != null && this.distanceEstimation != null
 
-    fun getDistanceString(): String =
-        if (this.hasValue) this.distance?.format(0) ?: "0" else ""
 
-    fun getDistanceEstimationString(): String =
-        if (this.hasValue) this.distanceEstimation?.toDouble()?.format(0) ?: "0" else ""
+    private val distanceFactor = when (DriveKitUI.unitSystem) {
+        DKUnitSystem.METRIC -> 1.0
+        DKUnitSystem.IMPERIAL -> MILES_TO_KM_FACTOR
+    }
+
+    fun getDistanceString(): String = if (this.hasValue) {
+        this.distance?.let {
+            (it / distanceFactor).format(0)
+        } ?: "0"
+    } else ""
+
+    fun getDistanceEstimationString(): String? =
+        if (this.hasValue) {
+            this.distanceEstimation?.let {
+                (it / distanceFactor).format(0)
+            }
+        } else ""
 
     fun getDistancePercentage(): Float =
         if (this.distanceEstimation != null && this.distanceEstimation != 0) {

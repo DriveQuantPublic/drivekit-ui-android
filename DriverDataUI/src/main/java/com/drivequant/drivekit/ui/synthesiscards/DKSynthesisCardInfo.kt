@@ -55,8 +55,8 @@ sealed class SynthesisCardInfo(open val trips: List<Trip>) : DKSynthesisCardInfo
                 )
             }
             is DISTANCE -> {
-                val computedDistance = DKDataFormatter.ceilDistance(trips.computeTotalDistance(), 10000)
-                formattingTypes = DKDataFormatter.getMeterDistanceFormat(context, computedDistance)
+                val computedDistanceMeter = DKDataFormatter.ceilDistance(trips.computeTotalDistance(), 10000)
+                formattingTypes = DKDataFormatter.getMeterDistanceFormat(context, computedDistanceMeter)
             }
             is DURATION -> {
                 val computedDuration = DKDataFormatter.ceilDuration(trips.computeTotalDuration(), 600)

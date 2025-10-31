@@ -5,6 +5,7 @@ import androidx.annotation.ColorRes
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
 import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
@@ -30,9 +31,9 @@ internal abstract class BaseContextCard : DKContextCard {
             override fun getTitle(context: Context): String = title
             override fun getSubtitle(context: Context): String = when (kind) {
                 UnitKind.TRIP -> "${DKDataFormatter.formatNumber(itemValue, 0)} ${context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, itemValue.toInt())}"
-                UnitKind.KILOMETER -> DKDataFormatter.formatMeterDistanceInKm(
+                UnitKind.KILOMETER -> DKDataFormatter.formatInKmOrMile(
                     context,
-                    itemValue * 1000,
+                    Meter(itemValue * 1000),
                     true,
                     if (totalItemsValue < 10) 10.0 else 0.0
                 ).convertToString()

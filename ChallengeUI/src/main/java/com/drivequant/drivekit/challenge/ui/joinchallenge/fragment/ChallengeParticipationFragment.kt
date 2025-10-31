@@ -26,7 +26,9 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.common.ui.utils.FormatType
+import com.drivequant.drivekit.common.ui.utils.MILES_TO_KM_FACTOR
 import kotlin.math.roundToInt
 
 class ChallengeParticipationFragment : Fragment() {
@@ -151,12 +153,25 @@ class ChallengeParticipationFragment : Fragment() {
             for (key in it.conditions.keys.reversed()) {
                 val progressBar = TitleProgressBar(context)
                 val progress = viewModel.computeDriverProgress(it.driverConditions.getValue(key), it.conditions.getValue(key))
+
+                val distanceFactor = when (DriveKitUI.unitSystem) {
+                    DKUnitSystem.METRIC -> 1.0
+                    DKUnitSystem.IMPERIAL -> MILES_TO_KM_FACTOR
+                }
+
+                val driverProgression: Int
+                val goal: Int
+                if (key == "km") { // TODO should be improved
+                    driverProgression = (it.driverConditions.getValue(key).toDouble() / distanceFactor).roundToInt()
+                    goal = (it.conditions.getValue(key).toDouble() / distanceFactor).roundToInt()
+                } else {
+                    driverProgression = it.driverConditions.getValue(key).toDouble().roundToInt()
+                    goal = it.conditions.getValue(key).toDouble().roundToInt()
+                }
+
+
                 progressBar.apply {
-                    setTitle(
-                        key,
-                        "${it.driverConditions.getValue(key).toDouble()
-                            .roundToInt()}/${it.conditions.getValue(key).toDouble().roundToInt()}"
-                    )
+                    setTitle(key, "$driverProgression/$goal")
                     setProgress(progress)
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,

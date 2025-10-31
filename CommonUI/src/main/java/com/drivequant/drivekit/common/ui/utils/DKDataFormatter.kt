@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.extension.convertKmsToMiles
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.formatLeadingZero
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
@@ -188,121 +187,132 @@ object DKDataFormatter {
         )
     }
 
-    @JvmOverloads
-    fun getMeterDistanceInKmFormat(
+    private fun getMeterDistanceInKmFormat(
         context: Context,
-        value: Double?,
+        meters: Meter,
         unit: Boolean = true
     ): List<FormatType> {
-        return getKilometerDistanceFormat(context, value?.div(1000), unit)
+        return getKilometerDistanceFormat(context, meters.toKilometers(), unit)
     }
 
-    @JvmOverloads
     fun getMeterDistanceFormat(
         context: Context,
-        value: Double?,
-        unit: Boolean = true): List<FormatType> {
+        meters: Meter?,
+        unit: Boolean = true,
+        forcedUnitSystem: DKUnitSystem? = null
+    ): List<FormatType> {
         lateinit var formattingTypes: List<FormatType>
 
-        value?.let {
-            when {
-                value < 10 -> {
-                    formattingTypes = listOf(
-                        FormatType.VALUE(value.removeZeroDecimal().format(2)),
-                        FormatType.SEPARATOR(),
-                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
-                    )
+        meters?.let {
+            val desiredUnitSystem = forcedUnitSystem ?: DriveKitUI.unitSystem
+
+            when (desiredUnitSystem) {
+                DKUnitSystem.METRIC -> {
+                    when {
+                        meters.value < 10 -> {
+                            formattingTypes = listOf(
+                                FormatType.VALUE(meters.value.removeZeroDecimal().format(2)),
+                                FormatType.SEPARATOR(),
+                                FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                            )
+                        }
+                        meters.value < 1000 -> {
+                            formattingTypes = listOf(
+                                FormatType.VALUE(meters.value.format(0)),
+                                FormatType.SEPARATOR(),
+                                FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                            )
+                        }
+                        else -> {
+                            formattingTypes = getMeterDistanceInKmFormat(context, meters, unit)
+                        }
+                    }
                 }
-                value < 1000 -> {
-                    formattingTypes = listOf(
-                        FormatType.VALUE(value.format(0)),
-                        FormatType.SEPARATOR(),
-                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
-                    )
-                }
-                else -> {
-                    formattingTypes = getMeterDistanceInKmFormat(context, value, unit)
+                DKUnitSystem.IMPERIAL -> {
+                    formattingTypes = formatInKmOrMile(context, meters, unit)
                 }
             }
         }
         return formattingTypes
     }
 
-    @JvmOverloads
-    fun getKilometerDistanceFormat(
+    private fun getKilometerDistanceFormat(
         context: Context,
-        value: Double?,
+        kilometers: Kilometer,
         unit: Boolean = true
     ): List<FormatType> {
         val formattingTypes = mutableListOf<FormatType>()
-        var formattedDistance: String
-        value?.let {
-            formattedDistance = if (value < 100) {
-                BigDecimal(it).setScale(1, RoundingMode.HALF_EVEN).toDouble().removeZeroDecimal()
-            } else {
-                value.roundToInt().toString()
-            }
-            formattingTypes.add(FormatType.VALUE(formattedDistance))
-            if (unit) {
-                formattingTypes.add(FormatType.SEPARATOR())
-                formattingTypes.add(FormatType.UNIT(context.resources.getString(R.string.dk_common_unit_kilometer)))
-            }
+        val formattedDistance: String = if (kilometers.value < 100) {
+            BigDecimal(kilometers.value).setScale(1, RoundingMode.HALF_EVEN).toDouble()
+                .removeZeroDecimal()
+        } else {
+            kilometers.value.roundToInt().toString()
+        }
+        formattingTypes.add(FormatType.VALUE(formattedDistance))
+        if (unit) {
+            formattingTypes.add(FormatType.SEPARATOR())
+            formattingTypes.add(FormatType.UNIT(context.resources.getString(R.string.dk_common_unit_kilometer)))
         }
         return formattingTypes
     }
 
-    @JvmOverloads
-    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true, minDistanceToRemoveFractions: Double = 100.0): List<FormatType> {
-        val distanceInKm = distance?.div(1000)
-        val distanceInMile = distanceInKm?.convertKmsToMiles()
-
+    fun formatInKmOrMile(
+        context: Context,
+        meters: Meter?,
+        unit: Boolean = true,
+        minDistanceToRemoveFractions: Double = 100.0,
+        forcedUnitSystem: DKUnitSystem? = null
+    ): List<FormatType> {
         val formattingTypes = mutableListOf<FormatType>()
+        val kilometers = meters?.toKilometers()
+        val desiredUnitSystem = forcedUnitSystem ?: DriveKitUI.unitSystem
 
-        when (DriveKitUI.distanceUnit) {
-            DistanceUnit.MILE -> {
-                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInMile, minDistanceToRemoveFractions) ?: ""))
-                if (unit) {
-                    formattingTypes.add(FormatType.SEPARATOR())
-                    formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_mile)))
-                }
-            }
-            DistanceUnit.KM -> {
-                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInKm, minDistanceToRemoveFractions) ?: ""))
+        when (desiredUnitSystem) {
+            DKUnitSystem.METRIC -> {
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(kilometers?.value, minDistanceToRemoveFractions) ?: ""))
                 if (unit) {
                     formattingTypes.add(FormatType.SEPARATOR())
                     formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_kilometer)))
                 }
             }
+            DKUnitSystem.IMPERIAL -> {
+                val miles = kilometers?.toMiles()
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(miles?.value, minDistanceToRemoveFractions) ?: ""))
+                if (unit) {
+                    formattingTypes.add(FormatType.SEPARATOR())
+                    formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_mile)))
+                }
+            }
         }
         return formattingTypes
     }
 
-    fun formatMeterDistance(context: Context, distance: Double?, unit: Boolean = true): List<FormatType> {
-        distance?.let {
+    fun formatMeterDistance(context: Context, meters: Meter?, unit: Boolean = true): List<FormatType> {
+        meters?.let {
             return when {
-                it == 0.0 -> {
+                it.value == 0.0 -> {
                     listOf(
-                        FormatType.VALUE(it.removeZeroDecimal()),
+                        FormatType.VALUE(it.value.removeZeroDecimal()),
                         FormatType.SEPARATOR(),
                         FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
                     )
                 }
-                it < 10 -> {
+                it.value < 10 -> {
                     listOf(
-                        FormatType.VALUE(it.format(2)),
+                        FormatType.VALUE(it.value.format(2)),
                         FormatType.SEPARATOR(),
                         FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
                     )
                 }
-                it < 1000 -> {
+                it.value < 1000 -> {
                     listOf(
-                        FormatType.VALUE(it.format(0)),
+                        FormatType.VALUE(it.value.format(0)),
                         FormatType.SEPARATOR(),
                         FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
                     )
                 }
                 else -> {
-                    formatMeterDistanceInKm(context, distance, unit)
+                    formatInKmOrMile(context, meters, unit)
                 }
             }
         } ?: run {
@@ -312,13 +322,11 @@ object DKDataFormatter {
         }
     }
 
-    fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
+    private fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? =
         distance?.let {
             val floatingNumber = if (distance >= minDistanceRemoveFraction) 0 else 1
             return distance.format(floatingNumber)
         }
-        return null
-    }
 
     fun formatCO2Emission(context: Context, emission: Double) : String =
         "${emission.roundToInt()}"
@@ -348,20 +356,36 @@ object DKDataFormatter {
         }
     }
 
-    fun formatSpeedMean(context: Context, speed: Double): String =
-        "${speed.roundToInt()}"
-            .plus(nbsp)
-            .plus(context.getString(R.string.dk_common_unit_km_per_hour))
+    fun formatMeanSpeed(context: Context, kmh: KilometerPerHour): String =
+        when (DriveKitUI.unitSystem) {
+            DKUnitSystem.METRIC -> "${kmh.value.roundToInt()}"
+                .plus(nbsp)
+                .plus(context.getString(R.string.dk_common_unit_km_per_hour))
+
+            DKUnitSystem.IMPERIAL -> {
+                "${kmh.toMilePerHour().value.roundToInt()}"
+                    .plus(nbsp)
+                    .plus(context.getString(R.string.dk_common_unit_mph))
+            }
+        }
 
     fun formatConsumption(
         context: Context,
         consumption: Double,
         type: DKConsumptionType = DKConsumptionType.FUEL) = when (type) {
-            DKConsumptionType.FUEL -> R.string.dk_common_unit_l_per_100km
+            DKConsumptionType.FUEL ->
+                when (DriveKitUI.unitSystem) {
+                    DKUnitSystem.METRIC -> R.string.dk_common_unit_l_per_100km
+                    DKUnitSystem.IMPERIAL -> R.string.dk_common_unit_mpg
+                }
             DKConsumptionType.ELECTRIC -> R.string.dk_common_unit_kwh_per_100km
         }.let {
+            val value = when (DriveKitUI.unitSystem) {
+                DKUnitSystem.METRIC -> consumption.removeZeroDecimal()
+                DKUnitSystem.IMPERIAL -> LitersPer100Kmh(consumption).toMilesPerGallon().value.removeZeroDecimal()
+            }
             listOf(
-                FormatType.VALUE(consumption.removeZeroDecimal()),
+                FormatType.VALUE(value),
                 FormatType.SEPARATOR(),
                 FormatType.UNIT(context.getString(it))
             )
@@ -391,10 +415,14 @@ object DKDataFormatter {
 
     fun formatPercentage(value: Double) = value.format(1).plus("%")
 
-    fun formatLiter(context: Context, liter: Double): String =
-        liter.format(1)
+    fun formatVolume(context: Context, liter: Liter): String =
+        liter.value.format(1)
             .plus(nbsp)
-            .plus(context.getString(R.string.dk_common_unit_liter))
+            .plus(when (DriveKitUI.unitSystem) {
+                DKUnitSystem.METRIC -> context.getString(R.string.dk_common_unit_liter)
+                DKUnitSystem.IMPERIAL -> context.getString(R.string.dk_common_unit_gallon)
+            }
+        )
 
     @StringRes
     fun getAccelerationDescriptionKey(score: Double): Int {
@@ -445,13 +473,12 @@ object DKDataFormatter {
         }
     }
 
-    fun ceilDistance(distanceInMeter: Double?, ceilValueInMeter: Int): Double? {
-        return if (distanceInMeter != null && distanceInMeter.rem(1000) > 0 && distanceInMeter >= ceilValueInMeter) {
-            distanceInMeter.div(1000).toInt() * 1000.toDouble() + 1000
+    fun ceilDistance(meters: Meter?, ceilValueInMeter: Int): Meter? =
+        if (meters != null && meters.value.rem(1000) > 0 && meters.value >= ceilValueInMeter) {
+            Meter(meters.value.div(1000).toInt() * 1000.toDouble() + 1000)
         } else {
-            distanceInMeter
+            meters
         }
-    }
 }
 
 enum class Co2Unit {
