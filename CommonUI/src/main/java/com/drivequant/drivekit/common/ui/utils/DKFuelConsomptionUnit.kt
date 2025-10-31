@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.common.ui.utils
 
-internal const val LITERS_PER_100_KMG_TO_MPG_FACTOR = 235.215
+internal const val LITERS_PER_100_KM_TO_MPG_FACTOR = 282.481053
 
 @JvmInline
 value class LitersPer100Kmh(val value: Double) {
-    fun toMilesPerGallon() = MilesPerGallon(LITERS_PER_100_KMG_TO_MPG_FACTOR / value)
+    fun toMilesPerGallon() = MilesPerGallon(LITERS_PER_100_KM_TO_MPG_FACTOR / value)
 }
 
 @JvmInline
