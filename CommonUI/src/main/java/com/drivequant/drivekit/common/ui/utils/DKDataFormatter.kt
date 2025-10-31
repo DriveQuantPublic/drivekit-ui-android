@@ -229,20 +229,7 @@ object DKDataFormatter {
                     }
                 }
                 DKUnitSystem.IMPERIAL -> {
-                    val mileDistance = meters.toKilometers().toMiles()
-                    formattingTypes = if (mileDistance.value < 1) {
-                        listOf(
-                            FormatType.VALUE(mileDistance.value.removeZeroDecimal().format(2)),
-                            FormatType.SEPARATOR(),
-                            FormatType.UNIT(context.getString(R.string.dk_common_unit_mile))
-                        )
-                    } else {
-                        listOf(
-                            FormatType.VALUE(mileDistance.value.format(0)),
-                            FormatType.SEPARATOR(),
-                            FormatType.UNIT(context.getString(R.string.dk_common_unit_mile))
-                        )
-                    }
+                    formattingTypes = formatInKmOrMile(context, meters, unit)
                 }
             }
         }
@@ -335,7 +322,7 @@ object DKDataFormatter {
         }
     }
 
-    fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? =
+    private fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? =
         distance?.let {
             val floatingNumber = if (distance >= minDistanceRemoveFraction) 0 else 1
             return distance.format(floatingNumber)
