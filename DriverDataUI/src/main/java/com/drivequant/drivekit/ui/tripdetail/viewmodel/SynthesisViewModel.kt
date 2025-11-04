@@ -87,20 +87,21 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
+    fun getConsumptionValue(context: Context) = when (consumptionType) {
+        DKConsumptionType.FUEL -> fuelConsumptionValue(context)
+        DKConsumptionType.ELECTRIC -> electricConsumptionValue(context)
+    }
+
     private fun electricConsumptionValue(context: Context) =
         trip.energyEstimation?.energyConsumption?.let {
             DKDataFormatter.formatConsumption(context, it, DKConsumptionType.ELECTRIC)
                 .convertToString()
         } ?: notAvailableText
 
-    private fun fuelConsumptionValue(context: Context) = trip.fuelEstimation?.fuelConsumption?.let {
-        DKDataFormatter.formatConsumption(context, it).convertToString()
-    } ?: notAvailableText
-
-    fun getConsumptionValue(context: Context) = when (consumptionType) {
-        DKConsumptionType.FUEL -> fuelConsumptionValue(context)
-        DKConsumptionType.ELECTRIC -> electricConsumptionValue(context)
-    }
+    private fun fuelConsumptionValue(context: Context) =
+        trip.fuelEstimation?.fuelConsumption?.let {
+            DKDataFormatter.formatConsumption(context, it, DKConsumptionType.FUEL).convertToString()
+        } ?: notAvailableText
 
     fun getConsumptionTitle(context: Context) = when (consumptionType) {
         DKConsumptionType.FUEL -> R.string.dk_driverdata_synthesis_fuel_consumption

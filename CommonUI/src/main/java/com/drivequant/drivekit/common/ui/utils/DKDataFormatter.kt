@@ -372,24 +372,36 @@ object DKDataFormatter {
     fun formatConsumption(
         context: Context,
         consumption: Double,
-        type: DKConsumptionType = DKConsumptionType.FUEL) = when (type) {
+        type: DKConsumptionType = DKConsumptionType.FUEL
+    ): List<FormatType> {
+        val unitResId = when (type) {
             DKConsumptionType.FUEL ->
                 when (DriveKitUI.unitSystem) {
                     DKUnitSystem.METRIC -> R.string.dk_common_unit_l_per_100km
                     DKUnitSystem.IMPERIAL -> R.string.dk_common_unit_mpg
                 }
-            DKConsumptionType.ELECTRIC -> R.string.dk_common_unit_kwh_per_100km
-        }.let {
-            val value = when (DriveKitUI.unitSystem) {
-                DKUnitSystem.METRIC -> consumption.removeZeroDecimal()
-                DKUnitSystem.IMPERIAL -> LitersPer100Kmh(consumption).toMilesPerGallon().value.removeZeroDecimal()
+            DKConsumptionType.ELECTRIC -> {
+                when (DriveKitUI.unitSystem) {
+                    DKUnitSystem.METRIC -> R.string.dk_common_unit_kwh_per_100km
+                    DKUnitSystem.IMPERIAL -> R.string.dk_common_unit_mile_per_kwh
+                }
             }
-            listOf(
-                FormatType.VALUE(value),
-                FormatType.SEPARATOR(),
-                FormatType.UNIT(context.getString(it))
-            )
         }
+        val value = when (DriveKitUI.unitSystem) {
+            DKUnitSystem.METRIC -> consumption.removeZeroDecimal()
+            DKUnitSystem.IMPERIAL -> {
+                when (type) {
+                    DKConsumptionType.FUEL -> LitersPer100Km(consumption).toMilesPerGallon().value.removeZeroDecimal()
+                    DKConsumptionType.ELECTRIC -> KWhPer100Km(consumption).toMilePerKWh().value.removeZeroDecimal()
+                }
+            }
+        }
+        return listOf(
+            FormatType.VALUE(value),
+            FormatType.SEPARATOR(),
+            FormatType.UNIT(context.getString(unitResId))
+        )
+    }
 
     fun formatMass(context: Context, mass: Double): String =
         mass.removeZeroDecimal()
