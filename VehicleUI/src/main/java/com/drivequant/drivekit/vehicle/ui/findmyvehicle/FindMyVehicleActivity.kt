@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,12 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.drivequant.drivekit.common.ui.component.DKText
+import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -54,18 +56,13 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
 
     @Composable
     fun FindMyVehicleScreen() {
-        Column(
-            Modifier.fillMaxSize()
-        ) {
-            Box(
-                Modifier.weight(1f)
-            ) {
+        Column(Modifier.fillMaxSize()) {
+            Box(Modifier.weight(1f)) {
                 FindMyVehicleMap()
             }
 
             Box(
                 Modifier
-                    .weight(1f)
                     .background(color = Color(red = 255, green = 255, blue = 0))
             ) {
                 FindMyVehicleContent()
@@ -88,7 +85,7 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
 
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         viewModel.getUserCurrentLocation(fusedLocationClient) { location ->
-            location ?.let {
+            location?.let {
                 userLocation.value = it
             }
         }
@@ -102,7 +99,7 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
                 )
             )
 
-            userLocation.value ?.let {
+            userLocation.value?.let {
                 Marker(
                     state = MarkerState(
                         position = LatLng(it.latitude, it.longitude)
@@ -118,8 +115,9 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
     fun FindMyVehicleContent() {
         Box(
             modifier = Modifier
-                .fillMaxSize()
                 .background(Color(0, 255, 0))
-        )
+        ) {
+            DKText(text = "Test", DKStyle.NORMAL_TEXT)
+        }
     }
 }
