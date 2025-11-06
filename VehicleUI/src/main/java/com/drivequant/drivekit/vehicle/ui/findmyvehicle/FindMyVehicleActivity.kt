@@ -6,20 +6,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.drivequant.drivekit.common.ui.component.DKText
-import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 internal open class FindMyVehicleActivity: ComponentActivity() {
 
+    lateinit var viewModel: FindMyVehicleViewModel
     companion object {
         fun launchActivity(context: Context) {
             val intent = Intent(context, FindMyVehicleActivity::class.java)
@@ -33,33 +39,59 @@ internal open class FindMyVehicleActivity: ComponentActivity() {
         enableEdgeToEdge()
         DKEdgeToEdgeManager.setSystemStatusBarForegroundColor(window)
         setContent {
-            val viewModel: FindMyVehicleViewModel = viewModel()
+            viewModel = viewModel()
             FindMyVehicleScreen()
         }
     }
 
     @Composable
     fun FindMyVehicleScreen() {
-        FindMyVehicleMap()
-        DKText("Test", DKStyle.NORMAL_TEXT)
+        Column(
+            Modifier.fillMaxSize()
+        ) {
+            Box(Modifier
+                .weight(1f)
+            ) {
+                FindMyVehicleMap()
+            }
+
+            Box(Modifier
+                .weight(1f)
+                .background(color = Color(red = 255, green = 255, blue = 0))
+            ) {
+                FindMyVehicleContent()
+            }
+        }
     }
 
     @Composable
     fun FindMyVehicleMap() {
-        val initialCoordinates = LatLng(37.7749, -122.4194)
-        val initialZoomLevel = 10f
-        val initialCameraPosition = CameraPosition.fromLatLngZoom(
-            initialCoordinates,
-            initialZoomLevel
-        )
+        val initialCameraPosition = viewModel.getInitialCameraPosition()
+        val vehicleLastKnownLocation = viewModel.getVehicleLastKnownLocation()
+        if (initialCameraPosition == null || vehicleLastKnownLocation == null) {
+            return // TODO HANDLE NOT LAST TRIP
+        }
         val initialCameraPositionState = rememberCameraPositionState {
             position = initialCameraPosition
         }
 
-
         GoogleMap(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             cameraPositionState = initialCameraPositionState
-        )
+        ) {
+            Marker(
+                state = MarkerState(
+                    position = vehicleLastKnownLocation
+                )
+            )
+        }
+    }
+
+    @Composable
+    fun FindMyVehicleContent() {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0, 255, 0)))
     }
 }
