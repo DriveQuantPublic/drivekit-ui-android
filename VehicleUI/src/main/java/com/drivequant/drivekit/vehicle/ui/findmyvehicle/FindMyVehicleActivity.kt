@@ -25,8 +25,10 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -72,11 +74,12 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
 
     @Composable
     fun FindMyVehicleMap() {
+        val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownLocation()
         val initialCameraPosition = viewModel.getInitialCameraPosition()
-        val vehicleLastKnownLocation = viewModel.getVehicleLastKnownLocation()
-        if (initialCameraPosition == null || vehicleLastKnownLocation == null) {
+        if (initialCameraPosition == null || vehicleLastKnownCoordinates == null) {
             return // TODO HANDLE NOT LAST TRIP
         }
+
         val initialCameraPositionState = rememberCameraPositionState {
             position = initialCameraPosition
         }
@@ -87,15 +90,28 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
         viewModel.getUserCurrentLocation(fusedLocationClient) { location ->
             location?.let {
                 userLocation.value = it
+
+                initialCameraPositionState.move(
+                    update = CameraUpdateFactory.newLatLngBounds(
+                        LatLngBounds.Builder().include(
+                            LatLng(
+                                it.latitude,
+                                it.longitude
+                            )
+                        ).include(vehicleLastKnownCoordinates).build(),
+                        50
+                    )
+                )
             }
         }
 
         GoogleMap(
-            modifier = Modifier.fillMaxWidth(), cameraPositionState = initialCameraPositionState
+            modifier = Modifier.fillMaxWidth(),
+            cameraPositionState = initialCameraPositionState,
         ) {
             Marker(
                 state = MarkerState(
-                    position = vehicleLastKnownLocation
+                    position = vehicleLastKnownCoordinates
                 )
             )
 

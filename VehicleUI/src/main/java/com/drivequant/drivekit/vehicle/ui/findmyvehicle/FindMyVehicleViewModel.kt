@@ -21,7 +21,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
             return null
         }
 
-        val initialZoomLevel = 10f
+        val initialZoomLevel = 20f
         return CameraPosition.fromLatLngZoom(
             initialCoordinates,
             initialZoomLevel
