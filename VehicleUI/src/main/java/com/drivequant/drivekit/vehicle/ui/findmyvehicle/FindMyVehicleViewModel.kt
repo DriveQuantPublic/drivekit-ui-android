@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 
-import android.annotation.SuppressLint
-import android.util.Log
+import android.location.Location
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -39,7 +38,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
 
     fun getUserCurrentLocation(
         locationClient: FusedLocationProviderClient,
-        callback: (LatLng?) -> Unit
+        callback: (Location?) -> Unit
     ) {
         // TODO Handle permissions
         locationClient.getCurrentLocation(
@@ -47,7 +46,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
             cancellationTokenSource.token
         )
             .addOnSuccessListener { location ->
-                callback(LatLng(location.latitude, location.longitude))
+                callback(location)
             }
             .addOnFailureListener { exception ->
                 DriveKitLog.e(DriveKitVehicleUI.TAG, "Failed to get user current location : $exception")
