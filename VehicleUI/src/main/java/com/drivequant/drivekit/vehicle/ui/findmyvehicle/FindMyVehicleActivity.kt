@@ -4,7 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.drivequant.drivekit.common.ui.component.DKText
+import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 
 internal open class FindMyVehicleActivity: ComponentActivity() {
@@ -21,5 +26,16 @@ internal open class FindMyVehicleActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         DKEdgeToEdgeManager.setSystemStatusBarForegroundColor(window)
+        setContent {
+            val viewModel: FindMyVehicleViewModel = viewModel()
+            FindMyVehicleScreen()
+        }
+    }
+
+    @Composable
+    fun FindMyVehicleScreen() {
+        // TODO map Google
+
+        DKText("Test", DKStyle.NORMAL_TEXT)
     }
 }

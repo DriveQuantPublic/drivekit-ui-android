@@ -23,6 +23,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     buildTypes {
@@ -37,6 +38,10 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "$kotlinCompilerExtension_version"
+    }
+
     publishing {
         singleVariant('release')
     }
@@ -45,6 +50,14 @@ android {
 dependencies {
     implementation libs.androidx.startup.runtime
     implementation libs.androidx.exifinterface
+
+    implementation libs.androidx.activity.compose
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.ui
+    implementation libs.androidx.ui.graphics
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    debugImplementation libs.androidx.ui.tooling
+    debugImplementation libs.androidx.ui.tooling.preview
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
