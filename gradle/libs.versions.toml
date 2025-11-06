@@ -2,7 +2,8 @@
 agp = "8.1.4"
 kotlin = "1.8.22"
 
-playServicesMaps = "18.2.0"
+mapsCompose = "5.0.3"
+playServicesMaps = "19.2.0"
 
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -22,6 +23,7 @@ exifInterface = "1.3.7"
 workRuntimeKtx = "2.9.0"
 
 mpAndroidChart = "v3.1.0"
+playServicesMapsVersion = "19.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,10 +52,12 @@ androidx-legacy-preference = { group = "androidx.legacy", name = "legacy-prefere
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridLayout" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpAndroidChart" }
 android-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifInterface" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMapsVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
