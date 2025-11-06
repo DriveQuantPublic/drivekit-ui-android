@@ -12,20 +12,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
-import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
-internal open class FindMyVehicleActivity: ComponentActivity() {
+internal open class FindMyVehicleActivity : ComponentActivity() {
 
     lateinit var viewModel: FindMyVehicleViewModel
+
     companion object {
         fun launchActivity(context: Context) {
             val intent = Intent(context, FindMyVehicleActivity::class.java)
@@ -49,15 +52,16 @@ internal open class FindMyVehicleActivity: ComponentActivity() {
         Column(
             Modifier.fillMaxSize()
         ) {
-            Box(Modifier
-                .weight(1f)
+            Box(
+                Modifier.weight(1f)
             ) {
                 FindMyVehicleMap()
             }
 
-            Box(Modifier
-                .weight(1f)
-                .background(color = Color(red = 255, green = 255, blue = 0))
+            Box(
+                Modifier
+                    .weight(1f)
+                    .background(color = Color(red = 255, green = 255, blue = 0))
             ) {
                 FindMyVehicleContent()
             }
@@ -75,15 +79,29 @@ internal open class FindMyVehicleActivity: ComponentActivity() {
             position = initialCameraPosition
         }
 
+        val userLocation = remember { mutableStateOf<LatLng?>(null) }
+
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        viewModel.getUserCurrentLocation(fusedLocationClient) { position ->
+            userLocation.value = position
+        }
+
         GoogleMap(
-            modifier = Modifier.fillMaxWidth(),
-            cameraPositionState = initialCameraPositionState
+            modifier = Modifier.fillMaxWidth(), cameraPositionState = initialCameraPositionState
         ) {
             Marker(
                 state = MarkerState(
                     position = vehicleLastKnownLocation
                 )
             )
+
+            userLocation.value ?.let {
+                Marker(
+                    state = MarkerState(
+                        position = it
+                    )
+                )
+            }
         }
     }
 
@@ -92,6 +110,7 @@ internal open class FindMyVehicleActivity: ComponentActivity() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0, 255, 0)))
+                .background(Color(0, 255, 0))
+        )
     }
 }

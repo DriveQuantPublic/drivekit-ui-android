@@ -59,6 +59,7 @@ dependencies {
     implementation libs.maps.compose
     implementation libs.androidx.material
     implementation libs.play.services.maps
+    implementation libs.play.services.location
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.tooling.preview
 
