@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,12 +12,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.component.DKText
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
@@ -31,8 +33,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberMarkerState
 
 internal open class FindMyVehicleActivity : ComponentActivity() {
 
@@ -77,8 +81,9 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
         val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownLocation()
         val initialCameraPosition = viewModel.getInitialCameraPosition()
         if (initialCameraPosition == null || vehicleLastKnownCoordinates == null) {
-            return // TODO HANDLE NOT LAST TRIP
+            return // TODO HANDLE NO LAST TRIP
         }
+
 
         val initialCameraPositionState = rememberCameraPositionState {
             position = initialCameraPosition
@@ -109,11 +114,22 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             modifier = Modifier.fillMaxWidth(),
             cameraPositionState = initialCameraPositionState,
         ) {
-            Marker(
-                state = MarkerState(
-                    position = vehicleLastKnownCoordinates
-                )
-            )
+            val configuration = LocalConfiguration.current
+            val markerState = rememberMarkerState(null, position = vehicleLastKnownCoordinates)
+            MarkerInfoWindow(
+                state = markerState,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width((configuration.screenWidthDp/5).dp)
+                ) {
+                    DKText(
+                        "",
+                        DKStyle.NORMAL_TEXT
+                    )
+                }
+            }
+            markerState.showInfoWindow()
 
             userLocation.value?.let {
                 Marker(
