@@ -239,4 +239,9 @@
    <string name="welcome_ok_button">NEXT STEP</string>
    <string name="welcome_ok_description">Congratulations, you have built the DriveKit demo application 🎉\n\nThis application shows you how the DriveKit components work and guides you to install them in your application.\n\nYour API key is:\n\n%s\n\nUnder no circumstances it shouldn\'t be shared or used in multiple applications.</string>
    <string name="welcome_ok_title">Welcome to the DriveKit demo application</string>
+
+   <string name="feature_find_vehicle_title">Vehicle | Retrouver mon véhicule</string>
+   <string name="feature_find_vehicle_description">Le composant Vehicle comprend une fonction qui permet à l\'utilisateur de visualiser la localisation de son véhicule en fonction de son dernier trajet analysé et de s\'y rendre à l\'aide de son outil de navigation préféré.</string>
+   <string name="drivekit_doc_ios_find_vehicle">https://docs.drivequant.com/vehicle/user-interface/ios</string>
+   <string name="drivekit_doc_android_find_vehicle">https://docs.drivequant.com/vehicle/user-interface/android</string>
 </resources>
