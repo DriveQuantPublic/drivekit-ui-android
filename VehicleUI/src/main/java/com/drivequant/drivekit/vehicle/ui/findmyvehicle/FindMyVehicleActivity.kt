@@ -14,8 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -68,8 +71,7 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             }
 
             Box(
-                Modifier
-                    .background(color = Color(red = 255, green = 255, blue = 0))
+                Modifier.background(color = Color(red = 255, green = 255, blue = 0))
             ) {
                 FindMyVehicleContent()
             }
@@ -89,24 +91,23 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             position = initialCameraPosition
         }
 
-        val userLocation = remember { mutableStateOf<Location?>(null) }
+        var userLocation by remember {
+            mutableStateOf<Location?>(null)
+        }
 
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        viewModel.getUserCurrentLocation(fusedLocationClient) { location ->
-            location?.let {
-                userLocation.value = it
+        LaunchedEffect(Unit) {
+            viewModel.getUserCurrentLocation(fusedLocationClient) { location ->
+                location?.let {
+                    userLocation = it
 
-                initialCameraPositionState.move(
-                    update = CameraUpdateFactory.newLatLngBounds(
-                        LatLngBounds.Builder().include(
-                            LatLng(
-                                it.latitude,
-                                it.longitude
-                            )
-                        ).include(vehicleLastKnownCoordinates).build(),
-                        50
+                    initialCameraPositionState.move(
+                        CameraUpdateFactory.newLatLngBounds(
+                            LatLngBounds.Builder().include(LatLng(it.latitude, it.longitude))
+                                .include(vehicleLastKnownCoordinates).build(), 100
+                        )
                     )
-                )
+                }
             }
         }
 
@@ -115,25 +116,27 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             cameraPositionState = initialCameraPositionState,
         ) {
             val configuration = LocalConfiguration.current
-            val markerState = rememberMarkerState(null, position = vehicleLastKnownCoordinates)
+            val vehicleMarkerState =
+                rememberMarkerState(null, position = vehicleLastKnownCoordinates)
+            LaunchedEffect(vehicleMarkerState) {
+                vehicleMarkerState.showInfoWindow()
+            }
+
             MarkerInfoWindow(
-                state = markerState,
+                state = vehicleMarkerState,
                 icon = BitmapDescriptorFactory.fromResource(R.drawable.dk_vehicle_target_location),
                 anchor = Offset(0.5f, 0.5f),
             ) {
                 Box(
-                    modifier = Modifier
-                        .width((configuration.screenWidthDp/5).dp)
+                    modifier = Modifier.width((configuration.screenWidthDp / 5).dp)
                 ) {
                     DKText(
-                        "",
-                        DKStyle.NORMAL_TEXT
+                        "", DKStyle.NORMAL_TEXT
                     )
                 }
             }
-            markerState.showInfoWindow()
 
-            userLocation.value?.let {
+            userLocation?.let {
                 Marker(
                     state = MarkerState(
                         position = LatLng(it.latitude, it.longitude)
@@ -148,8 +151,7 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
     @Composable
     fun FindMyVehicleContent() {
         Box(
-            modifier = Modifier
-                .background(Color(0, 255, 0))
+            modifier = Modifier.background(Color(0, 255, 0))
         ) {
             DKText(text = "Test", DKStyle.NORMAL_TEXT)
         }
