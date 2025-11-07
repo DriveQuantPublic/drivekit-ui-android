@@ -28,6 +28,7 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.geocoder.DKAddress
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -41,6 +42,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
+import kotlinx.coroutines.launch
 
 private const val INITIAL_ZOOM_LEVEL = 20f
 
@@ -106,12 +108,15 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
                 location?.let {
                     userLocation = it
 
-                    initialCameraPositionState.move(
-                        CameraUpdateFactory.newLatLngBounds(
-                            LatLngBounds.Builder().include(LatLng(it.latitude, it.longitude))
-                                .include(vehicleLastKnownCoordinates).build(), 100
+                    DriveKitVehicleUI.coroutineScope.launch {
+                        initialCameraPositionState.animate(
+                            CameraUpdateFactory.newLatLngBounds(
+                                LatLngBounds.Builder().include(LatLng(it.latitude, it.longitude))
+                                    .include(vehicleLastKnownCoordinates).build(), 100
+                            ),
+                            500
                         )
-                    )
+                    }
                 }
             }
         }

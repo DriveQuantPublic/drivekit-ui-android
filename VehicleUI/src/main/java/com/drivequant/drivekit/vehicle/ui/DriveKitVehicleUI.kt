@@ -31,9 +31,14 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal const val TAG = "DriveKit Vehicle UI"
+
+    internal val coroutineScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
 
     internal var vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR)
         private set
