@@ -28,10 +28,8 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.geocoder.DKAddress
-import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
@@ -132,30 +130,37 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             var addressState by remember { mutableStateOf<DKAddress?>(null) }
 
             LaunchedEffect(Unit) {
-                viewModel.getAddress(this@FindMyVehicleActivity, vehicleLastKnownCoordinates) {address ->
+                viewModel.getAddress(
+                    this@FindMyVehicleActivity, vehicleLastKnownCoordinates
+                ) { address ->
                     address?.let {
                         addressState = it
-                        vehicleMarkerState.showInfoWindow()
                     }
                 }
             }
 
-            Marker(
-                state = vehicleMarkerState,
-                icon = BitmapDescriptorFactory.fromResource(R.drawable.dk_vehicle_target_location),
-                anchor = Offset(0.5f, 0.5f),
-                title = addressState?.address
-            )
+            viewModel.getTargetLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
+                Marker(
+                    state = vehicleMarkerState,
+                    icon = icon,
+                    anchor = Offset(0.5f, 0.5f),
+                    title = addressState?.address
+                )
+            }
+
 
             userLocation?.let {
                 val userLatLng = LatLng(it.latitude, it.longitude)
-                Marker(
-                    state = MarkerState(
-                        position = userLatLng
-                    ),
-                    icon = BitmapDescriptorFactory.fromResource(R.drawable.dk_vehicle_current_location),
-                    anchor = Offset(0.5f, 0.5f),
-                )
+
+                viewModel.getCurrentLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
+                    Marker(
+                        state = MarkerState(
+                            position = userLatLng
+                        ),
+                        icon = icon,
+                        anchor = Offset(0.5f, 0.5f),
+                    )
+                }
                 Polyline(
                     points = listOf(vehicleLastKnownCoordinates, userLatLng),
                     geodesic = true,
