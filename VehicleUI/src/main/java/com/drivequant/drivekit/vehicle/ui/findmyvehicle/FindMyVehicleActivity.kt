@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -113,8 +114,7 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
                             CameraUpdateFactory.newLatLngBounds(
                                 LatLngBounds.Builder().include(LatLng(it.latitude, it.longitude))
                                     .include(vehicleLastKnownCoordinates).build(), 100
-                            ),
-                            500
+                            ), 500
                         )
                     }
                 }
@@ -125,47 +125,12 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             modifier = Modifier.fillMaxWidth(),
             cameraPositionState = initialCameraPositionState,
         ) {
-            val vehicleMarkerState =
-                rememberMarkerState(null, position = vehicleLastKnownCoordinates)
-
-            LaunchedEffect(vehicleMarkerState) {
-                vehicleMarkerState.showInfoWindow()
-            }
-
-            var addressState by remember { mutableStateOf<DKAddress?>(null) }
-
-            LaunchedEffect(Unit) {
-                viewModel.getAddress(
-                    this@FindMyVehicleActivity, vehicleLastKnownCoordinates
-                ) { address ->
-                    address?.let {
-                        addressState = it
-                    }
-                }
-            }
-
-            viewModel.getTargetLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
-                Marker(
-                    state = vehicleMarkerState,
-                    icon = icon,
-                    anchor = Offset(0.5f, 0.5f),
-                    title = addressState?.address
-                )
-            }
-
+            VehicleMapMarker(vehicleLastKnownCoordinates)
 
             userLocation?.let {
                 val userLatLng = LatLng(it.latitude, it.longitude)
 
-                viewModel.getCurrentLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
-                    Marker(
-                        state = MarkerState(
-                            position = userLatLng
-                        ),
-                        icon = icon,
-                        anchor = Offset(0.5f, 0.5f),
-                    )
-                }
+                UserMapMarker(userLocation = it)
                 Polyline(
                     points = listOf(vehicleLastKnownCoordinates, userLatLng),
                     geodesic = true,
@@ -174,6 +139,55 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
                     pattern = listOf(Dash(30f), Gap(20f))
                 )
             }
+        }
+    }
+
+    @Composable
+    fun UserMapMarker(userLocation: Location) {
+        val userLatLng = LatLng(userLocation.latitude, userLocation.longitude)
+        Circle(
+            userLatLng,
+            radius = userLocation.accuracy.toDouble(),
+            fillColor = Color(DKColors.primaryColor).copy(alpha = 0.3f),
+            strokeWidth = 0f
+        )
+
+        viewModel.getCurrentLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
+            Marker(
+                state = MarkerState(
+                    position = userLatLng
+                ),
+                icon = icon,
+                anchor = Offset(0.5f, 0.5f),
+            )
+        }
+    }
+
+    @Composable
+    fun VehicleMapMarker(vehicleLastKnownCoordinates: LatLng) {
+        val vehicleMarkerState =
+            rememberMarkerState(null, position = vehicleLastKnownCoordinates)
+        var addressState by remember { mutableStateOf<DKAddress?>(null) }
+        LaunchedEffect(Unit) {
+            viewModel.getAddress(
+                this@FindMyVehicleActivity, vehicleLastKnownCoordinates
+            ) { address ->
+                address?.let {
+                    addressState = it
+                }
+            }
+        }
+
+        LaunchedEffect(vehicleMarkerState) {
+            vehicleMarkerState.showInfoWindow()
+        }
+        viewModel.getTargetLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
+            Marker(
+                state = vehicleMarkerState,
+                icon = icon,
+                anchor = Offset(0.5f, 0.5f),
+                title = addressState?.address
+            )
         }
     }
 
