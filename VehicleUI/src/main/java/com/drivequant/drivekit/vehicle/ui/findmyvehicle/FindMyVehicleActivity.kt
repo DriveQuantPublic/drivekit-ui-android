@@ -118,6 +118,8 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             val markerState = rememberMarkerState(null, position = vehicleLastKnownCoordinates)
             MarkerInfoWindow(
                 state = markerState,
+                icon = BitmapDescriptorFactory.fromResource(R.drawable.dk_vehicle_target_location),
+                anchor = Offset(0.5f, 0.5f),
             ) {
                 Box(
                     modifier = Modifier
@@ -136,7 +138,7 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
                     state = MarkerState(
                         position = LatLng(it.latitude, it.longitude)
                     ),
-                    icon = BitmapDescriptorFactory.fromResource(R.drawable.dk_gps_user_arrow),
+                    icon = BitmapDescriptorFactory.fromResource(R.drawable.dk_vehicle_current_location),
                     anchor = Offset(0.5f, 0.5f),
                 )
             }
