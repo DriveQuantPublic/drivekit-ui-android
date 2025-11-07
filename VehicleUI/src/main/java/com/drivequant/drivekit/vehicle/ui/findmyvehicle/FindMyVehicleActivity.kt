@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,24 +21,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.component.DKText
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.core.geocoder.DKAddress
 import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
+
+private const val INITIAL_ZOOM_LEVEL = 20f
 
 internal open class FindMyVehicleActivity : ComponentActivity() {
 
@@ -81,11 +81,13 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
     @Composable
     fun FindMyVehicleMap() {
         val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownLocation()
-        val initialCameraPosition = viewModel.getInitialCameraPosition()
-        if (initialCameraPosition == null || vehicleLastKnownCoordinates == null) {
+
+        if (vehicleLastKnownCoordinates == null) {
             return // TODO HANDLE NO LAST TRIP
         }
 
+        val initialCameraPosition =
+            CameraPosition.fromLatLngZoom(vehicleLastKnownCoordinates, INITIAL_ZOOM_LEVEL)
 
         val initialCameraPositionState = rememberCameraPositionState {
             position = initialCameraPosition
@@ -115,26 +117,30 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             modifier = Modifier.fillMaxWidth(),
             cameraPositionState = initialCameraPositionState,
         ) {
-            val configuration = LocalConfiguration.current
             val vehicleMarkerState =
                 rememberMarkerState(null, position = vehicleLastKnownCoordinates)
+
             LaunchedEffect(vehicleMarkerState) {
                 vehicleMarkerState.showInfoWindow()
             }
 
-            MarkerInfoWindow(
+            var addressState by remember { mutableStateOf<DKAddress?>(null) }
+
+            LaunchedEffect(Unit) {
+                viewModel.getAddress(this@FindMyVehicleActivity, vehicleLastKnownCoordinates) {address ->
+                    address?.let {
+                        addressState = it
+                        vehicleMarkerState.showInfoWindow()
+                    }
+                }
+            }
+
+            Marker(
                 state = vehicleMarkerState,
                 icon = BitmapDescriptorFactory.fromResource(R.drawable.dk_vehicle_target_location),
                 anchor = Offset(0.5f, 0.5f),
-            ) {
-                Box(
-                    modifier = Modifier.width((configuration.screenWidthDp / 5).dp)
-                ) {
-                    DKText(
-                        "", DKStyle.NORMAL_TEXT
-                    )
-                }
-            }
+                title = addressState?.address
+            )
 
             userLocation?.let {
                 Marker(
