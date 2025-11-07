@@ -23,19 +23,24 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.component.DKText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.geocoder.DKAddress
 import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.Dash
+import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 
@@ -143,12 +148,20 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
             )
 
             userLocation?.let {
+                val userLatLng = LatLng(it.latitude, it.longitude)
                 Marker(
                     state = MarkerState(
-                        position = LatLng(it.latitude, it.longitude)
+                        position = userLatLng
                     ),
                     icon = BitmapDescriptorFactory.fromResource(R.drawable.dk_vehicle_current_location),
                     anchor = Offset(0.5f, 0.5f),
+                )
+                Polyline(
+                    points = listOf(vehicleLastKnownCoordinates, userLatLng),
+                    geodesic = true,
+                    color = Color(DKColors.mapTraceColor),
+                    width = 3.convertDpToPx().toFloat(),
+                    pattern = listOf(Dash(30f), Gap(20f))
                 )
             }
         }
