@@ -3,12 +3,12 @@ package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 import android.content.Context
 import android.content.Intent
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -293,11 +293,11 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                 userDistanceToVehicle?.let { distance ->
                     VehicleDistance(distance)
                 }
-                Box (
+                Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                ItineraryButton()
+                    ItineraryButton()
                 }
             }
         }
@@ -305,23 +305,32 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
 
     @Composable
     private fun ItineraryButton() {
+        val vehicleCoordinates = viewModel.getVehicleLastKnownCoordinates()
         val buttonLabel = stringResource(R.string.dk_find_vehicle_itinerary)
-        AndroidView(
-            modifier = Modifier.padding(
-                horizontal = 64.dp,
-                vertical = 0.dp
-            ),
+        vehicleCoordinates?.let { coordinates ->
+            AndroidView(
+                modifier = Modifier.padding(
+                    horizontal = 64.dp,
+                    vertical = 0.dp
+                ),
 
-            factory = { context ->
-                DKButtonPrimary(context).apply {
-                    text = buttonLabel
-                    setOnClickListener {  }
+                factory = { context ->
+                    DKButtonPrimary(context).apply {
+                        text = buttonLabel
+                        setOnClickListener {
+                            val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
+                            val navigationIntentUri =
+                                Uri.parse("geo:$coordinatesForUri?q=$coordinatesForUri")
+                            val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
+                            startActivity(mapIntent)
+                        }
+                    }
+                },
+                update = { button ->
+                    button.text = buttonLabel
                 }
-            },
-            update = { button ->
-                button.text = buttonLabel
-            }
-        )
+            )
+        }
     }
 
     @Composable
