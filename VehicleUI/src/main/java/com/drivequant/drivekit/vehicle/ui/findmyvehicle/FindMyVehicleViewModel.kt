@@ -21,17 +21,52 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.CancellationTokenSource
+import java.util.Date
 
 internal class FindMyVehicleViewModel : ViewModel() {
 
     private var cancellationTokenSource = CancellationTokenSource()
+    private val lastTripProvider = lazy {
+        DriveKitTripAnalysis.getLastTripLocation()
+    }
 
     fun getVehicleLastKnownLocation(): LatLng? {
-        val lastTrip = DriveKitTripAnalysis.getLastTripLocation()
+        val lastTrip = lastTripProvider.value
         if (lastTrip != null) {
             return LatLng(lastTrip.latitude, lastTrip.longitude)
         }
         return null
+    }
+
+    fun getVehicleLastKnownLocationDate(): Date? {
+        val lastTrip = lastTripProvider.value
+        if (lastTrip != null) {
+            return lastTrip.date
+        }
+        return null
+    }
+
+    fun getDistanceToVehicleLastKnownLocationInMeters(
+        locationClient: FusedLocationProviderClient,
+        callback: (Double?) -> Unit
+    ) {
+        val lastTrip = lastTripProvider.value
+        if (lastTrip != null) {
+            locationClient.getCurrentLocation(
+                Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token
+            ).addOnSuccessListener { location ->
+                val distance = location.distanceTo(Location("").apply {
+                    latitude = lastTrip.latitude
+                    longitude = lastTrip.longitude
+                })
+                callback(distance.toDouble())
+            }.addOnFailureListener { exception ->
+                DriveKitLog.e(
+                    DriveKitVehicleUI.TAG, "Failed to get user current location : $exception"
+                )
+                callback(null)
+            }
+        }
     }
 
     fun getUserCurrentLocation(
@@ -73,6 +108,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
                 )
             }
     }
+
     fun getTargetLocationIcon(context: Context): BitmapDescriptor? {
         return getIcon(context, R.drawable.dk_vehicle_target_location)
     }
