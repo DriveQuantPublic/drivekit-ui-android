@@ -9,12 +9,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,12 +27,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -67,6 +72,7 @@ private const val INITIAL_ZOOM_LEVEL = 20f
 private const val ITINERARY_LINE_WIDTH = 3f
 private const val VEHICLE_NEARBY_THRESHOLD = 100
 private const val VEHICLE_FAR_THRESHOLD = 1000
+private const val MAP_REGION_PADDING = 100
 
 internal open class FindMyVehicleActivity : AppCompatActivity() {
 
@@ -115,21 +121,39 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
 
     @Composable
     fun FindMyVehicleScreen() {
+
+        val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownCoordinates()
+
         Column(Modifier.fillMaxSize()) {
-            Box(Modifier.weight(1f)) {
-                FindMyVehicleMap()
+            vehicleLastKnownCoordinates?.let { coordinates ->
+
+                Box(Modifier.weight(1f)) {
+                    FindMyVehicleMap(coordinates)
+                }
+                FindMyVehicleContent(coordinates)
+
+            } ?: Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                DKText(
+                    text = stringResource(R.string.dk_find_vehicle_empty),
+                    style = DKStyle.SMALL_TEXT,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color(DKColors.neutralColor))
+                        .padding(16.dp)
+                        .wrapContentSize()
+                )
             }
-            FindMyVehicleContent()
         }
     }
 
     @Composable
-    fun FindMyVehicleMap() {
-        val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownCoordinates()
-        if (vehicleLastKnownCoordinates == null) {
-            return // TODO HANDLE NO LAST TRIP
-        }
-
+    fun FindMyVehicleMap(vehicleLastKnownCoordinates: LatLng) {
         val initialCameraPosition =
             CameraPosition.fromLatLngZoom(vehicleLastKnownCoordinates, INITIAL_ZOOM_LEVEL)
 
@@ -149,7 +173,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                         CameraUpdateFactory.newLatLngBounds(
                             LatLngBounds.Builder()
                                 .include(LatLng(location.latitude, location.longitude))
-                                .include(vehicleLastKnownCoordinates).build(), 100
+                                .include(vehicleLastKnownCoordinates).build(), MAP_REGION_PADDING
                         ), 500
                     )
                 }
@@ -200,8 +224,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                 Image(
                     painter = painterResource(id = com.drivequant.drivekit.common.ui.R.drawable.dk_common_center_map),
                     contentDescription = "Recentrer la carte",
-                    modifier = Modifier
-                        .size(32.dp),
+                    modifier = Modifier.size(32.dp),
                     colorFilter = ColorFilter.tint(Color.Black)
 
                 )
@@ -264,7 +287,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun FindMyVehicleContent() {
+    fun FindMyVehicleContent(vehicleCoordinates: LatLng) {
         var userDistanceToVehicle by remember {
             mutableStateOf<Double?>(null)
         }
@@ -294,43 +317,36 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                     VehicleDistance(distance)
                 }
                 Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
                 ) {
-                    ItineraryButton()
+                    ItineraryButton(vehicleCoordinates)
                 }
             }
         }
     }
 
     @Composable
-    private fun ItineraryButton() {
-        val vehicleCoordinates = viewModel.getVehicleLastKnownCoordinates()
+    private fun ItineraryButton(coordinates: LatLng) {
         val buttonLabel = stringResource(R.string.dk_find_vehicle_itinerary)
-        vehicleCoordinates?.let { coordinates ->
-            AndroidView(
-                modifier = Modifier.padding(
-                    horizontal = 64.dp,
-                    vertical = 0.dp
-                ),
+        AndroidView(
+            modifier = Modifier.padding(
+                horizontal = 64.dp, vertical = 0.dp
+            ),
 
-                factory = { context ->
-                    DKButtonPrimary(context).apply {
-                        text = buttonLabel
-                        setOnClickListener {
-                            val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
-                            val navigationIntentUri =
-                                Uri.parse("geo:$coordinatesForUri?q=$coordinatesForUri")
-                            val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
-                            startActivity(mapIntent)
-                        }
+            factory = { context ->
+                DKButtonPrimary(context).apply {
+                    text = buttonLabel
+                    setOnClickListener {
+                        val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
+                        val navigationIntentUri =
+                            Uri.parse("geo:$coordinatesForUri?q=$coordinatesForUri")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
+                        startActivity(mapIntent)
                     }
-                },
-                update = { button ->
-                    button.text = buttonLabel
                 }
-            )
-        }
+            }, update = { button ->
+                button.text = buttonLabel
+            })
     }
 
     @Composable
@@ -347,20 +363,16 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                 (distance / nearbyRoundingValue).toInt() * nearbyRoundingValue
             DKText(
                 text = stringResource(
-                    R.string.dk_find_vehicle_location_nearby,
-                    roundedNearbyDistance
-                ),
-                DKStyle.NORMAL_TEXT
+                    R.string.dk_find_vehicle_location_nearby, roundedNearbyDistance
+                ), DKStyle.NORMAL_TEXT
             )
         } else {
             val farRoundingUnit = 1000
             val roundedFarDistance = (distance / farRoundingUnit).toInt()
             DKText(
                 text = stringResource(
-                    R.string.dk_find_vehicle_location_far,
-                    roundedFarDistance
-                ),
-                DKStyle.NORMAL_TEXT
+                    R.string.dk_find_vehicle_location_far, roundedFarDistance
+                ), DKStyle.NORMAL_TEXT
             )
         }
     }
