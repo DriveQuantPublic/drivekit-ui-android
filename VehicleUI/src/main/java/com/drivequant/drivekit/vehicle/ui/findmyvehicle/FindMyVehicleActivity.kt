@@ -249,34 +249,39 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                     text = stringResource(R.string.dk_find_vehicle_date, date, time),
                     DKStyle.NORMAL_TEXT
                 )
-                // TODO : Handle imperial units
                 userDistanceToVehicle?.let { distance ->
-                    if (distance < 100) {
-                        DKText(
-                            text = stringResource(R.string.dk_find_vehicle_location_very_close),
-                            DKStyle.NORMAL_TEXT
-                        )
-                    } else if (distance < 1000) {
-                        val roundedDistanceTo100 = (distance / 100).toInt() * 100
-                        DKText(
-                            text = stringResource(
-                                R.string.dk_find_vehicle_location_nearby,
-                                roundedDistanceTo100
-                            ),
-                            DKStyle.NORMAL_TEXT
-                        )
-                    } else {
-                        val roundedDistanceTo1000 = (distance / 1000).toInt()
-                        DKText(
-                            text = stringResource(
-                                R.string.dk_find_vehicle_location_far,
-                                roundedDistanceTo1000
-                            ),
-                            DKStyle.NORMAL_TEXT
-                        )
-                    }
+                    VehicleDistance(distance)
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun VehicleDistance(distance: Double) {
+        // TODO : Handle imperial units
+        if (distance < 100) {
+            DKText(
+                text = stringResource(R.string.dk_find_vehicle_location_very_close),
+                DKStyle.NORMAL_TEXT
+            )
+        } else if (distance < 1000) {
+            val roundedDistanceTo100 = (distance / 100).toInt() * 100
+            DKText(
+                text = stringResource(
+                    R.string.dk_find_vehicle_location_nearby,
+                    roundedDistanceTo100
+                ),
+                DKStyle.NORMAL_TEXT
+            )
+        } else {
+            val roundedDistanceTo1000 = (distance / 1000).toInt()
+            DKText(
+                text = stringResource(
+                    R.string.dk_find_vehicle_location_far,
+                    roundedDistanceTo1000
+                ),
+                DKStyle.NORMAL_TEXT
+            )
         }
     }
 }
