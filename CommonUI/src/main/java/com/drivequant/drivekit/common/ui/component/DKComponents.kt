@@ -14,31 +14,48 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 
 @Composable
-fun DKText(text: String, style: DKStyle, color: Color = colorResource(com.drivequant.drivekit.common.ui.R.color.mainFontColor), modifier: Modifier = Modifier) {
+fun DKText(
+    text: String,
+    style: DKStyle,
+    color: Color = colorResource(com.drivequant.drivekit.common.ui.R.color.mainFontColor),
+    textAlign: TextAlign? = null,
+    modifier: Modifier = Modifier
+) {
     Text(
         text = text,
         modifier = modifier,
         style = style.dkTextStyle(color = color),
+        textAlign = textAlign
     )
 }
 
 @Composable
-fun DKText(text: AnnotatedString, style: DKStyle, color: Color = colorResource(com.drivequant.drivekit.common.ui.R.color.mainFontColor), modifier: Modifier = Modifier) {
+fun DKText(
+    text: AnnotatedString,
+    style: DKStyle,
+    color: Color = colorResource(com.drivequant.drivekit.common.ui.R.color.mainFontColor),
+    textAlign: TextAlign? = null,
+    modifier: Modifier = Modifier
+) {
     Text(
         text = text,
         modifier = modifier,
         style = style.dkTextStyle(color = color),
+        textAlign = textAlign
     )
 }
 
 @Composable
 fun DKPrimaryButton(text: String, onClick: () -> Unit) {
     Button(
-        modifier = Modifier.defaultMinSize(minHeight = 48.dp).fillMaxWidth(),
+        modifier = Modifier
+            .defaultMinSize(minHeight = 48.dp)
+            .fillMaxWidth(),
         colors = buttonColors(
             backgroundColor = colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor),
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.fontColorOnSecondaryColor)
@@ -54,14 +71,19 @@ fun DKPrimaryButton(text: String, onClick: () -> Unit) {
 @Composable
 fun DKSecondaryButton(text: String, onClick: () -> Unit) {
     OutlinedButton(
-        modifier = Modifier.defaultMinSize(minHeight = 48.dp).fillMaxWidth(),
+        modifier = Modifier
+            .defaultMinSize(minHeight = 48.dp)
+            .fillMaxWidth(),
         colors = buttonColors(
             backgroundColor = Color.Transparent,
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)
         ),
         elevation = null,
         shape = CircleShape,
-        border = BorderStroke(1.75.dp, colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)),
+        border = BorderStroke(
+            1.75.dp,
+            colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)
+        ),
         onClick = onClick
     ) {
         DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
@@ -85,7 +107,9 @@ fun DKTextButton(text: String, modifier: Modifier = Modifier, onClick: () -> Uni
 @Composable
 fun DKCriticalActionButton(text: String, onClick: () -> Unit) {
     TextButton(
-        modifier = Modifier.defaultMinSize(minHeight = 48.dp).fillMaxWidth(),
+        modifier = Modifier
+            .defaultMinSize(minHeight = 48.dp)
+            .fillMaxWidth(),
         colors = buttonColors(
             backgroundColor = Color.Transparent,
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.criticalColor)
