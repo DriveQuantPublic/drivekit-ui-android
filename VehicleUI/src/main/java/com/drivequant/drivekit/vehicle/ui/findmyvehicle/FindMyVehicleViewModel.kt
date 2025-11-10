@@ -95,7 +95,6 @@ internal class FindMyVehicleViewModel : ViewModel() {
                 }
             })
     }
-
     private fun getIcon(context: Context, @DrawableRes drawableId: Int): BitmapDescriptor? {
         return ContextCompat.getDrawable(context, drawableId)
             ?.let { targetLocationDrawable ->

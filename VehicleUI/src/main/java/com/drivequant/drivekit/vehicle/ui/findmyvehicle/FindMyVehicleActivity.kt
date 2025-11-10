@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -55,7 +58,7 @@ import java.util.Date
 private const val INITIAL_ZOOM_LEVEL = 20f
 private const val ITINERARY_LINE_WIDTH = 3f
 
-internal open class FindMyVehicleActivity : ComponentActivity() {
+internal open class FindMyVehicleActivity : AppCompatActivity() {
 
     lateinit var viewModel: FindMyVehicleViewModel
     val fusedLocationClient = lazy { LocationServices.getFusedLocationProviderClient(this) }
@@ -71,10 +74,32 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        DKEdgeToEdgeManager.setSystemStatusBarForegroundColor(window)
-        setContent {
+        setContentView(R.layout.activity_find_my_vehicle)
+        setupToolbar()
+        setupEdgeToEdge()
+
+        findViewById<ComposeView>(R.id.compose_view).setContent {
             viewModel = viewModel()
             FindMyVehicleScreen()
+        }
+    }
+
+    fun setupToolbar() {
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setTitle(R.string.dk_find_vehicle_title)
+        toolbar.setNavigationOnClickListener { finish() }
+    }
+
+    fun setupEdgeToEdge() {
+        DKEdgeToEdgeManager.apply {
+            setSystemStatusBarForegroundColor(window)
+            update(findViewById(R.id.root)) { view, insets ->
+                addSystemStatusBarTopPadding(findViewById(R.id.toolbar), insets)
+                addSystemNavigationBarBottomPadding(view, insets)
+            }
         }
     }
 
