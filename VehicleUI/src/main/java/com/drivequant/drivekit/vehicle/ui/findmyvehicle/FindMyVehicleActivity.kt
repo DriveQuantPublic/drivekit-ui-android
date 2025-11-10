@@ -7,21 +7,27 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -124,7 +130,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         val initialCameraPosition =
             CameraPosition.fromLatLngZoom(vehicleLastKnownCoordinates, INITIAL_ZOOM_LEVEL)
 
-        val initialCameraPositionState = rememberCameraPositionState {
+        val cameraPositionState = rememberCameraPositionState {
             position = initialCameraPosition
         }
 
@@ -133,42 +139,66 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         }
 
 
-        LaunchedEffect(Unit) {
-            viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
-                location?.let {
-                    userLocation = it
-
-                    DriveKitVehicleUI.coroutineScope.launch {
-                        initialCameraPositionState.animate(
-                            CameraUpdateFactory.newLatLngBounds(
-                                LatLngBounds.Builder().include(LatLng(it.latitude, it.longitude))
-                                    .include(vehicleLastKnownCoordinates).build(), 100
-                            ), 500
-                        )
-                    }
+        fun animateMapToIncludeUserAndVehicle() {
+            userLocation?.let { location ->
+                DriveKitVehicleUI.coroutineScope.launch {
+                    cameraPositionState.animate(
+                        CameraUpdateFactory.newLatLngBounds(
+                            LatLngBounds.Builder()
+                                .include(LatLng(location.latitude, location.longitude))
+                                .include(vehicleLastKnownCoordinates).build(), 100
+                        ), 500
+                    )
                 }
             }
         }
 
-        GoogleMap(
-            modifier = Modifier.fillMaxWidth(),
-            cameraPositionState = initialCameraPositionState,
-            uiSettings = MapUiSettings(
-                zoomControlsEnabled = false
-            )
-        ) {
-            VehicleMapMarker(vehicleLastKnownCoordinates)
+        LaunchedEffect(Unit) {
+            viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
+                location?.let {
+                    userLocation = it
+                    animateMapToIncludeUserAndVehicle()
+                }
+            }
+        }
 
-            userLocation?.let {
-                val userLatLng = LatLng(it.latitude, it.longitude)
+        Box(modifier = Modifier.fillMaxSize()) {
+            GoogleMap(
+                modifier = Modifier.fillMaxWidth(),
+                cameraPositionState = cameraPositionState,
+                uiSettings = MapUiSettings(
+                    zoomControlsEnabled = false
+                )
+            ) {
+                VehicleMapMarker(vehicleLastKnownCoordinates)
 
-                UserMapMarker(userLocation = it)
-                Polyline(
-                    points = listOf(vehicleLastKnownCoordinates, userLatLng),
-                    geodesic = true,
-                    color = Color(DKColors.mapTraceColor),
-                    width = ITINERARY_LINE_WIDTH.convertDpToPx().toFloat(),
-                    pattern = listOf(Dash(30f), Gap(20f))
+                userLocation?.let {
+                    val userLatLng = LatLng(it.latitude, it.longitude)
+
+                    UserMapMarker(userLocation = it)
+                    Polyline(
+                        points = listOf(vehicleLastKnownCoordinates, userLatLng),
+                        geodesic = true,
+                        color = Color(DKColors.mapTraceColor),
+                        width = ITINERARY_LINE_WIDTH.convertDpToPx().toFloat(),
+                        pattern = listOf(Dash(30f), Gap(20f))
+                    )
+                }
+            }
+            FloatingActionButton(
+                onClick = {
+                    animateMapToIncludeUserAndVehicle()
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp),
+                backgroundColor = Color.White
+            ) {
+                Image(
+                    painter = painterResource(id = com.drivequant.drivekit.common.ui.R.drawable.dk_common_arrow_down),
+                    contentDescription = "Recentrer la carte",
+                    modifier = Modifier
+                        .size(32.dp)
                 )
             }
         }
@@ -272,7 +302,8 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
             )
         } else if (distance < VEHICLE_FAR_THRESHOLD) {
             val nearbyRoundingValue = 100
-            val roundedNearbyDistance = (distance / nearbyRoundingValue).toInt() * nearbyRoundingValue
+            val roundedNearbyDistance =
+                (distance / nearbyRoundingValue).toInt() * nearbyRoundingValue
             DKText(
                 text = stringResource(
                     R.string.dk_find_vehicle_location_nearby,
