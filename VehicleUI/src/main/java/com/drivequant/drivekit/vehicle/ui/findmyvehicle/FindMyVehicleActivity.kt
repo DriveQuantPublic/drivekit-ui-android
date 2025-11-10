@@ -195,7 +195,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                 backgroundColor = Color.White
             ) {
                 Image(
-                    painter = painterResource(id = com.drivequant.drivekit.common.ui.R.drawable.dk_common_arrow_down),
+                    painter = painterResource(id = com.drivequant.drivekit.common.ui.R.drawable.dk_common_center_map),
                     contentDescription = "Recentrer la carte",
                     modifier = Modifier
                         .size(32.dp)
