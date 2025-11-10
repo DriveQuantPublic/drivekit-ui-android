@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -57,6 +55,8 @@ import java.util.Date
 
 private const val INITIAL_ZOOM_LEVEL = 20f
 private const val ITINERARY_LINE_WIDTH = 3f
+private const val VEHICLE_NEARBY_THRESHOLD = 100
+private const val VEHICLE_FAR_THRESHOLD = 1000
 
 internal open class FindMyVehicleActivity : AppCompatActivity() {
 
@@ -259,26 +259,28 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
     @Composable
     private fun VehicleDistance(distance: Double) {
         // TODO : Handle imperial units
-        if (distance < 100) {
+        if (distance < VEHICLE_NEARBY_THRESHOLD) {
             DKText(
                 text = stringResource(R.string.dk_find_vehicle_location_very_close),
                 DKStyle.NORMAL_TEXT
             )
-        } else if (distance < 1000) {
-            val roundedDistanceTo100 = (distance / 100).toInt() * 100
+        } else if (distance < VEHICLE_FAR_THRESHOLD) {
+            val nearbyRoundingValue = 100
+            val roundedNearbyDistance = (distance / nearbyRoundingValue).toInt() * nearbyRoundingValue
             DKText(
                 text = stringResource(
                     R.string.dk_find_vehicle_location_nearby,
-                    roundedDistanceTo100
+                    roundedNearbyDistance
                 ),
                 DKStyle.NORMAL_TEXT
             )
         } else {
-            val roundedDistanceTo1000 = (distance / 1000).toInt()
+            val farRoundingUnit = 1000
+            val roundedFarDistance = (distance / farRoundingUnit).toInt()
             DKText(
                 text = stringResource(
                     R.string.dk_find_vehicle_location_far,
-                    roundedDistanceTo1000
+                    roundedFarDistance
                 ),
                 DKStyle.NORMAL_TEXT
             )
