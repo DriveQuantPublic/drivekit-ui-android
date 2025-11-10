@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.component.DKText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
@@ -38,6 +40,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
@@ -46,6 +50,7 @@ import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
 
 private const val INITIAL_ZOOM_LEVEL = 20f
+private const val ITINERARY_LINE_WIDTH = 3f
 
 internal open class FindMyVehicleActivity : ComponentActivity() {
 
@@ -124,6 +129,9 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
         GoogleMap(
             modifier = Modifier.fillMaxWidth(),
             cameraPositionState = initialCameraPositionState,
+            uiSettings = MapUiSettings(
+                zoomControlsEnabled = false
+            )
         ) {
             VehicleMapMarker(vehicleLastKnownCoordinates)
 
@@ -135,7 +143,7 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
                     points = listOf(vehicleLastKnownCoordinates, userLatLng),
                     geodesic = true,
                     color = Color(DKColors.mapTraceColor),
-                    width = 3.convertDpToPx().toFloat(),
+                    width = ITINERARY_LINE_WIDTH.convertDpToPx().toFloat(),
                     pattern = listOf(Dash(30f), Gap(20f))
                 )
             }
@@ -194,7 +202,7 @@ internal open class FindMyVehicleActivity : ComponentActivity() {
     @Composable
     fun FindMyVehicleContent() {
         Box(
-            modifier = Modifier.background(Color(0, 255, 0))
+            modifier = Modifier.padding(16.dp)
         ) {
             DKText(text = "Test", DKStyle.NORMAL_TEXT)
         }
