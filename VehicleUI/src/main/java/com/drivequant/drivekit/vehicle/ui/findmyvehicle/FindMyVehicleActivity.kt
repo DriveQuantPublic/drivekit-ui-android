@@ -32,6 +32,7 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
+import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
 import com.drivequant.drivekit.core.geocoder.DKAddress
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
@@ -115,8 +116,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
 
     @Composable
     fun FindMyVehicleMap() {
-        val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownLocation()
-
+        val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownCoordinates()
         if (vehicleLastKnownCoordinates == null) {
             return // TODO HANDLE NO LAST TRIP
         }
@@ -177,12 +177,6 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
     @Composable
     fun UserMapMarker(userLocation: Location) {
         val userLatLng = LatLng(userLocation.latitude, userLocation.longitude)
-        Circle(
-            userLatLng,
-            radius = userLocation.accuracy.toDouble(),
-            fillColor = Color(DKColors.primaryColor).copy(alpha = 0.3f),
-            strokeWidth = 0f
-        )
 
         viewModel.getCurrentLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
             Marker(
@@ -198,6 +192,8 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
     @Composable
     fun VehicleMapMarker(vehicleLastKnownCoordinates: LatLng) {
         val vehicleMarkerState = rememberMarkerState(null, position = vehicleLastKnownCoordinates)
+        val vehicleAccuracyLevel = viewModel.getVehicleLastKnownLocationAccuracyLevel()
+
         var addressState by remember { mutableStateOf<DKAddress?>(null) }
         LaunchedEffect(Unit) {
             viewModel.getAddress(
@@ -219,6 +215,16 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                 anchor = Offset(0.5f, 0.5f),
                 title = addressState?.address
             )
+            if (vehicleAccuracyLevel == DKCoordinateAccuracy.POOR) {
+                viewModel.getVehicleLastKnownLocationAccuracyMeters()?.let { accuracy ->
+                    Circle(
+                        vehicleLastKnownCoordinates,
+                        radius = accuracy,
+                        fillColor = Color(DKColors.primaryColor).copy(alpha = 0.3f),
+                        strokeWidth = 0f
+                    )
+                }
+            }
         }
     }
 

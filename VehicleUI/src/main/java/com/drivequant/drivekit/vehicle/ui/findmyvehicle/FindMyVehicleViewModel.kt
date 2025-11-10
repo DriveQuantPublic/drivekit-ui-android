@@ -8,6 +8,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.DriveKitLog
+import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
 import com.drivequant.drivekit.core.geocoder.DKAddress
 import com.drivequant.drivekit.core.geocoder.DKLocation
 import com.drivequant.drivekit.core.geocoder.DKReverseGeocoderListener
@@ -30,10 +31,28 @@ internal class FindMyVehicleViewModel : ViewModel() {
         DriveKitTripAnalysis.getLastTripLocation()
     }
 
-    fun getVehicleLastKnownLocation(): LatLng? {
+    fun getVehicleLastKnownCoordinates(): LatLng? {
         val lastTrip = lastTripProvider.value
         if (lastTrip != null) {
             return LatLng(lastTrip.latitude, lastTrip.longitude)
+        }
+        return null
+    }
+
+    fun getVehicleLastKnownLocationAccuracyLevel(): DKCoordinateAccuracy? {
+        val lastTrip = lastTripProvider.value
+        if (lastTrip != null) {
+            DriveKitLog.e(DriveKitVehicleUI.TAG, "getVehicleLastKnownLocationAccuracyLevel " + lastTrip.getAccuracyLevel().toString())
+            return lastTrip.getAccuracyLevel()
+        }
+        return null
+    }
+
+    fun getVehicleLastKnownLocationAccuracyMeters(): Double? {
+        val lastTrip = lastTripProvider.value
+        if (lastTrip != null) {
+            DriveKitLog.e(DriveKitVehicleUI.TAG, "getVehicleLastKnownLocationAccuracyMeters " + lastTrip.accuracyMeter.toString())
+            return lastTrip.accuracyMeter
         }
         return null
     }
