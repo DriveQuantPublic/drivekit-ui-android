@@ -1,11 +1,12 @@
 package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,6 +52,9 @@ import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
 import com.drivequant.drivekit.core.geocoder.DKAddress
+import com.drivequant.drivekit.core.utils.DiagnosisHelper
+import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
+import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPermissionActivity
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.LocationServices
@@ -77,7 +81,7 @@ private const val VEHICLE_NEARBY_THRESHOLD = 100
 private const val VEHICLE_FAR_THRESHOLD = 1000
 private const val MAP_REGION_PADDING = 100
 
-internal open class FindMyVehicleActivity : AppCompatActivity() {
+internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
     lateinit var viewModel: FindMyVehicleViewModel
     val fusedLocationClient = lazy { LocationServices.getFusedLocationProviderClient(this) }
@@ -130,13 +134,41 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
 
         val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownCoordinates()
 
+        var userLocation by remember {
+            mutableStateOf<Location?>(null)
+        }
+
+        LaunchedEffect(Unit) {
+            @SuppressLint("MissingPermission")
+            val setupUserLocation: () -> Unit = {
+                viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
+                    location?.let {
+                        userLocation = it
+                    }
+                }
+            }
+
+            if (DiagnosisHelper.hasFineLocationPermission(this@FindMyVehicleActivity)) {
+                setupUserLocation()
+            } else {
+                requestFineLocationPermission { granted ->
+                    if (granted) {
+                        setupUserLocation()
+                    }
+                }
+            }
+        }
+
         Column(Modifier.fillMaxSize()) {
             vehicleLastKnownCoordinates?.let { coordinates ->
 
                 Box(Modifier.weight(1f)) {
-                    FindMyVehicleMap(coordinates)
+                    FindMyVehicleMap(
+                        vehicleLastKnownCoordinates = coordinates,
+                        userLocation = userLocation
+                    )
                 }
-                FindMyVehicleContent(coordinates)
+                FindMyVehicleContent(vehicleCoordinates = coordinates, userLocation = userLocation)
 
             } ?: Box(
                 contentAlignment = Alignment.Center,
@@ -158,19 +190,38 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         }
     }
 
+    private fun requestFineLocationPermission(callback: (granted: Boolean) -> Unit) {
+        permissionCallback = object :
+            OnPermissionCallback {
+            override fun onPermissionGranted(permissionName: Array<String>) {
+                callback(true)
+            }
+
+            override fun onPermissionDeclined(permissionName: Array<String>) {
+                handlePermissionDeclined(
+                    this@FindMyVehicleActivity,
+                    com.drivequant.drivekit.permissionsutils.R.string.dk_perm_utils_app_diag_activity_ko
+                ) { requestFineLocationPermission(callback) }
+            }
+
+            override fun onPermissionTotallyDeclined(permissionName: String) {
+                handlePermissionTotallyDeclined(
+                    this@FindMyVehicleActivity,
+                    com.drivequant.drivekit.permissionsutils.R.string.dk_perm_utils_app_diag_activity_ko
+                )
+            }
+        }
+        request(this, Manifest.permission.ACCESS_FINE_LOCATION)
+    }
+
     @Composable
-    fun FindMyVehicleMap(vehicleLastKnownCoordinates: LatLng) {
+    fun FindMyVehicleMap(vehicleLastKnownCoordinates: LatLng, userLocation: Location?) {
         val initialCameraPosition =
             CameraPosition.fromLatLngZoom(vehicleLastKnownCoordinates, INITIAL_ZOOM_LEVEL)
 
         val cameraPositionState = rememberCameraPositionState {
             position = initialCameraPosition
         }
-
-        var userLocation by remember {
-            mutableStateOf<Location?>(null)
-        }
-
 
         fun animateMapToIncludeUserAndVehicle() {
             userLocation?.let { location ->
@@ -185,14 +236,8 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                 }
             }
         }
-
-        LaunchedEffect(Unit) {
-            viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
-                location?.let {
-                    userLocation = it
-                    animateMapToIncludeUserAndVehicle()
-                }
-            }
+        LaunchedEffect(userLocation) {
+            animateMapToIncludeUserAndVehicle()
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
@@ -292,15 +337,15 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun FindMyVehicleContent(vehicleCoordinates: LatLng) {
+    fun FindMyVehicleContent(vehicleCoordinates: LatLng, userLocation: Location?) {
         var userDistanceToVehicle by remember {
             mutableStateOf<Double?>(null)
         }
         var vehicleLastKnownLocationDate by remember {
             mutableStateOf<Date?>(null)
         }
-        LaunchedEffect(Unit) {
-            viewModel.getDistanceToVehicleLastKnownLocationInMeters(locationClient = fusedLocationClient.value) { maybeDistance ->
+        userLocation?.let {
+            viewModel.getDistanceToVehicleLastKnownLocationInMeters(userLocation) { maybeDistance ->
                 maybeDistance?.let {
                     userDistanceToVehicle = it
                 }

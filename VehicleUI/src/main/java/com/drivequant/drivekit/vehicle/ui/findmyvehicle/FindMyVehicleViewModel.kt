@@ -1,10 +1,12 @@
 package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 
+import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.DriveKitLog
@@ -63,33 +65,25 @@ internal class FindMyVehicleViewModel : ViewModel() {
         return null
     }
 
+    // TODO: User Meter() class
     fun getDistanceToVehicleLastKnownLocationInMeters(
-        locationClient: FusedLocationProviderClient,
+        userLocation: Location,
         callback: (Double?) -> Unit
     ) {
         val lastTrip = lastTripProvider.value
         if (lastTrip != null) {
-            locationClient.getCurrentLocation(
-                Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token
-            ).addOnSuccessListener { location ->
-                val distance = location.distanceTo(Location("").apply {
-                    latitude = lastTrip.latitude
-                    longitude = lastTrip.longitude
-                })
-                callback(distance.toDouble())
-            }.addOnFailureListener { exception ->
-                DriveKitLog.e(
-                    DriveKitVehicleUI.TAG, "Failed to get user current location : $exception"
-                )
-                callback(null)
-            }
+            val distance = userLocation.distanceTo(Location("").apply {
+                latitude = lastTrip.latitude
+                longitude = lastTrip.longitude
+            })
+            callback(distance.toDouble())
         }
     }
 
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     fun getUserCurrentLocation(
         locationClient: FusedLocationProviderClient, callback: (Location?) -> Unit
     ) {
-        // TODO Handle permissions
         locationClient.getCurrentLocation(
             Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token
         ).addOnSuccessListener { location ->
