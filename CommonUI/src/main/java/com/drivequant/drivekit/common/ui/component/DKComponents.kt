@@ -22,9 +22,9 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 fun DKText(
     text: String,
     style: DKStyle,
+    modifier: Modifier = Modifier,
     color: Color = colorResource(com.drivequant.drivekit.common.ui.R.color.mainFontColor),
     textAlign: TextAlign? = null,
-    modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
@@ -38,9 +38,9 @@ fun DKText(
 fun DKText(
     text: AnnotatedString,
     style: DKStyle,
+    modifier: Modifier = Modifier,
     color: Color = colorResource(com.drivequant.drivekit.common.ui.R.color.mainFontColor),
     textAlign: TextAlign? = null,
-    modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
