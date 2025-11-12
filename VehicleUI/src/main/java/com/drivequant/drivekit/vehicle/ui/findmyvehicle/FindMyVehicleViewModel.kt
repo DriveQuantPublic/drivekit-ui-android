@@ -2,12 +2,12 @@ package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 
 import android.Manifest
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.scale
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.core.DriveKitLog
@@ -115,7 +115,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
                     context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_ic_big)
                         .toInt()
                 BitmapDescriptorFactory.fromBitmap(
-                    Bitmap.createScaledBitmap(bitmap, size, size, true)
+                    bitmap.scale(size, size)
                 )
             }
     }
