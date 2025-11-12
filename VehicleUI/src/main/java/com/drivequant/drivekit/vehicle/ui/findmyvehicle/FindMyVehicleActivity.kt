@@ -3,9 +3,11 @@ package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
@@ -21,6 +23,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +42,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKButtonPrimary
@@ -46,6 +52,7 @@ import com.drivequant.drivekit.common.ui.component.DKText
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
@@ -53,6 +60,7 @@ import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
 import com.drivequant.drivekit.core.geocoder.DKAddress
+import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPermissionActivity
@@ -140,16 +148,39 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             mutableStateOf<Location?>(null)
         }
 
-        LaunchedEffect(Unit) {
-            @SuppressLint("MissingPermission")
-            val setupUserLocation: () -> Unit = {
+        val lifecycleOwner = LocalLifecycleOwner.current
+
+        @SuppressLint("MissingPermission")
+        val setupUserLocation: () -> Unit = {
+            if (!DiagnosisHelper.isActivated(
+                    this@FindMyVehicleActivity,
+                    ConnectivityType.GPS
+                )
+            ) {
+                DKAlertDialog.LayoutBuilder()
+                    .init(this)
+                    // TODO : i18n wording
+                    .message("We need you GPS Sensor to display itinerary to your vehicle")
+                    .negativeButton()
+                    .positiveButton(
+                        positiveListener = { dialogInterface: DialogInterface?, _: Int ->
+                            run {
+                                dialogInterface?.dismiss()
+                                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                            }
+                        })
+                    .show()
+
+            } else {
                 viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
                     location?.let {
                         userLocation = it
                     }
                 }
             }
+        }
 
+        fun attemptToSetupUserLocation() {
             if (DiagnosisHelper.hasFineLocationPermission(this@FindMyVehicleActivity)) {
                 setupUserLocation()
             } else {
@@ -158,6 +189,18 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                         setupUserLocation()
                     }
                 }
+            }
+        }
+
+        DisposableEffect(lifecycleOwner) {
+            val observer = LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    attemptToSetupUserLocation()
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
             }
         }
 
