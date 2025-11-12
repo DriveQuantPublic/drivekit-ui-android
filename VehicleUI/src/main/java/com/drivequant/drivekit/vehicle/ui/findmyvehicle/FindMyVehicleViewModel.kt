@@ -80,7 +80,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
         }
     }
 
-    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION])
     fun getUserCurrentLocation(
         locationClient: FusedLocationProviderClient, callback: (Location?) -> Unit
     ) {
