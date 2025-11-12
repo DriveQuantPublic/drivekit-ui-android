@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -358,7 +359,8 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             val time = lastTripDate.formatDate(DKDatePattern.HOUR_MINUTE)
 
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 DKText(
                     text = stringResource(R.string.dk_find_vehicle_date, date, time),
