@@ -150,7 +150,8 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
         val lifecycleOwner = LocalLifecycleOwner.current
 
-        @SuppressLint("MissingPermission")
+        val gpsSensorNeededMessage =
+            stringResource(com.drivequant.drivekit.permissionsutils.R.string.dk_perm_utils_app_diag_loc_sensor_ko)
         val setupUserLocation: () -> Unit = {
             if (!DiagnosisHelper.isActivated(
                     this@FindMyVehicleActivity,
@@ -159,8 +160,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             ) {
                 DKAlertDialog.LayoutBuilder()
                     .init(this)
-                    // TODO : i18n wording
-                    .message("We need you GPS Sensor to display itinerary to your vehicle")
+                    .message(gpsSensorNeededMessage)
                     .negativeButton()
                     .positiveButton(
                         positiveListener = { dialogInterface: DialogInterface?, _: Int ->
@@ -170,7 +170,6 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                             }
                         })
                     .show()
-
             } else {
                 viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
                     location?.let {
