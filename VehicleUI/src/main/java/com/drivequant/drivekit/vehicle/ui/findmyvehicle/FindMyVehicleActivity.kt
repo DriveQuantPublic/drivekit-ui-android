@@ -74,6 +74,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
 import java.util.Date
+import kotlin.math.roundToInt
 
 private const val INITIAL_ZOOM_LEVEL = 20f
 private const val ITINERARY_LINE_WIDTH = 3f
@@ -339,7 +340,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
     @Composable
     fun FindMyVehicleContent(vehicleCoordinates: LatLng, userLocation: Location?) {
         var userDistanceToVehicle by remember {
-            mutableStateOf<Double?>(null)
+            mutableStateOf<Meter?>(null)
         }
         var vehicleLastKnownLocationDate by remember {
             mutableStateOf<Date?>(null)
@@ -400,8 +401,8 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
     }
 
     @Composable
-    private fun VehicleDistance(distance: Double) {
-        if (distance < VEHICLE_NEARBY_THRESHOLD) {
+    private fun VehicleDistance(distance: Meter) {
+        if (distance.value < VEHICLE_NEARBY_THRESHOLD) {
             val text = when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> stringResource(R.string.dk_find_vehicle_location_very_close)
                 DKUnitSystem.IMPERIAL -> stringResource(R.string.dk_find_vehicle_location_very_close_imperial)
@@ -409,10 +410,10 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             DKText(
                 text = text, DKStyle.NORMAL_TEXT
             )
-        } else if (distance < VEHICLE_FAR_THRESHOLD) {
+        } else if (distance.value < VEHICLE_FAR_THRESHOLD) {
             val nearbyRoundingValue = 100
             val roundedNearbyDistance =
-                (distance / nearbyRoundingValue).toInt() * nearbyRoundingValue
+                (distance.value / nearbyRoundingValue).roundToInt() * nearbyRoundingValue
             // We don't handle specific conversion as yards and meters are close enough with a 100m rounding
             val text = when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> stringResource(
@@ -427,18 +428,18 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 text = text, DKStyle.NORMAL_TEXT
             )
         } else {
-            val roundedFarDistance = Meter(distance).toKilometers()
+            val roundedFarDistance = distance.toKilometers()
             val text = when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> {
                     stringResource(
-                        R.string.dk_find_vehicle_location_far, roundedFarDistance.value.toInt()
+                        R.string.dk_find_vehicle_location_far, roundedFarDistance.value.roundToInt()
                     )
                 }
 
                 DKUnitSystem.IMPERIAL -> {
                     stringResource(
                         R.string.dk_find_vehicle_location_far_imperial,
-                        roundedFarDistance.toMiles().value.toInt()
+                        roundedFarDistance.toMiles().value.roundToInt()
                     )
                 }
             }

@@ -9,6 +9,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
 import com.drivequant.drivekit.core.geocoder.DKAddress
@@ -65,10 +66,9 @@ internal class FindMyVehicleViewModel : ViewModel() {
         return null
     }
 
-    // TODO: User Meter() class
     fun getDistanceToVehicleLastKnownLocationInMeters(
         userLocation: Location,
-        callback: (Double?) -> Unit
+        callback: (Meter?) -> Unit
     ) {
         val lastTrip = lastTripProvider.value
         if (lastTrip != null) {
@@ -76,7 +76,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
                 latitude = lastTrip.latitude
                 longitude = lastTrip.longitude
             })
-            callback(distance.toDouble())
+            callback(Meter(distance.toDouble()))
         }
     }
 
