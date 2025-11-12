@@ -107,9 +107,12 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.dk_find_vehicle_title)
-        toolbar.setNavigationOnClickListener { finish() }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     fun setupEdgeToEdge() {
