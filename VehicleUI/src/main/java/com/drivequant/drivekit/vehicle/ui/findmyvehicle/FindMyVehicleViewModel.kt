@@ -42,7 +42,6 @@ internal class FindMyVehicleViewModel : ViewModel() {
     fun getVehicleLastKnownLocationAccuracyLevel(): DKCoordinateAccuracy? {
         val lastTrip = lastTripProvider.value
         if (lastTrip != null) {
-            DriveKitLog.e(DriveKitVehicleUI.TAG, "getVehicleLastKnownLocationAccuracyLevel " + lastTrip.getAccuracyLevel().toString())
             return lastTrip.getAccuracyLevel()
         }
         return null
@@ -51,7 +50,6 @@ internal class FindMyVehicleViewModel : ViewModel() {
     fun getVehicleLastKnownLocationAccuracyMeters(): Double? {
         val lastTrip = lastTripProvider.value
         if (lastTrip != null) {
-            DriveKitLog.e(DriveKitVehicleUI.TAG, "getVehicleLastKnownLocationAccuracyMeters " + lastTrip.accuracyMeter.toString())
             return lastTrip.accuracyMeter
         }
         return null
@@ -114,6 +112,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
                 }
             })
     }
+
     private fun getIcon(context: Context, @DrawableRes drawableId: Int): BitmapDescriptor? {
         return ContextCompat.getDrawable(context, drawableId)
             ?.let { targetLocationDrawable ->

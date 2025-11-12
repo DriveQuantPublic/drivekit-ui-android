@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKButtonPrimary
 import com.drivequant.drivekit.common.ui.component.DKText
 import com.drivequant.drivekit.common.ui.extension.formatDate
@@ -45,6 +46,8 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
 import com.drivequant.drivekit.core.geocoder.DKAddress
@@ -351,28 +354,49 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
 
     @Composable
     private fun VehicleDistance(distance: Double) {
-        // TODO : Handle imperial units
         if (distance < VEHICLE_NEARBY_THRESHOLD) {
+            val text = when (DriveKitUI.unitSystem) {
+                DKUnitSystem.METRIC -> stringResource(R.string.dk_find_vehicle_location_very_close)
+                DKUnitSystem.IMPERIAL -> stringResource(R.string.dk_find_vehicle_location_very_close_imperial)
+            }
             DKText(
-                text = stringResource(R.string.dk_find_vehicle_location_very_close),
-                DKStyle.NORMAL_TEXT
+                text = text, DKStyle.NORMAL_TEXT
             )
         } else if (distance < VEHICLE_FAR_THRESHOLD) {
             val nearbyRoundingValue = 100
             val roundedNearbyDistance =
                 (distance / nearbyRoundingValue).toInt() * nearbyRoundingValue
-            DKText(
-                text = stringResource(
+            // We don't handle specific conversion as yards and meters are close enough with a 100m rounding
+            val text = when (DriveKitUI.unitSystem) {
+                DKUnitSystem.METRIC -> stringResource(
                     R.string.dk_find_vehicle_location_nearby, roundedNearbyDistance
-                ), DKStyle.NORMAL_TEXT
+                )
+
+                DKUnitSystem.IMPERIAL -> stringResource(
+                    R.string.dk_find_vehicle_location_nearby_imperial, roundedNearbyDistance
+                )
+            }
+            DKText(
+                text = text, DKStyle.NORMAL_TEXT
             )
         } else {
-            val farRoundingUnit = 1000
-            val roundedFarDistance = (distance / farRoundingUnit).toInt()
+            val roundedFarDistance = Meter(distance).toKilometers()
+            val text = when (DriveKitUI.unitSystem) {
+                DKUnitSystem.METRIC -> {
+                    stringResource(
+                        R.string.dk_find_vehicle_location_far, roundedFarDistance.value.toInt()
+                    )
+                }
+
+                DKUnitSystem.IMPERIAL -> {
+                    stringResource(
+                        R.string.dk_find_vehicle_location_far_imperial,
+                        roundedFarDistance.toMiles().value.toInt()
+                    )
+                }
+            }
             DKText(
-                text = stringResource(
-                    R.string.dk_find_vehicle_location_far, roundedFarDistance
-                ), DKStyle.NORMAL_TEXT
+                text = text, DKStyle.NORMAL_TEXT
             )
         }
     }
