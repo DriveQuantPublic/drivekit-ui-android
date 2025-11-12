@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKButtonPrimary
@@ -345,7 +346,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                     setOnClickListener {
                         val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
                         val navigationIntentUri =
-                            Uri.parse("geo:$coordinatesForUri?q=$coordinatesForUri")
+                            "geo:$coordinatesForUri?q=$coordinatesForUri".toUri()
                         val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
                         startActivity(mapIntent)
                     }
