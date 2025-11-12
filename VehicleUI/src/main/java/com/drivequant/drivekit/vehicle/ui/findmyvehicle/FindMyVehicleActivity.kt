@@ -3,7 +3,6 @@ package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 import android.content.Context
 import android.content.Intent
 import android.location.Location
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -230,10 +229,9 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
             ) {
                 Image(
                     painter = painterResource(id = com.drivequant.drivekit.common.ui.R.drawable.dk_common_center_map),
-                    contentDescription = "Recentrer la carte",
                     modifier = Modifier.size(32.dp),
+                    contentDescription = null,
                     colorFilter = ColorFilter.tint(Color.Black)
-
                 )
             }
         }
