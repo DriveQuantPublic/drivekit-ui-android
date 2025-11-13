@@ -88,6 +88,7 @@
    <string name="dk_common_unit_liter">l</string>
    <string name="dk_common_unit_meter">m</string>
    <string name="dk_common_unit_mile">mi</string>
+   <string name="dk_common_unit_mile_per_kwh">mi/kWh</string>
    <string name="dk_common_unit_minute">min</string>
    <string name="dk_common_unit_mpg">mi/gal</string>
    <string name="dk_common_unit_mph">mi/t</string>
