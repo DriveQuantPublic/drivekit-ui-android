@@ -2,10 +2,14 @@
 <resources>
    <string name="dk_timeline_acceleration_score">Acceleration score: %s</string>
    <string name="dk_timeline_accelerations">Accelerations / 100 km: %s</string>
+   <string name="dk_timeline_accelerations_miles">Accelerations / 100 mi: %s</string>
    <string name="dk_timeline_adherence">Adherence limits / 100 km: %s</string>
+   <string name="dk_timeline_adherence_miles">Adherence limits / 100 mi: %s</string>
    <string name="dk_timeline_brakings">Brakings / 100 km: %s</string>
+   <string name="dk_timeline_brakings_miles">Brakings / 100 mi: %s</string>
    <string name="dk_timeline_button_timeline_detail">See more details on my score</string>
    <string name="dk_timeline_calls_duration">Duration of forbidden calls / 100 km: %s</string>
+   <string name="dk_timeline_calls_duration_miles">Duration of forbidden calls / 100 mi: %s</string>
    <string name="dk_timeline_co2_mass">CO2 mass: %s</string>
    <string name="dk_timeline_consumption">Consumption : %s</string>
    <string name="dk_timeline_deceleration_score">Deceleration score: %s</string>
@@ -17,6 +21,7 @@
    <string name="dk_timeline_info_maintain_score">The speed maintain score ranges from 0 to 5. A value of 0 indicates that the driver has an appropriate behavior and drives at a constant speed. Otherwise, when oscillations in speed are detected, the score increases and the driver can progress.</string>
    <string name="dk_timeline_maintain_score">Speed maintain score: %s</string>
    <string name="dk_timeline_nb_unlocks">Number of phone unlocks / 100 km: %s</string>
+   <string name="dk_timeline_nb_unlocks_miles">Number of phone unlocks / 100 mi: %s</string>
    <string name="dk_timeline_overspeeding_distance">Overspeeding relative distance: %s</string>
    <string name="dk_timeline_overspeeding_duration">Overspeeding relative duration: %s</string>
    <string name="dk_timeline_road_context_city">City</string>

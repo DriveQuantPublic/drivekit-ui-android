@@ -18,9 +18,10 @@ import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.graphical.DKColors
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatInKmOrMile
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
@@ -332,9 +333,9 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
         }
 
     fun formatChallengeDistance(distance:Double, context: Context): List<FormatType> =
-        formatMeterDistanceInKm(
+        formatInKmOrMile(
             context,
-            distance * 1000,
+            Meter(distance * 1000),
             minDistanceToRemoveFractions = 10.0
         )
 

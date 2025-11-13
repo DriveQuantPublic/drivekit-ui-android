@@ -2,10 +2,14 @@
 <resources>
    <string name="dk_timeline_acceleration_score">Puntuación de aceleración: %s</string>
    <string name="dk_timeline_accelerations">Aceleración / 100 km: %s</string>
+   <string name="dk_timeline_accelerations_miles">Aceleración / 100 mi: %s</string>
    <string name="dk_timeline_adherence">Límites de adherencia / 100 km: %s</string>
+   <string name="dk_timeline_adherence_miles">Límites de adherencia / 100 mi: %s</string>
    <string name="dk_timeline_brakings">Frenada / 100 km: %s</string>
+   <string name="dk_timeline_brakings_miles">Frenada / 100 mi: %s</string>
    <string name="dk_timeline_button_timeline_detail">Ver más detalles en mi puntuación</string>
    <string name="dk_timeline_calls_duration">Duración de las llamadas prohibidas / 100 km: %s</string>
+   <string name="dk_timeline_calls_duration_miles">Duración de las llamadas prohibidas / 100 mi: %s</string>
    <string name="dk_timeline_co2_mass">Masa de CO2: %s</string>
    <string name="dk_timeline_consumption">Consumo: %s</string>
    <string name="dk_timeline_deceleration_score">Puntuación de desaceleración: %s</string>
@@ -17,6 +21,7 @@
    <string name="dk_timeline_info_maintain_score">La puntuación de mantenimiento de la velocidad va de 0 a 5. Un valor de 0 indica que el conductor se comporta bien y conduce a una velocidad constante. De lo contrario, cuando se detectan oscilaciones en la velocidad, la puntuación aumenta y el conductor puede progresar.</string>
    <string name="dk_timeline_maintain_score">Puntuación de mantenimiento: %s</string>
    <string name="dk_timeline_nb_unlocks">Número de desbloqueos / 100 km: %s</string>
+   <string name="dk_timeline_nb_unlocks_miles">Número de desbloqueos / 100 mi: %s</string>
    <string name="dk_timeline_overspeeding_distance">Distancia relativa al exceso de velocidad: %s</string>
    <string name="dk_timeline_overspeeding_duration">Duración relativa de la sobrecarga: %s</string>
    <string name="dk_timeline_road_context_city">Urbano fluido</string>

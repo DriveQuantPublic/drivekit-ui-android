@@ -7,6 +7,7 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.utils.DKConsumptionType
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.KilometerPerHour
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -86,20 +87,21 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
+    fun getConsumptionValue(context: Context) = when (consumptionType) {
+        DKConsumptionType.FUEL -> fuelConsumptionValue(context)
+        DKConsumptionType.ELECTRIC -> electricConsumptionValue(context)
+    }
+
     private fun electricConsumptionValue(context: Context) =
         trip.energyEstimation?.energyConsumption?.let {
             DKDataFormatter.formatConsumption(context, it, DKConsumptionType.ELECTRIC)
                 .convertToString()
         } ?: notAvailableText
 
-    private fun fuelConsumptionValue(context: Context) = trip.fuelEstimation?.fuelConsumption?.let {
-        DKDataFormatter.formatConsumption(context, it).convertToString()
-    } ?: notAvailableText
-
-    fun getConsumptionValue(context: Context) = when (consumptionType) {
-        DKConsumptionType.FUEL -> fuelConsumptionValue(context)
-        DKConsumptionType.ELECTRIC -> electricConsumptionValue(context)
-    }
+    private fun fuelConsumptionValue(context: Context) =
+        trip.fuelEstimation?.fuelConsumption?.let {
+            DKDataFormatter.formatConsumption(context, it, DKConsumptionType.FUEL).convertToString()
+        } ?: notAvailableText
 
     fun getConsumptionTitle(context: Context) = when (consumptionType) {
         DKConsumptionType.FUEL -> R.string.dk_driverdata_synthesis_fuel_consumption
@@ -118,7 +120,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
     fun getMeanSpeed(context: Context): String {
         return trip.tripStatistics?.let {
-            DKDataFormatter.formatSpeedMean(context, it.speedMean)
+            DKDataFormatter.formatMeanSpeed(context, KilometerPerHour(it.speedMean))
         } ?: run {
             notAvailableText
         }

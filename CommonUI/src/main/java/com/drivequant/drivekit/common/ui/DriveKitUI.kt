@@ -5,7 +5,7 @@ import android.graphics.Typeface
 import androidx.core.content.res.ResourcesCompat
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.module.DKUIModule
-import com.drivequant.drivekit.common.ui.utils.DistanceUnit
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
@@ -19,7 +19,8 @@ object DriveKitUI {
         private set
 
     @JvmStatic
-    var distanceUnit: DistanceUnit = DistanceUnit.KM
+    var unitSystem: DKUnitSystem = DKUnitSystem.METRIC
+        private set
 
     @JvmStatic
     var scores: List<DKScoreType> = DKScoreType.values().toList()
@@ -63,6 +64,11 @@ object DriveKitUI {
             this.secondaryFont = secondaryFont
         }
         return secondaryFont
+    }
+
+    @JvmStatic
+    fun configureUnitSystem(unitSystem: DKUnitSystem) {
+        this.unitSystem = unitSystem
     }
 
     @JvmStatic

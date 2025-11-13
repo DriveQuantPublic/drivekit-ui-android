@@ -2,10 +2,14 @@
 <resources>
    <string name="dk_timeline_acceleration_score">Punktzahl für die Beschleunigung: %s</string>
    <string name="dk_timeline_accelerations">Beschleunigungen / 100 km: %s</string>
+   <string name="dk_timeline_accelerations_miles">Beschleunigungen / 100 mi: %s</string>
    <string name="dk_timeline_adherence">Adhäsionsgrenze / 100 km: %s</string>
+   <string name="dk_timeline_adherence_miles">Adhäsionsgrenze / 100 mi: %s</string>
    <string name="dk_timeline_brakings">Bremsen / 100 km: %s</string>
+   <string name="dk_timeline_brakings_miles">Bremsen / 100 mi: %s</string>
    <string name="dk_timeline_button_timeline_detail">Weitere Details zu meiner Punktzahl anzeigen</string>
    <string name="dk_timeline_calls_duration">Dauer verbotener Anrufe / 100 km: %s</string>
+   <string name="dk_timeline_calls_duration_miles">Dauer verbotener Anrufe / 100 mi: %s</string>
    <string name="dk_timeline_co2_mass">CO2-Masse : %s</string>
    <string name="dk_timeline_consumption">Verbrauch: %s</string>
    <string name="dk_timeline_deceleration_score">Punktzahl für Verlangsamung: %s</string>
@@ -17,6 +21,7 @@
    <string name="dk_timeline_info_maintain_score">Die Punktzahl für die Beibehaltung der Geschwindigkeit variiert von 0 bis 5. Ein Wert von 0 bedeutet, dass der Fahrer ein gutes Fahrverhalten hat und mit konstanter Geschwindigkeit fährt. Im umgekehrten Fall, wenn Schwankungen in der Geschwindigkeit festgestellt werden, steigt die Punktzahl, der Fahrer kann dann Fortschritte machen.</string>
    <string name="dk_timeline_maintain_score">Score für die Aufrechterhaltung: %s</string>
    <string name="dk_timeline_nb_unlocks">Entsperrungsnummer / 100 km: %s</string>
+   <string name="dk_timeline_nb_unlocks_miles">Entsperrungsnummer / 100 mi: %s</string>
    <string name="dk_timeline_overspeeding_distance">Überdrehzahl relativer Abstand: %s</string>
    <string name="dk_timeline_overspeeding_duration">Überdrehzahl relative Dauer: %s</string>
    <string name="dk_timeline_road_context_city">Städtisch</string>

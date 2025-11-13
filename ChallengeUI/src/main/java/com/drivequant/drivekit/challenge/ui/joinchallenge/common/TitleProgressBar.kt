@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 
 
 internal class TitleProgressBar(context: Context) : LinearLayout(context) {
@@ -39,7 +40,12 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
 
     fun setTitle(title: String, condition: String) {
        val titleProgressBar = when (title) {
-            "km" -> context.getString(R.string.dk_challenge_distance_kilometer)
+            "km" -> {
+                when (DriveKitUI.unitSystem) {
+                    DKUnitSystem.METRIC -> context.getString(R.string.dk_challenge_distance_kilometer)
+                    DKUnitSystem.IMPERIAL -> context.getString(R.string.dk_challenge_distance_miles)
+                }
+            }
             "nbTrip" -> context.getString(R.string.dk_challenge_nb_trip)
             else -> ""
         }

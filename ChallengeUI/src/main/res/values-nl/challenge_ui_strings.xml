@@ -6,6 +6,7 @@
    <string name="dk_challenge_braking_score">Score remmen</string>
    <string name="dk_challenge_consult_rule_button">Raadpleeg de regels</string>
    <string name="dk_challenge_distance_kilometer">Afstand (km)</string>
+   <string name="dk_challenge_distance_miles">Afstand (mi)</string>
    <string name="dk_challenge_distraction_score">Afleidingsscore</string>
    <string name="dk_challenge_eco_driving_score">Eco-driving score</string>
    <string name="dk_challenge_failed_to_join">Je kunt niet deelnemen aan de challenge. Zorg ervoor dat je verbinding hebt met internet of probeer het later nog eens.</string>

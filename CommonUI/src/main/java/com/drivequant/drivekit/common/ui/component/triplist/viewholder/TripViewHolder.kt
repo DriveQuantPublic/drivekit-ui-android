@@ -18,10 +18,12 @@ import com.drivequant.drivekit.common.ui.component.triplist.extension.getOrCompu
 import com.drivequant.drivekit.common.ui.component.triplist.views.TripInfoView
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 
 
@@ -47,9 +49,9 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                 itemView.setPadding(it, 0, it, 0)
             }
         }
-        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE)
         textViewDepartureCity.text = trip.computeDepartureInfo()
-        textViewArrivalTime.text = trip.getEndDate().formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        textViewArrivalTime.text = trip.getEndDate().formatDate(DKDatePattern.HOUR_MINUTE)
         textViewArrivalCity.text = trip.computeArrivalInfo()
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
 
@@ -85,20 +87,40 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                     )
                 } else {
                     showImageIndicator()
-                    imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.dk_no_score))
+                    imageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            imageView.context,
+                            R.drawable.dk_no_score
+                        )
+                    )
                 }
             }
+
             DisplayType.TEXT -> {
+                val meters = trip.getDistance()?.let { Meter(it) }
                 showTextIndicator()
                 textIndicator.smallText(true)
                 textIndicator.text =
-                    if (tripData == TripData.DURATION) {
-                        DKDataFormatter.formatDuration(itemView.context, trip.computeCeilDuration())
-                            .convertToString()
-                    } else {
-                        DKDataFormatter.formatMeterDistanceInKm(
+                    when (tripData) {
+                        TripData.ECO_DRIVING,
+                        TripData.SAFETY,
+                        TripData.DISTRACTION,
+                        TripData.SPEEDING -> {
+                            if (trip.isScored(tripData)) {
+                                trip.getScore(tripData)?.removeZeroDecimal().toString()
+                            } else {
+                                "-"
+                            }
+                        }
+
+                        TripData.DURATION -> DKDataFormatter.formatDuration(
                             itemView.context,
-                            trip.getScore(tripData)
+                            trip.computeCeilDuration()
+                        ).convertToString()
+
+                        TripData.DISTANCE -> DKDataFormatter.formatInKmOrMile(
+                            itemView.context,
+                            meters
                         ).convertToString()
                     }
             }

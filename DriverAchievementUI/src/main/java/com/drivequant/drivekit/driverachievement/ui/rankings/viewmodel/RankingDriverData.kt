@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
 
@@ -42,7 +43,7 @@ class RankingDriverData(
         } else driverPseudo
 
     override fun getDistance(context: Context): String =
-        DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
+        DKDataFormatter.formatInKmOrMile(context, Meter(driverDistance * 1000)).convertToString()
 
     override fun getScore(context: Context, textColor: Int): Spannable =
         if (driverScore == 10.0) {

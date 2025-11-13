@@ -9,6 +9,7 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
+import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
@@ -162,9 +163,9 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     private fun getDistanceText(context: Context, distanceKm: Double): SpannableString {
         val spannable = DKSpannable()
 
-        DKDataFormatter.formatMeterDistanceInKm(
+        DKDataFormatter.formatInKmOrMile(
             context = context,
-            distance = distanceKm * 1000,
+            meters = Meter(distanceKm * 1000),
             minDistanceToRemoveFractions = 0.0,
         ).forEach {
             when (it) {

@@ -1,9 +1,11 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKConsumptionType
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getEngineTypeName
 
@@ -21,7 +23,10 @@ enum class EngineField : Field {
     override fun getValue(context: Context, vehicle: Vehicle): String? {
         return when (this) {
             MOTOR -> vehicle.getEngineTypeName(context)
-            CONSUMPTION -> DKDataFormatter.formatConsumption(context, vehicle.consumption).convertToString()
+            CONSUMPTION -> {
+                val consumptionType = if(vehicle.engineIndex == VehicleEngineIndex.ELECTRIC.value) DKConsumptionType.ELECTRIC else DKConsumptionType.FUEL
+                DKDataFormatter.formatConsumption(context, vehicle.consumption, consumptionType).convertToString()
+            }
         }
     }
 

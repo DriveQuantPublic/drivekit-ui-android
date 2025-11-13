@@ -6,6 +6,7 @@
    <string name="dk_challenge_braking_score">Score de freinage</string>
    <string name="dk_challenge_consult_rule_button">Consulter le règlement</string>
    <string name="dk_challenge_distance_kilometer">Distance (km)</string>
+   <string name="dk_challenge_distance_miles">Distance (mi)</string>
    <string name="dk_challenge_distraction_score">Score de distraction</string>
    <string name="dk_challenge_eco_driving_score">Score d\'éco-conduite</string>
    <string name="dk_challenge_failed_to_join">Impossible de participer au challenge, assurez-vous d\'être connecté à internet ou réessayez utlérieurement.</string>

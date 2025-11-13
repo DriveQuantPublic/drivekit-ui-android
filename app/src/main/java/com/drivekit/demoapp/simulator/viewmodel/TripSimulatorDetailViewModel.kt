@@ -5,6 +5,7 @@ import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.KilometerPerHour
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.tripanalysis.TripListener
@@ -106,7 +107,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
 
     fun getVelocity(context: Context) = if (isSimulating) {
         currentSpeed?.let {
-            DKDataFormatter.formatSpeedMean(context, it)
+            DKDataFormatter.formatMeanSpeed(context, KilometerPerHour(it))
         } ?: "-"
     } else {
         "-"
