@@ -35,6 +35,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -93,7 +94,9 @@ private const val MAP_REGION_PADDING = 100
 internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
     lateinit var viewModel: FindMyVehicleViewModel
-    val fusedLocationClient = lazy { LocationServices.getFusedLocationProviderClient(this) }
+    private val fusedLocationClient = lazy { LocationServices.getFusedLocationProviderClient(this) }
+
+    private val textColorResId = com.drivequant.drivekit.common.ui.R.color.primaryColor
 
     companion object {
         fun launchActivity(context: Context) {
@@ -140,7 +143,6 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
     @Composable
     fun FindMyVehicleScreen() {
-
         val vehicleLastKnownCoordinates = viewModel.getVehicleLastKnownCoordinates()
 
         var userLocation by remember {
@@ -223,6 +225,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                     text = stringResource(R.string.dk_find_vehicle_empty),
                     style = DKStyle.SMALL_TEXT,
                     textAlign = TextAlign.Center,
+                    color = colorResource(textColorResId),
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color(DKColors.neutralColor))
@@ -405,7 +408,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             ) {
                 DKText(
                     text = stringResource(R.string.dk_find_vehicle_date, date, time),
-                    DKStyle.NORMAL_TEXT
+                    DKStyle.NORMAL_TEXT, color = colorResource(textColorResId)
                 )
                 userDistanceToVehicle?.let { distance ->
                     VehicleDistance(distance)
@@ -450,9 +453,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 DKUnitSystem.METRIC -> stringResource(R.string.dk_find_vehicle_location_very_close)
                 DKUnitSystem.IMPERIAL -> stringResource(R.string.dk_find_vehicle_location_very_close_imperial)
             }
-            DKText(
-                text = text, DKStyle.NORMAL_TEXT
-            )
+            DKText(text = text, DKStyle.NORMAL_TEXT, color = colorResource(textColorResId))
         } else if (distance.value < VEHICLE_FAR_THRESHOLD) {
             val nearbyRoundingValue = 100
             val roundedNearbyDistance =
@@ -467,9 +468,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                     R.string.dk_find_vehicle_location_nearby_imperial, roundedNearbyDistance
                 )
             }
-            DKText(
-                text = text, DKStyle.NORMAL_TEXT
-            )
+            DKText(text = text, DKStyle.NORMAL_TEXT, color = colorResource(textColorResId))
         } else {
             val roundedFarDistance = distance.toKilometers()
             val text = when (DriveKitUI.unitSystem) {
@@ -486,9 +485,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                     )
                 }
             }
-            DKText(
-                text = text, DKStyle.NORMAL_TEXT
-            )
+            DKText(text = text, DKStyle.NORMAL_TEXT, color = colorResource(textColorResId))
         }
     }
 }
