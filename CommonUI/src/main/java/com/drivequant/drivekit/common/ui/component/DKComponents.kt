@@ -1,11 +1,15 @@
 package com.drivequant.drivekit.common.ui.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults.buttonColors
+import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -13,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -51,7 +57,7 @@ fun DKText(
 }
 
 @Composable
-fun DKPrimaryButton(text: String, onClick: () -> Unit) {
+fun DKPrimaryButton(text: String, @DrawableRes icon: Int? = null, onClick: () -> Unit) {
     Button(
         modifier = Modifier
             .defaultMinSize(minHeight = 48.dp)
@@ -64,10 +70,18 @@ fun DKPrimaryButton(text: String, onClick: () -> Unit) {
         shape = CircleShape,
         onClick = onClick
     ) {
+        icon?.let {
+            Icon(
+                painterResource(icon),
+                contentDescription = stringResource(com.drivequant.drivekit.common.ui.R.string.dk_common_back), // TODO
+                modifier = Modifier.size(30.dp).padding(horizontal = 2.dp)
+            )
+        }
         DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
     }
 }
 
+// TODO add icon parameter
 @Composable
 fun DKSecondaryButton(text: String, onClick: () -> Unit) {
     OutlinedButton(

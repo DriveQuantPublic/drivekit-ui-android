@@ -424,7 +424,10 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
     @Composable
     private fun ItineraryButton(coordinates: LatLng) {
-        DKPrimaryButton(stringResource(R.string.dk_find_vehicle_itinerary), onClick = {
+        DKPrimaryButton(
+            stringResource(R.string.dk_find_vehicle_itinerary),
+            icon = com.drivequant.drivekit.common.ui.R.drawable.dk_common_itinerary,
+            onClick = {
             val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
             val navigationIntentUri =
                 "geo:$coordinatesForUri?q=$coordinatesForUri".toUri()
