@@ -119,7 +119,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
         }
     }
 
-    fun setupToolbar() {
+    private fun setupToolbar() {
         val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -131,7 +131,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
         return true
     }
 
-    fun setupEdgeToEdge() {
+    private fun setupEdgeToEdge() {
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
             update(findViewById(R.id.root)) { view, insets ->
