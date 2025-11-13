@@ -71,19 +71,14 @@ fun DKPrimaryButton(text: String, @DrawableRes icon: Int? = null, onClick: () ->
         onClick = onClick
     ) {
         icon?.let {
-            Icon(
-                painterResource(icon),
-                contentDescription = stringResource(com.drivequant.drivekit.common.ui.R.string.dk_common_back), // TODO
-                modifier = Modifier.size(30.dp).padding(horizontal = 2.dp)
-            )
+            DKButtonIcon(it)
         }
         DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
     }
 }
 
-// TODO add icon parameter
 @Composable
-fun DKSecondaryButton(text: String, onClick: () -> Unit) {
+fun DKSecondaryButton(text: String, @DrawableRes icon: Int? = null, onClick: () -> Unit) {
     OutlinedButton(
         modifier = Modifier
             .defaultMinSize(minHeight = 48.dp)
@@ -100,8 +95,20 @@ fun DKSecondaryButton(text: String, onClick: () -> Unit) {
         ),
         onClick = onClick
     ) {
+        icon?.let {
+            DKButtonIcon(it)
+        }
         DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
     }
+}
+
+@Composable
+private fun DKButtonIcon(@DrawableRes icon: Int) {
+    Icon(
+        painterResource(icon),
+        contentDescription = stringResource(com.drivequant.drivekit.common.ui.R.string.dk_common_back), // TODO
+        modifier = Modifier.size(30.dp).padding(horizontal = 2.dp)
+    )
 }
 
 @Composable
