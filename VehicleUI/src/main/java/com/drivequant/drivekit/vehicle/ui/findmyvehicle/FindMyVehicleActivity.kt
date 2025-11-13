@@ -36,18 +36,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.component.DKText
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.graphical.DKColors
@@ -424,26 +424,13 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
     @Composable
     private fun ItineraryButton(coordinates: LatLng) {
-        val buttonLabel = stringResource(R.string.dk_find_vehicle_itinerary)
-        AndroidView(
-            modifier = Modifier.padding(
-                horizontal = 64.dp, vertical = 0.dp
-            ),
-
-            factory = { context ->
-                DKButtonPrimary(context).apply {
-                    text = buttonLabel
-                    setOnClickListener {
-                        val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
-                        val navigationIntentUri =
-                            "geo:$coordinatesForUri?q=$coordinatesForUri".toUri()
-                        val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
-                        startActivity(mapIntent)
-                    }
-                }
-            }, update = { button ->
-                button.text = buttonLabel
-            })
+        DKPrimaryButton(stringResource(R.string.dk_find_vehicle_itinerary), onClick = {
+            val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
+            val navigationIntentUri =
+                "geo:$coordinatesForUri?q=$coordinatesForUri".toUri()
+            val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
+            startActivity(mapIntent)
+        })
     }
 
     @Composable
