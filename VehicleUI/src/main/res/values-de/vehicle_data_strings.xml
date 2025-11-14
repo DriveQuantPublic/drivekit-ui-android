@@ -35,12 +35,12 @@
     <string name="dk_find_vehicle_date">Sie haben Ihr Fahrzeug am %1$s um %2$s geparkt.</string>
     <string name="dk_find_vehicle_empty">Um die Position Ihres Fahrzeugs zu sehen, müssen Sie zuerst eine Fahrt aufzeichnen.</string>
     <string name="dk_find_vehicle_itinerary">Route starten</string>
-    <string name="dk_find_vehicle_location_far">Ihr Fahrzeug befindet sich etwa %s Kilometer von Ihrer aktuellen Position entfernt.</string>
-    <string name="dk_find_vehicle_location_far_imperial">Ihr Fahrzeug befindet sich etwa %s Meilen von Ihrer aktuellen Position entfernt.</string>
-    <string name="dk_find_vehicle_location_nearby">Ihr Fahrzeug befindet sich etwa %s Meter von Ihrer aktuellen Position entfernt.</string>
-    <string name="dk_find_vehicle_location_nearby_imperial">Ihr Fahrzeug befindet sich etwa %s Yards von Ihrer aktuellen Position entfernt.</string>
-    <string name="dk_find_vehicle_location_very_close">Ihr Fahrzeug befindet sich weniger als 100 Meter von Ihrer aktuellen Position entfernt.</string>
-    <string name="dk_find_vehicle_location_very_close_imperial">Ihr Fahrzeug befindet sich weniger als 100 Yards von Ihrer Position entfernt.</string>
+    <string name="dk_find_vehicle_location_far">Ihr Fahrzeug befindet sich etwa %s km von Ihrer aktuellen Position entfernt.</string>
+    <string name="dk_find_vehicle_location_far_imperial">Ihr Fahrzeug befindet sich etwa %s mi von Ihrer aktuellen Position entfernt.</string>
+    <string name="dk_find_vehicle_location_nearby">Ihr Fahrzeug befindet sich etwa %s m von Ihrer aktuellen Position entfernt.</string>
+    <string name="dk_find_vehicle_location_nearby_imperial">Ihr Fahrzeug befindet sich etwa %s yd von Ihrer aktuellen Position entfernt.</string>
+    <string name="dk_find_vehicle_location_very_close">Ihr Fahrzeug befindet sich weniger als 100 m von Ihrer Position entfernt.</string>
+    <string name="dk_find_vehicle_location_very_close_imperial">Ihr Fahrzeug befindet sich weniger als 100 yd von Ihrer Position entfernt.</string>
     <string name="dk_find_vehicle_title">Wo ist mein Fahrzeug?</string>
     <string name="dk_gearbox">Getriebe</string>
     <string name="dk_gearbox_automatic">Automatique</string>
@@ -215,7 +215,7 @@
     <string name="dk_vehicle_type_car_title">Leicht- und Nutzfahrzeuge von weniger als 3,5 t</string>
     <string name="dk_vehicle_type_motorbike_title">Motorcycles</string>
     <string name="dk_vehicle_type_selection_title">Wählen Sie die Kategorie, zu der Ihr Fahrzeug gehört</string>
-    <string name="dk_vehicle_type_truck_road_train" />
+    <string name="dk_vehicle_type_truck_road_train"/>
     <string name="dk_vehicle_type_truck_title">Lastkraftwagen</string>
     <string name="dk_vehicle_type_truck_tractor_semi_trailer">Zugmaschine und Sattelanhänger</string>
     <string name="dk_vehicle_unknown">Das Fahrzeug ist unbekannt, bitte wählen Sie ein anderes Fahrzeug aus.</string>
