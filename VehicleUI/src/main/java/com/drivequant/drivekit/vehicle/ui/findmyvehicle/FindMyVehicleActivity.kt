@@ -358,10 +358,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 }
             }
         }
-
-        LaunchedEffect(vehicleMarkerState) {
-            vehicleMarkerState.showInfoWindow()
-        }
+        
         viewModel.getTargetLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
             Marker(
                 state = vehicleMarkerState,
