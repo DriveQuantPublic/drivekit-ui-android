@@ -86,9 +86,9 @@ import kotlin.math.roundToInt
 
 private const val INITIAL_ZOOM_LEVEL = 20f
 private const val ITINERARY_LINE_WIDTH = 3f
-private const val VEHICLE_NEARBY_THRESHOLD = 100
-private const val VEHICLE_FAR_THRESHOLD = 1000
 private const val MAP_REGION_PADDING = 100
+private val VEHICLE_NEARBY_THRESHOLD = Meter(100.0)
+private val VEHICLE_FAR_THRESHOLD = Meter(1000.0)
 
 internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
@@ -434,24 +434,23 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
     @Composable
     private fun VehicleDistance(distance: Meter) {
-        val text = if (distance.value < VEHICLE_NEARBY_THRESHOLD) {
+        val text = if (distance.value < VEHICLE_NEARBY_THRESHOLD.value) {
             when (DriveKitUI.unitSystem) {
-                DKUnitSystem.METRIC -> stringResource(R.string.dk_find_vehicle_location_very_close)
-                DKUnitSystem.IMPERIAL -> stringResource(R.string.dk_find_vehicle_location_very_close_imperial)
+                DKUnitSystem.METRIC -> R.string.dk_find_vehicle_location_very_close
+                DKUnitSystem.IMPERIAL -> R.string.dk_find_vehicle_location_very_close_imperial
+            }.let {
+                stringResource(it, VEHICLE_NEARBY_THRESHOLD.value.roundToInt())
             }
-        } else if (distance.value < VEHICLE_FAR_THRESHOLD) {
+        } else if (distance.value < VEHICLE_FAR_THRESHOLD.value) {
             val nearbyRoundingValue = 100
             val roundedNearbyDistance =
                 (distance.value / nearbyRoundingValue).roundToInt() * nearbyRoundingValue
             // We don't handle specific conversion as yards and meters are close enough with a 100m rounding
             when (DriveKitUI.unitSystem) {
-                DKUnitSystem.METRIC -> stringResource(
-                    R.string.dk_find_vehicle_location_nearby, roundedNearbyDistance
-                )
-
-                DKUnitSystem.IMPERIAL -> stringResource(
-                    R.string.dk_find_vehicle_location_nearby_imperial, roundedNearbyDistance
-                )
+                DKUnitSystem.METRIC -> R.string.dk_find_vehicle_location_nearby
+                DKUnitSystem.IMPERIAL -> R.string.dk_find_vehicle_location_nearby_imperial
+            }.let {
+                stringResource(it, roundedNearbyDistance)
             }
         } else {
             val roundedFarDistance = distance.toKilometers()
