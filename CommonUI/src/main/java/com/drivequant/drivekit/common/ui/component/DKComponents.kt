@@ -2,6 +2,7 @@ package com.drivequant.drivekit.common.ui.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,8 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -71,7 +72,7 @@ fun DKPrimaryButton(text: String, @DrawableRes icon: Int? = null, onClick: () ->
         onClick = onClick
     ) {
         icon?.let {
-            DKButtonIcon(it)
+            DKButtonIcon(it, text)
         }
         DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
     }
@@ -96,19 +97,25 @@ fun DKSecondaryButton(text: String, @DrawableRes icon: Int? = null, onClick: () 
         onClick = onClick
     ) {
         icon?.let {
-            DKButtonIcon(it)
+            DKButtonIcon(it, text)
         }
         DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
     }
 }
 
 @Composable
-private fun DKButtonIcon(@DrawableRes icon: Int) {
-    Icon(
-        painterResource(icon),
-        contentDescription = stringResource(com.drivequant.drivekit.common.ui.R.string.dk_common_back), // TODO
-        modifier = Modifier.size(30.dp).padding(horizontal = 2.dp)
-    )
+private fun DKButtonIcon(@DrawableRes icon: Int, contentDescription: String) {
+    Box(
+        modifier = Modifier.padding(
+            horizontal = dimensionResource(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)
+        )
+    ) {
+        Icon(
+            painterResource(icon),
+            contentDescription = contentDescription,
+            modifier = Modifier.size(24.dp)
+        )
+    }
 }
 
 @Composable
