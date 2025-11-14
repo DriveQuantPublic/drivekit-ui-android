@@ -290,7 +290,8 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 cameraPositionState = cameraPositionState,
                 uiSettings = MapUiSettings(
-                    zoomControlsEnabled = false
+                    zoomControlsEnabled = false,
+                    mapToolbarEnabled = false
                 )
             ) {
                 VehicleMapMarker(vehicleLastKnownCoordinates)
