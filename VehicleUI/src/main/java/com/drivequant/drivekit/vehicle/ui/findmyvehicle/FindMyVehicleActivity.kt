@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,9 +40,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
@@ -57,7 +53,10 @@ import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
+import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
+import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.core.geocoder.DKAddress
 import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
@@ -147,9 +146,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
         var userLocation by remember {
             mutableStateOf<Location?>(null)
         }
-
-        val lifecycleOwner = LocalLifecycleOwner.current
-
+        
         val gpsSensorNeededMessage =
             stringResource(com.drivequant.drivekit.permissionsutils.R.string.dk_perm_utils_app_diag_loc_sensor_ko)
         val setupUserLocation: () -> Unit = {
@@ -191,17 +188,19 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             }
         }
 
-        DisposableEffect(lifecycleOwner) {
-            val observer = LifecycleEventObserver { _, event ->
-                if (event == Lifecycle.Event.ON_RESUME) {
+        LaunchedEffect(Unit) {
+            attemptToSetupUserLocation()
+        }
+
+        DriveKit.addDeviceConfigurationListener(object : DKDeviceConfigurationListener {
+            override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
+                if (event is DKDeviceConfigurationEvent.LocationPermission
+                    || (event is DKDeviceConfigurationEvent.LocationSensor && event.isValid)
+                ) {
                     attemptToSetupUserLocation()
                 }
             }
-            lifecycleOwner.lifecycle.addObserver(observer)
-            onDispose {
-                lifecycleOwner.lifecycle.removeObserver(observer)
-            }
-        }
+        })
 
         Column(Modifier.fillMaxSize()) {
             vehicleLastKnownCoordinates?.let { coordinates ->
