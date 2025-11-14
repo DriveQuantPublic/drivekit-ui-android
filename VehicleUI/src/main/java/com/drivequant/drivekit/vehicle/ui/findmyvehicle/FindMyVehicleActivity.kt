@@ -36,7 +36,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -438,18 +437,17 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
 
     @Composable
     private fun VehicleDistance(distance: Meter) {
-        if (distance.value < VEHICLE_NEARBY_THRESHOLD) {
-            val text = when (DriveKitUI.unitSystem) {
+        val text = if (distance.value < VEHICLE_NEARBY_THRESHOLD) {
+            when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> stringResource(R.string.dk_find_vehicle_location_very_close)
                 DKUnitSystem.IMPERIAL -> stringResource(R.string.dk_find_vehicle_location_very_close_imperial)
             }
-            DKText(text = text, DKStyle.NORMAL_TEXT, color = colorResource(textColorResId))
         } else if (distance.value < VEHICLE_FAR_THRESHOLD) {
             val nearbyRoundingValue = 100
             val roundedNearbyDistance =
                 (distance.value / nearbyRoundingValue).roundToInt() * nearbyRoundingValue
             // We don't handle specific conversion as yards and meters are close enough with a 100m rounding
-            val text = when (DriveKitUI.unitSystem) {
+            when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> stringResource(
                     R.string.dk_find_vehicle_location_nearby, roundedNearbyDistance
                 )
@@ -458,10 +456,9 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                     R.string.dk_find_vehicle_location_nearby_imperial, roundedNearbyDistance
                 )
             }
-            DKText(text = text, DKStyle.NORMAL_TEXT, color = colorResource(textColorResId))
         } else {
             val roundedFarDistance = distance.toKilometers()
-            val text = when (DriveKitUI.unitSystem) {
+            when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> {
                     stringResource(
                         R.string.dk_find_vehicle_location_far, roundedFarDistance.value.roundToInt()
@@ -475,7 +472,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                     )
                 }
             }
-            DKText(text = text, DKStyle.NORMAL_TEXT, color = colorResource(textColorResId))
         }
+        DKText(text = text, DKStyle.NORMAL_TEXT, color = colorResource(textColorResId))
     }
 }
