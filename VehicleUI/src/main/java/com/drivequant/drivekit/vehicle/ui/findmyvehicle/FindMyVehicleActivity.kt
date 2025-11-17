@@ -143,7 +143,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
         var userLocation by remember {
             mutableStateOf<Location?>(null)
         }
-        
+
         val gpsSensorNeededMessage =
             stringResource(com.drivequant.drivekit.permissionsutils.R.string.dk_perm_utils_app_diag_loc_sensor_ko)
         val setupUserLocation: () -> Unit = {
@@ -353,7 +353,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 }
             }
         }
-        
+
         viewModel.getTargetLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
             Marker(
                 state = vehicleMarkerState,
@@ -406,7 +406,10 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                     VehicleDistance(distance)
                 }
                 Box(
-                    modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    contentAlignment = Alignment.Center
                 ) {
                     ItineraryButton(vehicleCoordinates)
                 }
@@ -420,12 +423,12 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             stringResource(R.string.dk_find_vehicle_itinerary),
             icon = com.drivequant.drivekit.common.ui.R.drawable.dk_common_itinerary,
             onClick = {
-            val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
-            val navigationIntentUri =
-                "geo:$coordinatesForUri?q=$coordinatesForUri".toUri()
-            val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
-            startActivity(mapIntent)
-        })
+                val coordinatesForUri = "${coordinates.latitude},${coordinates.longitude}"
+                val navigationIntentUri =
+                    "geo:$coordinatesForUri?q=$coordinatesForUri".toUri()
+                val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
+                startActivity(mapIntent)
+            })
     }
 
     @Composable
