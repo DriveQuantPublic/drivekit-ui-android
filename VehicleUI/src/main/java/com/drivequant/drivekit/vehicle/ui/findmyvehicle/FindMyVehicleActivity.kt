@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -137,17 +138,14 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
             mutableStateOf<Location?>(null)
         }
 
-        val setupUserLocation: () -> Unit = {
-            viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
-                location?.let {
-                    userLocation = it
-                }
-            }
-        }
-
         fun attemptToSetupUserLocation() {
+            @SuppressLint("MissingPermission")
             if (DiagnosisHelper.hasFineLocationPermission(this@FindMyVehicleActivity)) {
-                setupUserLocation()
+                viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
+                    location?.let {
+                        userLocation = it
+                    }
+                }
             }
         }
 
