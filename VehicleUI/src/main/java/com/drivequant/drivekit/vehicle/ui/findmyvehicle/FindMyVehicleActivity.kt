@@ -75,7 +75,6 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
-import java.util.Date
 import kotlin.math.roundToInt
 
 private const val INITIAL_ZOOM_LEVEL = 15f
@@ -348,18 +347,15 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
         var userDistanceToVehicle by remember {
             mutableStateOf<Meter?>(null)
         }
-        var vehicleLastKnownLocationDate by remember {
-            mutableStateOf<Date?>(null)
-        }
         userLocation?.let {
             viewModel.getDistanceToVehicleLastKnownLocationInMeters(userLocation) { maybeDistance ->
                 maybeDistance?.let {
                     userDistanceToVehicle = it
                 }
             }
-            vehicleLastKnownLocationDate = viewModel.getVehicleLastKnownLocationDate()
+
         }
-        vehicleLastKnownLocationDate?.let { lastTripDate ->
+        viewModel.getVehicleLastKnownLocationDate()?.let { lastTripDate ->
             val date = lastTripDate.formatDate(DKDatePattern.STANDARD_DATE)
             val time = lastTripDate.formatDate(DKDatePattern.HOUR_MINUTE)
 
