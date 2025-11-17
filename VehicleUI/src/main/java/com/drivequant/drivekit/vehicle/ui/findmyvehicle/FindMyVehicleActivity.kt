@@ -94,8 +94,6 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
     lateinit var viewModel: FindMyVehicleViewModel
     private val fusedLocationClient = lazy { LocationServices.getFusedLocationProviderClient(this) }
 
-    private val textColorResId = com.drivequant.drivekit.common.ui.R.color.primaryColor
-
     companion object {
         fun launchActivity(context: Context) {
             val intent = Intent(context, FindMyVehicleActivity::class.java)
@@ -223,7 +221,6 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                     text = stringResource(R.string.dk_find_vehicle_empty),
                     style = DKStyle.SMALL_TEXT,
                     textAlign = TextAlign.Center,
-                    color = colorResource(textColorResId),
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color(DKColors.neutralColor))
@@ -404,7 +401,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             ) {
                 DKText(
                     text = stringResource(R.string.dk_find_vehicle_date, date, time),
-                    DKStyle.NORMAL_TEXT, color = colorResource(textColorResId)
+                    style = DKStyle.SMALL_TEXT
                 )
                 userDistanceToVehicle?.let { distance ->
                     VehicleDistance(distance)
@@ -469,6 +466,6 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 }
             }
         }
-        DKText(text = text, DKStyle.NORMAL_TEXT, color = colorResource(textColorResId))
+        DKText(text = text, style = DKStyle.NORMAL_TEXT)
     }
 }
