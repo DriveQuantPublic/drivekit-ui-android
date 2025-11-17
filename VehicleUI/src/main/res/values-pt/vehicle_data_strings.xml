@@ -39,8 +39,8 @@
     <string name="dk_find_vehicle_location_far_imperial">O seu veículo está a cerca de %s mi da sua posição atual.</string>
     <string name="dk_find_vehicle_location_nearby">O seu veículo está a cerca de %s m da sua posição atual.</string>
     <string name="dk_find_vehicle_location_nearby_imperial">O seu veículo está a cerca de %s yd da sua posição atual.</string>
-    <string name="dk_find_vehicle_location_very_close">O seu veículo está a menos de 100 m da sua posição atual.</string>
-    <string name="dk_find_vehicle_location_very_close_imperial">O seu veículo está a menos de 100 yd da sua posição.</string>
+    <string name="dk_find_vehicle_location_very_close">O seu veículo está a menos de %s m da sua posição atual.</string>
+    <string name="dk_find_vehicle_location_very_close_imperial">O seu veículo está a menos de %s yd da sua posição.</string>
     <string name="dk_find_vehicle_title">Onde está o meu veículo?</string>
     <string name="dk_gearbox">Caixa de velocidade</string>
     <string name="dk_gearbox_automatic">Automático</string>

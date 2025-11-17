@@ -39,8 +39,8 @@
     <string name="dk_find_vehicle_location_far_imperial">Dit køretøj befinder sig cirka %s mi fra din nuværende position.</string>
     <string name="dk_find_vehicle_location_nearby">Dit køretøj befinder sig cirka %s m fra din nuværende position.</string>
     <string name="dk_find_vehicle_location_nearby_imperial">Dit køretøj befinder sig cirka %s yd fra din nuværende position.</string>
-    <string name="dk_find_vehicle_location_very_close">Dit køretøj befinder sig mindre end 100 m fra din nuværende position.</string>
-    <string name="dk_find_vehicle_location_very_close_imperial">Dit køretøj befinder sig mindre end 100 yd fra din position.</string>
+    <string name="dk_find_vehicle_location_very_close">Dit køretøj befinder sig mindre end %s m fra din nuværende position.</string>
+    <string name="dk_find_vehicle_location_very_close_imperial">Dit køretøj befinder sig mindre end %s yd fra din position.</string>
     <string name="dk_find_vehicle_title">Hvor er mit køretøj?</string>
     <string name="dk_gearbox">Gearkasse</string>
     <string name="dk_gearbox_automatic">Automatisk</string>

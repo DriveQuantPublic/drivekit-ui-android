@@ -39,8 +39,8 @@
     <string name="dk_find_vehicle_location_far_imperial">Uw voertuig bevindt zich op ongeveer %s mi van uw huidige positie.</string>
     <string name="dk_find_vehicle_location_nearby">Uw voertuig bevindt zich op ongeveer %s m van uw huidige positie.</string>
     <string name="dk_find_vehicle_location_nearby_imperial">Uw voertuig bevindt zich op ongeveer %s yd van uw huidige positie.</string>
-    <string name="dk_find_vehicle_location_very_close">Uw voertuig bevindt zich op minder dan 100 m van uw huidige positie.</string>
-    <string name="dk_find_vehicle_location_very_close_imperial">Uw voertuig bevindt zich op minder dan 100 yd van uw positie.</string>
+    <string name="dk_find_vehicle_location_very_close">Uw voertuig bevindt zich op minder dan %s m van uw huidige positie.</string>
+    <string name="dk_find_vehicle_location_very_close_imperial">Uw voertuig bevindt zich op minder dan %s yd van uw positie.</string>
     <string name="dk_find_vehicle_title">Waar is mijn voertuig?</string>
     <string name="dk_gearbox">Versnellingsbak</string>
     <string name="dk_gearbox_automatic">Automatisch</string>
