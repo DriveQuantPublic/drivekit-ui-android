@@ -2,11 +2,9 @@ package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 
 import android.Manifest
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
@@ -46,7 +44,6 @@ import com.drivequant.drivekit.common.ui.component.DKText
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
-import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
@@ -57,7 +54,6 @@ import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.core.geocoder.DKAddress
-import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPermissionActivity
@@ -82,7 +78,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import kotlin.math.roundToInt
 
-private const val INITIAL_ZOOM_LEVEL = 20f
+private const val INITIAL_ZOOM_LEVEL = 15f
 private const val ITINERARY_LINE_WIDTH = 3f
 private const val MAP_REGION_PADDING = 100
 private val VEHICLE_NEARBY_THRESHOLD = Meter(100.0)
@@ -144,31 +140,10 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
             mutableStateOf<Location?>(null)
         }
 
-        val gpsSensorNeededMessage =
-            stringResource(com.drivequant.drivekit.permissionsutils.R.string.dk_perm_utils_app_diag_loc_sensor_ko)
         val setupUserLocation: () -> Unit = {
-            if (!DiagnosisHelper.isActivated(
-                    this@FindMyVehicleActivity,
-                    ConnectivityType.GPS
-                )
-            ) {
-                DKAlertDialog.LayoutBuilder()
-                    .init(this)
-                    .message(gpsSensorNeededMessage)
-                    .negativeButton()
-                    .positiveButton(
-                        positiveListener = { dialogInterface: DialogInterface?, _: Int ->
-                            run {
-                                dialogInterface?.dismiss()
-                                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                            }
-                        })
-                    .show()
-            } else {
-                viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
-                    location?.let {
-                        userLocation = it
-                    }
+            viewModel.getUserCurrentLocation(fusedLocationClient.value) { location ->
+                location?.let {
+                    userLocation = it
                 }
             }
         }
@@ -176,12 +151,6 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
         fun attemptToSetupUserLocation() {
             if (DiagnosisHelper.hasFineLocationPermission(this@FindMyVehicleActivity)) {
                 setupUserLocation()
-            } else {
-                requestFineLocationPermission { granted ->
-                    if (granted) {
-                        setupUserLocation()
-                    }
-                }
             }
         }
 
