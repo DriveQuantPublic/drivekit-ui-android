@@ -465,10 +465,6 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 }
             }
         }
-<<<<<<< HEAD
         DKText(text = text, style = DKStyle.SMALL_TEXT)
-=======
-        DKText(text = text, style = DKStyle.NORMAL_TEXT)
->>>>>>> aba438e592e4237a83b2b896d4b7697935ff6b45
     }
 }
