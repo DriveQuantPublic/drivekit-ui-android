@@ -69,6 +69,7 @@ import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -296,12 +297,24 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         }
 
         viewModel.getTargetLocationIcon(this@FindMyVehicleActivity)?.let { icon ->
-            Marker(
+            MarkerInfoWindow(
                 state = vehicleMarkerState,
                 icon = icon,
                 anchor = Offset(0.5f, 0.5f),
-                title = addressState?.address
-            )
+            ) {
+                Column(
+                    modifier = Modifier
+                        .background(Color.White, RoundedCornerShape(12.dp))
+                        .padding(12.dp)
+                ) {
+                    DKText(
+                        text = addressState?.address?.removeSuffix("\n")
+                            ?: "", // The ReverseGeocoder method adds an extra "\n".
+                        style = DKStyle.HEADLINE2,
+                        modifier = Modifier.fillMaxWidth(0.6f)
+                    )
+                }
+            }
             if (vehicleAccuracyLevel == DKCoordinateAccuracy.POOR) {
                 viewModel.getVehicleLastKnownLocationAccuracyMeters()?.let { accuracy ->
                     Circle(
