@@ -108,6 +108,8 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
             viewModel = viewModel()
             FindMyVehicleScreen()
         }
+
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_find_my_vehicle), javaClass.simpleName)
     }
 
     private fun setupToolbar() {
