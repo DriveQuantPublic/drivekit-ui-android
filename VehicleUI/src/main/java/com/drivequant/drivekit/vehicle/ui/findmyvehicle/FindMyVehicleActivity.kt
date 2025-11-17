@@ -1,11 +1,11 @@
 package com.drivequant.drivekit.vehicle.ui.findmyvehicle
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -55,8 +55,6 @@ import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEve
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.core.geocoder.DKAddress
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
-import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPermissionActivity
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.LocationServices
@@ -83,7 +81,7 @@ private const val MAP_REGION_PADDING = 100
 private val VEHICLE_NEARBY_THRESHOLD = Meter(100.0)
 private val VEHICLE_FAR_THRESHOLD = Meter(1000.0)
 
-internal open class FindMyVehicleActivity : RequestPermissionActivity() {
+internal open class FindMyVehicleActivity : AppCompatActivity() {
 
     lateinit var viewModel: FindMyVehicleViewModel
     private val fusedLocationClient = lazy { LocationServices.getFusedLocationProviderClient(this) }
@@ -196,30 +194,6 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 )
             }
         }
-    }
-
-    private fun requestFineLocationPermission(callback: (granted: Boolean) -> Unit) {
-        permissionCallback = object :
-            OnPermissionCallback {
-            override fun onPermissionGranted(permissionName: Array<String>) {
-                callback(true)
-            }
-
-            override fun onPermissionDeclined(permissionName: Array<String>) {
-                handlePermissionDeclined(
-                    this@FindMyVehicleActivity,
-                    com.drivequant.drivekit.permissionsutils.R.string.dk_perm_utils_app_diag_activity_ko
-                ) { requestFineLocationPermission(callback) }
-            }
-
-            override fun onPermissionTotallyDeclined(permissionName: String) {
-                handlePermissionTotallyDeclined(
-                    this@FindMyVehicleActivity,
-                    com.drivequant.drivekit.permissionsutils.R.string.dk_perm_utils_app_diag_activity_ko
-                )
-            }
-        }
-        request(this, Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
     @Composable
