@@ -34,7 +34,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -367,7 +366,7 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                     Circle(
                         vehicleLastKnownCoordinates,
                         radius = accuracy,
-                        fillColor = Color(DKColors.primaryColor).copy(alpha = 0.3f),
+                        fillColor = Color(DKColors.mapTraceColor).copy(alpha = 0.3f),
                         strokeWidth = 0f
                     )
                 }
@@ -466,6 +465,10 @@ internal open class FindMyVehicleActivity : RequestPermissionActivity() {
                 }
             }
         }
+<<<<<<< HEAD
         DKText(text = text, style = DKStyle.SMALL_TEXT)
+=======
+        DKText(text = text, style = DKStyle.NORMAL_TEXT)
+>>>>>>> aba438e592e4237a83b2b896d4b7697935ff6b45
     }
 }
