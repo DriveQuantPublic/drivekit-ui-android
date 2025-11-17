@@ -79,6 +79,7 @@ import kotlin.math.roundToInt
 private const val INITIAL_ZOOM_LEVEL = 15f
 private const val ITINERARY_LINE_WIDTH = 3f
 private const val MAP_REGION_PADDING = 100
+private const val MAP_ANIMATION_DURATION = 500
 private val VEHICLE_NEARBY_THRESHOLD = Meter(100.0)
 private val VEHICLE_FAR_THRESHOLD = Meter(1000.0)
 
@@ -211,7 +212,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                             LatLngBounds.Builder()
                                 .include(LatLng(location.latitude, location.longitude))
                                 .include(vehicleLastKnownCoordinates).build(), MAP_REGION_PADDING
-                        ), 500
+                        ), MAP_ANIMATION_DURATION
                     )
                 }
             }
