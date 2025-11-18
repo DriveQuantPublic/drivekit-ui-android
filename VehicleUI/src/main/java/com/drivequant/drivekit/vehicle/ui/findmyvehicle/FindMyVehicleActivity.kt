@@ -48,7 +48,9 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.Kilometer
 import com.drivequant.drivekit.common.ui.utils.Meter
+import com.drivequant.drivekit.common.ui.utils.Mile
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
@@ -82,7 +84,10 @@ private const val ITINERARY_LINE_WIDTH = 3f
 private const val MAP_REGION_PADDING = 100
 private const val MAP_ANIMATION_DURATION = 500
 private val VEHICLE_NEARBY_THRESHOLD = Meter(100.0)
-private val VEHICLE_FAR_THRESHOLD = Meter(1000.0)
+private val VEHICLE_FAR_THRESHOLD = when (DriveKitUI.unitSystem) {
+    DKUnitSystem.METRIC -> Kilometer(1.0).toMeters()
+    DKUnitSystem.IMPERIAL -> Mile(1.0).toMeters()
+}
 
 internal open class FindMyVehicleActivity : AppCompatActivity() {
 
@@ -109,7 +114,10 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
             FindMyVehicleScreen()
         }
 
-        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_find_my_vehicle), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(
+            getString(R.string.dk_tag_vehicles_find_my_vehicle),
+            javaClass.simpleName
+        )
     }
 
     private fun setupToolbar() {
@@ -386,18 +394,18 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
 
     @Composable
     private fun VehicleDistance(distance: Meter) {
-        val text = if (distance.value < VEHICLE_NEARBY_THRESHOLD.value) {
+        val nearbyRoundingValue = 100
+        val roundedNearbyDistance =
+            (distance.value / nearbyRoundingValue).roundToInt() * nearbyRoundingValue
+        val text = if (roundedNearbyDistance < VEHICLE_NEARBY_THRESHOLD.value) {
             when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> R.string.dk_find_vehicle_location_very_close
                 DKUnitSystem.IMPERIAL -> R.string.dk_find_vehicle_location_very_close_imperial
             }.let {
                 stringResource(it, VEHICLE_NEARBY_THRESHOLD.value.roundToInt())
             }
-        } else if (distance.value < VEHICLE_FAR_THRESHOLD.value) {
-            val nearbyRoundingValue = 100
-            val roundedNearbyDistance =
-                (distance.value / nearbyRoundingValue).roundToInt() * nearbyRoundingValue
-            // We don't handle specific conversion as yards and meters are close enough with a 100m rounding
+        } else if (roundedNearbyDistance < VEHICLE_FAR_THRESHOLD.value) {
+            // We don't handle specific conversion as yards and meters are close enough
             when (DriveKitUI.unitSystem) {
                 DKUnitSystem.METRIC -> R.string.dk_find_vehicle_location_nearby
                 DKUnitSystem.IMPERIAL -> R.string.dk_find_vehicle_location_nearby_imperial
