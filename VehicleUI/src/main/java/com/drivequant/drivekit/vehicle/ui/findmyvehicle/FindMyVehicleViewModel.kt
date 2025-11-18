@@ -90,7 +90,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
             callback(location)
         }.addOnFailureListener { exception ->
             DriveKitLog.e(
-                DriveKitVehicleUI.TAG, "Failed to get user current location : $exception"
+                DriveKitVehicleUI.TAG, "Failed to get user current location: $exception"
             )
             callback(null)
         }
