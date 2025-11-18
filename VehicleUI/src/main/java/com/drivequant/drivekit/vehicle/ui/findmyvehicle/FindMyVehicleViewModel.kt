@@ -66,7 +66,7 @@ internal class FindMyVehicleViewModel : ViewModel() {
         return null
     }
 
-    fun getDistanceToVehicleLastKnownLocationInMeters(
+    fun getDistanceToVehicleLastKnownLocation(
         userLocation: Location,
         callback: (Meter?) -> Unit
     ) {

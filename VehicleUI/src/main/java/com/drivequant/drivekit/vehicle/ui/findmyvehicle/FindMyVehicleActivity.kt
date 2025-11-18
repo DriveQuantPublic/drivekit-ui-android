@@ -344,7 +344,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
             mutableStateOf<Meter?>(null)
         }
         userLocation?.let {
-            viewModel.getDistanceToVehicleLastKnownLocationInMeters(userLocation) { maybeDistance ->
+            viewModel.getDistanceToVehicleLastKnownLocation(userLocation) { maybeDistance ->
                 maybeDistance?.let {
                     userDistanceToVehicle = it
                 }
