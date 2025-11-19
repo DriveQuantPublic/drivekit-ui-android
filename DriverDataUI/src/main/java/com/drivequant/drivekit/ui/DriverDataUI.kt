@@ -69,7 +69,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     var alternativeTripsDepthInDays: Int? = null
 
     @ColorRes
-    internal var mapTraceMainColor: Int = R.color.dkMapTraceMainColor
+    internal var mapTraceMainColor: Int = com.drivequant.drivekit.common.ui.R.color.dkMapTraceMainColor
     @ColorRes
     internal var mapTraceWarningColor: Int = R.color.dkMapTraceWarningColor
     @ColorRes

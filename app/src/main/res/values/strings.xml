@@ -27,6 +27,7 @@
    <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/challenge/user-interface/android/get-started#display-challenge-list</string>
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
    <string name="drivekit_doc_android_driver_data">https://docs.drivequant.com/driver-data/user-interface/android/get-started</string>
+   <string name="drivekit_doc_android_find_vehicle">https://docs.drivequant.com/vehicle/user-interface/ios/find-my-vehicle</string>
    <string name="drivekit_doc_android_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-android</string>
    <string name="drivekit_doc_android_location_sharing">https://docs.drivequant.com/trip-analysis/user-interface/android/location-sharing</string>
    <string name="drivekit_doc_android_odometer">https://docs.drivequant.com/vehicle/user-interface/android/main-configurations#vehicle-mileage-tracking-and-editing</string>
@@ -46,6 +47,7 @@
    <string name="drivekit_doc_ios_challenges">https://docs.drivequant.com/challenge/user-interface/ios/get-started#display-challenge-list</string>
    <string name="drivekit_doc_ios_diag">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#sdk-diagnosis</string>
    <string name="drivekit_doc_ios_driver_data">https://docs.drivequant.com/driver-data/user-interface/ios/get-started</string>
+   <string name="drivekit_doc_ios_find_vehicle">https://docs.drivequant.com/vehicle/user-interface/ios/find-my-vehicle</string>
    <string name="drivekit_doc_ios_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-ios</string>
    <string name="drivekit_doc_ios_location_sharing">https://docs.drivequant.com/trip-analysis/user-interface/ios/location-sharing</string>
    <string name="drivekit_doc_ios_odometer">https://docs.drivequant.com/vehicle/user-interface/ios/main-configurations#vehicle-mileage-tracking-and-editing</string>
@@ -65,6 +67,8 @@
    <string name="feature_badges_title">Driver Achievement | Badges</string>
    <string name="feature_challenges_description">The driving challenge is a one-time event during which drivers compete to get the best driving score. The Challenge component includes several themes: eco-driving, safety, distraction and speed limit.</string>
    <string name="feature_challenges_title">Challenge | List and results</string>
+   <string name="feature_find_vehicle_description">The Vehicle component includes a feature that allows the user to know where they parked their vehicle and to navigate to it using the navigation tool of their choice.</string>
+   <string name="feature_find_vehicle_title">Vehicle | Where is my vehicle?</string>
    <string name="feature_list">List of features</string>
    <string name="feature_list_description">DriveKit is a rich and versatile SDK that includes phone sensor analysis, driving data display, driver coaching and gamification features. Discover these features before embedding in your app 🚀.</string>
    <string name="feature_location_sharing_description">The Trip Analysis component includes a function to reassure the user\'s family and friends while driving, thanks to a shared link that displays the vehicle\'s location during trips.</string>

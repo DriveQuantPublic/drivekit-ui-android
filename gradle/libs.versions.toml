@@ -1,8 +1,9 @@
 [versions]
-agp = "8.1.4"
+agp = "8.5.1"
 kotlin = "1.8.22"
 
-playServicesMaps = "18.2.0"
+mapsCompose = "5.0.3"
+playServicesMaps = "19.2.0"
 
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -22,6 +23,7 @@ exifInterface = "1.3.7"
 workRuntimeKtx = "2.9.0"
 
 mpAndroidChart = "v3.1.0"
+playServicesLocation = "21.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,8 +40,6 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-animation = { group = "androidx.compose.animation", name = "animation" }
 androidx-material = { group = "androidx.compose.material", name = "material" }
 androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
@@ -50,10 +50,12 @@ androidx-legacy-preference = { group = "androidx.legacy", name = "legacy-prefere
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridLayout" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpAndroidChart" }
 android-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifInterface" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

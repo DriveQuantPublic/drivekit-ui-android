@@ -91,6 +91,9 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
             FeatureType.VEHICLE_ODOMETER -> {
                 DriveKitVehicleUI.startOdometerUIActivity(context)
             }
+            FeatureType.VEHICLE_FIND_MY_VEHICLE -> {
+                DriveKitVehicleUI.startFindMyVehicleActivity(context)
+            }
             FeatureType.CHALLENGE_LIST -> {
                 ChallengeUI.startChallengeActivity(context)
             }
