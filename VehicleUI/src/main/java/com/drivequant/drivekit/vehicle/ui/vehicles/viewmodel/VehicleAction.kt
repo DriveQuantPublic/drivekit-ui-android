@@ -6,8 +6,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -30,17 +28,22 @@ enum class VehicleAction(
     RENAME(R.string.dk_vehicle_rename),
     REPLACE(R.string.dk_vehicle_replace),
     DELETE(R.string.dk_vehicle_delete),
-    ODOMETER(R.string.dk_vehicle_odometer);
+    ODOMETER(R.string.dk_vehicle_odometer),
+    FIND_MY_VEHICLE(R.string.dk_find_vehicle_title);
 
     override fun getTitle(context: Context): String = context.getString(descriptionIdentifier)
 
-    override fun isDisplayable(vehicle: Vehicle) = when (this) {
-        SHOW -> !vehicle.liteConfig && DriveKitVehicleUI.vehicleActions.contains(SHOW)
-        RENAME -> DriveKitVehicleUI.vehicleActions.contains(RENAME)
-        REPLACE -> DriveKitVehicleUI.vehicleActions.contains(REPLACE)
-        DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().countQuery().execute() > 1
-                && DriveKitVehicleUI.vehicleActions.contains(DELETE)
-        ODOMETER -> DriveKitVehicleUI.hasOdometer && DriveKitVehicleUI.vehicleActions.contains(ODOMETER)
+    override fun isDisplayable(vehicle: Vehicle): Boolean {
+        return if (!DriveKitVehicleUI.vehicleActions.contains(this)) {
+            false
+        } else when (this) {
+            SHOW -> !vehicle.liteConfig
+            RENAME -> true
+            REPLACE -> true
+            DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().countQuery().execute() > 1
+            ODOMETER -> DriveKitVehicleUI.hasOdometer
+            FIND_MY_VEHICLE -> DriveKitVehicle.vehiclesQuery().noFilter().countQuery().execute() == 1
+        }
     }
 
     override fun onItemClicked(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
@@ -50,6 +53,7 @@ enum class VehicleAction(
             REPLACE -> manageReplaceVehicle(context, vehicle)
             DELETE -> manageDeleteVehicle(context, viewModel, vehicle)
             ODOMETER -> manageShowOdometer(context, vehicle)
+            FIND_MY_VEHICLE -> manageShowFindMyVehicle(context)
         }
     }
 
@@ -134,6 +138,10 @@ enum class VehicleAction(
 
         titleTextView?.setText(R.string.app_name)
         descriptionTextView?.text = message
+    }
+
+    private fun manageShowFindMyVehicle(context: Context) {
+        DriveKitVehicleUI.startFindMyVehicleActivity(context)
     }
 
     private fun displayError(context: Context) {
