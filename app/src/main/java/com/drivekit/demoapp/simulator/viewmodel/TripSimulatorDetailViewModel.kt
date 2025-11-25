@@ -124,6 +124,10 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
         stopSimulation()
     }
 
+    override fun tripFinished(result: TripResult) {
+        stopSimulation()
+    }
+
     override fun sdkStateChanged(state: State) {
         updateStoppingTime(state)
         updateNeeded()
