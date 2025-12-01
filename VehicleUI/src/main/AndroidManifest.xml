@@ -44,6 +44,10 @@
         <activity
             android:name=".odometer.activity.OdometerInitActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".findmyvehicle.FindMyVehicleActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

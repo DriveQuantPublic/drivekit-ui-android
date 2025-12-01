@@ -18,6 +18,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
+import com.drivequant.drivekit.vehicle.ui.findmyvehicle.FindMyVehicleActivity
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleListActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
@@ -30,9 +31,14 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal const val TAG = "DriveKit Vehicle UI"
+
+    internal val coroutineScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
 
     internal var vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR)
         private set
@@ -193,6 +199,10 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
                 true
             }
         } ?: false
+    }
+
+    override fun startFindMyVehicleActivity(context: Context) {
+        FindMyVehicleActivity.launchActivity(context)
     }
 
     override fun getVehicleInfoById(context: Context, vehicleId: String, listener: GetVehicleInfoByVehicleIdListener) {

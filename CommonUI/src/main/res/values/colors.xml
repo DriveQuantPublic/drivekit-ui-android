@@ -14,6 +14,8 @@
     <color name="criticalColor">#E52027</color>
     <color name="transparentColor">#000000FF</color>
 
+    <color name="dkMapTraceMainColor">#116EA9</color>
+
     <color name="dkGaugeBackColor">#E0E0E0</color>
     <color name="dkVeryBad">#FF6E57</color>
     <color name="dkBad">#FFA057</color>

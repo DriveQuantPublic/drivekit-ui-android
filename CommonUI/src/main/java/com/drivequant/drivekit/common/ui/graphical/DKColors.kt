@@ -31,4 +31,6 @@ object DKColors {
     val criticalColor: Int = appContext.getColor(R.color.criticalColor)
     @ColorInt
     val transparentColor: Int = appContext.getColor(R.color.transparentColor)
+    @ColorInt
+    val mapTraceColor: Int = appContext.getColor(R.color.dkMapTraceMainColor)
 }

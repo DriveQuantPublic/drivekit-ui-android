@@ -15,4 +15,5 @@
     <string name="dk_tag_vehicles_odometer_histories_edit" translatable="false">drivekit-vehicles-odometer-histories-edit</string>
     <string name="dk_tag_vehicles_odometer_histories_detail" translatable="false">drivekit-vehicles-odometer-histories-detail</string>
     <string name="dk_tag_vehicles_odometer_init" translatable="false">drivekit-vehicles-odometer-init</string>
+    <string name="dk_tag_vehicles_find_my_vehicle" translatable="false">drivekit-vehicles-find-my-vehicle</string>
 </resources>
