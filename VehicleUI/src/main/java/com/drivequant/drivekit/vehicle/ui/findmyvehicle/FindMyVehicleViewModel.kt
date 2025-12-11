@@ -9,6 +9,7 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.scale
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
@@ -17,6 +18,7 @@ import com.drivequant.drivekit.core.geocoder.DKLocation
 import com.drivequant.drivekit.core.geocoder.DKReverseGeocoderListener
 import com.drivequant.drivekit.core.geocoder.ReverseGeocoder
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,11 +29,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.CancellationTokenSource
 import java.util.Date
 
-internal class FindMyVehicleViewModel : ViewModel() {
+internal class FindMyVehicleViewModel(
+    private val vehicleId: String?
+) : ViewModel() {
 
     private var cancellationTokenSource = CancellationTokenSource()
     private val lastTripProvider = lazy {
-        DriveKitTripAnalysis.getLastTripLocation()
+        if (vehicleId != null) {
+            DriveKitVehicle.getVehicleLocation(vehicleId)
+        } else {
+            DriveKitTripAnalysis.getLastTripLocation()
+        }
     }
 
     fun getVehicleLastKnownCoordinates(): LatLng? {
@@ -131,5 +139,18 @@ internal class FindMyVehicleViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         cancellationTokenSource.cancel()
+    }
+
+    class FindMyVehicleViewModelFactory(
+        private val vehicleId: String?
+    ) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(FindMyVehicleViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return FindMyVehicleViewModel(vehicleId) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
     }
 }

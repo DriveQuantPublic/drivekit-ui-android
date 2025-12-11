@@ -115,7 +115,12 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         setupEdgeToEdge()
 
         findViewById<ComposeView>(R.id.compose_view).setContent {
-            viewModel = viewModel()
+            val vehicleId: String? = intent.getStringExtra(VEHICLE_ID_INTENT_PARAM_KEY)
+            viewModel = viewModel(
+                factory = FindMyVehicleViewModel.FindMyVehicleViewModelFactory(
+                    vehicleId
+                )
+            )
             FindMyVehicleScreen()
         }
 
