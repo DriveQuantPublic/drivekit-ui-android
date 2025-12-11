@@ -201,8 +201,8 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         } ?: false
     }
 
-    override fun startFindMyVehicleActivity(context: Context) {
-        FindMyVehicleActivity.launchActivity(context)
+    override fun startFindMyVehicleActivity(context: Context, vehicleId: String?) {
+        FindMyVehicleActivity.launchActivity(context, vehicleId)
     }
 
     override fun getVehicleInfoById(context: Context, vehicleId: String, listener: GetVehicleInfoByVehicleIdListener) {

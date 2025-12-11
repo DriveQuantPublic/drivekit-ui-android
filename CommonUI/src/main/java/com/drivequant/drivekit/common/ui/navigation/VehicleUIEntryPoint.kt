@@ -7,7 +7,7 @@ import com.drivequant.drivekit.common.ui.adapter.FilterItem
 interface VehicleUIEntryPoint {
     fun startVehicleListActivity(context: Context)
     fun startVehicleDetailActivity(context: Context, vehicleId: String): Boolean
-    fun startFindMyVehicleActivity(context: Context)
+    fun startFindMyVehicleActivity(context: Context, vehicleId: String?)
     fun getVehicleInfoById(context: Context, vehicleId: String, listener : GetVehicleInfoByVehicleIdListener)
     fun getVehiclesFilterItems(context: Context): List<FilterItem>
     fun createVehicleListFragment(): Fragment

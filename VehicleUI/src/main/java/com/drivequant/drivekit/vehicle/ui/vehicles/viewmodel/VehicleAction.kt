@@ -42,7 +42,7 @@ enum class VehicleAction(
             REPLACE -> true
             DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().countQuery().execute() > 1
             ODOMETER -> DriveKitVehicleUI.hasOdometer
-            FIND_MY_VEHICLE -> DriveKitVehicle.vehiclesQuery().noFilter().countQuery().execute() == 1
+            FIND_MY_VEHICLE -> true
         }
     }
 
@@ -53,7 +53,7 @@ enum class VehicleAction(
             REPLACE -> manageReplaceVehicle(context, vehicle)
             DELETE -> manageDeleteVehicle(context, viewModel, vehicle)
             ODOMETER -> manageShowOdometer(context, vehicle)
-            FIND_MY_VEHICLE -> manageShowFindMyVehicle(context)
+            FIND_MY_VEHICLE -> manageShowFindMyVehicle(context, vehicle)
         }
     }
 
@@ -140,8 +140,8 @@ enum class VehicleAction(
         descriptionTextView?.text = message
     }
 
-    private fun manageShowFindMyVehicle(context: Context) {
-        DriveKitVehicleUI.startFindMyVehicleActivity(context)
+    private fun manageShowFindMyVehicle(context: Context, vehicle: Vehicle) {
+        DriveKitVehicleUI.startFindMyVehicleActivity(context, vehicle.vehicleId)
     }
 
     private fun displayError(context: Context) {

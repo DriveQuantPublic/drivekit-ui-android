@@ -88,6 +88,7 @@ private val VEHICLE_FAR_THRESHOLD = when (DriveKitUI.unitSystem) {
     DKUnitSystem.METRIC -> Kilometer(1.0).toMeters()
     DKUnitSystem.IMPERIAL -> Mile(1.0).toMeters()
 }
+private val VEHICLE_ID_INTENT_PARAM_KEY = "vehicleId"
 
 internal open class FindMyVehicleActivity : AppCompatActivity() {
 
@@ -95,9 +96,13 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
     private val fusedLocationClient = lazy { LocationServices.getFusedLocationProviderClient(this) }
 
     companion object {
-        fun launchActivity(context: Context) {
+        fun launchActivity(context: Context, vehicleId: String? = null) {
+
             val intent = Intent(context, FindMyVehicleActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+            if (vehicleId != null) intent.putExtra(VEHICLE_ID_INTENT_PARAM_KEY, vehicleId)
+
             context.startActivity(intent)
         }
     }
