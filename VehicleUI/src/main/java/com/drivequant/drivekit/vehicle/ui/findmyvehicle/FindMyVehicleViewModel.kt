@@ -40,7 +40,7 @@ internal class FindMyVehicleViewModel(
         if (vehicleId != null) {
             DriveKitVehicle.getVehicleLocation(vehicleId)
         } else {
-            DriveKitTripAnalysis.getLastTripLocation()
+            DriveKitTripAnalysis.getLastVehicleTripLocation()
         }
     }
 
