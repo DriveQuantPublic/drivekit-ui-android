@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -76,6 +78,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -225,6 +228,18 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
             position = initialCameraPosition
         }
 
+        var showReframeToTripFabButton by remember { mutableStateOf(false) }
+
+        LaunchedEffect(Unit) {
+            snapshotFlow { cameraPositionState.isMoving }
+                .distinctUntilChanged()
+                .collect { moving ->
+                    if (moving) {
+                        showReframeToTripFabButton = true
+                    }
+                }
+        }
+
         fun animateMapToIncludeUserAndVehicle() {
             userLocation?.let { location ->
                 DriveKitVehicleUI.coroutineScope.launch {
@@ -266,21 +281,25 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                     )
                 }
             }
-            FloatingActionButton(
-                onClick = {
-                    animateMapToIncludeUserAndVehicle()
-                },
+            AnimatedVisibility(
+                visible = showReframeToTripFabButton,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(16.dp),
-                backgroundColor = Color.White
+                    .padding(16.dp)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.dk_vehicle_trip),
-                    modifier = Modifier.size(32.dp),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(Color.Black)
-                )
+                FloatingActionButton(
+                    onClick = {
+                        animateMapToIncludeUserAndVehicle()
+                    },
+                    backgroundColor = Color.White
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.dk_vehicle_trip),
+                        modifier = Modifier.size(32.dp),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(Color.Black)
+                    )
+                }
             }
         }
     }
