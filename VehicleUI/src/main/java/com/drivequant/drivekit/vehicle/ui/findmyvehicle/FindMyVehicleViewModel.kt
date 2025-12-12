@@ -123,7 +123,7 @@ internal class FindMyVehicleViewModel(
 
     private fun isLocationAcceptable(location: Location): Boolean {
 
-        val gpsValidityDurationInSeconds = 60
+        val gpsValidityDurationInSeconds = 600
         val elapsedTimeSinceLocation = Date().diffWith(
             Date(location.time),
             calendarField = CalendarField.SECOND
