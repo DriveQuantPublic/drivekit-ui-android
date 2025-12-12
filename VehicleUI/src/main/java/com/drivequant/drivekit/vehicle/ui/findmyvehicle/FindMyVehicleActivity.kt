@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,6 +69,7 @@ import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.maps.android.compose.CameraMoveStartedReason
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
@@ -76,6 +79,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -88,6 +92,7 @@ private val VEHICLE_FAR_THRESHOLD = when (DriveKitUI.unitSystem) {
     DKUnitSystem.METRIC -> Kilometer(1.0).toMeters()
     DKUnitSystem.IMPERIAL -> Mile(1.0).toMeters()
 }
+private val VEHICLE_ID_INTENT_PARAM_KEY = "vehicleId"
 
 internal open class FindMyVehicleActivity : AppCompatActivity() {
 
@@ -95,9 +100,13 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
     private val fusedLocationClient = lazy { LocationServices.getFusedLocationProviderClient(this) }
 
     companion object {
-        fun launchActivity(context: Context) {
+        fun launchActivity(context: Context, vehicleId: String? = null) {
+
             val intent = Intent(context, FindMyVehicleActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+            if (vehicleId != null) intent.putExtra(VEHICLE_ID_INTENT_PARAM_KEY, vehicleId)
+
             context.startActivity(intent)
         }
     }
@@ -110,7 +119,12 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         setupEdgeToEdge()
 
         findViewById<ComposeView>(R.id.compose_view).setContent {
-            viewModel = viewModel()
+            val vehicleId: String? = intent.getStringExtra(VEHICLE_ID_INTENT_PARAM_KEY)
+            viewModel = viewModel(
+                factory = FindMyVehicleViewModel.FindMyVehicleViewModelFactory(
+                    vehicleId
+                )
+            )
             FindMyVehicleScreen()
         }
 
@@ -215,6 +229,18 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
             position = initialCameraPosition
         }
 
+        var showReframeToTripFabButton by remember { mutableStateOf(false) }
+
+        LaunchedEffect(Unit) {
+            snapshotFlow { cameraPositionState.cameraMoveStartedReason == CameraMoveStartedReason.GESTURE }
+                .distinctUntilChanged()
+                .collect { moving ->
+                    if (moving) {
+                        showReframeToTripFabButton = true
+                    }
+                }
+        }
+
         fun animateMapToIncludeUserAndVehicle() {
             userLocation?.let { location ->
                 DriveKitVehicleUI.coroutineScope.launch {
@@ -225,6 +251,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                                 .include(vehicleLastKnownCoordinates).build(), MAP_REGION_PADDING
                         ), MAP_ANIMATION_DURATION
                     )
+                    showReframeToTripFabButton = false
                 }
             }
         }
@@ -256,21 +283,25 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                     )
                 }
             }
-            FloatingActionButton(
-                onClick = {
-                    animateMapToIncludeUserAndVehicle()
-                },
+            AnimatedVisibility(
+                visible = showReframeToTripFabButton,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(16.dp),
-                backgroundColor = Color.White
+                    .padding(16.dp)
             ) {
-                Image(
-                    painter = painterResource(id = com.drivequant.drivekit.common.ui.R.drawable.dk_common_center_map),
-                    modifier = Modifier.size(32.dp),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(Color.Black)
-                )
+                FloatingActionButton(
+                    onClick = {
+                        animateMapToIncludeUserAndVehicle()
+                    },
+                    backgroundColor = Color.White
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.dk_vehicle_trip),
+                        modifier = Modifier.size(32.dp),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(Color.Black)
+                    )
+                }
             }
         }
     }
