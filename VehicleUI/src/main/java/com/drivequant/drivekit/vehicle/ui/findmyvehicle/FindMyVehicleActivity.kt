@@ -276,7 +276,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                 backgroundColor = Color.White
             ) {
                 Image(
-                    painter = painterResource(id = com.drivequant.drivekit.common.ui.R.drawable.dk_common_center_map),
+                    painter = painterResource(id = R.drawable.dk_vehicle_trip),
                     modifier = Modifier.size(32.dp),
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(Color.Black)
