@@ -251,6 +251,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                                 .include(vehicleLastKnownCoordinates).build(), MAP_REGION_PADDING
                         ), MAP_ANIMATION_DURATION
                     )
+                    showReframeToTripFabButton = false
                 }
             }
         }
