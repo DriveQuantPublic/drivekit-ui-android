@@ -42,7 +42,7 @@ enum class VehicleAction(
             REPLACE -> true
             DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().countQuery().execute() > 1
             ODOMETER -> DriveKitVehicleUI.hasOdometer
-            FIND_MY_VEHICLE -> DriveKitVehicle.getVehicleLocation(vehicle.vehicleId) !== null
+            FIND_MY_VEHICLE -> DriveKitVehicle.getVehicleLocation(vehicle.vehicleId) != null
         }
     }
 
