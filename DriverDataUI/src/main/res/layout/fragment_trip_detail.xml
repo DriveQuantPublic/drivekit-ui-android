@@ -117,7 +117,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="#BFFFFFFF"
-        android:src="@drawable/dk_common_center_map"
+        android:src="@drawable/dk_center_map"
         app:layout_constraintEnd_toEndOf="@id/google_map"
         app:layout_constraintTop_toTopOf="@id/google_map" />
 
