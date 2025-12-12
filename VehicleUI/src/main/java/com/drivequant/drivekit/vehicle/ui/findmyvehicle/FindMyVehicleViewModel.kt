@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.diffWith
 import com.drivequant.drivekit.core.geocoder.DKAddress
 import com.drivequant.drivekit.core.geocoder.DKLocation
 import com.drivequant.drivekit.core.geocoder.DKReverseGeocoderListener
@@ -92,16 +94,53 @@ internal class FindMyVehicleViewModel(
     fun getUserCurrentLocation(
         locationClient: FusedLocationProviderClient, callback: (Location?) -> Unit
     ) {
-        locationClient.getCurrentLocation(
-            Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token
-        ).addOnSuccessListener { location ->
-            callback(location)
+        locationClient.lastLocation.addOnSuccessListener { location ->
+            if (isLocationAcceptable(location)) {
+                DriveKitLog.i(
+                    DriveKitVehicleUI.TAG,
+                    "Using cached location"
+                )
+                callback(location)
+            } else {
+                DriveKitLog.i(
+                    DriveKitVehicleUI.TAG,
+                    "Fetching current location"
+                )
+                locationClient.getCurrentLocation(
+                    Priority.PRIORITY_HIGH_ACCURACY,
+                    cancellationTokenSource.token
+                ).addOnSuccessListener { location ->
+                    callback(location)
+                }
+            }
         }.addOnFailureListener { exception ->
             DriveKitLog.e(
                 DriveKitVehicleUI.TAG, "Failed to get user current location: $exception"
             )
             callback(null)
         }
+    }
+
+    private fun isLocationAcceptable(location: Location): Boolean {
+
+        val gpsValidityDurationInSeconds = 60
+        val elapsedTimeSinceLocation = Date().diffWith(
+            Date(location.time),
+            calendarField = CalendarField.SECOND
+        )
+
+        DriveKitLog.i(
+            DriveKitVehicleUI.TAG,
+        "FusedLocationProviderClient.lastLocation returned with $elapsedTimeSinceLocation seconds old location, accuracy = ${location.accuracy}"
+        )
+
+        val horizontalAccuracyThreshold = Meter(100.0);
+        if (location.accuracy >= horizontalAccuracyThreshold.value) {
+            return false
+        }
+
+
+        return elapsedTimeSinceLocation <= gpsValidityDurationInSeconds
     }
 
     fun getAddress(context: Context, latLng: LatLng, callback: (DKAddress?) -> Unit) {
