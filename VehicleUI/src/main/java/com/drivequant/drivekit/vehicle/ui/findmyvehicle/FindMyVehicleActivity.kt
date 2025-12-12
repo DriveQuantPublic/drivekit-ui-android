@@ -69,6 +69,7 @@ import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.maps.android.compose.CameraMoveStartedReason
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
@@ -231,7 +232,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         var showReframeToTripFabButton by remember { mutableStateOf(false) }
 
         LaunchedEffect(Unit) {
-            snapshotFlow { cameraPositionState.isMoving }
+            snapshotFlow { cameraPositionState.cameraMoveStartedReason == CameraMoveStartedReason.GESTURE }
                 .distinctUntilChanged()
                 .collect { moving ->
                     if (moving) {
