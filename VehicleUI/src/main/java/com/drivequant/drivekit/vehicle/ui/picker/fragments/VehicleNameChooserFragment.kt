@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.mutableStateOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.R
@@ -17,6 +19,9 @@ import com.google.android.material.textfield.TextInputLayout
 class VehicleNameChooserFragment : Fragment() {
 
     private lateinit var viewModel: VehiclePickerViewModel
+
+    val buttonEnableState by lazy { mutableStateOf(true) }
+
     private var _binding: FragmentVehicleNameChooserBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
@@ -51,13 +56,15 @@ class VehicleNameChooserFragment : Fragment() {
 
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
-        binding.buttonValidate.apply {
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            isEnabled = true
-            setOnClickListener {
+
+        binding.buttonValidate.setContent {
+            DKPrimaryButton(
+                getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate),
+                isEnabled = buttonEnableState.value
+            ) {
                 viewModel.progressBarObserver.observe(viewLifecycleOwner) { displayProgressCircular ->
                     displayProgressCircular?.let {
-                        isEnabled = !displayProgressCircular
+                        this.buttonEnableState.value = !displayProgressCircular
                     }
                 }
                 viewModel.name = editTextWrapper.editText?.editableText.toString()
