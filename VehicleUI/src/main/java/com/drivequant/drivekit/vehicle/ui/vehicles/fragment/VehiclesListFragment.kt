@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.compose.runtime.mutableStateOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -32,6 +34,9 @@ class VehiclesListFragment : Fragment(), DriveKitVehicleListener {
     private var adapter: VehiclesListAdapter? = null
     private var shouldSyncVehicles = true
     private lateinit var synchronizationType: SynchronizationType
+
+    private val buttonText by lazy { mutableStateOf(R.string.dk_vehicle_add) }
+
     private var _binding: FragmentVehiclesListBinding? = null
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
@@ -71,6 +76,19 @@ class VehiclesListFragment : Fragment(), DriveKitVehicleListener {
             }
         }
         binding.vehiclesList.layoutManager = LinearLayoutManager(context)
+
+        binding.buttonVehicle.setContent {
+            DKPrimaryButton(getString(buttonText.value)) {
+                if (viewModel.shouldReplaceVehicle()) {
+                    VehiclePickerActivity.launchActivity(
+                        requireContext(),
+                        vehicleToDelete = viewModel.vehiclesList.first()
+                    )
+                } else {
+                    VehiclePickerActivity.launchActivity(requireContext())
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -139,15 +157,8 @@ class VehiclesListFragment : Fragment(), DriveKitVehicleListener {
     private fun setupAddReplaceButton() {
         if (viewModel.shouldDisplayAddReplaceButton()) {
             binding.buttonVehicle.apply {
+                buttonText.value = viewModel.getAddReplaceButtonTextResId()
                 visibility = View.VISIBLE
-                setText(viewModel.getAddReplaceButtonTextResId())
-                setOnClickListener {
-                    if (viewModel.shouldReplaceVehicle()) {
-                        VehiclePickerActivity.launchActivity(context, vehicleToDelete = viewModel.vehiclesList.first())
-                    } else {
-                        VehiclePickerActivity.launchActivity(requireContext())
-                    }
-                }
             }
         } else {
             binding.buttonVehicle.visibility = View.GONE
