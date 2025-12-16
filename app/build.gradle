@@ -19,6 +19,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     buildTypes {
@@ -50,6 +51,10 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "$kotlinCompilerExtension_version"
+    }
+
     signingConfigs {
         debug {
             storeFile file("./debug.keystore")
@@ -70,6 +75,9 @@ dependencies {
     implementation libs.mpandroidchart
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.androidx.work.runtime.ktx
+
+    implementation libs.androidx.activity.compose
+    implementation platform(libs.androidx.compose.bom)
 
     implementation "com.drivequant.drivekit:drivekit-trip-analysis:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"
