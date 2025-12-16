@@ -58,7 +58,7 @@ fun DKText(
 }
 
 @Composable
-fun DKPrimaryButton(text: String, @DrawableRes icon: Int? = null, onClick: () -> Unit) {
+fun DKPrimaryButton(text: String, @DrawableRes icon: Int? = null, isEnabled: Boolean = true, onClick: () -> Unit) {
     Button(
         modifier = Modifier
             .defaultMinSize(minHeight = 48.dp)
