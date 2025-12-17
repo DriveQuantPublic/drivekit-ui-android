@@ -254,7 +254,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
                                 MAP_REGION_PADDING
                             ), MAP_ANIMATION_DURATION
                         )
-                    } catch (e: Exception) { // We should catch a CancellationException but the library throws a custom exception
+                    } catch (e: Exception) { // We should catch a CancellationException but the library throws a custom exception: https://github.com/googlemaps/android-maps-compose/issues/52
                         DriveKitLog.e(DriveKitVehicleUI.TAG, "An exception occurred during Find My Vehicle camera animation: $e")
                     }
                     showReframeToTripFabButton = false
