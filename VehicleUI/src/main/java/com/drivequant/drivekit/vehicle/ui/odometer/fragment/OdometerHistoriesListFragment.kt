@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerHistoriesListBinding
@@ -82,8 +83,10 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
     }
 
     private fun addOdometerReading(vehicleId: String) {
-        binding.dkButtonAddReference.setOnClickListener {
-            OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerHistoriesListFragment)
+        binding.dkButtonAddReference.setContent {
+            DKPrimaryButton(getString(R.string.dk_vehicle_odometer_add_history)) {
+                OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerHistoriesListFragment)
+            }
         }
     }
 

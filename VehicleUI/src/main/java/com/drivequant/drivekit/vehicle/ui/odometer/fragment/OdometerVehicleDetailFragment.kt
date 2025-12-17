@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.vehicle.ui.R
@@ -84,26 +86,30 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
                     OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId))[OdometerDetailViewModel::class.java]
                 initOdometerItems(vehicleId)
                 initVehicle(context)
-                displayOdometerReadings(vehicleId)
-                updateOdometerClicked(vehicleId)
+                manageDisplayOdometerReadingsButton(vehicleId)
+                manageUpdateOdometerButton(vehicleId)
             }
         }
     }
 
-    private fun displayOdometerReadings(vehicleId: String) {
+    private fun manageDisplayOdometerReadingsButton(vehicleId: String) {
         binding.buttonDisplayOdometerReadings.apply {
-            visibility = if(viewModel.shouldShowDisplayReadingButton()) View.VISIBLE else View.GONE
-            setOnClickListener {
-                activity?.let { activity ->
-                    OdometerHistoriesListActivity.launchActivity(activity, vehicleId, this@OdometerVehicleDetailFragment)
+            visibility = if (viewModel.shouldShowDisplayReadingButton()) View.VISIBLE else View.GONE
+            setContent {
+                DKPrimaryButton(getString(R.string.dk_vehicle_odometer_history_update)) {
+                    activity?.let { activity ->
+                        OdometerHistoriesListActivity.launchActivity(activity, vehicleId, this@OdometerVehicleDetailFragment)
+                    }
                 }
             }
         }
     }
 
-    private fun updateOdometerClicked(vehicleId: String) {
-        binding.buttonUpdateOdometerReading.setOnClickListener {
-            OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerVehicleDetailFragment)
+    private fun manageUpdateOdometerButton(vehicleId: String) {
+        binding.buttonUpdateOdometerReading.setContent {
+            DKSecondaryButton(getString(R.string.dk_vehicle_odometer_histories_link)) {
+                OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerVehicleDetailFragment)
+            }
         }
     }
 

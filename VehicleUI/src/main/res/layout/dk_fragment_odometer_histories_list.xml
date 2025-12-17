@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="72dp" />
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/dk_button_add_reference"
-        style="@style/DKButton"
         android:layout_gravity="bottom"
-        android:text="@string/dk_vehicle_odometer_add_history"
-        android:layout_marginBottom="@dimen/dk_screen_border"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dk_screen_border" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
