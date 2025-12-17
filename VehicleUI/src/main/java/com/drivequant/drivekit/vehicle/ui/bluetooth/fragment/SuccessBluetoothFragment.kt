@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -87,9 +88,8 @@ class SuccessBluetoothFragment : Fragment() {
             DKColors.mainFontColor, R.string.dk_vehicle_bluetooth_congrats_notice, btDeviceName
         )
 
-        binding.buttonFinish.apply {
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
-            setOnClickListener {
+        binding.buttonFinish.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)) {
                 activity?.finish()
             }
         }

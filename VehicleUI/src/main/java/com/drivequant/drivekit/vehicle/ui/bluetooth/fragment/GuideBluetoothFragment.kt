@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothGuideBinding
 
@@ -59,8 +61,12 @@ class GuideBluetoothFragment : Fragment() {
         binding.textViewGuideDesc1.normalText()
         binding.textViewGuideDesc2.normalText()
         binding.textViewGuideDesc3.normalText()
-        binding.buttonStart.setOnClickListener {
-            viewModel.onStartButtonClicked()
+
+        binding.buttonStart.setContent {
+            DKPrimaryButton(getString(R.string.dk_vehicle_begin)) {
+                viewModel.onStartButtonClicked()
+
+            }
         }
     }
 
