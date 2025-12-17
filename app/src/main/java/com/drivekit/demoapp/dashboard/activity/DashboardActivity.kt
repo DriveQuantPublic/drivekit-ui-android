@@ -8,10 +8,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.drivekit.demoapp.component.FeatureCard
@@ -24,6 +24,8 @@ import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.settings.activity.SettingsActivity
 import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
@@ -49,7 +51,6 @@ internal class DashboardActivity : AppCompatActivity() {
     private var menu: Menu? = null
     private var startStopTripButton: DKTripRecordingButton? = null
     private lateinit var tripSimulatorButtonContainer: ViewGroup
-    private lateinit var tripSimulatorButton: Button
     private lateinit var infoBanners: ViewGroup
 
     companion object {
@@ -184,10 +185,8 @@ internal class DashboardActivity : AppCompatActivity() {
     private fun initTripSimulatorButton() {
         if (viewModel.displayTripSimulator) {
             tripSimulatorButtonContainer.visibility = View.VISIBLE
-            tripSimulatorButtonContainer.findViewById<Button>(R.id.button_action).apply {
-                tripSimulatorButton = this
-                tripSimulatorButton.text = getString(R.string.simulate_trip)
-                setOnClickListener {
+            tripSimulatorButtonContainer.findViewById<ComposeView>(R.id.button_trip_simulator).setContent {
+                DKSecondaryButton(getString(R.string.simulate_trip)) {
                     TripSimulatorActivity.launchActivity(this@DashboardActivity)
                 }
             }

@@ -49,7 +49,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         initFilter()
         checkSimulationError()
 
-        binding.root.findViewById<ComposeView>(R.id.button_action).setContent {
+        binding.button.setContent {
             DKPrimaryButton(getString(R.string.trip_simulator_start_button)) {
                 when {
                     viewModel.shouldShowDeveloperModeErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_dev_mode)

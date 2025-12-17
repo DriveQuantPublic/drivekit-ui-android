@@ -113,7 +113,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
     }
 
     private fun startStopSimulation() {
-        binding.root.findViewById<ComposeView>(R.id.button_action).setContent {
+        binding.button.setContent {
             DKPrimaryButton(buttonText.value) {
                 if (viewModel.isSimulating) {
                     showStopSimulationPopup { updateContent() }

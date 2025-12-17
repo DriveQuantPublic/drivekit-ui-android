@@ -53,7 +53,7 @@ internal class PermissionsActivity : AppCompatActivity() {
             normalText()
         }
 
-        binding.root.findViewById<ComposeView>(R.id.button_action).setContent {
+        binding.button.setContent {
             DKPrimaryButton(getString(R.string.permissions_intro_button)) {
                 PermissionsUtilsUI.showPermissionViews(
                     this@PermissionsActivity, object : PermissionViewListener {
