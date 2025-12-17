@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -28,6 +29,8 @@ class VehicleCategoryDescriptionFragment : Fragment() {
     private lateinit var viewModel: VehiclePickerViewModel
     private lateinit var vehiclePickerCategoryItem: VehicleCategoryItem
 
+    private val isLiteConfigOnly = DriveKitVehicleUI.categoryConfigType == CategoryConfigType.LITE_CONFIG_ONLY
+
     companion object {
         fun newInstance(viewModel: VehiclePickerViewModel): VehicleCategoryDescriptionFragment {
             val fragment = VehicleCategoryDescriptionFragment()
@@ -41,7 +44,7 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = if (DriveKitVehicleUI.categoryConfigType == CategoryConfigType.LITE_CONFIG_ONLY) {
+    ): View = if (isLiteConfigOnly) {
         R.layout.fragment_vehicle_category_description_lite_config
     } else {
         R.layout.fragment_vehicle_category_description
@@ -54,22 +57,31 @@ class VehicleCategoryDescriptionFragment : Fragment() {
 
         val imageViewCategory: ImageView = view.findViewById(R.id.image_view_icon)
         val textViewDescription: TextView = view.findViewById(R.id.text_view_description)
-        val validateButton: View = view.findViewById(R.id.button_validate)
-        val textViewBrands: View = view.findViewById(R.id.text_view_brands)
+        val validateButton: ComposeView? = view.findViewById(R.id.button_validate)
+        val buttonFindMyVehicle: View? = view.findViewById(R.id.button_find_my_vehicle)
+        val buttonDontHaveTime: View? = view.findViewById(R.id.button_dont_have_time)
 
-        if (DriveKitVehicleUI.categoryConfigType == CategoryConfigType.LITE_CONFIG_ONLY) {
-            val buttonValidate = validateButton as Button
-            buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            textViewBrands.visibility = View.GONE
-        } else {
-            customizeButton(textViewBrands, R.string.dk_vehicle_detail_category_button_title, R.string.dk_vehicle_detail_category_button_description)
-            customizeButton(validateButton, R.string.dk_vehicle_quick_category_button_title, R.string.dk_vehicle_quick_category_button_description)
-            textViewBrands.setOnClickListener {
-                viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION, otherAction = true)
+        validateButton?.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
+                viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION)
             }
         }
-        validateButton.setOnClickListener {
-            viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION)
+
+        buttonFindMyVehicle?.let {
+            customizeButton(it, R.string.dk_vehicle_detail_category_button_title, R.string.dk_vehicle_detail_category_button_description)
+            it.setOnClickListener {
+                viewModel.computeNextScreen(
+                    requireContext(),
+                    VehiclePickerStep.CATEGORY_DESCRIPTION,
+                    otherAction = true
+                )
+            }
+        }
+        buttonDontHaveTime?.let {
+            customizeButton(it, R.string.dk_vehicle_quick_category_button_title, R.string.dk_vehicle_quick_category_button_description)
+            it.setOnClickListener {
+                viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION)
+            }
         }
 
         if (this::vehiclePickerCategoryItem.isInitialized) {
