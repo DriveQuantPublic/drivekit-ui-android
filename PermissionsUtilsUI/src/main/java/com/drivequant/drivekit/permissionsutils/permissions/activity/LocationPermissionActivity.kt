@@ -4,8 +4,9 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.mutableStateOf
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
@@ -18,6 +19,8 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionC
 
 class LocationPermissionActivity : BasePermissionActivity() {
 
+    private val buttonText by lazy { mutableStateOf(getString(R.string.dk_perm_utils_permissions_location_button_android)) }
+
     private lateinit var binding: ActivityLocationPermissionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +30,21 @@ class LocationPermissionActivity : BasePermissionActivity() {
         setContentView(binding.root)
         setToolbar(R.string.dk_perm_utils_permissions_location_title)
         setStyle()
+
+        binding.buttonRequestLocationPermission.setContent {
+            DKPrimaryButton(buttonText.value) {
+                if (DiagnosisHelper.hasFineLocationPermission(this)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permissionCallback != null) {
+                        request(this,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    } else {
+                        checkRequiredPermissions()
+                    }
+                } else {
+                    checkRequiredPermissions()
+                }
+            }
+        }
 
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -60,19 +78,6 @@ class LocationPermissionActivity : BasePermissionActivity() {
         }
     }
 
-    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
-        if (DiagnosisHelper.hasFineLocationPermission(this)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permissionCallback != null) {
-                request(this,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-            } else {
-                checkRequiredPermissions()
-            }
-        } else {
-            checkRequiredPermissions()
-        }
-    }
-
     private fun checkRequiredPermissions() {
         permissionCallback = object : OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
@@ -95,7 +100,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                binding.buttonRequestLocationPermission.text = getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
+                buttonText.value = getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
                 handlePermissionTotallyDeclined(
                     this@LocationPermissionActivity,
                     R.string.dk_perm_utils_app_diag_location_ko_android
@@ -118,7 +123,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
                             R.string.dk_perm_utils_permissions_location_text4_android11,
                             "$alwaysLabel"
                         )
-                        binding.buttonRequestLocationPermission.setText(R.string.dk_perm_utils_permissions_text_button_location_settings)
+                        buttonText.value = getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
                     } else {
                         request(this,
                             Manifest.permission.ACCESS_FINE_LOCATION,

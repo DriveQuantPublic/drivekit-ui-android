@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
@@ -25,6 +26,13 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
         setContentView(binding.root)
         setToolbar(R.string.dk_perm_utils_permissions_phone_settings_background_title)
         setStyle()
+
+        binding.buttonRequestBackgroundPermission.setContent {
+            DKPrimaryButton(getString(R.string.dk_perm_utils_permissions_phone_settings_background_button)) {
+                DiagnosisHelper.requestBatteryOptimization(this)
+            }
+        }
+
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
             update(binding.root) { view, insets ->
@@ -32,10 +40,6 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
                 addSystemNavigationBarBottomPadding(view, insets)
             }
         }
-    }
-
-    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
-        DiagnosisHelper.requestBatteryOptimization(this)
     }
 
     @Suppress("OverrideDeprecatedMigration")
