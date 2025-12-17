@@ -10,6 +10,7 @@ import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityVehiclesBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
@@ -49,8 +50,8 @@ internal class VehiclesActivity : AppCompatActivity() {
             normalText()
         }
 
-        binding.buttonAddVehicle.apply {
-            setOnClickListener {
+        binding.buttonAddVehicle.setContent {
+            DKPrimaryButton(getString(R.string.vehicle_intro_button)) {
                 VehiclePickerActivity.launchActivity(
                     this@VehiclesActivity,
                     null,

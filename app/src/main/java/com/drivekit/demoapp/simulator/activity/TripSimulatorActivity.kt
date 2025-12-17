@@ -10,9 +10,11 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.ComposeView
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
@@ -47,9 +49,8 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         initFilter()
         checkSimulationError()
 
-        binding.root.findViewById<Button>(R.id.button_action).apply {
-            text = getString(R.string.trip_simulator_start_button)
-            setOnClickListener {
+        binding.root.findViewById<ComposeView>(R.id.button_action).setContent {
+            DKPrimaryButton(getString(R.string.trip_simulator_start_button)) {
                 when {
                     viewModel.shouldShowDeveloperModeErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_dev_mode)
                     viewModel.shouldShowMockLocationErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_mock_location)

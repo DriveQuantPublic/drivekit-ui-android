@@ -70,10 +70,6 @@ internal class TransportationModeActivity : AppCompatActivity() {
         getFragment()?.onTransportationProfileClicked(view)
     }
 
-    fun onValidateClicked(@Suppress("UNUSED_PARAMETER")  view: View) {
-        getFragment()?.onValidate()
-    }
-
     private fun getFragment(): TransportationModeFragment? {
         val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
         return if (fragment != null && fragment is TransportationModeFragment){

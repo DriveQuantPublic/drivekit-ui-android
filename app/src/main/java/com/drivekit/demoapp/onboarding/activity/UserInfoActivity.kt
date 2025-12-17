@@ -8,12 +8,15 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityUserInfoBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
@@ -61,13 +64,14 @@ internal class UserInfoActivity : AppCompatActivity() {
             openDriveKitUserInfoDoc()
         }
 
-        binding.buttonNextStep.setOnClickListener {
-            goToNext()
+        binding.buttonNextStep.setContent {
+            DKSecondaryButton(getString(R.string.button_next_step)) {
+                goToNext()
+            }
         }
 
-        binding.root.findViewById<Button>(R.id.button_action).apply {
-            text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            setOnClickListener {
+        binding.buttonValidate.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
                 val firstName = binding.textViewFirstnameField.editableText.toString()
                 val lastName = binding.textViewLastnameField.editableText.toString()
                 val pseudo = binding.textViewPseudoField.editableText.toString()

@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.manager.SyncStatus
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
@@ -16,6 +17,7 @@ import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivitySetUserIdBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
@@ -58,9 +60,8 @@ class UserIdActivity : AppCompatActivity() {
             }
         }
 
-        binding.root.findViewById<Button>(R.id.button_action).apply {
-            text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            setOnClickListener {
+        binding.button.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
                 validateUserId()
             }
         }

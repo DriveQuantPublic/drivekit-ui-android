@@ -15,6 +15,7 @@ import com.drivekit.demoapp.settings.viewmodel.DeleteAccountViewModel
 import com.drivekit.demoapp.utils.restartApplication
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityDeleteAccountBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
@@ -49,8 +50,10 @@ internal class DeleteAccountActivity : AppCompatActivity() {
                 displayAccountDeletionConfirmation()
             }
         }
-        binding.buttonCancelAccountDeletion.setOnClickListener {
-            finish()
+        binding.buttonCancelAccountDeletion.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) {
+                finish()
+            }
         }
 
         viewModel.accountDeletionError.observe(this) {

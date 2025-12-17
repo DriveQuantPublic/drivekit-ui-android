@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
@@ -94,7 +95,21 @@ internal class TransportationModeFragment : Fragment() {
         binding.textCommentError.smallText()
         binding.textCommentError.setText(R.string.dk_driverdata_transportation_mode_declaration_comment_error)
 
-        binding.buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
+        binding.buttonValidate.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
+                viewModel.comment = binding.editTextComment.text.toString()
+                if (viewModel.checkFieldsValidity()) {
+                    showProgressCircular()
+                    viewModel.updateInformations()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.dk_driverdata_failed_to_declare_transportation,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
 
         updateTransportationProfileVisibility()
         bindTransportationModeItems()
@@ -207,20 +222,6 @@ internal class TransportationModeFragment : Fragment() {
             } else {
                 transportationProfileItemView.setItemSelectedState(false)
             }
-        }
-    }
-
-    fun onValidate(){
-        viewModel.comment = binding.editTextComment.text.toString()
-        if (viewModel.checkFieldsValidity()) {
-            showProgressCircular()
-            viewModel.updateInformations()
-        } else {
-            Toast.makeText(
-                requireContext(),
-                R.string.dk_driverdata_failed_to_declare_transportation,
-                Toast.LENGTH_SHORT
-            ).show()
         }
     }
 
