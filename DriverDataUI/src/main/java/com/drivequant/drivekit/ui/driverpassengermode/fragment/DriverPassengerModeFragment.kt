@@ -16,6 +16,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
@@ -97,7 +98,17 @@ internal class DriverPassengerModeFragment : Fragment() {
                 }
             }
         })
-        binding.buttonSubmit.text = getString(viewModel.getSubmitText())
+        binding.buttonSubmit.setContent {
+            DKPrimaryButton(getString(viewModel.getSubmitText())) {
+                viewModel.comment = binding.editTextComment.text.toString()
+                if (viewModel.checkFieldsValidity()) {
+                    showProgressCircular()
+                    viewModel.updateDriverPassengerMode()
+                } else {
+                    displayErrorMessage()
+                }
+            }
+        }
         binding.textCommentError.smallText()
         bindTransportationModeItems()
         bindTransportationProfileItems()
@@ -219,16 +230,6 @@ internal class DriverPassengerModeFragment : Fragment() {
 
     private fun clearTransportationModeViewsSelection() {
         transportationModesViews.forEach { it.setItemSelectedState(false) }
-    }
-
-    fun onChangeButtonClicked(){
-        viewModel.comment = binding.editTextComment.text.toString()
-        if (viewModel.checkFieldsValidity()) {
-            showProgressCircular()
-            viewModel.updateDriverPassengerMode()
-        } else {
-            displayErrorMessage()
-        }
     }
 
     private fun initDefaultValues() {

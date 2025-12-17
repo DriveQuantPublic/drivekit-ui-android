@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
@@ -68,8 +69,11 @@ internal class AlternativeTripFragment : Fragment() {
                 AlternativeTripViewModel.AlternativeTripViewModelFactory(trip)
             )[AlternativeTripViewModel::class.java]
         }
-        binding.buttonChange.setText(R.string.dk_driverdata_change_transportation_mode)
-        binding.buttonChange.setOnClickListener { launchTransportationMode() }
+        binding.buttonChange.setContent {
+            DKPrimaryButton(getString(R.string.dk_driverdata_change_transportation_mode)) {
+                launchTransportationMode()
+            }
+        }
         binding.itemCondition.setValueItem(viewModel.getConditionValue(requireContext()))
         binding.itemWeather.setValueItem(viewModel.getWeatherValue(requireContext()))
         binding.itemMeanSpeed.setValueItem(viewModel.getMeanSpeed(requireContext()))

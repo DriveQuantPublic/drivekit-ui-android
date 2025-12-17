@@ -74,10 +74,6 @@ internal class DriverPassengerModeActivity : AppCompatActivity() {
         getFragment()?.onCarOccupantRoleClicked(view)
     }
 
-    fun onChangeButtonClicked(@Suppress("UNUSED_PARAMETER")  view: View) {
-        getFragment()?.onChangeButtonClicked()
-    }
-
     private fun getFragment(): DriverPassengerModeFragment? {
         val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
         return if (fragment != null && fragment is DriverPassengerModeFragment){
