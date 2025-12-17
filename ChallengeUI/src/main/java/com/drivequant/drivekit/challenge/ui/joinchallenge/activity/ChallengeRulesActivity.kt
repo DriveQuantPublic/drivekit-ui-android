@@ -15,6 +15,7 @@ import com.drivequant.drivekit.challenge.ui.databinding.DkActivityChallengeRules
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity.Companion.CHALLENGE_ID_EXTRA
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
@@ -74,7 +75,32 @@ class ChallengeRulesActivity : AppCompatActivity() {
             R.string.dk_challenge_optin_title
         }
 
-        binding.textViewAcceptRule.setText(acceptRulesText)
+        binding.textViewAcceptRule.setContent {
+            DKPrimaryButton(getString(acceptRulesText)) {
+                if (!isRegistered) {
+                    val alertDialog = DKAlertDialog.LayoutBuilder()
+                        .init(this)
+                        .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
+                        .positiveButton(positiveListener = { dialog, _ ->
+                            updateProgressVisibility(true)
+                            viewModel.joinChallenge(challengeId)
+                            dialog.dismiss()
+                        })
+                        .negativeButton(negativeListener = { _,_ ->
+                            finish()
+                        })
+                        .show()
+
+                    val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+                    val descriptionTextView =
+                        alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
+                    titleTextView?.setText(R.string.dk_challenge_participate_button)
+                    viewModel.challenge?.optinText?.let {
+                        descriptionTextView?.text = it
+                    }
+                }
+            }
+        }
 
         (savedInstanceState?.getString("challengeId"))?.let {
             challengeId = it
@@ -105,31 +131,6 @@ class ChallengeRulesActivity : AppCompatActivity() {
             if (it.isNotEmpty()) {
                 binding.textViewChallengeRule.text =
                     HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
-            }
-        }
-
-        binding.textViewAcceptRule.setOnClickListener {
-            if (!isRegistered) {
-                val alertDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this)
-                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(positiveListener = { dialog, _ ->
-                        updateProgressVisibility(true)
-                        viewModel.joinChallenge(challengeId)
-                        dialog.dismiss()
-                    })
-                    .negativeButton(negativeListener = { _,_ ->
-                        finish()
-                    })
-                    .show()
-
-                val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
-                val descriptionTextView =
-                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
-                titleTextView?.setText(R.string.dk_challenge_participate_button)
-                viewModel.challenge?.optinText?.let {
-                    descriptionTextView?.text = it
-                }
             }
         }
 
