@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -57,9 +59,8 @@ class BeaconScannerCongratsFragment : Fragment() {
             setText(R.string.dk_vehicle_beacon_setup_store_notice)
         }
 
-        view.findViewById<Button>(R.id.button_validate).apply {
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
-            setOnClickListener {
+        view.findViewById<ComposeView>(R.id.button_validate).setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)) {
                 viewModel.scanValidationFinished()
             }
         }

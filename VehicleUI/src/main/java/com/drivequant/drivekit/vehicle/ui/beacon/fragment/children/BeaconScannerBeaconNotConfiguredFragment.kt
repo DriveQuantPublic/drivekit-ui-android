@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -53,9 +54,10 @@ class BeaconScannerBeaconNotConfiguredFragment : Fragment() {
             }
         }
 
-        binding.buttonCancel.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
-        binding.buttonCancel.setOnClickListener {
-            viewModel.scanValidationFinished()
+        binding.buttonCancel.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) {
+                viewModel.scanValidationFinished()
+            }
         }
     }
 

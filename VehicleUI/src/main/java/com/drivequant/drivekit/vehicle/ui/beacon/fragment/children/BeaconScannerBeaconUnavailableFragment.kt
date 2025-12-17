@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -58,16 +60,16 @@ class BeaconScannerBeaconUnavailableFragment : Fragment() {
         binding.textViewDescription.normalText()
         binding.textViewDescription.setText(R.string.dk_vehicle_beacon_setup_code_retry_title)
 
-        binding.buttonRetry.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
-        binding.buttonRetry.setOnClickListener {
-            activity?.onBackPressed()
+        binding.buttonRetry.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) {
+                activity?.onBackPressed()
+            }
         }
 
-        binding.buttonAbort.apply {
-            normalText()
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
-            setOnClickListener {
+        binding.buttonAbort.setContent {
+            DKSecondaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_finish))  {
                 viewModel.scanValidationFinished()
+
             }
         }
     }
