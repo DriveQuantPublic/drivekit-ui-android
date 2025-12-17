@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -90,15 +90,16 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
         }
         binding.textViewDescription.normalText()
 
-        binding.buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)
-        binding.buttonValidate.setOnClickListener {
-            viewModel.changeBeaconToVehicle()
+        binding.buttonValidate.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)) {
+                viewModel.changeBeaconToVehicle()
+            }
         }
 
-        binding.buttonAbort.typeface = Typeface.DEFAULT_BOLD
-        binding.buttonAbort.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
-        binding.buttonAbort.setOnClickListener {
-            viewModel.scanValidationFinished()
+        binding.buttonAbort.setContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) {
+                viewModel.scanValidationFinished()
+            }
         }
 
         viewModel.beaconChangeObserver.observe(viewLifecycleOwner) {
