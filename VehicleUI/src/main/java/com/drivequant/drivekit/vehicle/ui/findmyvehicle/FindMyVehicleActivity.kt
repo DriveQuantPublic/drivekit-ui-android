@@ -55,6 +55,7 @@ import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.Mile
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
@@ -244,13 +245,18 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         fun animateMapToIncludeUserAndVehicle() {
             userLocation?.let { location ->
                 DriveKitVehicleUI.coroutineScope.launch {
-                    cameraPositionState.animate(
-                        CameraUpdateFactory.newLatLngBounds(
-                            LatLngBounds.Builder()
-                                .include(LatLng(location.latitude, location.longitude))
-                                .include(vehicleLastKnownCoordinates).build(), MAP_REGION_PADDING
-                        ), MAP_ANIMATION_DURATION
-                    )
+                    try {
+                        cameraPositionState.animate(
+                            CameraUpdateFactory.newLatLngBounds(
+                                LatLngBounds.Builder()
+                                    .include(LatLng(location.latitude, location.longitude))
+                                    .include(vehicleLastKnownCoordinates).build(),
+                                MAP_REGION_PADDING
+                            ), MAP_ANIMATION_DURATION
+                        )
+                    } catch (e: Exception) { // We should catch a CancellationException but the library throws a custom exception: https://github.com/googlemaps/android-maps-compose/issues/52
+                        DriveKitLog.e(DriveKitVehicleUI.TAG, "An exception occurred during Find My Vehicle camera animation: $e")
+                    }
                     showReframeToTripFabButton = false
                 }
             }
