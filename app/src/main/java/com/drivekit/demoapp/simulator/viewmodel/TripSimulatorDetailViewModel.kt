@@ -53,12 +53,15 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     }
 
     fun stopSimulation() {
-        DriveKitTripSimulator.stop()
-        isSimulating = false
         currentSpeed = null
         timeWhenEnteredStoppingState = null
         stoppingTimer = null
         currentDuration = 0
+
+        if (isSimulating) {
+            isSimulating = false
+            DriveKitTripSimulator.stop()
+        }
         updateNeeded()
     }
 
@@ -151,7 +154,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     }
 }
 
-fun Double.formatSimulatorDuration(): String {
+private fun Double.formatSimulatorDuration(): String {
     val durationInt = this.toInt()
     val seconds = durationInt % 60
     val minutes = (durationInt - seconds) / 60

@@ -9,14 +9,18 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.scale
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.diffWith
 import com.drivequant.drivekit.core.geocoder.DKAddress
 import com.drivequant.drivekit.core.geocoder.DKLocation
 import com.drivequant.drivekit.core.geocoder.DKReverseGeocoderListener
 import com.drivequant.drivekit.core.geocoder.ReverseGeocoder
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,11 +31,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.CancellationTokenSource
 import java.util.Date
 
-internal class FindMyVehicleViewModel : ViewModel() {
+internal class FindMyVehicleViewModel(
+    private val vehicleId: String?
+) : ViewModel() {
 
     private var cancellationTokenSource = CancellationTokenSource()
     private val lastTripProvider = lazy {
-        DriveKitTripAnalysis.getLastTripLocation()
+        if (vehicleId != null) {
+            DriveKitVehicle.getVehicleLocation(vehicleId)
+        } else {
+            DriveKitTripAnalysis.getLastVehicleTripLocation()
+        }
     }
 
     fun getVehicleLastKnownCoordinates(): LatLng? {
@@ -84,16 +94,53 @@ internal class FindMyVehicleViewModel : ViewModel() {
     fun getUserCurrentLocation(
         locationClient: FusedLocationProviderClient, callback: (Location?) -> Unit
     ) {
-        locationClient.getCurrentLocation(
-            Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token
-        ).addOnSuccessListener { location ->
-            callback(location)
+        locationClient.lastLocation.addOnSuccessListener { location ->
+            if (isLocationAcceptable(location)) {
+                DriveKitLog.i(
+                    DriveKitVehicleUI.TAG,
+                    "Using cached location"
+                )
+                callback(location)
+            } else {
+                DriveKitLog.i(
+                    DriveKitVehicleUI.TAG,
+                    "Fetching current location"
+                )
+                locationClient.getCurrentLocation(
+                    Priority.PRIORITY_HIGH_ACCURACY,
+                    cancellationTokenSource.token
+                ).addOnSuccessListener { location ->
+                    callback(location)
+                }
+            }
         }.addOnFailureListener { exception ->
             DriveKitLog.e(
                 DriveKitVehicleUI.TAG, "Failed to get user current location: $exception"
             )
             callback(null)
         }
+    }
+
+    private fun isLocationAcceptable(location: Location): Boolean {
+
+        val gpsValidityDurationInSeconds = 600
+        val elapsedTimeSinceLocation = Date().diffWith(
+            Date(location.time),
+            calendarField = CalendarField.SECOND
+        )
+
+        DriveKitLog.i(
+            DriveKitVehicleUI.TAG,
+        "FusedLocationProviderClient.lastLocation returned with $elapsedTimeSinceLocation seconds old location, accuracy = ${location.accuracy}"
+        )
+
+        val horizontalAccuracyThreshold = Meter(100.0);
+        if (location.accuracy >= horizontalAccuracyThreshold.value) {
+            return false
+        }
+
+
+        return elapsedTimeSinceLocation <= gpsValidityDurationInSeconds
     }
 
     fun getAddress(context: Context, latLng: LatLng, callback: (DKAddress?) -> Unit) {
@@ -131,5 +178,18 @@ internal class FindMyVehicleViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         cancellationTokenSource.cancel()
+    }
+
+    class FindMyVehicleViewModelFactory(
+        private val vehicleId: String?
+    ) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(FindMyVehicleViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return FindMyVehicleViewModel(vehicleId) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
     }
 }
