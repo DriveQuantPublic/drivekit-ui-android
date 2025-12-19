@@ -3,6 +3,10 @@ apply plugin: 'maven-publish'
 publishing {
     repositories {
         maven {
+            name = "localRepository"
+            url = rootProject.layout.projectDirectory.dir("local-repository")
+        }
+        maven {
             if (System.env.REPO_PATH) {
                 url System.env.REPO_PATH
                 if (System.env.MAVEN_LOGIN && System.env.MAVEN_PASSWORD) {
@@ -14,10 +18,6 @@ publishing {
             } else {
                 url mavenLocal().url
             }
-        }
-        maven {
-            name = "localRepository"
-            url = layout.projectDirectory.dir("local-repository")
         }
     }
     publications {
