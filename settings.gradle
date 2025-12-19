@@ -10,9 +10,6 @@ pluginManagement {
         repositories {
             mavenCentral()
             maven {
-                url "https://maven.drivequant.com/repository/android-sdk/"
-            }
-            maven {
                 url = uri("https://storage.googleapis.com/r8-releases/raw")
             }
         }
@@ -27,6 +24,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://maven.drivequant.com/repository/android-sdk/"
+        }
         maven {
             url "https://jitpack.io"
         }
