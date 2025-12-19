@@ -5,9 +5,6 @@ pluginManagement {
         maven {
             url "https://maven.drivequant.com/repository/android-sdk/"
         }
-        maven {
-            url = new File(rootDir, "local-repository")
-        }
     }
     // The following block is to be removed when using Android Studio Hedgehog / AGP 8.2.
     // This is necessary to support sealed classes.
