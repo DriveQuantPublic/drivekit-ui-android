@@ -3,6 +3,9 @@ pluginManagement {
         google()
         mavenCentral()
         maven {
+            url "https://maven.drivequant.com/repository/android-sdk/"
+        }
+        maven {
             url = new File(rootDir, "local-repository")
         }
     }
