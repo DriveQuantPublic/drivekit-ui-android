@@ -2,7 +2,7 @@ buildscript {
     def version = System.getenv("BITRISE_GIT_TAG") ?: '0.0.1'
     ext {
         drivekitui_version = version
-        drivekit_version = '2.23.0'
+        drivekit_version = '2.24.0-beta1'
         kotlinCompilerExtension_version = '1.4.8'
     }
 }
@@ -18,5 +18,23 @@ allprojects {
         min_sdk_version = 26
         compile_sdk_version = 36
         target_sdk_version = 36
+    }
+}
+
+subprojects {
+    tasks.register('emptySourcesJar', Jar) {
+        archiveClassifier = 'sources'
+    }
+    tasks.register('emptyJavadocJar', Jar) {
+        archiveClassifier = 'javadoc'
+    }
+
+    afterEvaluate {
+        if (plugins.hasPlugin("maven-publish")) {
+            artifacts {
+                archives emptySourcesJar
+                archives emptyJavadocJar
+            }
+        }
     }
 }
