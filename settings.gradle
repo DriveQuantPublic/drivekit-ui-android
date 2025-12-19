@@ -2,9 +2,6 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url "https://maven.drivequant.com/repository/android-sdk/"
-        }
     }
     // The following block is to be removed when using Android Studio Hedgehog / AGP 8.2.
     // This is necessary to support sealed classes.
@@ -12,6 +9,9 @@ pluginManagement {
     buildscript {
         repositories {
             mavenCentral()
+            maven {
+                url "https://maven.drivequant.com/repository/android-sdk/"
+            }
             maven {
                 url = uri("https://storage.googleapis.com/r8-releases/raw")
             }
