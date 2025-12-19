@@ -2,6 +2,7 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
     // The following block is to be removed when using Android Studio Hedgehog / AGP 8.2.
     // This is necessary to support sealed classes.
@@ -9,6 +10,7 @@ pluginManagement {
     buildscript {
         repositories {
             mavenCentral()
+            mavenLocal()
             maven {
                 url = uri("https://storage.googleapis.com/r8-releases/raw")
             }
@@ -24,6 +26,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
         maven {
             url "https://jitpack.io"
         }
