@@ -70,7 +70,7 @@ internal class AlternativeTripFragment : Fragment() {
             )[AlternativeTripViewModel::class.java]
         }
         binding.buttonChange.setContent {
-            DKPrimaryButton(getString(R.string.dk_driverdata_change_transportation_mode)) {
+            DKPrimaryButton(getString(R.string.dk_driverdata_change_transportation_mode), isFullWidth = false) {
                 launchTransportationMode()
             }
         }
