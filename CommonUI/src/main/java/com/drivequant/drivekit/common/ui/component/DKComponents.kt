@@ -69,7 +69,8 @@ fun DKPrimaryButton(text: String, @DrawableRes icon: Int? = null, isEnabled: Boo
         ),
         elevation = null,
         shape = CircleShape,
-        onClick = onClick
+        onClick = onClick,
+        enabled = isEnabled
     ) {
         icon?.let {
             DKButtonIcon(it, text)
