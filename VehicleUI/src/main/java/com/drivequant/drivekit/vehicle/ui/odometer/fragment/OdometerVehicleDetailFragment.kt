@@ -86,8 +86,16 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
                     OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId))[OdometerDetailViewModel::class.java]
                 initOdometerItems(vehicleId)
                 initVehicle(context)
-                manageDisplayOdometerReadingsButton(vehicleId)
                 manageUpdateOdometerButton(vehicleId)
+                manageDisplayOdometerReadingsButton(vehicleId)
+            }
+        }
+    }
+
+    private fun manageUpdateOdometerButton(vehicleId: String) {
+        binding.buttonUpdateOdometerReading.setContent {
+            DKPrimaryButton(getString(R.string.dk_vehicle_odometer_history_update)) {
+                OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerVehicleDetailFragment)
             }
         }
     }
@@ -96,19 +104,11 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
         binding.buttonDisplayOdometerReadings.apply {
             visibility = if (viewModel.shouldShowDisplayReadingButton()) View.VISIBLE else View.GONE
             setContent {
-                DKPrimaryButton(getString(R.string.dk_vehicle_odometer_history_update)) {
+                DKSecondaryButton(getString(R.string.dk_vehicle_odometer_histories_link)) {
                     activity?.let { activity ->
                         OdometerHistoriesListActivity.launchActivity(activity, vehicleId, this@OdometerVehicleDetailFragment)
                     }
                 }
-            }
-        }
-    }
-
-    private fun manageUpdateOdometerButton(vehicleId: String) {
-        binding.buttonUpdateOdometerReading.setContent {
-            DKSecondaryButton(getString(R.string.dk_vehicle_odometer_histories_link)) {
-                OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerVehicleDetailFragment)
             }
         }
     }
