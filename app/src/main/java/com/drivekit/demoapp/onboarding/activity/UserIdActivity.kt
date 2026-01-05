@@ -22,6 +22,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.networking.RequestError
 
 class UserIdActivity : AppCompatActivity() {
@@ -60,7 +61,7 @@ class UserIdActivity : AppCompatActivity() {
             }
         }
 
-        binding.button.setContent {
+        binding.button.injectContent {
             DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
                 validateUserId()
             }
