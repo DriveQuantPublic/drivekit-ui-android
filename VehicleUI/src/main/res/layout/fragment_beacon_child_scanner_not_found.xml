@@ -19,14 +19,15 @@
         android:layout_gravity="center"
         android:layout_marginVertical="@dimen/dk_margin_half" />
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_cancel"
-        style="@style/DKButton"
-        android:layout_marginTop="@dimen/dk_margin_medium"
-        android:foreground="?android:attr/selectableItemBackground" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dk_margin_medium" />
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_abort"
-        style="@style/DKButton.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin_medium" />
 </LinearLayout>

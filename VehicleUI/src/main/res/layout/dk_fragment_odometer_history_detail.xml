@@ -80,29 +80,29 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+                <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/button_validate_reference"
-                    style="@style/DKButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
-                    android:layout_marginTop="@dimen/dk_margin_half"
-                    android:text="@string/dk_common_validate" />
+                    android:layout_marginTop="@dimen/dk_margin_half" />
 
-                <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
+                <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/button_cancel_action"
-                    style="@style/DKButton.Secondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
-                    android:layout_marginTop="@dimen/dk_margin_half"
-                    android:text="@string/dk_common_cancel" />
+                    android:layout_marginTop="@dimen/dk_margin_half" />
 
-                <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
+                <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/button_delete_reference"
-                    style="@style/DKButton.Secondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                     android:layout_marginVertical="@dimen/dk_margin_half"
-                    android:text="@string/dk_common_delete"
                     android:visibility="gone" />
-            </LinearLayout>
 
+            </LinearLayout>
             <ProgressBar
                 android:id="@+id/progress_circular"
                 style="@style/Widget.AppCompat.ProgressBar"

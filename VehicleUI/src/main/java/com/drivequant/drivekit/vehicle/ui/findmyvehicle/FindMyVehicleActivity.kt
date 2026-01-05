@@ -54,6 +54,7 @@ import com.drivequant.drivekit.common.ui.utils.Kilometer
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.Mile
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.common.model.DKCoordinateAccuracy
@@ -119,7 +120,7 @@ internal open class FindMyVehicleActivity : AppCompatActivity() {
         setupToolbar()
         setupEdgeToEdge()
 
-        findViewById<ComposeView>(R.id.compose_view).setContent {
+        findViewById<ComposeView>(R.id.compose_view).injectContent {
             val vehicleId: String? = intent.getStringExtra(VEHICLE_ID_INTENT_PARAM_KEY)
             viewModel = viewModel(
                 factory = FindMyVehicleViewModel.FindMyVehicleViewModelFactory(

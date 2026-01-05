@@ -52,11 +52,11 @@
         </LinearLayout>
     </ScrollView>
 
-    <include
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button"
-        layout="@layout/layout_button_primary_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dk_margin_half"
         android:layout_marginBottom="@dimen/dk_margin"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,20 +31,12 @@
         app:layout_constraintTop_toBottomOf="@id/image_view_icon"
         tools:text="Ceci est une description" />
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_validate"
-        style="@style/DKButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/dk_margin_half"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_view_description" />
-
-    <TextView
-        android:id="@+id/text_view_brands"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin_half"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_validate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

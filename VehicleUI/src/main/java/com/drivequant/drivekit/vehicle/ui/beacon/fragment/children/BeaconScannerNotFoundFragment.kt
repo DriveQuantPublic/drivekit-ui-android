@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
@@ -69,15 +71,14 @@ class BeaconScannerNotFoundFragment : Fragment() {
             binding.buttonCancel.visibility = View.GONE
             binding.buttonAbort.visibility = View.GONE
         } else {
-            binding.buttonCancel.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
-            binding.buttonCancel.setOnClickListener {
-                activity?.onBackPressed()
+            binding.buttonCancel.injectContent {
+                DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) {
+                    activity?.onBackPressed()
+                }
             }
 
-            binding.buttonAbort.apply {
-                headLine2()
-                setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
-                setOnClickListener {
+            binding.buttonCancel.injectContent {
+                DKSecondaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)) {
                     viewModel.scanValidationFinished()
                 }
             }

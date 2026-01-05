@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults.buttonColors
@@ -58,18 +59,31 @@ fun DKText(
 }
 
 @Composable
-fun DKPrimaryButton(text: String, @DrawableRes icon: Int? = null, onClick: () -> Unit) {
+fun DKPrimaryButton(
+    text: String,
+    @DrawableRes icon: Int? = null,
+    isEnabled: Boolean = true,
+    isFullWidth: Boolean = true,
+    onClick: () -> Unit
+) {
     Button(
-        modifier = Modifier
-            .defaultMinSize(minHeight = 48.dp)
-            .fillMaxWidth(),
+        modifier = if (isFullWidth) {
+            Modifier
+                .defaultMinSize(minHeight = 48.dp)
+                .fillMaxWidth()
+        } else {
+            Modifier
+                .defaultMinSize(minHeight = 48.dp)
+                .wrapContentSize()
+        },
         colors = buttonColors(
             backgroundColor = colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor),
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.fontColorOnSecondaryColor)
         ),
         elevation = null,
         shape = CircleShape,
-        onClick = onClick
+        onClick = onClick,
+        enabled = isEnabled
     ) {
         icon?.let {
             DKButtonIcon(it, text)

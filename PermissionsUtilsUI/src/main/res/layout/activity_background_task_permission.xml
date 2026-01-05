@@ -68,13 +68,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_text1" />
 
-            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/button_request_background_permission"
-                style="@style/DKButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:onClick="onRequestPermissionClicked"
                 android:paddingVertical="@dimen/dk_margin"
-                android:text="@string/dk_perm_utils_permissions_phone_settings_background_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

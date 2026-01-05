@@ -16,6 +16,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
@@ -87,10 +89,10 @@ class OdometerHistoryDetailFragment : Fragment() {
                 }
                 initVehicle(context, vehicleId)
                 initMileageRecord(context)
-                onValidateButtonClicked(context)
-                onDeleteOdometerHistory()
+                manageValidateButton(context)
+                manageDeleteOdometerHistoryButton()
                 onDistanceClicked(context)
-                onCancelButtonClicked()
+                manageCancelButton()
                 viewModel.odometerActionObserver.observe(viewLifecycleOwner) {
                     updateProgressVisibility(false)
                     Toast.makeText(context, it.first, Toast.LENGTH_LONG).show()
@@ -138,36 +140,41 @@ class OdometerHistoryDetailFragment : Fragment() {
         }
     }
 
-    private fun onValidateButtonClicked(context: Context) {
+    private fun manageValidateButton(context: Context) {
         binding.buttonValidateReference.apply {
             visibility = if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
-            setOnClickListener {
-                if (viewModel.showMileageDistanceErrorMessage()) {
-                    Toast.makeText(
-                        context,
-                        R.string.dk_vehicle_odometer_history_error,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    updateProgressVisibility(true)
-                    if (viewModel.canEditHistory()) {
-                        viewModel.updateOdometerHistory()
+
+            setContent {
+                DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
+                    if (viewModel.showMileageDistanceErrorMessage()) {
+                        Toast.makeText(
+                            context,
+                            R.string.dk_vehicle_odometer_history_error,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
-                        viewModel.addOdometerHistory()
+                        updateProgressVisibility(true)
+                        if (viewModel.canEditHistory()) {
+                            viewModel.updateOdometerHistory()
+                        } else {
+                            viewModel.addOdometerHistory()
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun onCancelButtonClicked() {
+    private fun manageCancelButton() {
         binding.buttonCancelAction.apply {
             visibility = if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
-            setOnClickListener {
-                activity?.let {
-                    val intentData = Intent()
-                    it.setResult(Activity.RESULT_CANCELED, intentData)
-                    it.finish()
+            setContent {
+                DKSecondaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) {
+                    activity?.let {
+                        val intentData = Intent()
+                        it.setResult(Activity.RESULT_CANCELED, intentData)
+                        it.finish()
+                    }
                 }
             }
         }
@@ -218,14 +225,14 @@ class OdometerHistoryDetailFragment : Fragment() {
         }
     }
 
-    private fun onDeleteOdometerHistory() {
+    private fun manageDeleteOdometerHistoryButton() {
         binding.buttonDeleteReference.apply {
-            normalText()
-            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_delete)
             visibility = if (viewModel.canDeleteHistory()) View.VISIBLE else View.GONE
-            setOnClickListener {
-                updateProgressVisibility(true)
-                viewModel.deleteOdometerHistory()
+            setContent {
+                DKSecondaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_delete)) {
+                    updateProgressVisibility(true)
+                    viewModel.deleteOdometerHistory()
+                }
             }
         }
     }

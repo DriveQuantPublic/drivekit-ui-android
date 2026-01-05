@@ -29,18 +29,17 @@
                 android:text="@string/dk_vehicle_bluetooth_not_found"
                 android:textColor="@color/mainFontColor" />
 
-            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/button_cancel"
-                style="@style/DKButton"
-                android:layout_marginBottom="@dimen/dk_margin_half"
-                android:text="@string/dk_common_cancel" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin_half"/>
 
-            <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/text_view_open_settings"
-                style="@style/DKButton.Secondary"
-                android:layout_marginVertical="@dimen/dk_margin"
-                android:text="@string/dk_vehicle_open_bluetooth_settings" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin" />
         </LinearLayout>
-
     </ScrollView>
 </LinearLayout>

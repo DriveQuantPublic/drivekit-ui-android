@@ -3,13 +3,15 @@ package com.drivequant.drivekit.permissionsutils.permissions.activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.mutableStateOf
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.R
@@ -18,6 +20,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class FullScreenIntentPermissionActivity : BasePermissionActivity() {
+    private val buttonText = mutableStateOf(getString(R.string.dk_perm_utils_text_button_fsi_settings))
 
     private lateinit var binding: ActivityFullScreenIntentPermissionBinding
 
@@ -29,6 +32,13 @@ class FullScreenIntentPermissionActivity : BasePermissionActivity() {
         setToolbar(R.string.dk_perm_utils_fsi_activity_title)
         setStyle()
         manageSkipButton()
+
+        binding.buttonRequestFullScreenIntentPermission.injectContent {
+            DKPrimaryButton(buttonText.value) {
+                DiagnosisHelper.requestFullScreenPermission(this)
+            }
+        }
+
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
             update(binding.root) { view, insets ->
@@ -36,10 +46,6 @@ class FullScreenIntentPermissionActivity : BasePermissionActivity() {
                 addSystemNavigationBarBottomPadding(view, insets)
             }
         }
-    }
-
-    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
-        DiagnosisHelper.requestFullScreenPermission(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

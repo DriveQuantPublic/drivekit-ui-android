@@ -13,14 +13,15 @@
         android:paddingVertical="@dimen/dk_margin_half"
         android:textColor="@color/mainFontColor" />
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_retry"
-        style="@style/DKButton"
-        android:layout_marginTop="@dimen/dk_margin_medium" />
-
-    <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
-        android:id="@+id/button_abort"
-        style="@style/DKButton.Secondary"
         android:layout_marginTop="@dimen/dk_margin_medium"
-        tools:text="text" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/button_abort"
+        android:layout_marginTop="@dimen/dk_margin_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
