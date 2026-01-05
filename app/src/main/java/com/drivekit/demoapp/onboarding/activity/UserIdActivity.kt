@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +15,12 @@ import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivitySetUserIdBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.networking.RequestError
 
 class UserIdActivity : AppCompatActivity() {
@@ -58,9 +59,8 @@ class UserIdActivity : AppCompatActivity() {
             }
         }
 
-        binding.root.findViewById<Button>(R.id.button_action).apply {
-            text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
-            setOnClickListener {
+        binding.button.injectContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
                 validateUserId()
             }
         }

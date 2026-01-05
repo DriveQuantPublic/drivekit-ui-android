@@ -5,18 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
@@ -43,7 +45,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
     private lateinit var graphContainer: LinearLayout
     private lateinit var graphView: TimelineGraphView
-    private lateinit var displayTimelineDetailButton: Button
+    private lateinit var displayTimelineDetailButton: ComposeView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     companion object {
@@ -113,8 +115,8 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
     }
 
     private fun configureTimelineDetailButton() {
-        displayTimelineDetailButton.apply {
-            setOnClickListener {
+        displayTimelineDetailButton.injectContent {
+            DKSecondaryButton(getString(R.string.dk_timeline_button_timeline_detail)) {
                 TimelineDetailActivity.launchActivity(
                     requireActivity(),
                     viewModel.selectedScore,

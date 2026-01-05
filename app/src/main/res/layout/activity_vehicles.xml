@@ -55,13 +55,12 @@
 
     </ScrollView>
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_add_vehicle"
-        style="@style/DKButton"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginEnd="@dimen/dk_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dk_margin"
         android:layout_marginBottom="@dimen/dk_margin"
-        android:text="@string/vehicle_intro_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

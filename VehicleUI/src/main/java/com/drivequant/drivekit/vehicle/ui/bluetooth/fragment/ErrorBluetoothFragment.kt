@@ -7,8 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothErrorBinding
 
 class ErrorBluetoothFragment : Fragment() {
@@ -37,14 +41,16 @@ class ErrorBluetoothFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.textViewBluetoothFailed.normalText()
+        binding.buttonCancel.injectContent {
+            DKPrimaryButton(getString(R.string.dk_common_cancel)) {
+                activity?.finish()
+            }
 
-        binding.buttonCancel.setOnClickListener {
-            activity?.finish()
         }
-
-        binding.textViewOpenSettings.normalText()
-        binding.textViewOpenSettings.setOnClickListener {
-            startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT)
+        binding.textViewOpenSettings.injectContent {
+            DKSecondaryButton(getString(com.drivequant.drivekit.vehicle.ui.R.string.dk_vehicle_open_bluetooth_settings)) {
+                startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT)
+            }
         }
     }
 

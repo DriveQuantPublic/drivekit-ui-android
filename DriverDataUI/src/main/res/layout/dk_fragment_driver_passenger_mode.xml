@@ -184,11 +184,11 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/button_submit"
-                style="@style/DKButton"
-                android:layout_marginVertical="@dimen/dk_margin"
-                android:onClick="onChangeButtonClicked" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

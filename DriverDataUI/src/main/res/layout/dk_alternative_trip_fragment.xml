@@ -48,9 +48,8 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+        <androidx.compose.ui.platform.ComposeView
             android:id="@+id/button_change"
-            style="@style/DKButton"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dk_ic_xbig"
             android:layout_gravity="center"

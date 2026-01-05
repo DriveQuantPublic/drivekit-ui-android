@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
@@ -17,6 +18,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconInfoStatus
 import com.drivequant.drivekit.vehicle.ui.R
@@ -81,8 +83,10 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
         binding.codeWrapper.apply {
             typeface = DriveKitUI.primaryFont(context)
         }
-        binding.buttonValidate.setOnClickListener {
-            manageValidateClick(it)
+        binding.buttonValidate.injectContent {
+            DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
+                manageValidateClick(binding.buttonValidate)
+            }
         }
     }
 

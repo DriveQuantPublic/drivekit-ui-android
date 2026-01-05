@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_cancel"
-        style="@style/DKButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin_medium" />
 </LinearLayout>

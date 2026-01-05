@@ -32,7 +32,7 @@
         tools:text="Ceci est une description" />
 
     <include
-        android:id="@+id/text_view_brands"
+        android:id="@+id/button_find_my_vehicle"
         layout="@layout/dk_vehicle_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@id/text_view_description" />
 
     <include
-        android:id="@+id/button_validate"
+        android:id="@+id/button_dont_have_time"
         layout="@layout/dk_vehicle_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,6 +51,6 @@
         android:layout_marginTop="@dimen/dk_margin_double"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_brands" />
+        app:layout_constraintTop_toBottomOf="@id/button_find_my_vehicle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

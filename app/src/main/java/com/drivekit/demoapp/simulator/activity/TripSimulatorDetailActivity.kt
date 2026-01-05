@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.component.ChartEntry
 import com.drivekit.demoapp.component.TripSimulatorGraphView
@@ -16,15 +16,19 @@ import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModel
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModelListener
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorDetailBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 
 internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailViewModelListener {
+
+    private val buttonText by lazy { mutableStateOf(getString(R.string.trip_simulator_stop_button))}
 
     private lateinit var viewModel: TripSimulatorDetailViewModel
     private lateinit var graphView: TripSimulatorGraphView
@@ -108,8 +112,8 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
     }
 
     private fun startStopSimulation() {
-        binding.root.findViewById<Button>(R.id.button_action).apply {
-            setOnClickListener {
+        binding.button.injectContent {
+            DKPrimaryButton(buttonText.value) {
                 if (viewModel.isSimulating) {
                     showStopSimulationPopup { updateContent() }
                 } else {
@@ -154,12 +158,10 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
             }
         }
 
-        if (viewModel.isSimulating) {
-            R.string.trip_simulator_stop_button
+        buttonText.value = if (viewModel.isSimulating) {
+            getString(R.string.trip_simulator_stop_button)
         } else {
-            R.string.trip_simulator_restart_button
-        }.let {
-            binding.root.findViewById<Button>(R.id.button_action).text = getString(it)
+            getString(R.string.trip_simulator_restart_button)
         }
     }
 

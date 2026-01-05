@@ -34,9 +34,9 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_validate"
-        style="@style/DKButton"
-        android:layout_marginVertical="@dimen/dk_margin_half"
-        android:text="@string/dk_common_validate" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dk_margin_half" />
 </LinearLayout>
