@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
@@ -45,7 +46,7 @@ internal class DefaultCarEngineSelectionFragment : Fragment() {
         yesChoice.normalText()
         noChoice.normalText()
 
-        validateButton.setContent {
+        validateButton.injectContent {
             DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
                 viewModel.isElectric = yesChoice.isChecked
                 viewModel.computeNextScreen(requireContext(), VehiclePickerStep.DEFAULT_CAR_ENGINE)

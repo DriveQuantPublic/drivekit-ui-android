@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.vehicle.ui.R
@@ -88,7 +89,7 @@ class SuccessBluetoothFragment : Fragment() {
             DKColors.mainFontColor, R.string.dk_vehicle_bluetooth_congrats_notice, btDeviceName
         )
 
-        binding.buttonFinish.setContent {
+        binding.buttonFinish.injectContent {
             DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)) {
                 activity?.finish()
             }

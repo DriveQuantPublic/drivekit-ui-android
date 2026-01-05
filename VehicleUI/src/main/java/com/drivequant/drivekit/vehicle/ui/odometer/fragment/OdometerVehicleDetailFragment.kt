@@ -16,6 +16,7 @@ import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerVehicleDetailBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoriesListActivity
@@ -93,7 +94,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     }
 
     private fun manageUpdateOdometerButton(vehicleId: String) {
-        binding.buttonUpdateOdometerReading.setContent {
+        binding.buttonUpdateOdometerReading.injectContent {
             DKPrimaryButton(getString(R.string.dk_vehicle_odometer_history_update)) {
                 OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerVehicleDetailFragment)
             }

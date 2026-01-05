@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerInitBinding
@@ -108,7 +109,7 @@ class OdometerInitFragment : Fragment() {
     }
 
     private fun addOdometerReading(context: Context) {
-        binding.buttonValidateReference.setContent {
+        binding.buttonValidateReference.injectContent {
             DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
                 val isEditTextDistanceBlank = binding.textViewVehicleDistanceField.editableText.toString().isBlank()
                 viewModel.mileageDistance =

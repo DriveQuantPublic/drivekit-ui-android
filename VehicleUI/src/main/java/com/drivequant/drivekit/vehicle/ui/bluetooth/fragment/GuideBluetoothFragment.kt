@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothGuideBinding
@@ -62,7 +63,7 @@ class GuideBluetoothFragment : Fragment() {
         binding.textViewGuideDesc2.normalText()
         binding.textViewGuideDesc3.normalText()
 
-        binding.buttonStart.setContent {
+        binding.buttonStart.injectContent {
             DKPrimaryButton(getString(R.string.dk_vehicle_begin)) {
                 viewModel.onStartButtonClicked()
 

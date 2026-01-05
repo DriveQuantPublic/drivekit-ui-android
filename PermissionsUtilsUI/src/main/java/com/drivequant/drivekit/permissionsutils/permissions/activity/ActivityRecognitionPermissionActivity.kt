@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityRecognitionPermissionBinding
@@ -28,7 +29,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
         setToolbar(R.string.dk_perm_utils_permissions_phone_settings_activity_title)
         setStyle()
 
-        binding.buttonRequestActivityPermission.setContent {
+        binding.buttonRequestActivityPermission.injectContent {
             DKPrimaryButton(buttonText.value) {
                 checkRequiredPermissions()
             }

@@ -17,6 +17,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -61,7 +62,7 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         val buttonFindMyVehicle: View? = view.findViewById(R.id.button_find_my_vehicle)
         val buttonDontHaveTime: View? = view.findViewById(R.id.button_dont_have_time)
 
-        validateButton?.setContent {
+        validateButton?.injectContent {
             DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
                 viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION)
             }

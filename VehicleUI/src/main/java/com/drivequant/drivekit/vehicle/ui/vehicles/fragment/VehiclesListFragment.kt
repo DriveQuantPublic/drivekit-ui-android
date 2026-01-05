@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicleListener
@@ -77,7 +78,7 @@ class VehiclesListFragment : Fragment(), DriveKitVehicleListener {
         }
         binding.vehiclesList.layoutManager = LinearLayoutManager(context)
 
-        binding.buttonVehicle.setContent {
+        binding.buttonVehicle.injectContent {
             DKPrimaryButton(getString(buttonText.value)) {
                 if (viewModel.shouldReplaceVehicle()) {
                     VehiclePickerActivity.launchActivity(

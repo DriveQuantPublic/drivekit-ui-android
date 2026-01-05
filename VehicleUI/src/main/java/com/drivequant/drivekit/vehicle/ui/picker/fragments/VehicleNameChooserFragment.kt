@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentVehicleNameChooserBinding
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -57,7 +58,7 @@ class VehicleNameChooserFragment : Fragment() {
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
 
-        binding.buttonValidate.setContent {
+        binding.buttonValidate.injectContent {
             DKPrimaryButton(
                 getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate),
                 isEnabled = buttonEnableState.value

@@ -20,6 +20,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
 import com.drivequant.drivekit.ui.R
@@ -95,7 +96,7 @@ internal class TransportationModeFragment : Fragment() {
         binding.textCommentError.smallText()
         binding.textCommentError.setText(R.string.dk_driverdata_transportation_mode_declaration_comment_error)
 
-        binding.buttonValidate.setContent {
+        binding.buttonValidate.injectContent {
             DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) {
                 viewModel.comment = binding.editTextComment.text.toString()
                 if (viewModel.checkFieldsValidity()) {

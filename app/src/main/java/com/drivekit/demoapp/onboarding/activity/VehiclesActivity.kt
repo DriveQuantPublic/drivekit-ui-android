@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 
@@ -50,7 +51,7 @@ internal class VehiclesActivity : AppCompatActivity() {
             normalText()
         }
 
-        binding.buttonAddVehicle.setContent {
+        binding.buttonAddVehicle.injectContent {
             DKPrimaryButton(getString(R.string.vehicle_intro_button)) {
                 VehiclePickerActivity.launchActivity(
                     this@VehiclesActivity,

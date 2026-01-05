@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus.ERROR
@@ -90,13 +91,13 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
         }
         binding.textViewDescription.normalText()
 
-        binding.buttonValidate.setContent {
+        binding.buttonValidate.injectContent {
             DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)) {
                 viewModel.changeBeaconToVehicle()
             }
         }
 
-        binding.buttonAbort.setContent {
+        binding.buttonAbort.injectContent {
             DKPrimaryButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) {
                 viewModel.scanValidationFinished()
             }

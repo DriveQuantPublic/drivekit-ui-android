@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityNotificationsPermissionBinding
@@ -34,7 +35,7 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
         setStyle()
         manageSkipButton()
 
-        binding.buttonRequestNotificationsPermission.setContent {
+        binding.buttonRequestNotificationsPermission.injectContent {
             DKPrimaryButton(buttonText.value) {
                 checkRequiredPermissions()
             }

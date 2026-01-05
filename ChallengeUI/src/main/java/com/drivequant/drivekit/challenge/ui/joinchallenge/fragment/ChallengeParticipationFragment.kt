@@ -30,6 +30,7 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.common.ui.utils.MILES_TO_KM_FACTOR
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import kotlin.math.roundToInt
 
 class ChallengeParticipationFragment : Fragment() {
@@ -108,7 +109,7 @@ class ChallengeParticipationFragment : Fragment() {
         dispatch()
 
         viewModel.challenge?.let { challenge ->
-            binding.textViewJoinChallenge.setContent {
+            binding.textViewJoinChallenge.injectContent {
                 DKPrimaryButton(getString(R.string.dk_challenge_participate_button)) {
                     challenge.rules?.let { rules ->
                         if (rules.isNotEmpty()) {

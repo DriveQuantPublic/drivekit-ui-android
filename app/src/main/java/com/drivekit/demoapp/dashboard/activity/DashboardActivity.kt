@@ -24,12 +24,12 @@ import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.settings.activity.SettingsActivity
 import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
@@ -185,7 +185,7 @@ internal class DashboardActivity : AppCompatActivity() {
     private fun initTripSimulatorButton() {
         if (viewModel.displayTripSimulator) {
             tripSimulatorButtonContainer.visibility = View.VISIBLE
-            tripSimulatorButtonContainer.findViewById<ComposeView>(R.id.button_trip_simulator).setContent {
+            tripSimulatorButtonContainer.findViewById<ComposeView>(R.id.button_trip_simulator).injectContent {
                 DKSecondaryButton(getString(R.string.simulate_trip)) {
                     TripSimulatorActivity.launchActivity(this@DashboardActivity)
                 }

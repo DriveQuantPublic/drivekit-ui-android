@@ -25,6 +25,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.TextArg
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.utils.ConnectivityType
@@ -346,7 +347,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun manageHelpReportButton(contactType: ContactType) {
-        this.helpReportButton.setContent {
+        this.helpReportButton.injectContent {
             DKPrimaryButton(getString(R.string.dk_perm_utils_app_diag_help_request_button)) {
                 when (contactType) {
                     ContactType.NONE -> { }

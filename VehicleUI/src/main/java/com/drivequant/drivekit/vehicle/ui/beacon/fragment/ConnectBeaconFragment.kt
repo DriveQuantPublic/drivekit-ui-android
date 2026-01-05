@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
@@ -68,7 +69,7 @@ class ConnectBeaconFragment : Fragment() {
         binding.textViewConnectDesc1.normalText()
         binding.textViewConnectDesc2.normalText()
         binding.textViewConnectDesc3.normalText()
-        binding.buttonBegin.setContent {
+        binding.buttonBegin.injectContent {
             DKPrimaryButton(getString(R.string.dk_vehicle_begin)) {
                 if (!viewModel.isBluetoothSensorEnabled()) {
                     val alertDialog = DKAlertDialog.LayoutBuilder()

@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityLocationPermissionBinding
@@ -31,7 +32,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
         setToolbar(R.string.dk_perm_utils_permissions_location_title)
         setStyle()
 
-        binding.buttonRequestLocationPermission.setContent {
+        binding.buttonRequestLocationPermission.injectContent {
             DKPrimaryButton(buttonText.value) {
                 if (DiagnosisHelper.hasFineLocationPermission(this)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permissionCallback != null) {

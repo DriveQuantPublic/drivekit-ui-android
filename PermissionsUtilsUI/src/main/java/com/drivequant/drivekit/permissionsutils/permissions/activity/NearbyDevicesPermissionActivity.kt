@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityNearbyDevicesPermissionBinding
@@ -32,7 +33,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
         setToolbar(R.string.dk_perm_utils_app_diag_nearby_title)
         setStyle()
 
-        binding.buttonRequestNearbyDevicesPermission.setContent {
+        binding.buttonRequestNearbyDevicesPermission.injectContent {
             DKPrimaryButton(buttonText.value) {
                 checkRequiredPermissions()
             }

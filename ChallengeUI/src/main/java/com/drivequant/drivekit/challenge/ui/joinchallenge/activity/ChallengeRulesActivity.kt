@@ -19,6 +19,7 @@ import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 
 class ChallengeRulesActivity : AppCompatActivity() {
 
@@ -75,7 +76,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             R.string.dk_challenge_optin_title
         }
 
-        binding.textViewAcceptRule.setContent {
+        binding.textViewAcceptRule.injectContent {
             DKPrimaryButton(getString(acceptRulesText)) {
                 if (!isRegistered) {
                     val alertDialog = DKAlertDialog.LayoutBuilder()

@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.R
@@ -32,7 +33,7 @@ class FullScreenIntentPermissionActivity : BasePermissionActivity() {
         setStyle()
         manageSkipButton()
 
-        binding.buttonRequestFullScreenIntentPermission.setContent {
+        binding.buttonRequestFullScreenIntentPermission.injectContent {
             DKPrimaryButton(buttonText.value) {
                 DiagnosisHelper.requestFullScreenPermission(this)
             }

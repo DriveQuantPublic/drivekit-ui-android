@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.ui.R
@@ -69,7 +70,7 @@ internal class AlternativeTripFragment : Fragment() {
                 AlternativeTripViewModel.AlternativeTripViewModelFactory(trip)
             )[AlternativeTripViewModel::class.java]
         }
-        binding.buttonChange.setContent {
+        binding.buttonChange.injectContent {
             DKPrimaryButton(getString(R.string.dk_driverdata_change_transportation_mode), isFullWidth = false) {
                 launchTransportationMode()
             }
