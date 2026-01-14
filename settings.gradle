@@ -25,6 +25,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
+            url "https://maven.drivequant.com/repository/android-sdk/"
+        }
+        maven {
             url "https://jitpack.io"
         }
     }
