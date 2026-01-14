@@ -76,10 +76,10 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/road_context_container" />
 
-                    <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
+                    <androidx.compose.ui.platform.ComposeView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:id="@+id/button_display_timeline_detail"
-                        style="@style/DKButton.Secondary"
-                        android:text="@string/dk_timeline_button_timeline_detail"
                         android:layout_marginVertical="@dimen/dk_margin_half"
                         android:layout_marginHorizontal="@dimen/dk_screen_border_dkbutton"
                         app:layout_constraintBottom_toBottomOf="parent"

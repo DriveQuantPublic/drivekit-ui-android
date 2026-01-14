@@ -44,12 +44,12 @@
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+        <androidx.compose.ui.platform.ComposeView
             android:id="@+id/button_vehicle"
-            style="@style/DKButton"
-            android:paddingHorizontal="@dimen/dk_screen_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/dk_margin"
             android:visibility="gone"
-            tools:text="New vehicle" />
+            />
     </LinearLayout>
 </FrameLayout>

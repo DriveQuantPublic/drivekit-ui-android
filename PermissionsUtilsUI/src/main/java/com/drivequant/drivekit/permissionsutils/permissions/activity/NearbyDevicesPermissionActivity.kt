@@ -4,13 +4,15 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.mutableStateOf
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityNearbyDevicesPermissionBinding
@@ -18,6 +20,8 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionC
 
 @RequiresApi(Build.VERSION_CODES.S)
 class NearbyDevicesPermissionActivity : BasePermissionActivity() {
+
+    private val buttonText by lazy { mutableStateOf(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_link))}
 
     private lateinit var binding: ActivityNearbyDevicesPermissionBinding
 
@@ -28,6 +32,13 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
         setContentView(binding.root)
         setToolbar(R.string.dk_perm_utils_app_diag_nearby_title)
         setStyle()
+
+        binding.buttonRequestNearbyDevicesPermission.injectContent {
+            DKPrimaryButton(buttonText.value) {
+                checkRequiredPermissions()
+            }
+        }
+
         DKEdgeToEdgeManager.apply {
             setSystemStatusBarForegroundColor(window)
             update(binding.root) { view, insets ->
@@ -35,10 +46,6 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
                 addSystemNavigationBarBottomPadding(view, insets)
             }
         }
-    }
-
-    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
-        checkRequiredPermissions()
     }
 
     private fun checkRequiredPermissions() {
@@ -56,7 +63,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                binding.buttonRequestNearbyDevicesPermission.setText(R.string.dk_perm_utils_permissions_text_button_nearby_devices_settings)
+                buttonText.value = getString(R.string.dk_perm_utils_permissions_text_button_nearby_devices_settings)
                 handlePermissionTotallyDeclined(
                     this@NearbyDevicesPermissionActivity,
                     com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_ko

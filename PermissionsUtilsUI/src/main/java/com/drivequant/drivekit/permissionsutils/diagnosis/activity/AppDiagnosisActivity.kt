@@ -10,13 +10,14 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.ui.platform.ComposeView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.ContactType
@@ -24,6 +25,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.TextArg
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.utils.ConnectivityType
@@ -59,7 +61,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private lateinit var summaryDescription: TextView
     private lateinit var helpTitle: TextView
     private lateinit var helpDescription: TextView
-    private lateinit var helpReport: Button
+    private lateinit var helpReportButton: ComposeView
     private lateinit var batteryTitle: TextView
     private lateinit var batteryDescription: TextView
     private lateinit var summaryViewSeparator: View
@@ -92,7 +94,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         this.summaryDescription = findViewById(R.id.text_view_summary_description)
         this.helpTitle = findViewById(R.id.text_view_help_title)
         this.helpDescription = findViewById(R.id.text_view_help_description)
-        this.helpReport = findViewById(R.id.button_help_report)
+        this.helpReportButton = findViewById(R.id.button_help_report)
         this.batteryTitle = findViewById(R.id.text_view_battery_title)
         this.batteryDescription = findViewById(R.id.text_view_battery_description)
         this.summaryViewSeparator = findViewById(R.id.summary_view_separator)
@@ -335,46 +337,53 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun displayReportSection() {
-        when (val contactType = PermissionsUtilsUI.contactType) {
-            is ContactType.NONE -> {
-                this.helpTitle.visibility = View.GONE
-                this.helpDescription.visibility = View.GONE
-                this.helpReport.visibility = View.GONE
-            }
-            is ContactType.WEB -> {
-                this.helpReport.setOnClickListener {
-                    val intent = Intent(Intent.ACTION_VIEW, contactType.url)
-                    startActivity(intent)
-                }
-            }
-            is ContactType.EMAIL -> {
-                this.helpReport.setOnClickListener {
-                    val contentMail = contactType.contentMail
-                    val recipients = contentMail.getRecipients().toTypedArray()
-                    val bccRecipients = contentMail.getBccRecipients().toTypedArray()
-                    val subject = contentMail.getSubject()
-                    var mailBody =
-                        "${contentMail.getMailBody()} ${PermissionsUtilsUI.getDiagnosisDescription(
-                            this
-                        )}"
+        val contactType = PermissionsUtilsUI.contactType
+        if (contactType == ContactType.NONE) {
+            this.helpTitle.visibility = View.GONE
+            this.helpDescription.visibility = View.GONE
+            this.helpReportButton.visibility = View.GONE
+        }
+        manageHelpReportButton(contactType)
+    }
 
-                    if (contentMail.overrideMailBodyContent()) {
-                        mailBody = contentMail.getMailBody()
-                    }
+    private fun manageHelpReportButton(contactType: ContactType) {
+        this.helpReportButton.injectContent {
+            DKPrimaryButton(getString(R.string.dk_perm_utils_app_diag_help_request_button)) {
+                when (contactType) {
+                    ContactType.NONE -> { }
+                    is ContactType.EMAIL -> {
+                        val contentMail = contactType.contentMail
+                        val recipients = contentMail.getRecipients().toTypedArray()
+                        val bccRecipients = contentMail.getBccRecipients().toTypedArray()
+                        val subject = contentMail.getSubject()
+                        var mailBody =
+                            "${contentMail.getMailBody()} ${PermissionsUtilsUI.getDiagnosisDescription(
+                                this
+                            )}"
 
-                    val intent = Intent(Intent.ACTION_SEND)
-                    intent.type = "plain/text"
-                    intent.putExtra(Intent.EXTRA_EMAIL, recipients)
-                    intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
-                    intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-                    intent.putExtra(Intent.EXTRA_TEXT, mailBody)
-                    DriveKitLog.getLogUriFile(this)?.let {
-                        intent.putExtra(Intent.EXTRA_STREAM, it)
+                        if (contentMail.overrideMailBodyContent()) {
+                            mailBody = contentMail.getMailBody()
+                        }
+
+                        val intent = Intent(Intent.ACTION_SEND)
+                        intent.type = "plain/text"
+                        intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+                        intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
+                        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+                        intent.putExtra(Intent.EXTRA_TEXT, mailBody)
+                        DriveKitLog.getLogUriFile(this)?.let {
+                            intent.putExtra(Intent.EXTRA_STREAM, it)
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
+                    is ContactType.WEB -> {
+                        val intent = Intent(Intent.ACTION_VIEW, contactType.url)
+                        startActivity(intent)
+                    }
                 }
             }
         }
+
     }
 
     private fun displayBluetoothItem() {

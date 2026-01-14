@@ -62,9 +62,9 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_start"
-        style="@style/DKButton"
-        android:layout_marginHorizontal="@dimen/dk_screen_border"
-        android:text="@string/dk_vehicle_begin" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dk_screen_border" />
 </LinearLayout>

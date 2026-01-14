@@ -19,6 +19,7 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.common.TitleProgressBa
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationDisplayState
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -29,6 +30,7 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.common.ui.utils.MILES_TO_KM_FACTOR
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import kotlin.math.roundToInt
 
 class ChallengeParticipationFragment : Fragment() {
@@ -107,18 +109,20 @@ class ChallengeParticipationFragment : Fragment() {
         dispatch()
 
         viewModel.challenge?.let { challenge ->
-            binding.textViewJoinChallenge.setOnClickListener {
-                challenge.rules?.let { rules ->
-                    if (rules.isNotEmpty()) {
-                        ChallengeRulesActivity.launchActivity(
-                            requireActivity(),
-                            challengeId,
-                            viewModel.isDriverRegistered()
-                        )
+            binding.textViewJoinChallenge.injectContent {
+                DKPrimaryButton(getString(R.string.dk_challenge_participate_button)) {
+                    challenge.rules?.let { rules ->
+                        if (rules.isNotEmpty()) {
+                            ChallengeRulesActivity.launchActivity(
+                                requireActivity(),
+                                challengeId,
+                                viewModel.isDriverRegistered()
+                            )
+                        }
+                    } ?: run {
+                        updateProgressVisibility(true)
+                        viewModel.joinChallenge(challengeId)
                     }
-                } ?: run {
-                    updateProgressVisibility(true)
-                    viewModel.joinChallenge(challengeId)
                 }
             }
         }

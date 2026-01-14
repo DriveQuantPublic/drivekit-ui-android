@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.DKSecondaryButton
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.driverprofile.component.DriverProfileScrollState
@@ -28,7 +30,7 @@ internal class DriverProfileFragment : Fragment() {
     private lateinit var driverProfileFeatureContainer: DriverProfileFeatureContainer
     private lateinit var driverDistanceEstimationContainer: DriverDistanceEstimationContainer
     private lateinit var driverCommonTripFeatureContainer: DriverCommonTripFeatureContainer
-    private lateinit var drivingConditionsButton: Button
+    private lateinit var drivingConditionsButton: ComposeView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,9 +90,11 @@ internal class DriverProfileFragment : Fragment() {
     }
 
     private fun configureDrivingConditionsButton() {
-        this.drivingConditionsButton.setOnClickListener {
-            context?.let {
-                DriverDataUI.startDrivingConditionsActivity(it)
+        this.drivingConditionsButton.injectContent {
+            DKSecondaryButton(getString(R.string.dk_driverdata_drivingconditions_show)) {
+                context?.let {
+                    DriverDataUI.startDrivingConditionsActivity(it)
+                }
             }
         }
     }

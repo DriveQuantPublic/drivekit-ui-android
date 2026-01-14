@@ -7,6 +7,7 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
+import com.drivequant.drivekit.common.ui.utils.Kilometer
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
@@ -36,7 +37,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
             OdometerItemType.ANALYZED -> it.analyzedDistance
             OdometerItemType.ESTIMATED -> it.estimatedYearDistance
         }.let { distance ->
-            getFormattedDistance(context, Meter(distance))
+            getFormattedDistance(context, Kilometer(distance).toMeters())
         }
     }
 

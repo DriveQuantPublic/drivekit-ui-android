@@ -60,14 +60,14 @@
 
     </RadioGroup>
 
-    <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/button_validate"
-        style="@style/DKButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin"
         android:paddingVertical="@dimen/dk_margin_half"
-        android:text="@string/dk_common_validate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
-
+        app:layout_constraintTop_toBottomOf="@id/radioGroup"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

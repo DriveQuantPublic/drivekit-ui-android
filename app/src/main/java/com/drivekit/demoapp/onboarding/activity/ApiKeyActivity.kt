@@ -4,14 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivitySetApiKeyBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 
 internal class ApiKeyActivity : AppCompatActivity() {
 
@@ -35,9 +36,8 @@ internal class ApiKeyActivity : AppCompatActivity() {
         val viewModel = ApiKeyViewModel()
         binding.textViewDescription.text = viewModel.getDescription(this@ApiKeyActivity)
         binding.textViewTitle.setText(viewModel.getTitleResId())
-        binding.root.findViewById<Button>(R.id.button_action).apply {
-            setText(viewModel.getButtonTextResId())
-            setOnClickListener {
+        binding.button.injectContent {
+            DKPrimaryButton(getString(viewModel.getButtonTextResId())) {
                 if (viewModel.isApiKeyValid()) {
                     UserIdActivity.launchActivity(this@ApiKeyActivity)
                 } else {

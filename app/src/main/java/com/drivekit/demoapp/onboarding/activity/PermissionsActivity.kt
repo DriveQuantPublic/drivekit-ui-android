@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
@@ -12,10 +11,12 @@ import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivekit.drivekitdemoapp.databinding.ActivityPermissionsBinding
+import com.drivequant.drivekit.common.ui.component.DKPrimaryButton
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKEdgeToEdgeManager
+import com.drivequant.drivekit.common.ui.utils.injectContent
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 
@@ -52,9 +53,8 @@ internal class PermissionsActivity : AppCompatActivity() {
             normalText()
         }
 
-        binding.root.findViewById<Button>(R.id.button_action).apply {
-            text = getString(R.string.permissions_intro_button)
-            setOnClickListener {
+        binding.button.injectContent {
+            DKPrimaryButton(getString(R.string.permissions_intro_button)) {
                 PermissionsUtilsUI.showPermissionViews(
                     this@PermissionsActivity, object : PermissionViewListener {
                         override fun onFinish() {

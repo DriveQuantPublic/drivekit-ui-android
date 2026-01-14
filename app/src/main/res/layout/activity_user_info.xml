@@ -94,17 +94,19 @@
 
         </ScrollView>
 
-        <include
-            layout="@layout/layout_button_primary_action"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/button_validate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <com.drivequant.drivekit.common.ui.component.DKButtonSecondary
-            android:id="@+id/button_next_step"
-            style="@style/DKButton.Secondary"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dk_margin"
-            android:layout_marginTop="@dimen/dk_margin_medium"
-            android:text="@string/button_next_step" />
+            android:layout_marginVertical="@dimen/dk_margin_half" />
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/button_next_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dk_margin"
+            android:layout_marginTop="@dimen/dk_margin_medium" />
     </LinearLayout>
 
     <ProgressBar

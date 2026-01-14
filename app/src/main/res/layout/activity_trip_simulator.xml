@@ -86,10 +86,11 @@
         </LinearLayout>
     </ScrollView>
 
-    <include
-        layout="@layout/layout_button_primary_action"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginVertical="@dimen/dk_margin_half"
         android:layout_marginBottom="@dimen/dk_margin" />
 </LinearLayout>

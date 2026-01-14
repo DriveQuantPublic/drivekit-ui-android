@@ -68,12 +68,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_nearby_devices_permission_text1" />
 
-            <com.drivequant.drivekit.common.ui.component.DKButtonPrimary
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/button_request_nearby_devices_permission"
-                style="@style/DKButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin"
-                android:onClick="onRequestPermissionClicked"
-                android:text="@string/dk_common_app_diag_nearby_link"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
