@@ -75,20 +75,15 @@ fun DKPrimaryButton(
             Modifier
                 .defaultMinSize(minHeight = 48.dp)
                 .wrapContentSize()
-        },
-        colors = buttonColors(
+        }, colors = buttonColors(
             backgroundColor = colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor),
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.fontColorOnSecondaryColor)
-        ),
-        elevation = null,
-        shape = CircleShape,
-        onClick = onClick,
-        enabled = isEnabled
+        ), elevation = null, shape = CircleShape, onClick = onClick, enabled = isEnabled
     ) {
         icon?.let {
             DKButtonIcon(it, text)
         }
-        DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
+        DKButtonText(text = text)
     }
 }
 
@@ -97,23 +92,17 @@ fun DKSecondaryButton(text: String, @DrawableRes icon: Int? = null, onClick: () 
     OutlinedButton(
         modifier = Modifier
             .defaultMinSize(minHeight = 48.dp)
-            .fillMaxWidth(),
-        colors = buttonColors(
+            .fillMaxWidth(), colors = buttonColors(
             backgroundColor = Color.Transparent,
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)
-        ),
-        elevation = null,
-        shape = CircleShape,
-        border = BorderStroke(
-            1.75.dp,
-            colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)
-        ),
-        onClick = onClick
+        ), elevation = null, shape = CircleShape, border = BorderStroke(
+            1.75.dp, colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)
+        ), onClick = onClick
     ) {
         icon?.let {
             DKButtonIcon(it, text)
         }
-        DKText(text.uppercase(), DKStyle.HEADLINE2, color = Color.Unspecified)
+        DKButtonText(text = text)
     }
 }
 
@@ -135,15 +124,18 @@ private fun DKButtonIcon(@DrawableRes icon: Int, contentDescription: String) {
 @Composable
 fun DKTextButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     TextButton(
-        modifier = modifier,
-        colors = buttonColors(
+        modifier = modifier, colors = buttonColors(
             backgroundColor = Color.Transparent,
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.secondaryColor)
-        ),
-        onClick = onClick
+        ), onClick = onClick
     ) {
-        DKText(text.uppercase(), DKStyle.NORMAL_TEXT, color = Color.Unspecified)
+        DKButtonText(text)
     }
+}
+
+@Composable
+private fun DKButtonText(text: String) {
+    DKText(text.uppercase(), DKStyle.NORMAL_TEXT, color = Color.Unspecified, textAlign = TextAlign.Center)
 }
 
 @Composable
@@ -151,13 +143,10 @@ fun DKCriticalActionButton(text: String, onClick: () -> Unit) {
     TextButton(
         modifier = Modifier
             .defaultMinSize(minHeight = 48.dp)
-            .fillMaxWidth(),
-        colors = buttonColors(
+            .fillMaxWidth(), colors = buttonColors(
             backgroundColor = Color.Transparent,
             contentColor = colorResource(com.drivequant.drivekit.common.ui.R.color.criticalColor)
-        ),
-        shape = CircleShape,
-        onClick = onClick
+        ), shape = CircleShape, onClick = onClick
     ) {
         DKText(text, DKStyle.HEADLINE2, color = Color.Unspecified)
     }
