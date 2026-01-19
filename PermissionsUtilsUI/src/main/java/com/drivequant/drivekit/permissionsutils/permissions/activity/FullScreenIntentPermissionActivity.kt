@@ -20,7 +20,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class FullScreenIntentPermissionActivity : BasePermissionActivity() {
-    private val buttonText = mutableStateOf(getString(R.string.dk_perm_utils_text_button_fsi_settings))
+    private val buttonText by lazy { mutableStateOf(getString(R.string.dk_perm_utils_text_button_fsi_settings)) }
 
     private lateinit var binding: ActivityFullScreenIntentPermissionBinding
 

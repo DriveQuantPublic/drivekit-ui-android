@@ -16,6 +16,7 @@
             android:value="AIzaSyCZ6Z6xhkxP2_iV3Vq9wqlbeZkO1sX2ODs"/>
         <activity
             android:name="com.drivekit.demoapp.splashscreen.activity.SplashScreenActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
@@ -26,50 +27,62 @@
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.ApiKeyActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.UserInfoActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.UserIdActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.PermissionsActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.VehiclesActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.dashboard.activity.DashboardActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.features.activity.FeatureListActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.drivekit.demoapp.simulator.activity.TripSimulatorActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.simulator.activity.TripSimulatorDetailActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.settings.activity.SettingsActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.settings.activity.DeleteAccountActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>
