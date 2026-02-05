@@ -48,7 +48,6 @@ class RankingViewModel : ViewModel() {
                     .withIndex()) {
                     val titleId = when (rankingPeriod) {
                         RankingPeriod.WEEKLY -> R.string.dk_achievements_ranking_week
-                        RankingPeriod.LEGACY -> R.string.dk_achievements_ranking_legacy
                         RankingPeriod.MONTHLY -> R.string.dk_achievements_ranking_month
                         RankingPeriod.ALL_TIME -> R.string.dk_achievements_ranking_permanent
                     }

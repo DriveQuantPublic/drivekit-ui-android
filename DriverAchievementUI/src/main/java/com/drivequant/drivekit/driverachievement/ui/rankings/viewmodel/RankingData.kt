@@ -87,7 +87,6 @@ class RankingData(
     override fun hasInfoButton() = true
     override fun getInfoPopupMessage(context: Context) =
         when (viewModel.selectedRankingSelectorData.rankingPeriod) {
-            RankingPeriod.LEGACY -> R.string.dk_achievements_ranking_legacy_info
             RankingPeriod.WEEKLY -> R.string.dk_achievements_ranking_week_info
             RankingPeriod.MONTHLY -> R.string.dk_achievements_ranking_month_info
             RankingPeriod.ALL_TIME -> R.string.dk_achievements_ranking_permanent_info
