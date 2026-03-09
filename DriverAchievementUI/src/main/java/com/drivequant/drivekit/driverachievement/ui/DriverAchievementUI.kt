@@ -28,7 +28,7 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         private set
 
     internal var rankingSelector: RankingSelectorType = RankingSelectorType.PERIOD(
-        listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
+        RankingPeriod.values().toList(),
     )
 
     internal var rankingDepth: Int = 5
