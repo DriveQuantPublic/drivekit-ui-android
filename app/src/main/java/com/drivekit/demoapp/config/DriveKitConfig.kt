@@ -227,7 +227,7 @@ internal object DriveKitConfig {
 
     private fun configureDriverAchievementUI() {
         DriverAchievementUI.configureRankingTypes(RankingType.values().toList())
-        val rankingPeriods = listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
+        val rankingPeriods = RankingPeriod.values().toList()
         DriverAchievementUI.configureRankingSelector(RankingSelectorType.PERIOD(rankingPeriods))
         DriverAchievementUI.configureBadgeCategories(BadgeCategory.values().toMutableList())
         DriverAchievementUI.configureRankingDepth(rankingDepth = 5)

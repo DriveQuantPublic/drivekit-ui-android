@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
    <string name="dk_achievements_failed_to_sync_rankings">Synchronisatie van de ranglijsten mislukt, probeer later opnieuw.</string>
-   <string name="dk_achievements_ranking_legacy">Tweemaandelijks</string>
-   <string name="dk_achievements_ranking_legacy_info">Deze ranglijst wordt berekend op basis van de gemiddelde score van de ritten van de afgelopen twee weken. Om in de ranglijst te verschijnen, moet je minstens één rit hebben voltooid in de afgelopen 14 dagen.</string>
-   <string name="dk_achievements_ranking_menu_ranking">Mijn rangschikking</string>
+    <string name="dk_achievements_ranking_menu_ranking">Mijn rangschikking</string>
    <string name="dk_achievements_ranking_month">Maandelijks</string>
    <string name="dk_achievements_ranking_month_info">De maandelijkse ranglijst wordt berekend op basis van de gemiddelde score van alle ritten van een maand. Om in dit klassement te komen, moet je minstens 20 km rijden en 5 ritten voltooien.</string>
    <string name="dk_achievements_ranking_no_pseudo_set">Je moet een pseudoniem invoeren om toegang te krijgen tot deze pagina.</string>
