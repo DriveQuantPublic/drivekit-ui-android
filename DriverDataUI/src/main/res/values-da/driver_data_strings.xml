@@ -14,10 +14,10 @@
    <string name="dk_driverdata_alternative_transportation_remark">💡 Denne tur har ikke en score, fordi appen ikke måler din kørsel, når ikke du er i dit køretøj.</string>
    <string name="dk_driverdata_alternative_transportation_thanks">❤️ Tak fordi du rapporterede denne tur og for at hjælpe os med at forbedre automatisk genkendelse af ture.</string>
    <string name="dk_driverdata_alternative_trips">Alternativ transport</string>
-   <string name="dk_driverdata_beginning_authorized_call">Lovligt opkaldt begyndte</string>
-   <string name="dk_driverdata_beginning_authorized_call_info_content">Det ser ud til, at du har brugt din telefon på lovlig vis under kørslen. Det må du gerne, men vær opmærksom på, at en mobiltelefon kan gøre dig uopmærksom under kørslen (selvom den er fastmonteret) - og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
-   <string name="dk_driverdata_beginning_unauthorized_call">Ulovligt opkald begyndte</string>
-   <string name="dk_driverdata_beginning_unauthorized_call_info_content">Hov, det ser ud til, at du kom til at bruge din telefon, mens du kørte. Det er forbudt at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
+   <string name="dk_driverdata_beginning_authorized_call">Tilladt opkald begyndte</string>
+   <string name="dk_driverdata_beginning_authorized_call_info_content">Det ser ud til, at du har brugt din telefon på tilladt vis under kørslen. Det må du gerne, men vær opmærksom på, at en mobiltelefon kan gøre dig uopmærksom under kørslen (selvom den er fastmonteret) - og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
+   <string name="dk_driverdata_beginning_unauthorized_call">Ikke tilladt opkald begyndte</string>
+   <string name="dk_driverdata_beginning_unauthorized_call_info_content">Hov, det ser ud til, at du kom til at bruge din telefon, mens du kørte. Det er ikke tillad at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
    <string name="dk_driverdata_calling_time">Opkaldstid =</string>
    <string name="dk_driverdata_change_transportation_mode">Skift?</string>
    <string name="dk_driverdata_confirm_delete_trip">Vil du slette rejsen?\n\nSletningen er permanent, og rejsen vil ikke længere være synlig.\nBemærk, at dette ikke ændrer gennemsnitsværdierne for dine kørescorer eller dem for en aktuel udfordring.</string>
@@ -80,11 +80,11 @@
    <string name="dk_driverdata_drivingconditions_weekend">Weekend</string>
    <string name="dk_driverdata_ecodriving_score">Øko-kørselsscore</string>
    <string name="dk_driverdata_ecodriving_score_info">Økonomisk kørsel går ud på at bruge mindst muligt brændstof, fx ved at undgå tomkørsel, unødige overhalinger og alt for høj hastighed. Øko-kørselsscoren går fra 0 til 10. Når du får en god score, betyder det, at du har kørt så effektivt som muligt på den pågældende strækning.</string>
-   <string name="dk_driverdata_end_authorized_call">Lovligt opkald sluttede</string>
-   <string name="dk_driverdata_end_authorized_call_info_content">Det ser ud til, at du har brugt din telefon på lovlig vis under kørslen. Det må du gerne, men vær opmærksom på, at en mobiltelefon kan gøre dig uopmærksom under kørslen (selvom den er fastmonteret) - og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
+   <string name="dk_driverdata_end_authorized_call">Tilladt opkald sluttede</string>
+   <string name="dk_driverdata_end_authorized_call_info_content">Det ser ud til, at du har brugt din telefon på tilladt vis under kørslen. Det må du gerne, men vær opmærksom på, at en mobiltelefon kan gøre dig uopmærksom under kørslen (selvom den er fastmonteret) - og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
    <string name="dk_driverdata_end_event">Afslutning af turen</string>
-   <string name="dk_driverdata_end_unauthorized_call">Ulovligt opkald sluttede</string>
-   <string name="dk_driverdata_end_unauthorized_call_info_content">Hov, det ser ud til, at du kom til at bruge din telefon, mens du kørte. Det er forbudt at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
+   <string name="dk_driverdata_end_unauthorized_call">Ikke tilladt opkald sluttede</string>
+   <string name="dk_driverdata_end_unauthorized_call_info_content">Hov, det ser ud til, at du kom til at bruge din telefon, mens du kørte. Det er ikke tillad at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
    <string name="dk_driverdata_expressway">%s på motorveje</string>
    <string name="dk_driverdata_extra_urban">%s i tæt byzone</string>
    <string name="dk_driverdata_failed_to_declare_transportation">Transporttilstand kunne ikke opdateres, prøv igen senere.</string>
