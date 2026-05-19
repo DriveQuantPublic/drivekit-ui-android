@@ -8,7 +8,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.drivequant.beaconutils.BeaconData
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.beaconutils.BeaconListener
 import com.drivequant.beaconutils.BeaconScanner
@@ -18,6 +17,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.core.beacon.BeaconData
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle

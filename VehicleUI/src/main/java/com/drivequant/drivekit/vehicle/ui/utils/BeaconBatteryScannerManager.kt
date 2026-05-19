@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.utils
 
 import android.content.Context
-import com.drivequant.beaconutils.BeaconData
 import com.drivequant.beaconutils.BeaconInfoReaderListener
 import com.drivequant.beaconutils.BeaconInfoReaderScanner
+import com.drivequant.drivekit.core.beacon.BeaconData
 import java.io.Serializable
 
 internal class BeaconInfoScannerManager(
