@@ -24,9 +24,11 @@ publishing {
                 url mavenLocal().url
             }
         }
-        maven {
-            name = "localRepository"
-            url = layout.projectDirectory.dir("local-repository")
+        if (System.env.RELEASE_TYPE == "stable") {
+            maven {
+                name = "localRepository"
+                url = layout.projectDirectory.dir("local-repository")
+            }
         }
     }
     publications {
