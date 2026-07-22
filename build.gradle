@@ -16,8 +16,8 @@ plugins {
 allprojects {
     project.ext {
         min_sdk_version = 26
-        compile_sdk_version = 36
-        target_sdk_version = 36
+        compile_sdk_version = 37
+        target_sdk_version = 37
     }
 }
 
