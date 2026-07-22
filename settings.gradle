@@ -30,6 +30,9 @@ dependencyResolutionManagement {
         maven {
             url "https://jitpack.io"
         }
+        maven {
+            url "https://gitlab.com/api/v4/projects/84225187/packages/maven"
+        }
     }
 }
 

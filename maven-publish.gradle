@@ -3,21 +3,32 @@ apply plugin: 'maven-publish'
 publishing {
     repositories {
         maven {
-            if (System.env.REPO_PATH) {
-                url System.env.REPO_PATH
-                if (System.env.MAVEN_LOGIN && System.env.MAVEN_PASSWORD) {
+            if (System.env.RELEASE_TYPE == "stable") {
+                url System.env.REPO_PATH_MAVEN_DRIVEQUANT
+                if (System.env.REPO_USERNAME && System.env.REPO_PASSWORD) {
                     credentials {
-                        username System.env.MAVEN_LOGIN
-                        password System.env.MAVEN_PASSWORD
+                        username System.env.REPO_USERNAME
+                        password System.env.REPO_PASSWORD
                     }
+                }
+            } else if (System.env.RELEASE_TYPE == "beta") {
+                url System.env.REPO_PATH_GITLAB_REGISTRY
+                credentials(HttpHeaderCredentials) {
+                    name = "Deploy-Token"
+                    value = System.env.GITLAB_DEPLOY_TOKEN
+                }
+                authentication {
+                    header(HttpHeaderAuthentication)
                 }
             } else {
                 url mavenLocal().url
             }
         }
-        maven {
-            name = "localRepository"
-            url = layout.projectDirectory.dir("local-repository")
+        if (System.env.RELEASE_TYPE == "stable") {
+            maven {
+                name = "localRepository"
+                url = layout.projectDirectory.dir("local-repository")
+            }
         }
     }
     publications {
