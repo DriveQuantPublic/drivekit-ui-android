@@ -14,19 +14,11 @@ import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleAddBeaconQueryListener
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconBatteryStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconInfoStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleChangeBeaconQueryListener
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleGetBeaconQueryListener
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleUpdateBeaconBatteryLevelQueryListener
+import com.drivequant.drivekit.vehicle.manager.beacon.*
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment
-import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.DIAGNOSTIC
-import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.PAIRING
-import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.VERIFY
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import java.io.Serializable
 
@@ -45,12 +37,8 @@ class BeaconViewModel(
     var batteryLevel: Int = 0
         set(value) {
             field = value
-            seenBeacon?.let {
-                val beacon = Beacon(it.proximityUuid, it.major, it.minor)
-                DriveKitVehicle.updateBeaconBatteryLevel(
-                    beacon,
-                    value,
-                    object : VehicleUpdateBeaconBatteryLevelQueryListener {
+            beacon?.let {
+                DriveKitVehicle.updateBeaconBatteryLevel(it, value, object : VehicleUpdateBeaconBatteryLevelQueryListener {
                     override fun onResponse(status: VehicleBeaconBatteryStatus) {
                         // do nothing
                     }
