@@ -20,21 +20,3 @@ allprojects {
         target_sdk_version = 37
     }
 }
-
-subprojects {
-    tasks.register('emptySourcesJar', Jar) {
-        archiveClassifier = 'sources'
-    }
-    tasks.register('emptyJavadocJar', Jar) {
-        archiveClassifier = 'javadoc'
-    }
-
-    afterEvaluate {
-        if (plugins.hasPlugin("maven-publish")) {
-            artifacts {
-                archives emptySourcesJar
-                archives emptyJavadocJar
-            }
-        }
-    }
-}
