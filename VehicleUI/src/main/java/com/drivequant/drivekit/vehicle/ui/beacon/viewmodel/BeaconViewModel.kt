@@ -46,7 +46,11 @@ class BeaconViewModel(
         set(value) {
             field = value
             seenBeacon?.let {
-                DriveKitVehicle.updateBeaconBatteryLevel(it, value, object : VehicleUpdateBeaconBatteryLevelQueryListener {
+                val beacon = Beacon(it.proximityUuid, it.major, it.minor)
+                DriveKitVehicle.updateBeaconBatteryLevel(
+                    beacon,
+                    value,
+                    object : VehicleUpdateBeaconBatteryLevelQueryListener {
                     override fun onResponse(status: VehicleBeaconBatteryStatus) {
                         // do nothing
                     }
