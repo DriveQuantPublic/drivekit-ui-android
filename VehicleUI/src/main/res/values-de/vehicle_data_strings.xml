@@ -53,7 +53,7 @@
     <string name="dk_motor">Motortyp</string>
     <string name="dk_name">Name</string>
     <string name="dk_power">Leistung</string>
-    <string name="dk_vehicle_add">Eine Fahrt hinzufügen</string>
+    <string name="dk_vehicle_add">Ein Fahrzeug hinzufügen</string>
     <string name="dk_vehicle_beacon_already_paired">Die Beacon ist nicht verfügbar. Sie ist bereits an ein anderes Fahrzeug gekoppelt.</string>
     <string name="dk_vehicle_beacon_already_paired_to_vehicle">Diese beacon ist bereits an dieses Fahrzeug gekoppelt.</string>
     <string name="dk_vehicle_beacon_deactivate_alert">Das %1$s Bake wird vom %2$s Fahrzeug getrennt.\nBist du sicher, dass du weitermachen willst?</string>
