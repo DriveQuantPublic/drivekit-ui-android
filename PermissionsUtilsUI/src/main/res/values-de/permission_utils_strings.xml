@@ -105,6 +105,7 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">Eine Fahrtenaufzeichnung ist nicht möglich, da die App nicht berechtigt ist, auf den Bluetooth-Sensor zuzugreifen.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Öffnen Sie die Einstellungen</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Genehmigungen</string>
+   <string name="dk_perm_utils_permissions_android_auto_reset_skip">Nicht mehr fragen</string>
    <string name="dk_perm_utils_permissions_fsi_button">Erlauben, dass Benachrichtigungen im Vollbildmodus angezeigt werden</string>
    <string name="dk_perm_utils_permissions_fsi_text">Wenn die App einen Unfall erkennt, kann sie eine Benachrichtigung anzeigen, die den gesamten Bildschirm einnimmt, selbst wenn Ihr Smartphone gesperrt ist.\n\nAuf diese Weise können Sie eine Notfallnummer anrufen oder mitteilen, dass es Ihnen gut geht.\n\nTippen Sie auf die Schaltfläche unten, um der App zu erlauben, Benachrichtigungen im Vollbildmodus anzuzeigen.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Standort zulassen</string>

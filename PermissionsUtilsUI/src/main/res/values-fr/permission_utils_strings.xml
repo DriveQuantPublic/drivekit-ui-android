@@ -105,6 +105,7 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">L\'enregistrement de vos trajets n\'est pas possible car l\'app ne peut pas accéder au capteur Bluetooth.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Ouvrir les réglages</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Autorisations</string>
+   <string name="dk_perm_utils_permissions_android_auto_reset_skip">Ne plus demander</string>
    <string name="dk_perm_utils_permissions_fsi_button">Autoriser l\'affichage de notifications en plein écran</string>
    <string name="dk_perm_utils_permissions_fsi_text">Si l\'appli détecte un accident, elle peut afficher une notification qui occupe tout l\'écran même lorsque votre smartphone est verrouillé.\n\nAinsi, vous pouvez contacter un numéro d\'assistance ou indiquer que vous allez bien.\n\nAppuyez sur le bouton ci-dessous pour autoriser l\'appli à afficher les notifications en plein écran.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autoriser la localisation</string>
