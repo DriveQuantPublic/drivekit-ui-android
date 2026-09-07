@@ -87,12 +87,9 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     @JvmStatic
     fun hasError(context: Context): Boolean {
         PermissionType.values().forEach {
-            if (isAutoResetIgnored()) {
-                return@forEach
-            }
-
-            if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
+            if (computeAppDiagnosisStatus(context, it) == PermissionStatus.NOT_VALID) {
                 return true
+            }
         }
 
         if (!DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH) && isBluetoothNeeded) {
@@ -217,6 +214,22 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
 
     private fun clearAutoResetChoice() =
         DriveKitSharedPreferencesUtils.remove(IGNORE_AUTO_RESET_KEY, true)
+
+    internal fun computeAppDiagnosisStatus(
+        context: Context,
+        permissionType: PermissionType
+    ): PermissionStatus {
+        val status = DiagnosisHelper.getPermissionStatus(context, permissionType)
+        return if (permissionType == PermissionType.AUTO_RESET
+            && isAutoResetIgnored()
+            && status == PermissionStatus.NOT_VALID
+        ) {
+            PermissionStatus.WARNING
+        } else {
+            status
+        }
+    }
+
 
     @JvmStatic
     fun reset() {

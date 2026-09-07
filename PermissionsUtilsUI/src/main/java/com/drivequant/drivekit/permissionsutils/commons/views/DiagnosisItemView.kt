@@ -31,7 +31,12 @@ class DiagnosisItemView : LinearLayout {
     private lateinit var diagnosisTextOK: String
     private lateinit var diagnosisTextKO: String
     private lateinit var diagnosisFirstLink: String
+    var displayFirstLink: Boolean = true
+        internal set
+
     private var diagnosisSecondLink: String? = null
+    var displaySecondLink: Boolean = true
+        internal set
 
     constructor(context: Context) : super(context) {
         init(null)
