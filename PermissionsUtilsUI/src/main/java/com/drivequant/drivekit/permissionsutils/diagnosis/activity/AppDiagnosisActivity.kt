@@ -235,6 +235,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
                     override fun onIgnore() {
                         ignorePermission(permissionType)
+                        displayAutoResetItem()
                     }
                 })
             }
