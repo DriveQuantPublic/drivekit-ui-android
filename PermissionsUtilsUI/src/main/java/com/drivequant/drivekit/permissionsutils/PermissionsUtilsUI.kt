@@ -30,7 +30,7 @@ import java.util.Locale
 
 object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal const val TAG = "DriveKit Permissions Utils UI"
-    internal const val IGNORE_AUTO_RESET_KEY = "dk_ignore_permission_auto_reset_key"
+    private const val IGNORE_AUTO_RESET_KEY = "dk_ignore_permission_auto_reset_key"
 
     internal var permissionViewListener: PermissionViewListener? = null
     internal val isBluetoothNeeded: Boolean
@@ -87,6 +87,10 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     @JvmStatic
     fun hasError(context: Context): Boolean {
         PermissionType.values().forEach {
+            if (isAutoResetIgnored()) {
+                return@forEach
+            }
+
             if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
                 return true
         }
@@ -205,8 +209,17 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         return mailBody
     }
 
+    internal fun isAutoResetIgnored(): Boolean =
+        DriveKitSharedPreferencesUtils.getBoolean(IGNORE_AUTO_RESET_KEY, false)
+
+    internal fun ignoreAutoReset() =
+        DriveKitSharedPreferencesUtils.setBoolean(IGNORE_AUTO_RESET_KEY, true)
+
+    private fun clearAutoResetChoice() =
+        DriveKitSharedPreferencesUtils.remove(IGNORE_AUTO_RESET_KEY, true)
+
     @JvmStatic
     fun reset() {
-        DriveKitSharedPreferencesUtils.remove(IGNORE_AUTO_RESET_KEY, immediately = true)
+        clearAutoResetChoice()
     }
 }

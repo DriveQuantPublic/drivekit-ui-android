@@ -147,4 +147,6 @@
    <string name="dk_perm_utils_permissions_text_button_notifications_settings">Open the settings</string>
    <string name="dk_perm_utils_permissions_text_button_skip">Skip and don\'t ask again</string>
    <string name="dk_perm_utils_text_button_fsi_settings">Open the settings</string>
+
+   <string name="dk_perm_utils_permissions_android_auto_reset_skip">Don\'t ask again</string>
 </resources>

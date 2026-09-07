@@ -2,6 +2,7 @@ package com.drivequant.drivekit.permissionsutils.diagnosis.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.content.IntentFilter
@@ -10,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -134,7 +136,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun init() {
         checkPermissionItem(PermissionType.LOCATION, this.itemLocation)
         checkPermissionItem(PermissionType.ACTIVITY, this.itemActivityRecognition)
-        checkPermissionItem(PermissionType.AUTO_RESET, this.itemAutoResetPermissions)
+        if (!PermissionsUtilsUI.isAutoResetIgnored()) {
+            checkPermissionItem(PermissionType.AUTO_RESET, this.itemAutoResetPermissions)
+        }
         checkPermissionItem(PermissionType.NEARBY, this.itemNearbyDevices)
         checkPermissionItem(PermissionType.NOTIFICATION, this.itemNotification)
         checkPermissionItem(PermissionType.FULL_SCREEN_INTENT, this.itemFullScreenIntent)
@@ -174,7 +178,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(this.itemBluetooth.getDiagnosisLink()) { _, _ ->
+                    .positiveButton(this.itemBluetooth.getDiagnosisFirstLink()) { _, _ ->
                         enableSensor(ConnectivityType.BLUETOOTH)
                     }
                     .show()
@@ -200,7 +204,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(this.itemLocationSensor.getDiagnosisLink()) { _, _ ->
+                    .positiveButton(this.itemLocationSensor.getDiagnosisFirstLink()) { _, _ ->
                         enableSensor(ConnectivityType.GPS)
                     }
                     .show()
@@ -228,6 +232,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     override fun onSubmit() {
                         requestPermission(permissionType)
                     }
+
+                    override fun onIgnore() {
+                        ignorePermission(permissionType)
+                    }
                 })
             }
         }
@@ -243,7 +251,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(this.itemConnectivity.getDiagnosisLink()) { _, _ ->
+                    .positiveButton(this.itemConnectivity.getDiagnosisFirstLink()) { _, _ ->
                         val networkIntent = Intent(Settings.ACTION_SETTINGS)
                         startActivity(networkIntent)
                     }
@@ -271,7 +279,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                         this.itemBatteryOptimization, PermissionStatus.NOT_VALID, object : ResolveProblemStateListener {
                             override fun onSubmit() {
                                 DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
-                            }})
+                            }
+                        })
                 }
             }
         }
@@ -312,8 +321,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun displayAutoResetItem() {
-        this.itemAutoResetPermissions.visibility =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        itemAutoResetPermissions.visibility =
+            if (!PermissionsUtilsUI.isAutoResetIgnored() &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+            ) {
                 View.VISIBLE
             } else {
                 View.GONE
@@ -452,6 +463,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
+    private fun ignorePermission(permissionType: PermissionType) {
+        if (permissionType == PermissionType.AUTO_RESET) {
+            PermissionsUtilsUI.ignoreAutoReset()
+        }
+    }
+
     private fun requestActivityPermission() {
         permissionCallback = object :
             OnPermissionCallback {
@@ -573,10 +590,25 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this@AppDiagnosisActivity)
                     .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(getDiagnosisLink()) { _, _ ->
+                    .positiveButton(getDiagnosisFirstLink()) { _, _ ->
                         listener.onSubmit()
                     }
+                    .apply {
+                        getDiagnosisSecondLink()?.let { secondLink ->
+                            negativeButton(secondLink) { _, _ ->
+                                listener.onIgnore()
+                            }
+                        }
+                    }
                     .show()
+
+                listOf(
+                    AlertDialog.BUTTON_POSITIVE,
+                    AlertDialog.BUTTON_NEGATIVE
+                ).forEach { button ->
+                    alertDialog.getButton(button).layoutParams.width =
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                }
 
                 val titleTextView =
                     alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
@@ -669,4 +701,5 @@ private enum class Brand {
 
 interface ResolveProblemStateListener {
     fun onSubmit()
+    fun onIgnore() {}
 }
