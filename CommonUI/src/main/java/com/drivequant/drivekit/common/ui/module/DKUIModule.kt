@@ -1,7 +1,8 @@
 package com.drivequant.drivekit.common.ui.module
 
 internal enum class DKUIModule {
-    VEHICLE;
+    VEHICLE,
+    PERMISSION_UTILS;
 
     fun getClassForModule() = try {
         Class.forName(this.getClassName())
@@ -13,6 +14,7 @@ internal enum class DKUIModule {
         val basePackageName = "com.drivequant.drivekit."
         when (this) {
             VEHICLE -> "vehicle.ui.DriveKitVehicleUI"
+            PERMISSION_UTILS -> "permissionsutils.PermissionsUtilsUI"
         }.let {
             return basePackageName + it
         }

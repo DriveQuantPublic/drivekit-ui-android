@@ -9,6 +9,7 @@ import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.core.module.BluetoothUsage
 import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
@@ -29,6 +30,8 @@ import java.util.Locale
 
 object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal const val TAG = "DriveKit Permissions Utils UI"
+    internal const val IGNORE_AUTO_RESET_KEY = "dk_ignore_permission_auto_reset_key"
+
     internal var permissionViewListener: PermissionViewListener? = null
     internal val isBluetoothNeeded: Boolean
         get() {
@@ -200,5 +203,10 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_app_version)} $versionName \n"
         return mailBody
+    }
+
+    @JvmStatic
+    fun reset() {
+        DriveKitSharedPreferencesUtils.remove(IGNORE_AUTO_RESET_KEY, immediately = true)
     }
 }
