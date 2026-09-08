@@ -12,6 +12,7 @@ interface VehicleUIEntryPoint {
     fun getVehicleInfoById(context: Context, vehicleId: String, listener : GetVehicleInfoByVehicleIdListener)
     fun getVehiclesFilterItems(context: Context): List<FilterItem>
     fun createVehicleListFragment(): Fragment
+    fun reset()
 }
 
 interface GetVehicleInfoByVehicleIdListener {
