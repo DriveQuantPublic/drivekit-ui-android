@@ -229,8 +229,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
             status
         }
     }
-
-
+    
     override fun reset() {
         clearAutoResetChoice()
     }
