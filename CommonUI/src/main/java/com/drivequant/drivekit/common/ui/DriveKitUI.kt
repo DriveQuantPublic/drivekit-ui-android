@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import androidx.core.content.res.ResourcesCompat
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
-import com.drivequant.drivekit.common.ui.module.DKUIModule
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKUnitSystem
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
@@ -73,24 +73,9 @@ object DriveKitUI {
 
     @JvmStatic
     fun reset() {
-        resetOtherModules()
-    }
-
-    private fun resetOtherModules() {
-        DKUIModule.values().forEach { dkUIModule ->
-            try {
-                dkUIModule.getClassForModule()?.let {
-                    val method = it.getDeclaredMethod("reset")
-                    if (!method.isAccessible) {
-                        method.isAccessible = true
-                    }
-                    method.invoke(it)
-                }
-            } catch (e: NoSuchMethodException) {
-                DriveKitLog.e(TAG, "Cannot reset $dkUIModule: method was not found")
-            } catch (e: Exception) {
-                DriveKitLog.e(TAG, "Cannot reset $dkUIModule: $e")
-            }
+        DriveKitNavigationController.apply {
+            vehicleUIEntryPoint?.reset()
+            //permissionsUtilsUIEntryPoint?.reset()
         }
     }
 }
