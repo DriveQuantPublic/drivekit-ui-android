@@ -75,7 +75,7 @@ object DriveKitUI {
     fun reset() {
         DriveKitNavigationController.apply {
             vehicleUIEntryPoint?.reset()
-            //permissionsUtilsUIEntryPoint?.reset()
+            permissionsUtilsUIEntryPoint?.reset()
         }
     }
 }

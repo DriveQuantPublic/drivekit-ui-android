@@ -10,4 +10,5 @@ import android.content.Context
 
 interface PermissionsUtilsUIEntryPoint {
     fun startAppDiagnosisActivity(context: Context)
+    fun reset()
 }

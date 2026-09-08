@@ -231,8 +231,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     }
 
 
-    @JvmStatic
-    fun reset() {
+    override fun reset() {
         clearAutoResetChoice()
     }
 }
