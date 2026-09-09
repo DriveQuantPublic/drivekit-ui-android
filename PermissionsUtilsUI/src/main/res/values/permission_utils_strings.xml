@@ -105,6 +105,7 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">Trip recording is not possible because the app is not authorized to access the Bluetooth sensor.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Open the settings</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permissions</string>
+   <string name="dk_perm_utils_permissions_android_auto_reset_skip">Don\'t ask again</string>
    <string name="dk_perm_utils_permissions_fsi_button">Allow full-screen notification display</string>
    <string name="dk_perm_utils_permissions_fsi_text">If the app detects an accident, it can display a full-screen notification even when your smartphone is locked.\n\nIn this way, you can contact a support number or report that you\'re okay.\n\nPress the button below to authorize the app to display full-screen notifications.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Allow location</string>

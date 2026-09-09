@@ -2,6 +2,7 @@ package com.drivequant.drivekit.permissionsutils.diagnosis.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.content.IntentFilter
@@ -10,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -134,7 +136,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun init() {
         checkPermissionItem(PermissionType.LOCATION, this.itemLocation)
         checkPermissionItem(PermissionType.ACTIVITY, this.itemActivityRecognition)
-        checkPermissionItem(PermissionType.AUTO_RESET, this.itemAutoResetPermissions)
+        checkPermissionItem(
+            PermissionType.AUTO_RESET,
+            this.itemAutoResetPermissions,
+            onIgnoreClicked = {
+                ignoreAutoResetPermission()
+            })
         checkPermissionItem(PermissionType.NEARBY, this.itemNearbyDevices)
         checkPermissionItem(PermissionType.NOTIFICATION, this.itemNotification)
         checkPermissionItem(PermissionType.FULL_SCREEN_INTENT, this.itemFullScreenIntent)
@@ -171,22 +178,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             }
             this.itemBluetooth.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
             this.itemBluetooth.setOnClickListener {
-                val alertDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this)
-                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(this.itemBluetooth.getDiagnosisLink()) { _, _ ->
+                displayAlertDialog(
+                    this.itemBluetooth,
+                    onFirstLinkClicked = {
                         enableSensor(ConnectivityType.BLUETOOTH)
+                    },
+                    onSecondLinkClicked = {
+                        // do nothing
                     }
-                    .show()
-
-                val titleTextView =
-                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
-                val descriptionTextView =
-                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
-                titleTextView?.text = this.itemBluetooth.getDiagnosisTitle()
-                descriptionTextView?.text = this.itemBluetooth.getDiagnosticTextKO()
-                descriptionTextView?.text =
-                    this.itemBluetooth.getDiagnosticTextKO()
+                )
             }
         }
 
@@ -196,37 +196,43 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         } else {
             errorsCount++
             this.itemLocationSensor.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
-            this.itemLocationSensor.setOnClickListener {
-                val alertDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this)
-                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(this.itemLocationSensor.getDiagnosisLink()) { _, _ ->
-                        enableSensor(ConnectivityType.GPS)
-                    }
-                    .show()
 
-                val titleTextView =
-                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
-                val descriptionTextView =
-                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
-                titleTextView?.text = this.itemLocationSensor.getDiagnosisTitle()
-                descriptionTextView?.text =
-                    this.itemLocationSensor.getDiagnosticTextKO()
-            }
+            displayAlertDialog(
+                this.itemLocationSensor,
+                onFirstLinkClicked = {
+                    enableSensor(ConnectivityType.GPS)
+                },
+                onSecondLinkClicked = {
+                    // do nothing
+                }
+            )
         }
     }
 
-    private fun checkPermissionItem(permissionType: PermissionType, diagnosticItem: DiagnosisItemView) {
-        when (val status = DiagnosisHelper.getPermissionStatus(this, permissionType)) {
+    private fun checkPermissionItem(
+        permissionType: PermissionType,
+        diagnosticItem: DiagnosisItemView,
+        onIgnoreClicked: (() -> Unit)? = null
+    ) {
+        when (val status =
+            PermissionsUtilsUI.computeAppDiagnosisStatus(diagnosticItem.context, permissionType)
+        ) {
             PermissionStatus.VALID -> diagnosticItem.setNormalState()
             PermissionStatus.WARNING,
             PermissionStatus.NOT_VALID -> {
                 if (status == PermissionStatus.NOT_VALID) {
                     errorsCount++
                 }
-                setProblemState(diagnosticItem, status, object : ResolveProblemStateListener {
+                setProblemState(
+                    diagnosticItem,
+                    status,
+                    object : ResolveProblemStateListener {
                     override fun onSubmit() {
                         requestPermission(permissionType)
+                    }
+
+                    override fun onIgnore() {
+                        onIgnoreClicked?.invoke()
                     }
                 })
             }
@@ -240,20 +246,17 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             errorsCount++
             this.itemConnectivity.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
             this.itemConnectivity.setOnClickListener {
-                val alertDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this)
-                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(this.itemConnectivity.getDiagnosisLink()) { _, _ ->
+
+                displayAlertDialog(
+                    this.itemConnectivity,
+                    onFirstLinkClicked = {
                         val networkIntent = Intent(Settings.ACTION_SETTINGS)
                         startActivity(networkIntent)
+                    },
+                    onSecondLinkClicked = {
+                        // do nothing
                     }
-                    .show()
-
-                val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
-                val descriptionTextView =
-                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
-                titleTextView?.text = this.itemConnectivity.getDiagnosisTitle()
-                descriptionTextView?.text = this.itemConnectivity.getDiagnosticTextKO()
+                )
             }
         }
     }
@@ -271,7 +274,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                         this.itemBatteryOptimization, PermissionStatus.NOT_VALID, object : ResolveProblemStateListener {
                             override fun onSubmit() {
                                 DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
-                            }})
+                            }
+                        })
                 }
             }
         }
@@ -312,12 +316,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun displayAutoResetItem() {
-        this.itemAutoResetPermissions.visibility =
+        itemAutoResetPermissions.visibility =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
+
+        if (PermissionsUtilsUI.isAutoResetIgnored()) {
+            itemAutoResetPermissions.displaySecondLink = false
+        }
     }
 
     private fun displayNearbyDevicesItem() {
@@ -452,6 +460,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
+    private fun ignoreAutoResetPermission() {
+        PermissionsUtilsUI.ignoreAutoReset()
+        hideAutoResetSecondLink()
+        init()
+    }
+
+    private fun hideAutoResetSecondLink() {
+        this.itemAutoResetPermissions.displaySecondLink = false
+    }
+
     private fun requestActivityPermission() {
         permissionCallback = object :
             OnPermissionCallback {
@@ -570,22 +588,57 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         diagnosticItem.apply {
             setDiagnosisDrawable(permissionStatus)
             setOnClickListener {
-                val alertDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this@AppDiagnosisActivity)
-                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(getDiagnosisLink()) { _, _ ->
+                displayAlertDialog(
+                    diagnosticItem,
+                    onFirstLinkClicked = {
                         listener.onSubmit()
-                    }
-                    .show()
-
-                val titleTextView =
-                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
-                val descriptionTextView =
-                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
-                titleTextView?.text = getDiagnosisTitle()
-                descriptionTextView?.text = getDiagnosticTextKO()
+                    }, onSecondLinkClicked = {
+                        listener.onIgnore()
+                    })
             }
         }
+    }
+
+    private fun displayAlertDialog(
+        diagnosisItem: DiagnosisItemView,
+        onFirstLinkClicked: () -> Unit,
+        onSecondLinkClicked: () -> Unit
+    ) {
+        val alertDialog = DKAlertDialog.LayoutBuilder()
+            .init(this@AppDiagnosisActivity)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
+            .apply {
+                if (diagnosisItem.displayFirstLink) {
+                    positiveButton(diagnosisItem.getDiagnosisFirstLink()) { _, _ ->
+                        onFirstLinkClicked()
+                    }
+                }
+            }
+            .apply {
+                if (diagnosisItem.displaySecondLink) {
+                    diagnosisItem.getDiagnosisSecondLink()?.let { secondLink ->
+                        negativeButton(secondLink) { _, _ ->
+                            onSecondLinkClicked()
+                        }
+                    }
+                }
+            }
+            .show()
+
+        listOf(
+            AlertDialog.BUTTON_POSITIVE,
+            AlertDialog.BUTTON_NEGATIVE
+        ).forEach { button ->
+            alertDialog.getButton(button).layoutParams.width =
+                ViewGroup.LayoutParams.MATCH_PARENT
+        }
+
+        val titleTextView =
+            alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+        val descriptionTextView =
+            alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
+        titleTextView?.text = diagnosisItem.getDiagnosisTitle()
+        descriptionTextView?.text = diagnosisItem.getDiagnosticTextKO()
     }
 
     override fun onResume() {
@@ -669,4 +722,5 @@ private enum class Brand {
 
 interface ResolveProblemStateListener {
     fun onSubmit()
+    fun onIgnore() {}
 }

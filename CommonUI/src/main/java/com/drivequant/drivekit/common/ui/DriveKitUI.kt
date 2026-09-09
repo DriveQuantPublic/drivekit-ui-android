@@ -73,10 +73,9 @@ object DriveKitUI {
 
     @JvmStatic
     fun reset() {
-        resetOtherModules()
-    }
-
-    private fun resetOtherModules() {
-        DriveKitNavigationController.vehicleUIEntryPoint?.reset()
+        DriveKitNavigationController.apply {
+            vehicleUIEntryPoint?.reset()
+            permissionsUtilsUIEntryPoint?.reset()
+        }
     }
 }
