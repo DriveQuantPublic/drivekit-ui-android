@@ -3,15 +3,7 @@ apply plugin: 'maven-publish'
 publishing {
     repositories {
         maven {
-            if (System.env.RELEASE_TYPE == "stable") {
-                url System.env.REPO_PATH_MAVEN_DRIVEQUANT
-                if (System.env.REPO_USERNAME && System.env.REPO_PASSWORD) {
-                    credentials {
-                        username System.env.REPO_USERNAME
-                        password System.env.REPO_PASSWORD
-                    }
-                }
-            } else if (System.env.RELEASE_TYPE == "beta") {
+            if (System.env.RELEASE_TYPE == "beta" || System.env.RELEASE_TYPE == "stable") {
                 url System.env.REPO_PATH_GITLAB_REGISTRY
                 credentials(HttpHeaderCredentials) {
                     name = "Deploy-Token"
@@ -24,51 +16,13 @@ publishing {
                 url mavenLocal().url
             }
         }
-        if (System.env.RELEASE_TYPE == "stable") {
-            maven {
-                name = "localRepository"
-                url = layout.projectDirectory.dir("local-repository")
-            }
-        }
     }
     publications {
         release(MavenPublication) {
             groupId = "com.drivequant.drivekit"
             artifactId = project.artifactId
             version = android.defaultConfig.versionName
-
-            pom {
-                name = "com.drivequant.drivekit:${project.artifactId}"
-                version = android.defaultConfig.versionName
-                description = "DriveKit SDK for Android"
-                url = "https://drivequant.com"
-
-                licenses {
-                    license {
-                        name = "Commercial licence"
-                        url = "https://www.drivequant.com/legal-notices"
-                    }
-                }
-
-                developers {
-                    developer {
-                        name = "DriveQuant"
-                        email = "developer@drivequant.com"
-                        organization = "DriveQuant"
-                        organizationUrl = "https://drivequant.com"
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:private://not-public-repository")
-                    developerConnection.set("scm:git:private://not-public-repository")
-                    url.set("https://docs.drivequant.com")
-                }
-            }
-
-            artifact(tasks.named("emptySourcesJar"))
-            artifact(tasks.named("emptyJavadocJar"))
-
+            
             afterEvaluate {
                 from components.release
             }
