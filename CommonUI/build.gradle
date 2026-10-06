@@ -14,8 +14,6 @@ android {
     defaultConfig {
         minSdkVersion project.ext.min_sdk_version
         targetSdkVersion project.ext.target_sdk_version
-        versionCode 1
-        versionName "$drivekitui_version"
 
         consumerProguardFiles 'consumer-rules.pro'
     }
@@ -37,9 +35,6 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "$kotlinCompilerExtension_version"
-    }
 
     publishing {
         singleVariant('release')
