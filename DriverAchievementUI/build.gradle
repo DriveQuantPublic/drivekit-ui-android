@@ -29,10 +29,6 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "$kotlinCompilerExtension_version"
-    }
-
     publishing {
         singleVariant('release')
     }
