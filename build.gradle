@@ -1,9 +1,11 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+
 buildscript {
     def version = System.getenv("BITRISE_GIT_TAG") ?: '0.0.1'
     ext {
         drivekitui_version = version
         drivekit_version = '3.5.0'
-        kotlinCompilerExtension_version = '1.4.8'
     }
 }
 
@@ -11,12 +13,33 @@ plugins {
     alias libs.plugins.android.application apply false
     alias libs.plugins.android.library apply false
     alias libs.plugins.kotlin.android apply false
+    alias libs.plugins.kotlin.compose apply false
 }
 
 allprojects {
     project.ext {
         min_sdk_version = 26
-        compile_sdk_version = 36
-        target_sdk_version = 36
+        compile_sdk_version = 37
+        target_sdk_version = 37
+    }
+}
+
+subprojects { project ->
+    version = drivekitui_version
+    group = "com.drivequant.drivekit.ui"
+
+    project.tasks.withType(KotlinCompilationTask).configureEach {
+        compilerOptions {
+            languageVersion = KotlinVersion.KOTLIN_2_1
+            apiVersion = KotlinVersion.KOTLIN_2_1
+        }
+    }
+
+    project.afterEvaluate {
+        def kotlinExt = project.extensions.findByName('kotlin')
+        if (kotlinExt != null) {
+            kotlinExt.jvmToolchain(17)
+            kotlinExt.coreLibrariesVersion = libs.versions.kotlin.get()
+        }
     }
 }
