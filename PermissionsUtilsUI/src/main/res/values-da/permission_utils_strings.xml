@@ -105,6 +105,7 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">Turoptagelse er ikke mulig, fordi appen ikke er autoriseret til at få adgang til Bluetooth-sensoren.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Åbn indstillingerne</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Tilladelser</string>
+   <string name="dk_perm_utils_permissions_android_auto_reset_skip">Spørg ikke igen</string>
    <string name="dk_perm_utils_permissions_fsi_button">Tillad, at notifikationer vises i fuldskærmstilstand</string>
    <string name="dk_perm_utils_permissions_fsi_text">Hvis appen registrerer en ulykke, kan den vise en meddelelse i fuld skærm, selv når din smartphone er låst.\n\nPå den måde kan du kontakte en hjælpelinje eller lade dem vide, at du er okay.\n\nTryk på knappen nedenfor for at give appen tilladelse til at vise notifikationer i fuldskærmstilstand.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Tillad lokation</string>

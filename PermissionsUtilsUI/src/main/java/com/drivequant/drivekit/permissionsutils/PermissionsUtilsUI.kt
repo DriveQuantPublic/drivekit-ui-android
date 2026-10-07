@@ -9,6 +9,7 @@ import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.core.module.BluetoothUsage
 import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
@@ -29,6 +30,8 @@ import java.util.Locale
 
 object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal const val TAG = "DriveKit Permissions Utils UI"
+    private const val IGNORE_AUTO_RESET_KEY = "dk_ignore_permission_auto_reset_key"
+
     internal var permissionViewListener: PermissionViewListener? = null
     internal val isBluetoothNeeded: Boolean
         get() {
@@ -84,8 +87,9 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     @JvmStatic
     fun hasError(context: Context): Boolean {
         PermissionType.values().forEach {
-            if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
+            if (computeAppDiagnosisStatus(context, it) == PermissionStatus.NOT_VALID) {
                 return true
+            }
         }
 
         if (!DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH) && isBluetoothNeeded) {
@@ -200,5 +204,33 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_app_version)} $versionName \n"
         return mailBody
+    }
+
+    internal fun isAutoResetIgnored(): Boolean =
+        DriveKitSharedPreferencesUtils.getBoolean(IGNORE_AUTO_RESET_KEY, false)
+
+    internal fun ignoreAutoReset() =
+        DriveKitSharedPreferencesUtils.setBoolean(IGNORE_AUTO_RESET_KEY, true)
+
+    private fun clearAutoResetChoice() =
+        DriveKitSharedPreferencesUtils.remove(IGNORE_AUTO_RESET_KEY, true)
+
+    internal fun computeAppDiagnosisStatus(
+        context: Context,
+        permissionType: PermissionType
+    ): PermissionStatus {
+        val status = DiagnosisHelper.getPermissionStatus(context, permissionType)
+        return if (permissionType == PermissionType.AUTO_RESET
+            && isAutoResetIgnored()
+            && status == PermissionStatus.NOT_VALID
+        ) {
+            PermissionStatus.WARNING
+        } else {
+            status
+        }
+    }
+    
+    override fun reset() {
+        clearAutoResetChoice()
     }
 }

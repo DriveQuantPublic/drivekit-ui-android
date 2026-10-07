@@ -105,6 +105,7 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">A gravação da viagem não é possível porque a aplicação não está autorizada a aceder ao sensor Bluetooth.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Abra as configurações</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permissões</string>
+   <string name="dk_perm_utils_permissions_android_auto_reset_skip">Não pergunte novamente</string>
    <string name="dk_perm_utils_permissions_fsi_button">Permitir que as notificações sejam apresentadas em modo de ecrã inteiro</string>
    <string name="dk_perm_utils_permissions_fsi_text">Se a aplicação detetar um acidente, pode apresentar uma notificação em ecrã inteiro, mesmo quando o smartphone está bloqueado.\n\nDesta forma, pode contactar uma linha de apoio ou informá-los de que está bem.\n\nPrima o botão abaixo para autorizar a aplicação a apresentar notificações em modo de ecrã inteiro.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Permitir localização</string>

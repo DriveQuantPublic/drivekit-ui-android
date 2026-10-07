@@ -105,6 +105,7 @@
    <string name="dk_perm_utils_notification_nearby_devices_permission">Het opnemen van je ritten is niet mogelijk omdat de app geen toegang heeft tot de Bluetooth-sensor.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Open de instellingen</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">rechten</string>
+   <string name="dk_perm_utils_permissions_android_auto_reset_skip">Niet meer vragen</string>
    <string name="dk_perm_utils_permissions_fsi_button">Meldingen op volledig scherm toestaan</string>
    <string name="dk_perm_utils_permissions_fsi_text">Als de app een ongeluk detecteert, kan hij een melding weergeven die het hele scherm beslaat, zelfs als je smartphone is vergrendeld, zodat je contact kunt opnemen met een hulplijn of kunt laten weten dat je in orde bent.</string>
    <string name="dk_perm_utils_permissions_location_button_android">Locatie toestaan</string>

@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.tint
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -31,7 +30,13 @@ class DiagnosisItemView : LinearLayout {
     private lateinit var diagnosisSubtitle: String
     private lateinit var diagnosisTextOK: String
     private lateinit var diagnosisTextKO: String
-    private lateinit var diagnosisLink: String
+    private lateinit var diagnosisFirstLink: String
+    var displayFirstLink: Boolean = true
+        internal set
+
+    private var diagnosisSecondLink: String? = null
+    var displaySecondLink: Boolean = true
+        internal set
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -50,7 +55,6 @@ class DiagnosisItemView : LinearLayout {
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.DiagnosisItemView, 0, 0)
             try {
-
                 a.getString(R.styleable.DiagnosisItemView_diagnosisTitle)?.let {
                     diagnosisTitle = it
                 }
@@ -67,8 +71,12 @@ class DiagnosisItemView : LinearLayout {
                     diagnosisTextKO = it
                 }
 
-                a.getString(R.styleable.DiagnosisItemView_diagnosisLink)?.let {
-                    diagnosisLink = it
+                a.getString(R.styleable.DiagnosisItemView_diagnosisFirstLink)?.let {
+                    diagnosisFirstLink = it
+                }
+
+                a.getString(R.styleable.DiagnosisItemView_diagnosisSecondLink)?.let {
+                    diagnosisSecondLink = it
                 }
 
                 textViewDiagnosisTitle?.let {
@@ -99,7 +107,9 @@ class DiagnosisItemView : LinearLayout {
 
     fun getDiagnosticTextKO(): String = diagnosisTextKO
 
-    fun getDiagnosisLink(): String = diagnosisLink
+    fun getDiagnosisFirstLink(): String = diagnosisFirstLink
+
+    fun getDiagnosisSecondLink(): String? = diagnosisSecondLink
 
     fun setDiagnosisDrawable(permissionStatus: PermissionStatus) {
         @ColorRes val color = when (permissionStatus) {
