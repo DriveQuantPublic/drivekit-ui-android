@@ -65,7 +65,7 @@ The DriveKit SDK uses the libraries listed below. These are minimal required ver
 * `Kotlinx Serialization JSON = 1.5.11`
 * `Gson = 2.10.1`
 * `Volley = 1.2.1`
-* `Room = 2.7.0`
+* `Room = 2.7.2`
 * `WorkManager = 2.9.0`
 * `Play Services Location = 21.3.0`
 * `Car App = 1.7.0`
