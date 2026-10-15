@@ -10,7 +10,6 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.extension.highlightBig
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.graphical.DKColors
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemViewModel
@@ -40,9 +39,7 @@ internal class OdometerVehicleDetailView : LinearLayout {
                 context.obtainStyledAttributes(attrs, R.styleable.OdometerVehicleDetailView, 0, 0)
             try {
                 a.getString(R.styleable.OdometerVehicleDetailView_odometerTitle)?.let {
-                    odometerDistanceTitle.apply {
-                        text = DKResource.convertToString(context, it)
-                    }
+                    odometerDistanceTitle.text = it
                 }
                 a.getDrawable(R.styleable.OdometerVehicleDetailView_odometerCornerIcon)?.let {
                     infoImageView.setImageDrawable(it)
