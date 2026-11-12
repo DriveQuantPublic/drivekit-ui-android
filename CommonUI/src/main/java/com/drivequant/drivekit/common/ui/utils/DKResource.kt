@@ -13,7 +13,6 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 
 object DKResource {
-
     fun convertToDrawable(context: Context, identifier: String): Drawable? {
         val id = context.resources.getIdentifier(identifier, "drawable", context.packageName)
         return if (id > 0) {

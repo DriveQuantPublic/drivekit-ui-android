@@ -1,6 +1,6 @@
 [versions]
-agp = "8.13.2"
-kotlin = "1.8.22"
+agp = "9.4.1"
+kotlin = "2.2.21"
 
 mapsCompose = "5.0.3"
 playServicesMaps = "19.2.0"
@@ -61,3 +61,4 @@ play-services-location = { group = "com.google.android.gms", name = "play-servic
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

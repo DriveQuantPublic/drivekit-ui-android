@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin_quarter"
                 app:odometerCornerIcon="@drawable/dk_common_dots"
-                app:odometerTitle="dk_vehicle_odometer_info_vehicle_distance_title" />
+                app:odometerTitle="@string/dk_vehicle_odometer_info_vehicle_distance_title" />
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

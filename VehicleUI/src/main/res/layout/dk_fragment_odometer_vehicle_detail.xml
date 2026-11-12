@@ -34,7 +34,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 app:odometerCornerIcon="@drawable/dk_common_info"
-                app:odometerTitle="dk_vehicle_odometer_info_vehicle_distance_title" />
+                app:odometerTitle="@string/dk_vehicle_odometer_info_vehicle_distance_title" />
 
             <com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerVehicleDetailView
                 android:id="@+id/distance_analyzed_item"
@@ -43,7 +43,7 @@
                 android:layout_weight="1"
                 android:layout_marginVertical="@dimen/dk_margin_quarter"
                 app:odometerCornerIcon="@drawable/dk_common_info"
-                app:odometerTitle="dk_vehicle_odometer_distance_analyzed" />
+                app:odometerTitle="@string/dk_vehicle_odometer_distance_analyzed" />
 
             <com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerVehicleDetailView
                 android:id="@+id/distance_estimated_item"
@@ -51,7 +51,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 app:odometerCornerIcon="@drawable/dk_common_info"
-                app:odometerTitle="dk_vehicle_odometer_info_estimated_distance_title" />
+                app:odometerTitle="@string/dk_vehicle_odometer_info_estimated_distance_title" />
         </LinearLayout>
 
         <androidx.compose.ui.platform.ComposeView
