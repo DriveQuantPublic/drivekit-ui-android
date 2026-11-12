@@ -61,7 +61,7 @@ Your project must be configured as follows:
 
 The DriveKit SDK uses the libraries listed below. These are minimal required versions. Check that they are compatible with your application.
 
-* `Kotlin = 2.1`
+* `Kotlin = 2.2.21` (mininal required version is 2.1)
 * `Kotlinx Serialization JSON = 1.5.11`
 * `Gson = 2.10.1`
 * `Volley = 1.2.1`

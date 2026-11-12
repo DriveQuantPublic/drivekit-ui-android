@@ -25,6 +25,8 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.Meter
 import com.drivequant.drivekit.common.ui.utils.convertToString
+import java.util.Calendar
+import kotlin.math.ceil
 
 
 internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -64,8 +66,28 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         textViewDepartureTime.normalText()
         textViewArrivalTime.normalText()
 
+        val width = cachedTimeWidth ?: textViewDepartureTime.computeMaxTimeWidth()
+            .also { cachedTimeWidth = it }
+        listOf(textViewDepartureTime, textViewArrivalTime).forEach {
+            if (it.layoutParams.width != width) {
+                it.layoutParams = it.layoutParams.apply { this.width = width }
+            }
+        }
+
         computeTripData(trip, tripData)
         computeTripInfo(trip)
+    }
+
+    private fun TextView.computeMaxTimeWidth(): Int {
+        val widestDigit = ('0'..'9').maxBy { paint.measureText(it.toString()) }.toString()
+        val calendar = Calendar.getInstance().apply { set(Calendar.MINUTE, 0) }
+        val maxTextWidth = (0..23).maxOf { hour ->
+            calendar.set(Calendar.HOUR_OF_DAY, hour)
+            val text = calendar.time.formatDate(DKDatePattern.HOUR_MINUTE)
+                .replace(Regex("\\d"), widestDigit)
+            paint.measureText(text)
+        }
+        return ceil(maxTextWidth).toInt() + paddingStart + paddingEnd
     }
 
     private fun computeTripData(trip: DKTripListItem, tripData: TripData) {
@@ -165,5 +187,9 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         } else {
             tripInfoContainer.visibility = View.INVISIBLE
         }
+    }
+
+    private companion object {
+        var cachedTimeWidth: Int? = null
     }
 }
