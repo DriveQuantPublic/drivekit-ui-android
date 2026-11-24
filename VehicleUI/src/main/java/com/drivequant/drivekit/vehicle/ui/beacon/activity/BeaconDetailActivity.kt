@@ -76,23 +76,25 @@ class BeaconDetailActivity : AppCompatActivity() {
         beaconInfo = intent.getSerializableExtraCompat(BEACON_INFO_EXTRA, BeaconInfo::class.java)
         beaconRetrievedInfo = intent.getSerializableExtraCompat(BEACON_RETRIEVED_INFO_EXTRA, DKBeaconRetrievedInfo::class.java)
 
-        vehicleId?.let { vehicleId ->
-            beaconInfo?.let { beaconInfo ->
-                beaconRetrievedInfo?.let { beaconRetrievedInfo ->
-                    vehicleName?.let { vehicleName ->
-                        viewModel = ViewModelProvider(
-                            this,
-                            BeaconDetailViewModel.BeaconDetailViewModelFactory(
-                                vehicleId,
-                                vehicleName,
-                                beaconRetrievedInfo,
-                                beaconInfo
-                            )
-                        )[BeaconDetailViewModel::class.java]
-                    }
-                }
-            }
+        val vehicleId = vehicleId
+        val vehicleName = vehicleName
+        val beaconInfo = beaconInfo
+        val beaconRetrievedInfo = beaconRetrievedInfo
+        if (vehicleId == null || vehicleName == null || beaconInfo == null || beaconRetrievedInfo == null) {
+            // Prevents Play Console pre-launch crash when the Activity is started with no extra
+            finish()
+            return
         }
+
+        viewModel = ViewModelProvider(
+            this,
+            BeaconDetailViewModel.BeaconDetailViewModelFactory(
+                vehicleId,
+                vehicleName,
+                beaconRetrievedInfo,
+                beaconInfo
+            )
+        )[BeaconDetailViewModel::class.java]
 
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(
