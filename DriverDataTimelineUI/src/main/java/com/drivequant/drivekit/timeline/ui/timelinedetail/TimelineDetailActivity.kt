@@ -60,22 +60,23 @@ internal class TimelineDetailActivity : AppCompatActivity() {
         val selectedPeriod = intent.getStringExtra(SELECTED_PERIOD_ID_EXTRA)
         val selectedDate = intent.getLongExtra(SELECTED_DATE_ID_EXTRA, 0L)
 
-        if (selectedScore != null
-            && selectedPeriod != null
-            && selectedDate > 0
-        ) {
-            val computedDate = Date()
-            computedDate.time = selectedDate
-            fragment = TimelineDetailFragment.newInstance(
-                DKScoreType.valueOf(selectedScore),
-                DKPeriod.valueOf(selectedPeriod),
-                computedDate
-            )
-            supportFragmentManager
+        if (selectedScore == null || selectedPeriod == null || selectedDate <= 0) {
+            // Prevents Play Console pre-launch crash when the Activity is started with no extra
+            finish()
+            return
+        }
+
+        val computedDate = Date()
+        computedDate.time = selectedDate
+        fragment = TimelineDetailFragment.newInstance(
+            DKScoreType.valueOf(selectedScore),
+            DKPeriod.valueOf(selectedPeriod),
+            computedDate
+        )
+        supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -90,6 +91,10 @@ internal class TimelineDetailActivity : AppCompatActivity() {
     }
 
     private fun finishActivity() {
+        if (!this::fragment.isInitialized) {
+            finish()
+            return
+        }
         val intent = Intent()
         intent.putExtra(SELECTED_PERIOD_ID_EXTRA, fragment.viewModel.selectedPeriod.name)
         intent.putExtra(SELECTED_DATE_ID_EXTRA, fragment.viewModel.selectedDate.time)
