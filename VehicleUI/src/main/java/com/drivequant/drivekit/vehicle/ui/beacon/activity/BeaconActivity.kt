@@ -73,7 +73,13 @@ class BeaconActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        scanType = intent.getSerializableExtraCompat(SCAN_TYPE_EXTRA, BeaconScanType::class.java)!!
+        val scanType = intent.getSerializableExtraCompat(SCAN_TYPE_EXTRA, BeaconScanType::class.java)
+        if (scanType == null) {
+            // Prevents Play Console pre-launch crash when the Activity is started with no extra
+            finish()
+            return
+        }
+        this.scanType = scanType
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         beacon = intent.getSerializableExtraCompat(BEACON_EXTRA, Beacon::class.java)
 
