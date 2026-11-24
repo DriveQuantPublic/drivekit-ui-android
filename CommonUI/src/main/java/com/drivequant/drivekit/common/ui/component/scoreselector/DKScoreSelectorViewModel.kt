@@ -14,9 +14,9 @@ class DKScoreSelectorViewModel {
             this.internalScores = value.ifEmpty {
                 listOf(DKScoreType.SAFETY)
             }
-            this.selectedScore = this.internalScores.first()
+            this.selectedScore = this.scores.firstOrNull() ?: this.internalScores.first()
         }
-    var selectedScore: DKScoreType = this.scores.first()
+    var selectedScore: DKScoreType = this.scores.firstOrNull() ?: DKScoreType.SAFETY
         private set
     private var onScoreChangeCallback: ((score: DKScoreType) -> Unit)? = null
 
