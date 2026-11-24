@@ -53,7 +53,12 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
+        val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
+        if (vehicleId.isNullOrBlank()) {
+            // Prevents Play Console pre-launch crash when the Activity is started with no extra
+            finish()
+            return
+        }
         historyId = intent.getIntExtra(HISTORY_ID_EXTRA, -1)
 
         supportFragmentManager

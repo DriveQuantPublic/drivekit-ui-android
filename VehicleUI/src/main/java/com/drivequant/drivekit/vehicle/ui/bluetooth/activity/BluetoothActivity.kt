@@ -26,8 +26,6 @@ import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 
 class BluetoothActivity : AppCompatActivity() {
     private lateinit var viewModel: BluetoothViewModel
-    private lateinit var vehicleId: String
-    private lateinit var vehicleName: String
     private lateinit var binding: ActivityBluetoothBinding
 
     companion object {
@@ -56,8 +54,14 @@ class BluetoothActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
-        vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA) as String
+        val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
+        val vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA)
+
+        if (vehicleId.isNullOrBlank() || vehicleName.isNullOrBlank()) {
+            // Prevents Play Console pre-launch crash when the Activity is started with no extra
+            finish()
+            return
+        }
 
         viewModel = ViewModelProvider(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName))[BluetoothViewModel::class.java]
 
