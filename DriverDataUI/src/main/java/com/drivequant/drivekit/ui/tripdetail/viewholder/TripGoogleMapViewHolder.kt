@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
 import android.content.res.ColorStateList
-import android.media.Image
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -81,7 +80,7 @@ internal class TripGoogleMapViewHolder(
         }
         viewModel.selection.observe(fragment.viewLifecycleOwner) {
             it?.let { position ->
-                val marker = googleMarkerList[position]
+                val marker = googleMarkerList.getOrNull(position) ?: return@let
                 val cameraUpdate = CameraUpdateFactory.newCameraPosition(
                     CameraPosition.fromLatLngZoom(
                         marker.position,
