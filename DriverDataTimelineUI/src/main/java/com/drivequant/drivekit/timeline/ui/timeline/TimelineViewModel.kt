@@ -36,7 +36,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
-    var selectedScore: DKScoreType = scores.first()
+    var selectedScore: DKScoreType = scores.firstOrNull() ?: DKScoreType.SAFETY
         private set
 
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()

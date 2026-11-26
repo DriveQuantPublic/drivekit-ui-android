@@ -24,7 +24,7 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     internal var streakThemes: List<StreakTheme> = StreakTheme.values().toList()
     internal var badgeCategories: List<BadgeCategory> = BadgeCategory.values().toList()
     internal var rankingTypes = listOf(RankingType.SAFETY, RankingType.ECO_DRIVING, RankingType.DISTRACTION)
-        get() = field.sanitize()
+        get() = field.sanitize().ifEmpty { listOf(RankingType.SAFETY) }
         private set
 
     internal var rankingSelector: RankingSelectorType = RankingSelectorType.PERIOD(

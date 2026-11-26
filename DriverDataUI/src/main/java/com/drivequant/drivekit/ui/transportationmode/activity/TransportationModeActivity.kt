@@ -39,7 +39,13 @@ internal class TransportationModeActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val itinId = intent.getStringExtra(ITINID_EXTRA) as String
+        val itinId = intent.getStringExtra(ITINID_EXTRA)
+        if (itinId.isNullOrBlank()) {
+            // Prevents Play Console pre-launch crash when the Activity is started with no extra
+            finish()
+            return
+        }
+
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container,

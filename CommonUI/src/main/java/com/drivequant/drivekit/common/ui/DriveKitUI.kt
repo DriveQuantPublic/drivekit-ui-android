@@ -24,7 +24,7 @@ object DriveKitUI {
 
     @JvmStatic
     var scores: List<DKScoreType> = DKScoreType.values().toList()
-        get() = field.filter { it.hasAccess() }
+        get() = field.filter { it.hasAccess() }.ifEmpty { listOf(DKScoreType.SAFETY) }
         set(value) {
             field = value.ifEmpty {
                 listOf(DKScoreType.SAFETY)
